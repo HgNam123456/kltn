@@ -1,0 +1,26 @@
+﻿test: 438 examples; keys = ['event', 'season', 'subgraph_after', 'subgraph_before', 'text', 'text_mentioned_entities']
+================================================================================
+event: released | season: 2017-18
+text : the Indiana_Pacers announced friday they have waived forward Thaddeus_Young_2017-18 .
+mentioned: ['Thaddeus_Young_2017-18', 'Indiana_Pacers']
+|before| = 276 |after| = 244
+ADDED  : []
+DELETED: [('Aaron_Brooks_2017-18', '<teammate>', 'Thaddeus_Young_2017-18'), ('Al_Jefferson_2017-18', '<teammate>', 'Thaddeus_Young_2017-18'), ('C.J._Miles_2017-18', '<teammate>', 'Thaddeus_Young_2017-18'), ('Georges_Niang_2017-18', '<teammate>', 'Thaddeus_Young_2017-18'), ('Glenn_Robinson_2017-18', '<teammate>', 'Thaddeus_Young_2017-18'), ('Indiana_Pacers', '<player>', 'Thaddeus_Young_2017-18'), ('Jeff_Teague_2017-18', '<teammate>', 'Thaddeus_Young_2017-18'), ('Joe_Young_2017-18', '<teammate>', 'Thaddeus_Young_2017-18'), ('Kevin_Seraphin_2017-18', '<teammate>', 'Thaddeus_Young_2017-18'), ('Lance_Stephenson_2017-18', '<teammate>', 'Thaddeus_Young_2017-18')]
+================================================================================
+event: trade | season: 2014-15
+text : cleveland , oh – the Cleveland_Cavaliers have acquired center Anthony_Randolph_2014-15 and a 2015 second round pick from the Denver_Nuggets in exchange for two protected 2015 first round picks ( <unk> oklahoma city and memphis ) , cavaliers general manager david griffin announced tonight .
+mentioned: ['Denver_Nuggets', 'Cleveland_Cavaliers', 'Anthony_Randolph_2014-15']
+|before| = 742 |after| = 754
+ADDED  : [('Alonzo_Gee_2014-15', '<teammate>', 'Anthony_Randolph_2014-15'), ('Anderson_Varejao_2014-15', '<teammate>', 'Anthony_Randolph_2014-15'), ('Andrew_Bynum_2014-15', '<teammate>', 'Anthony_Randolph_2014-15'), ('Anthony_Bennett_2014-15', '<teammate>', 'Anthony_Randolph_2014-15'), ('Anthony_Randolph_2014-15', '<player>', 'Cleveland_Cavaliers'), ('Anthony_Randolph_2014-15', '<teammate>', 'Alonzo_Gee_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'Anderson_Varejao_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'Andrew_Bynum_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'Anthony_Bennett_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'Arinze_Onuaku_2014-15')]
+DELETED: [('Aaron_Brooks_2014-15', '<teammate>', 'Anthony_Randolph_2014-15'), ('Andre_Miller_2014-15', '<teammate>', 'Anthony_Randolph_2014-15'), ('Anthony_Randolph_2014-15', '<player>', 'Denver_Nuggets'), ('Anthony_Randolph_2014-15', '<teammate>', 'Aaron_Brooks_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'Andre_Miller_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'Darrell_Arthur_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'Evan_Fournier_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'J.J._Hickson_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'JaVale_McGee_2014-15'), ('Anthony_Randolph_2014-15', '<teammate>', 'Jan_Vesely_2014-15')]
+================================================================================
+event: released | season: 2015-16
+text : boston – the Boston_Celtics announced today that they have waived guard Kelly_Olynyk_2015-16 .
+mentioned: ['Kelly_Olynyk_2015-16', 'Boston_Celtics']
+|before| = 510 |after| = 466
+ADDED  : []
+DELETED: [('Avery_Bradley_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16'), ('Boston_Celtics', '<player>', 'Kelly_Olynyk_2015-16'), ('Brandan_Wright_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16'), ('Brandon_Bass_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16'), ('Dwight_Powell_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16'), ('Evan_Turner_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16'), ('Gerald_Wallace_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16'), ('Isaiah_Thomas_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16'), ('Jae_Crowder_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16'), ('Jameer_Nelson_2015-16', '<teammate>', 'Kelly_Olynyk_2015-16')]
+================================================================================
+avg added = 38.20, avg deleted = 39.72
+events: [('trade', 150), ('released', 139), ('free_agency', 107), ('draft', 18), ('head_coach', 10), ('d_league', 6), ('retirement', 5), ('overseas', 3)]
+relation/head-looks-like-team: [(('<teammate>', False), 19466), (('<player>', False), 1261), (('<player>', True), 902), (('<head_coach>', False), 81), (('<head_coach>', True), 74), (('<general_mananger>', False), 72), (('<general_mananger>', True), 44)]

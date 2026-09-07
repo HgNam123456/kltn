@@ -1,0 +1,23 @@
+[project]
+name = "kgu"
+version = "0.1.0"
+description = "LLM-driven knowledge graph update from news"
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.7",
+    "openai>=1.40",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["kgu*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
