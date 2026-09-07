@@ -18,3 +18,9 @@ build/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Local LLM assets
+models/
+tools/
+data/raw/
+results/
