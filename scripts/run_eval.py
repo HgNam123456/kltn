@@ -70,11 +70,12 @@ def main() -> None:
             n_add += rec["n_add_cand"]
             n_calls += rec["n_llm_calls"]
 
+    n = len(examples)
     s = summarize(total)
     s.update({
-        "config": f"{args.extractor}+{args.judge}", "split": args.split, "n": len(examples),
+        "config": f"{args.extractor}+{args.judge}", "split": args.split, "n": n,
         "coverage": cov_hit / cov_all if cov_all else 0.0,
-        "avg_cut_cand": n_cut / len(examples), "avg_add_cand": n_add / len(examples),
+        "avg_cut_cand": n_cut / n if n else 0.0, "avg_add_cand": n_add / n if n else 0.0,
         "llm_calls": n_calls, "seconds": round(time.time() - t0, 1),
     })
     args.out.with_suffix(".summary.json").write_text(json.dumps(s, indent=2), encoding="utf8")
