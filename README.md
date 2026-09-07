@@ -37,3 +37,19 @@ python scripts/run_eval.py --extractor gold_explicit --judge oracle --out result
 ```
 
 Mỗi lệnh ghi 1 dòng JSON/ví dụ vào `--out` và một bản tổng hợp vào `<out>.summary.json` (in ra console luôn). Thư mục `results/` không được commit (`.gitignore`).
+
+## Cấu hình LLM
+
+`kgu.llm.client_from_env()` đọc 3 biến môi trường `KGU_LLM_BASE_URL` / `KGU_LLM_MODEL` / `KGU_LLM_API_KEY` để dựng một `OpenAICompatClient` (bất kỳ endpoint OpenAI-compatible nào). Có 3 lựa chọn:
+
+```
+# A. Local llama.cpp (Vulkan, AMD 780M) — MẶC ĐỊNH.  Khởi động:  .\scripts\llm_server.ps1
+set KGU_LLM_BASE_URL=http://localhost:8080/v1   KGU_LLM_MODEL=local   KGU_LLM_API_KEY=none
+#    Model khác: .\scripts\llm_server.ps1 -Model models\<file>.gguf  (GGUF Qwen2.5-7B-Instruct Q4_K_M ~4,7 GB cho số cuối)
+# B. Colab + vLLM (Qwen2.5-7B-Instruct, GPU T4) qua ngrok/cloudflared:
+set KGU_LLM_BASE_URL=https://<tunnel>/v1   KGU_LLM_MODEL=Qwen/Qwen2.5-7B-Instruct  KGU_LLM_API_KEY=none
+# C. OpenRouter (hosted):
+set KGU_LLM_BASE_URL=https://openrouter.ai/api/v1  KGU_LLM_MODEL=qwen/qwen-2.5-7b-instruct  KGU_LLM_API_KEY=<key>
+```
+
+Mặc định của `client_from_env()` là **A** (đã dựng sẵn 2026-09-07: `scripts/llm_server.ps1` + `models/Qwen3.5-2B-Q8_0.gguf` + `tools/llama.cpp/` bản Vulkan chạy trên AMD Radeon 780M; kiểm tra bằng `python scripts/llm_smoke.py`). Vì llama-server hỗ trợ `response_format={"type":"json_schema", ...}` (constrained decoding thật, thay cho outlines/xgrammar trong spec), `OpenAICompatClient.complete_json` gửi `json_schema` trước, và chỉ lùi về `json_object` nếu server báo lỗi. Đã đo trên máy dev (2026-09-07, Qwen3.5-2B Q8_0, Vulkan 780M): sinh ~20 tok/s, đọc prompt ~106 tok/s, JSON schema được tuân thủ 100% (constrained decoding). Ước tính split test 438 tin × 2 lệnh gọi ≈ 1–2 giờ với 2B.
