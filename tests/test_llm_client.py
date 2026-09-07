@@ -51,3 +51,59 @@ def test_openai_client_raises_after_retries():
     c = _client_with(["garbage", "still garbage"])
     with pytest.raises(LLMOutputError):
         c.complete_json("sys", "user", Out)
+
+
+class _FakeCompletionsSchemaThenObject:
+    """Rejects the first json_schema request with BadRequestError, succeeds otherwise."""
+
+    def __init__(self):
+        self.kwargs = []
+        self._raised = False
+
+    def create(self, **kwargs):
+        self.kwargs.append(kwargs)
+        if kwargs["response_format"]["type"] == "json_schema" and not self._raised:
+            self._raised = True
+            import httpx2
+            from openai import BadRequestError
+            raise BadRequestError(
+                message="bad", response=httpx2.Response(400, request=httpx2.Request("POST", "http://x")), body=None,
+            )
+        content = '{"answer": 7}'
+        msg = type("M", (), {"content": content})()
+        choice = type("C", (), {"message": msg})()
+        return type("R", (), {"choices": [choice]})()
+
+
+def test_openai_client_falls_back_to_json_object_once():
+    c = OpenAICompatClient(base_url="http://x", api_key="k", model="m", max_retries=2)
+    c._completions = _FakeCompletionsSchemaThenObject()
+
+    assert c.complete_json("sys", "user", Out).answer == 7
+    assert c.complete_json("sys", "user", Out).answer == 7
+
+    kwargs = c._completions.kwargs
+    assert len(kwargs) == 3  # schema-fail, object, object
+    assert kwargs[0]["response_format"]["type"] == "json_schema"
+    assert kwargs[1]["response_format"]["type"] == "json_object"
+    assert kwargs[2]["response_format"]["type"] == "json_object"  # 2nd call: never retries json_schema
+
+
+class _FakeCompletionsRaisesNonBadRequest:
+    def __init__(self):
+        self.n_calls = 0
+
+    def create(self, **kwargs):
+        self.n_calls += 1
+        raise RuntimeError("boom")
+
+
+def test_openai_client_propagates_non_400_errors():
+    c = OpenAICompatClient(base_url="http://x", api_key="k", model="m", max_retries=2)
+    fake = _FakeCompletionsRaisesNonBadRequest()
+    c._completions = fake
+
+    with pytest.raises(RuntimeError):
+        c.complete_json("sys", "user", Out)
+
+    assert fake.n_calls == 1  # no fallback attempted for a non-400 error

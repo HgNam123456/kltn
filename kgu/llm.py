@@ -47,6 +47,7 @@ class OpenAICompatClient:
         self.n_calls = 0
         self._completions = None
         self._init = dict(base_url=base_url, api_key=api_key, timeout=timeout)
+        self._use_json_schema = True  # nhớ lại nếu server đã từ chối json_schema, tránh trả 2 round-trip mỗi lần
 
     @property
     def completions(self):
@@ -67,14 +68,22 @@ class OpenAICompatClient:
             # Qwen3.5 là model có thinking: tắt qua chat_template_kwargs (llama-server đọc extra_body),
             # nếu không nội dung sẽ nằm trong reasoning_content và content rỗng.
             extra = {"chat_template_kwargs": {"enable_thinking": False}}
-            try:
-                resp = self.completions.create(
-                    model=self.model, messages=messages, temperature=self.temperature,
-                    response_format={"type": "json_schema",
-                                     "json_schema": {"name": schema.__name__, "schema": schema.model_json_schema()}},
-                    extra_body=extra,
-                )
-            except Exception:  # server không hỗ trợ json_schema → lùi về json_object
+            if self._use_json_schema:
+                from openai import BadRequestError
+                try:
+                    resp = self.completions.create(
+                        model=self.model, messages=messages, temperature=self.temperature,
+                        response_format={"type": "json_schema",
+                                         "json_schema": {"name": schema.__name__, "schema": schema.model_json_schema()}},
+                        extra_body=extra,
+                    )
+                except BadRequestError:  # server không hỗ trợ json_schema → lùi về json_object, nhớ lại cho lần sau
+                    self._use_json_schema = False
+                    resp = self.completions.create(
+                        model=self.model, messages=messages, temperature=self.temperature,
+                        response_format={"type": "json_object"}, extra_body=extra,
+                    )
+            else:
                 resp = self.completions.create(
                     model=self.model, messages=messages, temperature=self.temperature,
                     response_format={"type": "json_object"}, extra_body=extra,
