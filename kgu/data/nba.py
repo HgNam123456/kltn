@@ -4,18 +4,10 @@ import json
 from dataclasses import dataclass
 from pathlib import Path
 
+from kgu.data import Example
 from kgu.types import Triple
 
-
-@dataclass
-class Example:
-    idx: int
-    event: str
-    season: str
-    text: str
-    mentioned: list[str]
-    before: set[Triple]
-    after: set[Triple]
+__all__ = ["Example", "load_id_map", "Vocab", "load_split"]
 
 
 def load_id_map(path: Path) -> dict[int, str]:

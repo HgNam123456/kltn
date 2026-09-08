@@ -42,8 +42,9 @@ class OpenAICompatClient:
     """Gọi bất kỳ endpoint OpenAI-compatible (vLLM, Ollama, OpenRouter, DashScope)."""
 
     def __init__(self, base_url: str, api_key: str, model: str, temperature: float = 0.0,
-                 max_retries: int = 3, timeout: float = 120.0) -> None:
+                 max_retries: int = 3, timeout: float = 120.0, extra_body: dict | None = None) -> None:
         self.model, self.temperature, self.max_retries = model, temperature, max_retries
+        self.extra_body = extra_body
         self.n_calls = 0
         self._completions = None
         self._init = dict(base_url=base_url, api_key=api_key, timeout=timeout)
@@ -65,9 +66,9 @@ class OpenAICompatClient:
         last_err: Exception | None = None
         for _ in range(self.max_retries):
             self.n_calls += 1
-            # Qwen3.5 là model có thinking: tắt qua chat_template_kwargs (llama-server đọc extra_body),
-            # nếu không nội dung sẽ nằm trong reasoning_content và content rỗng.
-            extra = {"chat_template_kwargs": {"enable_thinking": False}}
+            # extra_body đi thẳng tới server (vd Qwen3.5: tắt "thinking" qua chat_template_kwargs, xem
+            # client_from_env); None ⇒ không gửi trường này (endpoint khác có thể không hiểu/không cần).
+            extra_kwargs = {} if self.extra_body is None else {"extra_body": self.extra_body}
             if self._use_json_schema:
                 from openai import BadRequestError
                 try:
@@ -75,20 +76,20 @@ class OpenAICompatClient:
                         model=self.model, messages=messages, temperature=self.temperature,
                         response_format={"type": "json_schema",
                                          "json_schema": {"name": schema.__name__, "schema": schema.model_json_schema()}},
-                        extra_body=extra,
+                        **extra_kwargs,
                     )
                 except BadRequestError:
                     # Có thể là "không hỗ trợ json_schema" HOẶC lỗi khác (tràn ctx...). Chỉ khi json_object
                     # thành công mới kết luận server không hỗ trợ json_schema và nhớ lại cho lần sau.
                     resp = self.completions.create(
                         model=self.model, messages=messages, temperature=self.temperature,
-                        response_format={"type": "json_object"}, extra_body=extra,
+                        response_format={"type": "json_object"}, **extra_kwargs,
                     )
                     self._use_json_schema = False
             else:
                 resp = self.completions.create(
                     model=self.model, messages=messages, temperature=self.temperature,
-                    response_format={"type": "json_object"}, extra_body=extra,
+                    response_format={"type": "json_object"}, **extra_kwargs,
                 )
             raw = resp.choices[0].message.content or ""
             try:
@@ -102,9 +103,20 @@ class OpenAICompatClient:
 
 
 def client_from_env() -> OpenAICompatClient:
-    """Mặc định: llama-server local (scripts/llm_server.ps1) trên http://localhost:8080/v1."""
+    """Mặc định: llama-server local (scripts/llm_server.ps1) trên http://localhost:8080/v1.
+
+    `KGU_LLM_EXTRA_BODY` (chuỗi JSON) đi thẳng vào `extra_body` của mỗi lệnh gọi; mặc định tắt
+    "thinking" của Qwen3.5 qua `chat_template_kwargs` (chỉ llama-server cục bộ đọc trường này) —
+    xem README "Cấu hình LLM". Endpoint khác (option B/C: vLLM/OpenRouter) nên set
+    `KGU_LLM_EXTRA_BODY={}` để không gửi trường này.
+    """
+    raw_extra_body = os.environ.get(
+        "KGU_LLM_EXTRA_BODY", '{"chat_template_kwargs": {"enable_thinking": false}}'
+    )
+    extra_body = json.loads(raw_extra_body) if raw_extra_body.strip() else None
     return OpenAICompatClient(
         base_url=os.environ.get("KGU_LLM_BASE_URL", "http://localhost:8080/v1"),
         api_key=os.environ.get("KGU_LLM_API_KEY", "none"),
         model=os.environ.get("KGU_LLM_MODEL", "local"),
+        extra_body=extra_body,
     )

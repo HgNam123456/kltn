@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import BaseModel, create_model
 
-from kgu.data.nba import Example
+from kgu.data import Example
 from kgu.graph import BiTemporalGraph
 from kgu.llm import LLMClient
 from kgu.types import Op, OpKind
@@ -57,12 +57,12 @@ class LLMExtractor:
     def n_calls(self) -> int:
         return self.client.n_calls
 
-    def _prompt(self, ex: Example, graph: BiTemporalGraph) -> str:
+    def _prompt(self, ex: Example, graph: BiTemporalGraph, at: int) -> str:
         lines = [FEW_SHOT, "BẢN TIN:", ex.text, "", "QUAN HỆ CHO PHÉP: " + ", ".join(self.relations),
                  "ENTITY (chỉ được dùng các tên này): " + ", ".join(ex.mentioned), "",
                  "CẠNH HIỆN CÓ CỦA TỪNG ENTITY:"]
         for e in ex.mentioned:
-            edges = sorted(graph.edges_of(e, 0))[: self.max_edges]
+            edges = sorted(graph.edges_of(e, at))[: self.max_edges]
             lines.append(f"- {e}:")
             lines.extend(f"    ({h}, {r}, {t})" for h, r, t in edges)
             if not edges:
@@ -70,13 +70,13 @@ class LLMExtractor:
         lines += ["", "Liệt kê các op ADD / INVALIDATE được văn bản khẳng định trực tiếp."]
         return "\n".join(lines)
 
-    def extract(self, ex: Example, graph: BiTemporalGraph) -> list[Op]:
-        out = self.client.complete_json(SYSTEM, self._prompt(ex, graph), self.schema)
-        known = graph.entities(0) | set(ex.mentioned)
+    def extract(self, ex: Example, graph: BiTemporalGraph, at: int) -> list[Op]:
+        out = self.client.complete_json(SYSTEM, self._prompt(ex, graph, at), self.schema)
+        known = graph.entities(at) | set(ex.mentioned)
         ops: list[Op] = []
         for o in out.ops:
             triple = (o.h, o.r, o.t)
-            active = graph.is_active(triple, 0)
+            active = graph.is_active(triple, at)
             valid = (
                 o.r in self.relations and o.h in known and o.t in known      # r vẫn kiểm tra: đường json_object không ép enum
                 and ((o.kind == "INVALIDATE" and active) or (o.kind == "ADD" and not active))

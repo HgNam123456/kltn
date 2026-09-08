@@ -1,0 +1,15 @@
+{
+  "precision": 0.0,
+  "recall": 0.0,
+  "f1": 0.0,
+  "add_acc": 0.0,
+  "del_acc": 0.0,
+  "config": "gold_all+none",
+  "split": "test",
+  "n": 0,
+  "coverage": 0.0,
+  "avg_cut_cand": 0.0,
+  "avg_add_cand": 0.0,
+  "llm_calls": 0,
+  "seconds": 0.0
+}

@@ -1,0 +1,15 @@
+{
+  "precision": 0.9247779905972489,
+  "recall": 0.9274383294731812,
+  "f1": 0.926106249512438,
+  "add_acc": 0.056299306717666746,
+  "del_acc": 0.0564432693413036,
+  "config": "gold_explicit+none",
+  "split": "test",
+  "n": 438,
+  "coverage": 1.0,
+  "avg_cut_cand": 70.33333333333333,
+  "avg_add_cand": 30.95662100456621,
+  "llm_calls": 0,
+  "seconds": 2.9
+}

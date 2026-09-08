@@ -19,7 +19,7 @@ def test_extractor_parses_and_filters(before, after):
         {"kind": "ADD", "h": "Pedri", "r": PLAYS, "t": "Barca"},            # đã active → bỏ
     ]}])
     ext = LLMExtractor(client, relations=[PLAYS, TEAM])
-    ops = ext.extract(_ex(before, after), BiTemporalGraph.from_triples(before))
+    ops = ext.extract(_ex(before, after), BiTemporalGraph.from_triples(before), 0)
     assert ops == [
         Op(OpKind.INVALIDATE, "Messi", PLAYS, "Barca"),
         Op(OpKind.ADD, "Messi", PLAYS, "Inter"),
@@ -30,7 +30,7 @@ def test_extractor_parses_and_filters(before, after):
 
 def test_prompt_contains_text_relations_and_mentioned_edges(before, after):
     client = FakeLLMClient([{"ops": []}])
-    LLMExtractor(client, relations=[PLAYS, TEAM]).extract(_ex(before, after), BiTemporalGraph.from_triples(before))
+    LLMExtractor(client, relations=[PLAYS, TEAM]).extract(_ex(before, after), BiTemporalGraph.from_triples(before), 0)
     system, user = client.calls[0]
     assert "Messi leaves Barca" in user
     assert PLAYS in user and TEAM in user
@@ -49,7 +49,7 @@ def test_schema_restricts_relation_to_enum():
 
 def test_prompt_has_few_shot_and_direction_rule(before, after):
     client = FakeLLMClient([{"ops": []}])
-    LLMExtractor(client, relations=[PLAYS, TEAM]).extract(_ex(before, after), BiTemporalGraph.from_triples(before))
+    LLMExtractor(client, relations=[PLAYS, TEAM]).extract(_ex(before, after), BiTemporalGraph.from_triples(before), 0)
     system, user = client.calls[0]
     assert "VÍ DỤ" in user and '"kind": "INVALIDATE"' in user
     assert "cùng chiều" in system

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from kgu.data.nba import Example
+from kgu.data import Example
 from kgu.localize import Localization
 from kgu.ops import diff
 from kgu.types import Op, OpKind

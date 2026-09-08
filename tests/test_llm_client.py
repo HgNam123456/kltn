@@ -3,6 +3,11 @@ from pydantic import BaseModel
 
 from kgu.llm import FakeLLMClient, LLMOutputError, OpenAICompatClient, extract_json
 
+try:
+    import httpx  # noqa: F401 — openai>=1 depends on real httpx; openai 3.8.0 vendors it as httpx2
+except ImportError:
+    import httpx2 as httpx
+
 
 class Out(BaseModel):
     answer: int
@@ -40,6 +45,20 @@ def _client_with(contents):
     return c
 
 
+def test_openai_client_sends_no_extra_body_by_default():
+    c = _client_with(['{"answer": 9}'])
+    c.complete_json("sys", "user", Out)
+    assert "extra_body" not in c._completions.kwargs[0]
+
+
+def test_openai_client_sends_extra_body_when_configured():
+    c = OpenAICompatClient(base_url="http://x", api_key="k", model="m", max_retries=2,
+                            extra_body={"chat_template_kwargs": {"enable_thinking": False}})
+    c._completions = _FakeCompletions(['{"answer": 9}'])
+    c.complete_json("sys", "user", Out)
+    assert c._completions.kwargs[0]["extra_body"] == {"chat_template_kwargs": {"enable_thinking": False}}
+
+
 def test_openai_client_retries_on_invalid_json_then_succeeds():
     c = _client_with(['{"answer": "not-int"}', '{"answer": 5}'])
     assert c.complete_json("sys", "user", Out).answer == 5
@@ -64,10 +83,9 @@ class _FakeCompletionsSchemaThenObject:
         self.kwargs.append(kwargs)
         if kwargs["response_format"]["type"] == "json_schema" and not self._raised:
             self._raised = True
-            import httpx2
             from openai import BadRequestError
             raise BadRequestError(
-                message="bad", response=httpx2.Response(400, request=httpx2.Request("POST", "http://x")), body=None,
+                message="bad", response=httpx.Response(400, request=httpx.Request("POST", "http://x")), body=None,
             )
         content = '{"answer": 7}'
         msg = type("M", (), {"content": content})()
@@ -110,7 +128,6 @@ def test_openai_client_propagates_non_400_errors():
 
 
 def _bad_request():
-    import httpx2 as httpx
     from openai import BadRequestError
     return BadRequestError(message="bad", response=httpx.Response(400, request=httpx.Request("POST", "http://x")), body=None)
 

@@ -21,8 +21,9 @@ build/
 Thumbs.db
 
 # Local LLM assets
-models/
-tools/
-data/raw/
-results/
-.superpowers/
+/models/
+/tools/
+/data/raw/
+/results/*
+!/results/*.summary.json
+/.superpowers/

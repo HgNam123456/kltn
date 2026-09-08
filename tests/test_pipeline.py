@@ -28,3 +28,4 @@ def test_gold_explicit_with_oracle_is_perfect(before, after):
     rec = res.to_record(_ex(before, after))
     assert rec["idx"] == 3 and rec["n_explicit"] == 2 and rec["coverage"] == [4, 4]
     assert rec["counts"]["tp"] == len(after)
+    assert rec["n_dropped"] == 0                       # gold extractors don't drop candidates

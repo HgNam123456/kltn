@@ -46,6 +46,43 @@ def run_one(ex, extractor, judge, relations: list[str]) -> dict:
         return {"idx": ex.idx, "event": ex.event, "error": f"{type(e).__name__}: {e}"}
 
 
+def summarize_run(records: list[dict], seconds: float, config: str, split: str) -> dict:
+    """Gộp danh sách record (kể cả record lỗi) thành summary.
+
+    `n` đếm MỌI record (kể cả lỗi); `n_scored` = n - errors chỉ đếm record có "counts". Các trung bình
+    (avg_cut_cand, avg_add_cand) và coverage chia cho n_scored, không phải n — record lỗi không có
+    n_cut_cand/n_add_cand nên chia cho n sẽ làm trung bình bị pha loãng sai khi có lỗi.
+    """
+    total = Counts()
+    cov_hit = cov_all = n_cut = n_add = n_judged = n_calls = n_err = 0
+    for rec in records:
+        if "error" in rec:
+            n_err += 1
+            continue
+        total = total + Counts(**rec["counts"])
+        cov_hit += rec["coverage"][0]
+        cov_all += rec["coverage"][1]
+        n_cut += rec["n_cut_cand"]
+        n_add += rec["n_add_cand"]
+        n_judged += rec["n_judged"]
+        n_calls += rec["n_llm_calls"]
+
+    n = len(records)
+    n_scored = n - n_err
+    n_cands = n_cut + n_add
+    s = summarize(total)
+    s.update({
+        "config": config, "split": split, "n": n, "n_scored": n_scored,
+        "errors": n_err,
+        "coverage": cov_hit / cov_all if cov_all else 0.0,
+        "avg_cut_cand": n_cut / n_scored if n_scored else 0.0,
+        "avg_add_cand": n_add / n_scored if n_scored else 0.0,
+        "judged_ratio": n_judged / n_cands if n_cands else 0.0,
+        "llm_calls": n_calls, "seconds": round(seconds, 1),
+    })
+    return s
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data-dir", type=Path, default=Path("data/raw/nba"))
@@ -61,8 +98,7 @@ def main() -> None:
     extractor = build_extractor(args.extractor, relations)
     llm_judge = build_llm_judge(args.judge)
 
-    total = Counts()
-    cov_hit = cov_all = n_cut = n_add = n_calls = n_err = 0
+    records: list[dict] = []
     t0 = time.time()
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf8") as f:
@@ -71,25 +107,9 @@ def main() -> None:
             rec = run_one(ex, extractor, judge, relations)
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             f.flush()
-            if "error" in rec:
-                n_err += 1
-                continue
-            total = total + Counts(**rec["counts"])
-            cov_hit += rec["coverage"][0]
-            cov_all += rec["coverage"][1]
-            n_cut += rec["n_cut_cand"]
-            n_add += rec["n_add_cand"]
-            n_calls += rec["n_llm_calls"]
+            records.append(rec)
 
-    n = len(examples)
-    s = summarize(total)
-    s.update({
-        "config": f"{args.extractor}+{args.judge}", "split": args.split, "n": n,
-        "errors": n_err,
-        "coverage": cov_hit / cov_all if cov_all else 0.0,
-        "avg_cut_cand": n_cut / n if n else 0.0, "avg_add_cand": n_add / n if n else 0.0,
-        "llm_calls": n_calls, "seconds": round(time.time() - t0, 1),
-    })
+    s = summarize_run(records, time.time() - t0, f"{args.extractor}+{args.judge}", args.split)
     args.out.with_suffix(".summary.json").write_text(json.dumps(s, indent=2), encoding="utf8")
     print(json.dumps(s, indent=2))
 

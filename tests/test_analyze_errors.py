@@ -1,7 +1,9 @@
 import importlib.util
 from pathlib import Path
 
-spec = importlib.util.spec_from_file_location("analyze_errors", Path("scripts/analyze_errors.py"))
+spec = importlib.util.spec_from_file_location(
+    "analyze_errors", Path(__file__).resolve().parents[1] / "scripts" / "analyze_errors.py"
+)
 mod = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(mod)
 
