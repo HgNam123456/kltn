@@ -103,10 +103,14 @@ Based on comparison of `nba_test_llm_nojudge_20.jsonl` vs `nba_test_gold_explici
 ### Example 4: idx=3, event=released
 **Text:** "the Golden_State_Warriors state have waived forward Jason_Thompson_2015-16 , the team announced today ..."
 
-**Expected ops:** 2 INVALIDATE
-**LLM ops:** 1 INVALIDATE (incomplete)
+**Expected ops:**
+- INVALIDATE(Golden_State_Warriors, <player>, Jason_Thompson_2015-16)
+- INVALIDATE(Jason_Thompson_2015-16, <player>, Golden_State_Warriors)
 
-**Likely cause:** khoanh vùng bỏ sót — LLM extracted one operation but missed the second (possibly missed contract removal or dual invalidation pattern).
+**LLM ops:** 
+- INVALIDATE(Golden_State_Warriors, <general_mananger>, Bob_Myers_2015-16)
+
+**Likely cause:** LLM bịa entity + LLM đảo vị trí (h, r, t) — LLM hallucinated an entity (Bob_Myers_2015-16, not in text) and wrong relation (<general_mananger> vs <player>). The op survived post-validation only because Bob_Myers_2015-16 exists in the graph, but it's factually wrong for this news event.
 
 ---
 
@@ -128,6 +132,6 @@ Based on comparison of `nba_test_llm_nojudge_20.jsonl` vs `nba_test_gold_explici
 1. **Zero ADD operations** across all samples (gold achieves ~1.0 for draft/free_agency/trade)
 2. **Entity recognition failures** on versioned player IDs (`_2017-18` suffixes)
 3. **OOV token handling** — `<unk>` tokens disrupt extraction pipeline
-4. **LLM đảo vị trí (h, r, t)** — not observed in these 5 samples, but seen in earlier Task 10 analysis
+4. **Hallucination of non-existent entities** — Example 4 shows LLM fabricating Bob_Myers_2015-16 when text mentions Jason_Thompson_2015-16; also wrong relation detected
 
 **Primary Bottleneck:** LLM cannot reliably extract from complex or malformed inputs; future work should preprocess entity identifiers and handle OOV tokens before LLM processing.

@@ -27,7 +27,8 @@ def _key(rec: dict, by: str) -> str:
 def group_records(records: list[dict], by: str) -> dict[str, Counts]:
     groups: dict[str, Counts] = defaultdict(Counts)
     for rec in records:
-        groups[_key(rec, by)] = groups[_key(rec, by)] + Counts(**rec["counts"])
+        k = _key(rec, by)
+        groups[k] = groups[k] + Counts(**rec["counts"])
     return dict(groups)
 
 
