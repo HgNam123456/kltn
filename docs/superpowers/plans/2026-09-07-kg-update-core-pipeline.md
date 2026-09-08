@@ -2427,6 +2427,476 @@ git commit -m "feat: error analysis by event / gold size / coverage; month-2 not
 
 ---
 
+### Task 13: Cứng hóa prompt + độ bền khi chạy LLM thật (bổ sung sau khi đo Task 10–11)
+
+**Lý do (đo ngày 2026-09-07 với Qwen3.5-2B trên llama.cpp/780M):**
+- LLM #1 xáo trộn vị trí (h, r, t): nhét tên đội vào ô `r`, nhét "guard"/"center" vào ô `t` → add_acc = 0 trên 20 ví dụ. Spec đã dự liệu: "LLM xuất ops kém → few-shot + constrained decoding".
+- Prompt bộ phán 6.8k token cho tin trade (60 ứng viên cắt × ~70 token/dòng vì lặp `hub=` và `anchors=`, 38 ứng viên thêm) + output ~1.500 token verdict → vượt ctx 8192, và mỗi lệnh gọi mất 60–95 s.
+- Một lỗi 400 do tràn ctx sẽ bị `OpenAICompatClient` hiểu là "server không hỗ trợ json_schema" và tắt json_schema vĩnh viễn.
+- `run_eval.py` abort cả lượt chạy khi một ví dụ lỗi.
+
+**Files:**
+- Modify: `kgu/llm.py` (chỉ đổi cờ `_use_json_schema` sau khi fallback thành công)
+- Modify: `kgu/extract/llm.py` (schema động với `r` là enum quan hệ; few-shot; nhắc chiều cạnh)
+- Modify: `kgu/judge/llm.py` (schema output chỉ liệt kê ngoại lệ; prompt gom theo hub, bỏ `hub=`/`anchors=`; few-shot)
+- Modify: `scripts/run_eval.py` (ghi record lỗi thay vì abort; `errors` trong summary)
+- Modify: `scripts/analyze_errors.py` (bỏ qua record lỗi)
+- Modify: `scripts/llm_server.ps1` (mặc định `Ctx = 16384`)
+- Modify: `tests/test_llm_client.py`, `tests/test_llm_extractor.py`, `tests/test_llm_judge.py`, `tests/test_analyze_errors.py`; Create: `tests/test_run_eval.py`
+- Modify: `README.md`, `docs/error-analysis-month2.md`
+
+**Interfaces:**
+- Consumes: mọi interface hiện có (không đổi chữ ký public của `LLMExtractor(client, relations, max_edges_per_entity=40)`, `LLMJudge(client)`, `run_example`).
+- Produces: `kgu.extract.llm.make_ops_schema(relations) -> type[BaseModel]`; `kgu.judge.llm.make_judge_schema(relations) -> type[BaseModel]` với `JudgeOut(invalidate: list[int], add: list[AddVerdict(idx, r, direction)])`; `scripts/run_eval.run_one(ex, extractor, judge, relations) -> dict` (record thường hoặc `{"idx", "event", "error"}`); summary có thêm khóa `"errors"`.
+
+- [ ] **Step 1: Test client — tràn ctx không được tắt json_schema**
+
+Thêm vào cuối `tests/test_llm_client.py` (dùng lại `_FakeCompletions`, `Out`, `_client_with`, và cách dựng `BadRequestError` đã có trong file — tên module httpx trong venv này là `httpx2`, giữ đúng như các test hiện có):
+
+```python
+def _bad_request():
+    import httpx2 as httpx
+    from openai import BadRequestError
+    return BadRequestError(message="bad", response=httpx.Response(400, request=httpx.Request("POST", "http://x")), body=None)
+
+
+class _AlwaysBadCompletions:
+    def __init__(self):
+        self.kwargs = []
+
+    def create(self, **kwargs):
+        self.kwargs.append(kwargs)
+        raise _bad_request()
+
+
+def test_openai_client_keeps_json_schema_when_both_formats_get_400():
+    from openai import BadRequestError
+    c = OpenAICompatClient(base_url="http://x", api_key="k", model="m", max_retries=2)
+    c._completions = _AlwaysBadCompletions()
+    with pytest.raises(BadRequestError):
+        c.complete_json("sys", "user", Out)
+    assert c._use_json_schema is True                       # không phải lỗi "không hỗ trợ json_schema"
+    assert [k["response_format"]["type"] for k in c._completions.kwargs] == ["json_schema", "json_object"]
+```
+
+- [ ] **Step 2: Chạy test, xác nhận fail**
+
+Run: `python -m pytest tests/test_llm_client.py::test_openai_client_keeps_json_schema_when_both_formats_get_400 -v`
+Expected: FAIL ở `assert c._use_json_schema is True` (hiện tại cờ bị tắt ngay khi json_schema trả 400).
+
+- [ ] **Step 3: Sửa `kgu/llm.py`** — thay khối `except BadRequestError:` bằng:
+
+```python
+                except BadRequestError:
+                    # Có thể là "không hỗ trợ json_schema" HOẶC lỗi khác (tràn ctx...). Chỉ khi json_object
+                    # thành công mới kết luận server không hỗ trợ json_schema và nhớ lại cho lần sau.
+                    resp = self.completions.create(
+                        model=self.model, messages=messages, temperature=self.temperature,
+                        response_format={"type": "json_object"}, extra_body=extra,
+                    )
+                    self._use_json_schema = False
+```
+
+- [ ] **Step 4: Chạy test client, xác nhận pass**
+
+Run: `python -m pytest tests/test_llm_client.py -v`
+Expected: 7 passed (test fallback cũ `test_openai_client_falls_back_to_json_object_once` vẫn pass vì json_object thành công).
+
+- [ ] **Step 5: Test extractor — schema enum quan hệ + few-shot**
+
+Sửa `tests/test_llm_extractor.py`: trong `test_extractor_parses_and_filters` **bỏ** dòng `{"kind": "ADD", "h": "Messi", "r": "owns", "t": "Inter"}` (quan hệ lạ giờ bị schema chặn ngay ở decoding, `FakeLLMClient.model_validate` sẽ raise nếu để lại) và đổi `assert ext.n_dropped == 4` thành `== 3`. Thêm:
+
+```python
+import json
+
+
+def test_schema_restricts_relation_to_enum():
+    ext = LLMExtractor(FakeLLMClient([]), relations=[PLAYS, TEAM])
+    s = json.dumps(ext.schema.model_json_schema())
+    assert f'"enum": ["{PLAYS}", "{TEAM}"]' in s
+
+
+def test_prompt_has_few_shot_and_direction_rule(before, after):
+    client = FakeLLMClient([{"ops": []}])
+    LLMExtractor(client, relations=[PLAYS, TEAM]).extract(_ex(before, after), BiTemporalGraph.from_triples(before))
+    system, user = client.calls[0]
+    assert "VÍ DỤ" in user and '"kind": "INVALIDATE"' in user
+    assert "cùng chiều" in system
+```
+
+- [ ] **Step 6: Chạy test extractor, xác nhận fail**
+
+Run: `python -m pytest tests/test_llm_extractor.py -v`
+Expected: `test_schema_restricts_relation_to_enum` FAIL (`AttributeError: 'LLMExtractor' object has no attribute 'schema'`), `test_prompt_has_few_shot_and_direction_rule` FAIL.
+
+- [ ] **Step 7: Sửa `kgu/extract/llm.py`**
+
+Thay hai class `OpOut`/`OpsOut` và `SYSTEM`, `_prompt`, dòng gọi `complete_json` bằng:
+
+```python
+from pydantic import BaseModel, create_model
+
+
+def make_ops_schema(relations: list[str]) -> type[BaseModel]:
+    """Schema output với `r` là enum quan hệ → constrained decoding ép model chọn đúng ô quan hệ."""
+    rel_type = Literal[tuple(relations)] if relations else str  # type: ignore[valid-type]
+    op_out = create_model(
+        "OpOut",
+        kind=(Literal["ADD", "INVALIDATE"], ...),
+        h=(str, ...), r=(rel_type, ...), t=(str, ...), quote=(str, ""),
+    )
+    return create_model("OpsOut", ops=(list[op_out], ...))
+
+
+SYSTEM = """Bạn là bộ trích xuất thay đổi cho knowledge graph.
+Cho một bản tin và các cạnh hiện có của những entity được nhắc tới, hãy liệt kê CHỈ những thay đổi
+mà văn bản KHẲNG ĐỊNH TRỰC TIẾP:
+- INVALIDATE (h, r, t): một cạnh ĐANG CÓ trong danh sách trở nên không còn đúng → chép nguyên cạnh đó.
+- ADD (h, r, t): một cạnh mới được văn bản khẳng định.
+Quy tắc:
+- h và t PHẢI là tên entity y hệt trong danh sách entity. r PHẢI là một trong QUAN HỆ CHO PHÉP.
+- Giữ cùng chiều (h, r, t) như các cạnh hiện có cùng loại quan hệ (vd nếu cạnh có dạng (Đội, <player>, Cầu_thủ)
+  thì cạnh mới cũng là (Đội, <player>, Cầu_thủ)).
+- Không bịa entity mới. Không suy diễn hệ quả gián tiếp (đồng đội, HLV...). Việc đó do bước sau làm.
+- Với mỗi op, chép nguyên văn đoạn text làm căn cứ vào "quote".
+- Nếu không có thay đổi nào được khẳng định, trả về ops rỗng."""
+
+FEW_SHOT = """VÍ DỤ (miền khác, chỉ minh họa định dạng):
+Bản tin: Messi rời Barca để gia nhập Inter.
+Entity: Messi, Barca, Inter. Cạnh hiện có của Messi: (Messi, plays_for, Barca)
+Kết quả đúng:
+{"ops": [
+  {"kind": "INVALIDATE", "h": "Messi", "r": "plays_for", "t": "Barca", "quote": "Messi rời Barca"},
+  {"kind": "ADD", "h": "Messi", "r": "plays_for", "t": "Inter", "quote": "gia nhập Inter"}
+]}
+"""
+```
+
+```python
+class LLMExtractor:
+    """LLM #1: text + ngữ cảnh entity → ops tường minh."""
+
+    def __init__(self, client: LLMClient, relations: list[str], max_edges_per_entity: int = 40) -> None:
+        self.client, self.relations, self.max_edges = client, relations, max_edges_per_entity
+        self.schema = make_ops_schema(relations)
+        self.n_dropped = 0
+
+    @property
+    def n_calls(self) -> int:
+        return self.client.n_calls
+
+    def _prompt(self, ex: Example, graph: BiTemporalGraph) -> str:
+        lines = [FEW_SHOT, "BẢN TIN:", ex.text, "", "QUAN HỆ CHO PHÉP: " + ", ".join(self.relations),
+                 "ENTITY (chỉ được dùng các tên này): " + ", ".join(ex.mentioned), "",
+                 "CẠNH HIỆN CÓ CỦA TỪNG ENTITY:"]
+        for e in ex.mentioned:
+            edges = sorted(graph.edges_of(e, 0))[: self.max_edges]
+            lines.append(f"- {e}:")
+            lines.extend(f"    ({h}, {r}, {t})" for h, r, t in edges)
+            if not edges:
+                lines.append("    (chưa có cạnh nào)")
+        lines += ["", "Liệt kê các op ADD / INVALIDATE được văn bản khẳng định trực tiếp."]
+        return "\n".join(lines)
+
+    def extract(self, ex: Example, graph: BiTemporalGraph) -> list[Op]:
+        out = self.client.complete_json(SYSTEM, self._prompt(ex, graph), self.schema)
+        known = graph.entities(0) | set(ex.mentioned)
+        ops: list[Op] = []
+        for o in out.ops:
+            triple = (o.h, o.r, o.t)
+            active = graph.is_active(triple, 0)
+            valid = (
+                o.r in self.relations and o.h in known and o.t in known      # r vẫn kiểm tra: đường json_object không ép enum
+                and ((o.kind == "INVALIDATE" and active) or (o.kind == "ADD" and not active))
+            )
+            if not valid:
+                self.n_dropped += 1
+                continue
+            op = Op(OpKind(o.kind), o.h, o.r, o.t, source="llm", quote=o.quote)
+            if op not in ops:
+                ops.append(op)
+        return ops
+```
+
+- [ ] **Step 8: Chạy test extractor, xác nhận pass**
+
+Run: `python -m pytest tests/test_llm_extractor.py -v`
+Expected: 4 passed.
+
+- [ ] **Step 9: Test judge — schema ngoại lệ + prompt gọn**
+
+Viết lại `tests/test_llm_judge.py` (giữ `EXPLICIT`, `_ctx`, `test_judge_skips_llm_when_no_candidates` nguyên; thay hai test còn lại và thêm một test):
+
+```python
+def test_judge_maps_verdicts_to_ops(graph):
+    ctx = _ctx(graph)
+    cut_idx = {c.triple: i for i, c in enumerate(ctx.loc.cut)}
+    add_idx = {c.neighbor: i for i, c in enumerate(ctx.loc.add)}
+    client = FakeLLMClient([{
+        "invalidate": [cut_idx[("Pedri", TEAM, "Messi")], cut_idx[("Messi", TEAM, "Pedri")], 99],  # 99 ngoài phạm vi → bỏ
+        "add": [
+            {"idx": add_idx["Lautaro"], "r": TEAM, "direction": "neighbor_first"},
+            {"idx": add_idx["Lautaro"], "r": TEAM, "direction": "subject_first"},   # quan hệ đối xứng → 2 chiều
+        ],
+    }])
+    ops = LLMJudge(client).judge(ctx)
+    assert set(ops) == {
+        Op(OpKind.INVALIDATE, "Pedri", TEAM, "Messi"),
+        Op(OpKind.INVALIDATE, "Messi", TEAM, "Pedri"),
+        Op(OpKind.ADD, "Lautaro", TEAM, "Messi"),
+        Op(OpKind.ADD, "Messi", TEAM, "Lautaro"),
+    }
+    assert all(o.source == "llm_judge" for o in ops)
+    assert client.n_calls == 1
+
+
+def test_prompt_groups_cut_candidates_by_hub_without_repeating_anchors(graph):
+    ctx = _ctx(graph)
+    client = FakeLLMClient([{"invalidate": [], "add": []}])
+    LLMJudge(client).judge(ctx)
+    system, user = client.calls[0]
+    assert "[C0]" in user and "[A0]" in user and "Lautaro" in user
+    assert "Pedri:" in user                       # gom theo hub
+    assert "hub=" not in user and "anchors=" not in user
+    assert user.count("ENTITY THAM GIA") == 1
+    assert "VÍ DỤ" in system
+
+
+def test_judge_schema_restricts_relation_to_enum():
+    import json
+    from kgu.judge.llm import make_judge_schema
+    s = json.dumps(make_judge_schema([PLAYS, TEAM]).model_json_schema())
+    assert f'"enum": ["{PLAYS}", "{TEAM}"]' in s
+```
+
+- [ ] **Step 10: Chạy test judge, xác nhận fail**
+
+Run: `python -m pytest tests/test_llm_judge.py -v`
+Expected: 3 FAIL (schema cũ không có `invalidate`; prompt còn `hub=`; `make_judge_schema` chưa có), 1 pass.
+
+- [ ] **Step 11: Viết lại `kgu/judge/llm.py`**
+
+```python
+from __future__ import annotations
+
+from typing import Literal
+
+from pydantic import BaseModel, create_model
+
+from kgu.judge import JudgeContext
+from kgu.llm import LLMClient
+from kgu.types import Op, OpKind
+
+
+def make_judge_schema(relations: list[str]) -> type[BaseModel]:
+    """Output chỉ liệt kê NGOẠI LỆ: chỉ số cần INVALIDATE, và các ADD (mặc định KEEP / bỏ qua).
+
+    `r` là enum quan hệ → constrained decoding. Output ngắn (vài chục token) thay vì một verdict/ứng viên.
+    """
+    rel_type = Literal[tuple(relations)] if relations else str  # type: ignore[valid-type]
+    add_verdict = create_model(
+        "AddVerdict",
+        idx=(int, ...), r=(rel_type, ...),
+        direction=(Literal["subject_first", "neighbor_first"], "subject_first"),
+    )
+    return create_model("JudgeOut", invalidate=(list[int], []), add=(list[add_verdict], []))
+
+
+SYSTEM = """Bạn là bộ phán cập nhật knowledge graph. Một bản tin đã được áp các thay đổi TƯỜNG MINH.
+Hãy phán các ứng viên bị ảnh hưởng GIÁN TIẾP. Chỉ trả về NGOẠI LỆ:
+- invalidate: danh sách số i của các ứng viên cắt [Ci] KHÔNG CÒN ĐÚNG sau thay đổi. Không liệt kê = KEEP.
+  Fact TRẠNG THÁI (đang chơi cho, là đồng đội, là HLV của) có thể bị vô hiệu.
+  Fact SỰ KIỆN LỊCH SỬ (đã ghi bàn, đã vô địch, sinh tại) LUÔN KEEP.
+- add: danh sách {idx, r, direction} cho các ứng viên thêm [Ai] mà cấu trúc mới THỰC SỰ hàm ý, theo cùng mẫu
+  với cạnh bằng chứng. direction: subject_first = (subject, r, neighbor); neighbor_first = (neighbor, r, subject).
+  Quan hệ đối xứng (đồng đội) → trả 2 mục cùng idx với 2 direction. Không liệt kê = bỏ qua.
+- Không đoán sự kiện chưa xảy ra. Không thêm cạnh ngoài danh sách ứng viên. Chỉ dùng quan hệ trong danh sách.
+
+VÍ DỤ (miền khác): tin "Messi rời Barca sang Inter", đã áp INVALIDATE (Messi, plays_for, Barca) và ADD (Messi, plays_for, Inter).
+  Ứng viên cắt: Pedri: [C0] (Pedri, plays_for, Barca) [C1] (Pedri, teammate, Messi) [C2] (Pedri, close_friend, Messi)
+  Ứng viên thêm: [A0] Messi ~ Lautaro (bằng chứng: (Lautaro, plays_for, Inter))
+  Kết quả đúng: {"invalidate": [1], "add": [{"idx": 0, "r": "teammate", "direction": "subject_first"},
+                                            {"idx": 0, "r": "teammate", "direction": "neighbor_first"}]}
+  (C0 giữ: Pedri vẫn ở Barca. C2 giữ: bạn thân không phụ thuộc CLB. C1 cắt: đồng đội chỉ đúng khi cùng CLB.)"""
+
+
+class LLMJudge:
+    """Phương án A: 1 lệnh gọi phán toàn bộ danh sách ứng viên."""
+
+    def __init__(self, client: LLMClient) -> None:
+        self.client = client
+        self._schemas: dict[tuple[str, ...], type[BaseModel]] = {}
+
+    @property
+    def n_calls(self) -> int:
+        return self.client.n_calls
+
+    def _schema(self, relations: list[str]) -> type[BaseModel]:
+        key = tuple(relations)
+        if key not in self._schemas:
+            self._schemas[key] = make_judge_schema(relations)
+        return self._schemas[key]
+
+    def _prompt(self, ctx: JudgeContext) -> str:
+        participants = sorted({e for op in ctx.explicit_ops for e in (op.h, op.t)})
+        lines = ["BẢN TIN:", ctx.text, "", "THAY ĐỔI TƯỜNG MINH ĐÃ ÁP:"]
+        lines += [f"  {o.kind.value} ({o.h}, {o.r}, {o.t})" for o in ctx.explicit_ops]
+        lines += ["ENTITY THAM GIA: " + ", ".join(participants),
+                  "QUAN HỆ CHO PHÉP: " + ", ".join(ctx.relations), "",
+                  "ỨNG VIÊN CẮT (cạnh hiện có, gom theo entity trung gian; mặc định KEEP):"]
+        by_hub: dict[str, list[str]] = {}
+        for i, c in enumerate(ctx.loc.cut):
+            by_hub.setdefault(c.hub, []).append(f"[C{i}] ({c.triple[0]}, {c.triple[1]}, {c.triple[2]})")
+        lines += [f"  {hub}: " + " ".join(items) for hub, items in by_hub.items()]
+        lines += ["", "ỨNG VIÊN THÊM (cặp chưa nối trong bối cảnh mới; mặc định bỏ qua):"]
+        lines += [f"  [A{i}] {c.subject} ~ {c.neighbor}  (bằng chứng: ({c.via[0]}, {c.via[1]}, {c.via[2]}))"
+                  for i, c in enumerate(ctx.loc.add)]
+        lines += ["", "Trả về invalidate = các số i của [Ci] cần vô hiệu; add = các {idx, r, direction} cho [Ai] cần thêm."]
+        return "\n".join(lines)
+
+    def judge(self, ctx: JudgeContext) -> list[Op]:
+        if not ctx.loc.cut and not ctx.loc.add:
+            return []
+        out = self.client.complete_json(SYSTEM, self._prompt(ctx), self._schema(ctx.relations))
+        ops: list[Op] = []
+        for i in out.invalidate:
+            if 0 <= i < len(ctx.loc.cut):
+                ops.append(Op(OpKind.INVALIDATE, *ctx.loc.cut[i].triple, source="llm_judge"))
+        for v in out.add:
+            if not (0 <= v.idx < len(ctx.loc.add)) or v.r not in ctx.relations:   # r vẫn kiểm tra: đường json_object không ép enum
+                continue
+            c = ctx.loc.add[v.idx]
+            h, t = (c.subject, c.neighbor) if v.direction == "subject_first" else (c.neighbor, c.subject)
+            if not ctx.graph.is_active((h, v.r, t), ctx.at):
+                ops.append(Op(OpKind.ADD, h, v.r, t, source="llm_judge"))
+        return list(dict.fromkeys(ops))
+```
+
+- [ ] **Step 12: Chạy test judge, xác nhận pass**
+
+Run: `python -m pytest tests/test_llm_judge.py -v`
+Expected: 4 passed.
+
+- [ ] **Step 13: Test run_eval — lỗi một ví dụ không abort**
+
+Tạo `tests/test_run_eval.py`:
+
+```python
+import importlib.util
+from pathlib import Path
+
+from kgu.data.nba import Example
+from kgu.extract.gold import GoldAllExtractor
+from tests.conftest import PLAYS, TEAM
+
+spec = importlib.util.spec_from_file_location("run_eval", Path("scripts/run_eval.py"))
+mod = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(mod)
+
+
+class _Boom:
+    n_calls = 0
+
+    def extract(self, ex, graph):
+        raise RuntimeError("boom")
+
+
+def _ex(before, after):
+    return Example(7, "trade", "2021", "messi joins inter", ["Messi", "Barca", "Inter"], before, after)
+
+
+def test_run_one_returns_record_on_success(before, after):
+    rec = mod.run_one(_ex(before, after), GoldAllExtractor(), None, [PLAYS, TEAM])
+    assert rec["idx"] == 7 and "counts" in rec and "error" not in rec
+
+
+def test_run_one_returns_error_record_instead_of_raising(before, after):
+    rec = mod.run_one(_ex(before, after), _Boom(), None, [PLAYS, TEAM])
+    assert rec == {"idx": 7, "event": "trade", "error": "RuntimeError: boom"}
+```
+
+Và thêm vào `tests/test_analyze_errors.py`:
+
+```python
+def test_group_records_skips_error_records():
+    g = mod.group_records([_rec("trade", 2, 2, [4, 4]), {"idx": 3, "event": "trade", "error": "RuntimeError: boom"}], "event")
+    assert g["trade"].n_add == 2
+```
+
+- [ ] **Step 14: Chạy hai test, xác nhận fail**
+
+Run: `python -m pytest tests/test_run_eval.py tests/test_analyze_errors.py -v`
+Expected: `test_run_one_*` FAIL (`AttributeError: module has no attribute 'run_one'`); `test_group_records_skips_error_records` FAIL (`KeyError: 'counts'`).
+
+- [ ] **Step 15: Sửa `scripts/run_eval.py` và `scripts/analyze_errors.py`**
+
+Trong `scripts/run_eval.py`, thêm sau `build_llm_judge`:
+
+```python
+def run_one(ex, extractor, judge, relations: list[str]) -> dict:
+    """Một ví dụ → record; nếu lỗi (LLM, mạng, tràn ctx...) → record lỗi để lượt chạy không abort."""
+    try:
+        return run_example(ex, extractor, judge, relations).to_record(ex)
+    except Exception as e:  # noqa: BLE001 — cố ý: ghi lại mọi lỗi per-example
+        return {"idx": ex.idx, "event": ex.event, "error": f"{type(e).__name__}: {e}"}
+```
+
+và thay thân vòng `for` trong `main()` bằng:
+
+```python
+        for ex in tqdm(examples, desc=f"{args.extractor}+{args.judge}"):
+            judge = OracleJudge(ex.after) if args.judge == "oracle" else llm_judge
+            rec = run_one(ex, extractor, judge, relations)
+            f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            f.flush()
+            if "error" in rec:
+                n_err += 1
+                continue
+            total = total + Counts(**rec["counts"])
+            cov_hit += rec["coverage"][0]
+            cov_all += rec["coverage"][1]
+            n_cut += rec["n_cut_cand"]
+            n_add += rec["n_add_cand"]
+            n_calls += rec["n_llm_calls"]
+```
+
+khởi tạo `n_err = 0` cùng dòng với `cov_hit = ...`, và thêm `"errors": n_err,` vào dict `s.update({...})` (ngay sau `"n": n,`). `n` giữ là `len(examples)`.
+
+Trong `scripts/analyze_errors.py`, đầu `group_records` thêm `records = [r for r in records if "counts" in r]`, và trong `main()` lọc `records` cùng cách trước khi đếm `sizes`/`cands`.
+
+- [ ] **Step 16: Chạy toàn bộ test, xác nhận pass**
+
+Run: `python -m pytest -q -W error`
+Expected: 55 passed (48 + 7 mới: 1 client, 2 extractor, 1 judge mới + 2 sửa tính là cũ, 2 run_eval, 1 analyze).
+
+- [ ] **Step 17: `scripts/llm_server.ps1` mặc định ctx 16k**
+
+Đổi `[int]$Ctx = 8192` thành `[int]$Ctx = 16384` và dòng chú thích usage `-Ctx 8192` thành `-Ctx 16384`. Khởi động lại server nếu đang chạy với ctx cũ (kiểm tra `models/server.err` có `n_ctx_slot = 16384`).
+
+- [ ] **Step 18: Đo lại prompt và chạy 3 cấu hình (n = 20)**
+
+Đo prompt bộ phán cho idx=1 (trade) bằng `/tokenize` của llama-server: kỳ vọng user prompt giảm từ ~6.8k xuống ≤ 3k token. Ghi số vào report.
+
+```bash
+python scripts/run_eval.py --extractor llm           --judge none --limit 20 --out results/nba_test_llm_nojudge_20.jsonl
+python scripts/run_eval.py --extractor gold_explicit --judge llm  --limit 20 --out results/nba_test_goldexp_llmjudge_20.jsonl
+python scripts/run_eval.py --extractor llm           --judge llm  --limit 20 --out results/nba_test_llm_llm_20.jsonl
+```
+Chạy foreground, mỗi lệnh một tool call với timeout tối đa; nếu một lệnh không kịp trong 10 phút thì chạy lại với `--limit 10` và ghi rõ n trong README. Expected: `errors` = 0; add_acc của `llm+none` > 0 (mục tiêu ≥ 0,03, tức LLM #1 bắt được ít nhất phần ops tường minh); thời gian mỗi lệnh gọi judge ≤ 30 s.
+
+- [ ] **Step 19: Cập nhật README + error analysis**
+
+README mục "Kết quả sơ bộ": thêm 3 dòng cấu hình LLM (ghi rõ n, model Qwen3.5-2B Q8_0, llama.cpp Vulkan) và một dòng ghi chú "số này là cận dưới với model 2B zero/few-shot; Task tháng 3 sẽ chạy 7B". `docs/error-analysis-month2.md`: thay dòng ghi chú "llm+llm sẽ bổ sung" bằng bảng `--by event` của `results/nba_test_llm_llm_20.jsonl`.
+
+- [ ] **Step 20: Commit**
+
+```bash
+git add kgu/llm.py kgu/extract/llm.py kgu/judge/llm.py scripts/run_eval.py scripts/analyze_errors.py scripts/llm_server.ps1 tests/ README.md docs/error-analysis-month2.md
+git commit -m "feat: constrained relation enums, few-shot prompts, compact judge prompt, per-example error records"
+```
+
+---
+
 ## Ngoài phạm vi plan này (plan riêng, theo lộ trình tháng 3–4)
 
 1. **Bộ phán B/C** — `kgu/judge/anyburl.py` (xuất KG tại `at` ra file triple, chạy AnyBURL bằng Java 11, đọc luật + confidence, chấm ứng viên vế sinh, ngưỡng 0,9, vùng xám → `LLMJudge`), `kgu/judge/ultra.py`, bảng 2 ablation.
