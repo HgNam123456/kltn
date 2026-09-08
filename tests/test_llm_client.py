@@ -107,3 +107,28 @@ def test_openai_client_propagates_non_400_errors():
         c.complete_json("sys", "user", Out)
 
     assert fake.n_calls == 1  # no fallback attempted for a non-400 error
+
+
+def _bad_request():
+    import httpx2 as httpx
+    from openai import BadRequestError
+    return BadRequestError(message="bad", response=httpx.Response(400, request=httpx.Request("POST", "http://x")), body=None)
+
+
+class _AlwaysBadCompletions:
+    def __init__(self):
+        self.kwargs = []
+
+    def create(self, **kwargs):
+        self.kwargs.append(kwargs)
+        raise _bad_request()
+
+
+def test_openai_client_keeps_json_schema_when_both_formats_get_400():
+    from openai import BadRequestError
+    c = OpenAICompatClient(base_url="http://x", api_key="k", model="m", max_retries=2)
+    c._completions = _AlwaysBadCompletions()
+    with pytest.raises(BadRequestError):
+        c.complete_json("sys", "user", Out)
+    assert c._use_json_schema is True                       # không phải lỗi "không hỗ trợ json_schema"
+    assert [k["response_format"]["type"] for k in c._completions.kwargs] == ["json_schema", "json_object"]

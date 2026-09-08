@@ -77,12 +77,14 @@ class OpenAICompatClient:
                                          "json_schema": {"name": schema.__name__, "schema": schema.model_json_schema()}},
                         extra_body=extra,
                     )
-                except BadRequestError:  # server không hỗ trợ json_schema → lùi về json_object, nhớ lại cho lần sau
-                    self._use_json_schema = False
+                except BadRequestError:
+                    # Có thể là "không hỗ trợ json_schema" HOẶC lỗi khác (tràn ctx...). Chỉ khi json_object
+                    # thành công mới kết luận server không hỗ trợ json_schema và nhớ lại cho lần sau.
                     resp = self.completions.create(
                         model=self.model, messages=messages, temperature=self.temperature,
                         response_format={"type": "json_object"}, extra_body=extra,
                     )
+                    self._use_json_schema = False
             else:
                 resp = self.completions.create(
                     model=self.model, messages=messages, temperature=self.temperature,

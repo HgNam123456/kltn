@@ -25,3 +25,8 @@ def test_group_by_n_gold_buckets():
 def test_group_by_coverage():
     g = mod.group_records([_rec("x", 2, 2, [4, 4]), _rec("x", 2, 2, [1, 4])], "coverage")
     assert set(g) == {"full", "partial"}
+
+
+def test_group_records_skips_error_records():
+    g = mod.group_records([_rec("trade", 2, 2, [4, 4]), {"idx": 3, "event": "trade", "error": "RuntimeError: boom"}], "event")
+    assert g["trade"].n_add == 2

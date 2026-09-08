@@ -14,7 +14,6 @@ def test_extractor_parses_and_filters(before, after):
     client = FakeLLMClient([{"ops": [
         {"kind": "INVALIDATE", "h": "Messi", "r": PLAYS, "t": "Barca", "quote": "leaves Barca"},
         {"kind": "ADD", "h": "Messi", "r": PLAYS, "t": "Inter", "quote": "joins Inter"},
-        {"kind": "ADD", "h": "Messi", "r": "owns", "t": "Inter"},            # quan hệ lạ → bỏ
         {"kind": "ADD", "h": "Messi", "r": PLAYS, "t": "Mars FC"},          # entity lạ → bỏ
         {"kind": "INVALIDATE", "h": "Messi", "r": PLAYS, "t": "Inter"},     # không active → bỏ
         {"kind": "ADD", "h": "Pedri", "r": PLAYS, "t": "Barca"},            # đã active → bỏ
@@ -26,7 +25,7 @@ def test_extractor_parses_and_filters(before, after):
         Op(OpKind.ADD, "Messi", PLAYS, "Inter"),
     ]
     assert ops[0].source == "llm" and ops[0].quote == "leaves Barca"
-    assert ext.n_dropped == 4 and ext.n_calls == 1
+    assert ext.n_dropped == 3 and ext.n_calls == 1
 
 
 def test_prompt_contains_text_relations_and_mentioned_edges(before, after):
@@ -37,3 +36,20 @@ def test_prompt_contains_text_relations_and_mentioned_edges(before, after):
     assert PLAYS in user and TEAM in user
     assert "(Messi, plays_for, Barca)" in user
     assert "ADD" in system and "INVALIDATE" in system
+
+
+import json
+
+
+def test_schema_restricts_relation_to_enum():
+    ext = LLMExtractor(FakeLLMClient([]), relations=[PLAYS, TEAM])
+    s = json.dumps(ext.schema.model_json_schema())
+    assert f'"enum": ["{PLAYS}", "{TEAM}"]' in s
+
+
+def test_prompt_has_few_shot_and_direction_rule(before, after):
+    client = FakeLLMClient([{"ops": []}])
+    LLMExtractor(client, relations=[PLAYS, TEAM]).extract(_ex(before, after), BiTemporalGraph.from_triples(before))
+    system, user = client.calls[0]
+    assert "VÍ DỤ" in user and '"kind": "INVALIDATE"' in user
+    assert "cùng chiều" in system

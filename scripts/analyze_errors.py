@@ -25,6 +25,7 @@ def _key(rec: dict, by: str) -> str:
 
 
 def group_records(records: list[dict], by: str) -> dict[str, Counts]:
+    records = [r for r in records if "counts" in r]
     groups: dict[str, Counts] = defaultdict(Counts)
     for rec in records:
         k = _key(rec, by)
@@ -38,6 +39,7 @@ def main() -> None:
     ap.add_argument("--by", default="event", choices=["event", "n_gold", "coverage"])
     args = ap.parse_args()
     records = [json.loads(l) for l in args.results.read_text(encoding="utf8").splitlines() if l.strip()]
+    records = [r for r in records if "counts" in r]
     sizes: dict[str, int] = defaultdict(int)
     cands: dict[str, list[int]] = defaultdict(lambda: [0, 0])
     for rec in records:

@@ -21,12 +21,17 @@ Chạy pipeline (`kgu/pipeline.py`) trên toàn bộ split test (438 ví dụ) v
 | gold_all + none | 1.000 | 1.000 | 1.000 | 0.0 (0/0, không có op ngầm) | 6.5 | 2.5 |
 | gold_explicit + none | 0.926 | 0.056 | 0.056 | 1.0 | 70.3 | 31.0 |
 | gold_explicit + oracle | 1.000 | 1.000 | 1.000 | 1.0 | 70.3 | 31.0 |
+| llm + none (n=20) | 0.937 | 0.000 | 0.000 | 0.0 (0/0, LLM #1 không xuất op nào) | 0.0 | 0.0 |
+| gold_explicit + llm judge (n=20, 1 lỗi tràn ctx) | 0.944 | 0.051 | 1.000 | 1.0 | 66.6 | 11.6 |
+| llm + llm judge (n=20) | 0.937 | 0.000 | 0.000 | 0.0 (0/0, LLM #1 không xuất op nào → judge không được gọi) | 0.0 | 0.0 |
 
 Nhận xét:
 - `gold_all + none` = 1.0 chứng minh loader + executor + metric đúng (trích toàn bộ diff before/after, không cần khoanh vùng).
 - `gold_explicit + none` cho add_acc/del_acc ≈ 0,056 — trùng với con số "5,6% thay đổi được nói thẳng" của paper gốc, cho thấy cách xấp xỉ ops tường minh (cả 2 đầu cạnh đều được nhắc trong text) hợp lý; F1 0,926 gần baseline IE thuần (0,9429).
 - `gold_explicit + oracle` có coverage = 1.0 — khoanh vùng cấu trúc 2 vế (cắt/thêm) bao phủ toàn bộ cạnh ngầm trên NBAtransactions; với oracle phán đúng, pipeline đạt lại F1 = 1.0.
 - Mỗi tin có trung bình ~70 ứng viên cắt + ~31 ứng viên thêm — ghi chú cho việc thiết kế prompt bộ phán LLM (tháng 2).
+- 3 dòng LLM đo ngày 2026-09-08 sau Task 13 (constrained relation enums + few-shot + prompt bộ phán gọn), model **Qwen3.5-2B Q8_0** trên llama.cpp Vulkan (AMD 780M), n=20 (giới hạn `--limit 20`, không phải toàn split): `gold_explicit + llm judge` đạt add_acc 0,051 / del_acc 1,0 với 1/20 ví dụ lỗi tràn ngữ cảnh (16506 > 16384 token, ghi lại thành record lỗi thay vì abort — đúng hành vi Task 13 nhắm tới). `llm + none` và `llm + llm judge` cho add_acc/del_acc = 0 vì LLM #1 (2B, zero/few-shot, prompt ngữ cảnh entity dài) không xuất được op tường minh nào trên 20 ví dụ này dù đã có schema enum quan hệ + few-shot — bộ phán A hoạt động tốt khi có input (`gold_explicit + llm judge`), nút thắt hiện tại là LLM #1.
+- **Số này là cận dưới với model 2B zero/few-shot; Task tháng 3 sẽ chạy 7B.**
 
 Chạy lại:
 

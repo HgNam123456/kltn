@@ -1,6 +1,19 @@
 # Error Analysis — Month 2
 
-**Note:** The `llm+llm` (n=50) table will be added when that run exists.
+### Table 0: LLM Extractor + LLM Judge (n=20) by Event Type
+
+`--by event` trên `results/nba_test_llm_llm_20.jsonl` (đo 2026-09-08, sau Task 13 — schema enum quan hệ, few-shot, prompt bộ phán gọn; model Qwen3.5-2B Q8_0):
+
+| group       | n  | f1    | add   | del   | cut/ex | add/ex |
+|-------------|----|-------|-------|-------|--------|--------|
+| draft       | 1  | 0.948 | 0.000 | 0.000 | 0.0    | 0.0    |
+| free_agency | 1  | 0.948 | 0.000 | 0.000 | 0.0    | 0.0    |
+| overseas    | 1  | 0.934 | 0.000 | 0.000 | 0.0    | 0.0    |
+| released    | 11 | 0.951 | 0.000 | 0.000 | 0.0    | 0.0    |
+| retirement  | 1  | 0.934 | 0.000 | 0.000 | 0.0    | 0.0    |
+| trade       | 5  | 0.920 | 0.000 | 0.000 | 0.0    | 0.0    |
+
+`cut/ex` = `add/ex` = 0.0 across every event: LLM #1 (extractor) produced zero explicit ops on all 20 examples in this run, so `localize()` never had participants to build candidates from, and the judge (LLM #2) was never invoked (`llm_calls` = 20, all from the extractor). This isolates the current bottleneck to LLM #1's zero-shot/few-shot extraction on this 2B model, not to the judge or the localization/judge hardening done in Task 13 — see `gold_explicit + llm judge` in the README (add_acc 0.051, del_acc 1.0, 1/20 context-overflow error handled as a per-example record instead of aborting the run) for evidence the judge and error-handling paths work when given real explicit ops.
 
 ## Analysis Tables
 

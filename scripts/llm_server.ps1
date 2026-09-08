@@ -2,7 +2,7 @@
 # API OpenAI-compatible: http://localhost:8080/v1
 #
 # Dùng:  .\scripts\llm_server.ps1                       (mặc định Qwen3.5-2B Q8_0)
-#        .\scripts\llm_server.ps1 -Model models\x.gguf -Port 8080 -Ctx 8192
+#        .\scripts\llm_server.ps1 -Model models\x.gguf -Port 8080 -Ctx 16384
 #
 # Sau đó đặt biến môi trường cho kgu:
 #   $env:KGU_LLM_BASE_URL = "http://localhost:8080/v1"
@@ -12,7 +12,7 @@
 param(
     [string]$Model = "models\Qwen3.5-2B-Q8_0.gguf",
     [int]$Port = 8080,
-    [int]$Ctx = 8192,
+    [int]$Ctx = 16384,
     [int]$Parallel = 1,
     [int]$GpuLayers = 99
 )

@@ -38,6 +38,14 @@ def build_llm_judge(name: str):
     raise SystemExit(f"unknown judge {name}")
 
 
+def run_one(ex, extractor, judge, relations: list[str]) -> dict:
+    """Một ví dụ → record; nếu lỗi (LLM, mạng, tràn ctx...) → record lỗi để lượt chạy không abort."""
+    try:
+        return run_example(ex, extractor, judge, relations).to_record(ex)
+    except Exception as e:  # noqa: BLE001 — cố ý: ghi lại mọi lỗi per-example
+        return {"idx": ex.idx, "event": ex.event, "error": f"{type(e).__name__}: {e}"}
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data-dir", type=Path, default=Path("data/raw/nba"))
@@ -54,15 +62,18 @@ def main() -> None:
     llm_judge = build_llm_judge(args.judge)
 
     total = Counts()
-    cov_hit = cov_all = n_cut = n_add = n_calls = 0
+    cov_hit = cov_all = n_cut = n_add = n_calls = n_err = 0
     t0 = time.time()
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf8") as f:
         for ex in tqdm(examples, desc=f"{args.extractor}+{args.judge}"):
             judge = OracleJudge(ex.after) if args.judge == "oracle" else llm_judge
-            res = run_example(ex, extractor, judge, relations)
-            rec = res.to_record(ex)
+            rec = run_one(ex, extractor, judge, relations)
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
+            f.flush()
+            if "error" in rec:
+                n_err += 1
+                continue
             total = total + Counts(**rec["counts"])
             cov_hit += rec["coverage"][0]
             cov_all += rec["coverage"][1]
@@ -74,6 +85,7 @@ def main() -> None:
     s = summarize(total)
     s.update({
         "config": f"{args.extractor}+{args.judge}", "split": args.split, "n": n,
+        "errors": n_err,
         "coverage": cov_hit / cov_all if cov_all else 0.0,
         "avg_cut_cand": n_cut / n if n else 0.0, "avg_add_cand": n_add / n if n else 0.0,
         "llm_calls": n_calls, "seconds": round(time.time() - t0, 1),
