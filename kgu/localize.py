@@ -71,7 +71,8 @@ def localize(graph: BiTemporalGraph, explicit_ops: list[Op], at: int) -> Localiz
         for n in sorted(fresh):
             if (a, n) in seen_add:
                 continue
-            via = sorted(_edges_between(graph, b, n, at))[0]
+            # ưu tiên cạnh có n đứng đầu (X, r, b) để các mẫu bằng chứng gom được vào nhau khi đồ thị 2 chiều
+            via = sorted(_edges_between(graph, b, n, at), key=lambda tr: (tr[0] != n, tr))[0]
             seen_add.add((a, n))
             loc.add.append(AddCandidate(a, n, via))
 
