@@ -57,3 +57,22 @@ def test_summarize_run_handles_no_records_and_no_candidates():
     s = mod.summarize_run([], seconds=0.5, config="gold_all+none", split="test")
     assert s["n"] == 0 and s["n_scored"] == 0 and s["errors"] == 0
     assert s["avg_cut_cand"] == 0.0 and s["avg_add_cand"] == 0.0 and s["judged_ratio"] == 0.0
+
+
+def test_workers_produce_same_records_in_order(tmp_path, monkeypatch):
+    """--workers N chạy song song nhưng kết quả và thứ tự ghi phải y hệt chạy tuần tự."""
+    import json
+    import sys
+    data = Path(__file__).resolve().parents[1] / "data" / "raw" / "nba"
+    if not data.exists():
+        import pytest
+        pytest.skip("chưa tải dataset")
+    outs = []
+    for workers in (1, 3):
+        out = tmp_path / f"w{workers}.jsonl"
+        monkeypatch.setattr(sys, "argv", ["run_eval", "--extractor", "gold_explicit", "--judge", "oracle",
+                                          "--limit", "6", "--workers", str(workers), "--out", str(out)])
+        mod.main()
+        outs.append([json.loads(l) for l in out.read_text(encoding="utf8").splitlines()])
+    assert [r["idx"] for r in outs[1]] == [r["idx"] for r in outs[0]] == list(range(6))
+    assert outs[0] == outs[1]

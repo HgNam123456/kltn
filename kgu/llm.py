@@ -118,5 +118,6 @@ def client_from_env() -> OpenAICompatClient:
         base_url=os.environ.get("KGU_LLM_BASE_URL", "http://localhost:8080/v1"),
         api_key=os.environ.get("KGU_LLM_API_KEY", "none"),
         model=os.environ.get("KGU_LLM_MODEL", "local"),
+        timeout=float(os.environ.get("KGU_LLM_TIMEOUT", "300")),
         extra_body=extra_body,
     )

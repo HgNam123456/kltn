@@ -3,7 +3,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 from tqdm import tqdm
@@ -27,12 +29,12 @@ def build_extractor(name: str, relations: list[str]):
     raise SystemExit(f"unknown extractor {name}")
 
 
-def build_llm_judge(name: str):
+def build_llm_judge(name: str, batch: int | None = 1, gate: float | None = None):
     """Judge LLM tạo MỘT lần (dùng chung client, đếm n_calls liên tục); oracle tạo per-example."""
     if name == "llm":
         from kgu.judge.llm import LLMJudge
         from kgu.llm import client_from_env
-        return LLMJudge(client_from_env())
+        return LLMJudge(client_from_env(), batch_size=batch, gate=gate)
     if name in ("none", "oracle"):
         return None
     raise SystemExit(f"unknown judge {name}")
@@ -91,25 +93,42 @@ def main() -> None:
     ap.add_argument("--judge", default="none", choices=["none", "oracle", "llm"])
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--workers", type=int, default=1,
+                    help="số tin gửi song song (khớp --parallel của llama-server để dùng continuous batching)")
+    ap.add_argument("--judge-batch", type=int, default=1, help="mẫu / lệnh gọi LLM judge; 0 = cả pha một lệnh gọi")
+    ap.add_argument("--judge-gate", type=float, default=None,
+                    help="phương án C: ngưỡng đồng xuất hiện để cổng cấu trúc lọc mẫu trước LLM (vd 0.5); bỏ = LLM thuần")
     args = ap.parse_args()
 
     relations = Vocab.load(args.data_dir).relations
     examples = load_split(args.data_dir, args.split, limit=args.limit)
-    extractor = build_extractor(args.extractor, relations)
-    llm_judge = build_llm_judge(args.judge)
+
+    # Mỗi thread một extractor/judge riêng (client riêng): n_calls/n_dropped cộng dồn theo thread, nên
+    # hiệu trước/sau trong run_example vẫn đúng cho từng ví dụ khi chạy song song.
+    local = threading.local()
+
+    def components():
+        if not hasattr(local, "extractor"):
+            local.extractor = build_extractor(args.extractor, relations)
+            local.judge = build_llm_judge(args.judge, batch=args.judge_batch or None, gate=args.judge_gate)
+        return local.extractor, local.judge
+
+    def work(ex) -> dict:
+        extractor, llm_judge = components()
+        judge = OracleJudge(ex.after) if args.judge == "oracle" else llm_judge
+        return run_one(ex, extractor, judge, relations)
 
     records: list[dict] = []
     t0 = time.time()
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    with args.out.open("w", encoding="utf8") as f:
-        for ex in tqdm(examples, desc=f"{args.extractor}+{args.judge}"):
-            judge = OracleJudge(ex.after) if args.judge == "oracle" else llm_judge
-            rec = run_one(ex, extractor, judge, relations)
+    with args.out.open("w", encoding="utf8") as f, ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
+        for rec in tqdm(pool.map(work, examples), total=len(examples), desc=f"{args.extractor}+{args.judge}"):
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             f.flush()
             records.append(rec)
 
-    s = summarize_run(records, time.time() - t0, f"{args.extractor}+{args.judge}", args.split)
+    tag = f"{args.extractor}+{args.judge}" + (f"[batch={args.judge_batch},gate={args.judge_gate}]" if args.judge == "llm" else "")
+    s = summarize_run(records, time.time() - t0, tag, args.split)
     args.out.with_suffix(".summary.json").write_text(json.dumps(s, indent=2), encoding="utf8")
     print(json.dumps(s, indent=2))
 
