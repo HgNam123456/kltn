@@ -1,0 +1,56 @@
+{
+ "n": 350,
+ "judge": "llm",
+ "errors": 0,
+ "with_candidates": 242,
+ "llm_calls": 242,
+ "seconds": 703,
+ "mine": {
+  "Exists": {
+   "n": 201,
+   "recall": 0.5364237130009158,
+   "precision": 0.7456944578507815
+  },
+  "Deprecate": {
+   "n": 125,
+   "recall": 0.37466666666666665,
+   "precision": 0.3706666666666667
+  }
+ },
+ "kg-aware/gpt-5.1/oracle": {
+  "Exists": {
+   "n": 201,
+   "recall": 0.531798903309318,
+   "precision": 0.6514280699622647
+  },
+  "Deprecate": {
+   "n": 125,
+   "recall": 0.352,
+   "precision": 0.352
+  }
+ },
+ "kg-aware/gpt-5.1/kg_rag_32": {
+  "Exists": {
+   "n": 201,
+   "recall": 0.18817362481761074,
+   "precision": 0.20221597892617793
+  },
+  "Deprecate": {
+   "n": 125,
+   "recall": 0.088,
+   "precision": 0.06533333333333333
+  }
+ },
+ "kg-aware/gpt-5.1/oracle_kg_rag": {
+  "Exists": {
+   "n": 201,
+   "recall": 0.4285114047028411,
+   "precision": 0.44229517209682173
+  },
+  "Deprecate": {
+   "n": 125,
+   "recall": 0.124,
+   "precision": 0.10400000000000001
+  }
+ }
+}
