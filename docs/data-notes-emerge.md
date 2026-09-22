@@ -163,3 +163,42 @@ delta, `--offset 10`), không sửa gì:
 
 Hiệu recall ghép cặp trên held-out, v1 − GPT-5.1 oracle: Exists +0,355 [0,286; 0,426], Deprecate +0,272 [0,180; 0,364].
 Điểm gần như không tụt → không overfit vào tập dev.
+
+## 9. Ngày 22/09: thử nâng precision Deprecate (v2, v3) và Add v0
+
+Dev 350, Gemma 4 E4B, gom lô 12. Ô ghi recall / precision Executable-R.
+
+| Bản | Thay đổi so với v1 | Exists | Deprecate | TP/FP cạnh Deprecate |
+|---|---|---|---|---|
+| v1 | – | 0,877 / 0,693 | 0,652 / 0,445 | 99 / 143 |
+| v2 | luật cứng: ended CHỈ KHI passage ghi năm {Y-1}/{Y} | 0,918 / 0,694 | 0,560 / 0,401 | 86 / 97 |
+| v3 | gợi ý mềm: "kết thúc {Y-2} trở về trước = đã lâu" | 0,891 / 0,699 | 0,644 / 0,451 | – |
+
+- v2 bớt 46 phán thừa nhưng mất 13 ca đúng; vì metric tính theo bài (bài trống = precision 0) nên cả hai chỉ số tụt.
+  Model 4B đọc luật "CHỈ KHI" thành "khi nghi ngờ thì đừng đánh dấu": "from 2011 to 2019" với GRAPH DATE 2019 vẫn trả holds.
+- v3 không khác v1 trong khoảng nhiễu. Giữ v3 trong code (Exists nhỉnh hơn).
+- **Trần dữ liệu của Deprecate trên dev 350:** 15/145 gold không xuất hiện trong passage (diff Wikidata: place of birth,
+  screenwriter); 26/91 phán thừa chung của v1+v2 là chiều ngược của một gold Deprecate và gold chọn chiều không theo
+  quy luật (P39→P1308 62 lần, ngược lại 35 lần). Bỏ hai nhóm này thì v1 tương đương recall ~0,75 / precision ~0,55.
+- Lỗi thật còn lại: 64 cạnh gold Exists bị phán ended vì passage dùng thì quá khứ cho việc kết thúc từ lâu
+  ("previously played for", "served as Taoiseach 2011–2017" với KG 2020). v2/v3 chưa sửa được nhóm này.
+
+### Add v0 (`kgu/judge/emerge_add.py`, `--judge add`)
+
+Ứng viên: cặp entity được nhắc (phủ 100% gold Add); quan hệ cho phép = quan hệ trên lân cận 1-hop của entity được nhắc
+(phủ 83%, ~40 quan hệ/bài; tập theo kiểu entity chỉ phủ 58% nên không dùng). Một lệnh gọi/bài, model trả (số entity,
+nhãn quan hệ, số entity), ánh xạ nhãn → PID.
+
+| Hệ | Add recall | Add precision |
+|---|---|---|
+| GPT-5.1 oracle | 0,475 [0,388; 0,568] | 0,423 |
+| GPT-5.1 kg_rag@32 | 0,076 | 0,059 |
+| Add v0 | 0,221 [0,159; 0,290] | 0,125 |
+
+Lỗi: sinh 1.576 dự đoán cho 273 gold (gấp 6). 95/230 ca sót là đúng cặp nhưng sai quan hệ (instance of thay vì sport,
+occupation thay vì position held) hoặc ngược chiều (position held ↔ position holder). Một số entity thiếu nhãn KG.
+Add v1: giới hạn 5 fact/bài, gợi ý chiều/từ vựng Wikidata, nhãn fallback từ chữ trong passage — đang chạy.
+
+### Phạm vi chốt (22/09)
+Chỉ xét tri thức được passage đề cập. **Infer bỏ hẳn** (định nghĩa là "không nói trong passage", 60% không có trong
+KG lân cận). Deprecate ngoài passage (~10%) ghi là trần dữ liệu.

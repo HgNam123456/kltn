@@ -25,6 +25,7 @@ def test_candidates_need_both_ends_mentioned():
 def test_render_has_snapshot_date_labels_and_numbers():
     text = render(_ex(), [A, B], LABELS)
     assert "GRAPH DATE: 2019-01-01" in text and "TODAY: 2019-01-08" in text
+    assert "2017 or earlier" in text and "2018, 2019" in text
     assert "[0] Messi | team | Barca" in text and "[1] Barca | country | Spain" in text
     assert "Messi left Barca." in text
 

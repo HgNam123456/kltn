@@ -62,7 +62,12 @@ def index_out_edges(kg: Iterable[Triple]) -> dict[str, list[Triple]]:
 def render(ex: EmergeExample, cand: list[Triple], labels: dict[str, str]) -> str:
     lines = [f"[{i}] {labels.get(h, h)} | {labels.get(r, r)} | {labels.get(t, t)}"
              for i, (h, r, t) in enumerate(cand)]
+    year = int(ex.snapshot[:4])
+    # Gợi ý mềm bằng năm cụ thể cho "LONG before" (v1: 166 ca phán thừa là chức vụ kết thúc từ nhiều năm trước).
+    # Luật cứng "ended CHỈ khi passage ghi năm {year-1}/{year}" (v2) làm mất cả ca đúng → không dùng.
     return (f"GRAPH DATE: {ex.snapshot}\nTODAY: {ex.delta}\n"
+            f"NOTE: an end dated {year - 2} or earlier is LONG before GRAPH DATE (ended = false); "
+            f"an end in {year - 1}, {year} or undated but described as recent counts as ended.\n"
             f"PASSAGE (Wikipedia page: {ex.title}):\n{ex.text}\n\n"
             f"FACTS CURRENTLY IN THE GRAPH:\n" + "\n".join(lines))
 
