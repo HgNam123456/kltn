@@ -202,3 +202,33 @@ Add v1: giới hạn 5 fact/bài, gợi ý chiều/từ vựng Wikidata, nhãn f
 ### Phạm vi chốt (22/09)
 Chỉ xét tri thức được passage đề cập. **Infer bỏ hẳn** (định nghĩa là "không nói trong passage", 60% không có trong
 KG lân cận). Deprecate ngoài passage (~10%) ghi là trần dữ liệu.
+
+## 10. Ngày 23/09: số CHÍNH THỨC từ bộ chấm EMERGE (Kaggle GPU)
+
+Pipeline: `scripts/export_emerge_predictions.py` xuất prediction v3 (Exists/Deprecate) theo format `kg-prompt`
+→ dataset Kaggle `ngocnam2005/emerge-dev350-mine` → kernel `emerge-eval-dev350` (`kaggle/emerge_eval/run_eval.py`)
+clone repo EMERGE, chạy `evaluation.s0x_evaluate_predictions` với config "fixed", không nạp KG snapshot, bỏ
+entity_coverage. Bảng đầy đủ: `results/kaggle/dev350_v3_tables.txt`. Kaggle mount dataset ở
+`/kaggle/input/datasets/<user>/<slug>/` (không phải `/kaggle/input/<slug>/`).
+
+Dev 350, 11 baseline kèm sẵn cùng tập. C = Completeness, R = G-BERTScore-R (bảng chính của paper).
+
+| Model | Exists C / R | Add C / R | Deprecate C / R |
+|---|---|---|---|
+| **mine/gemma4-e4b (v3, chưa Add)** | **92,8 / 91,3** | 0 / 0 | **69,0 / 70,6** |
+| KG-aware GPT-5.1 oracle | 65,7 / 53,2 | 58,6 / 50,9 | 40,0 / 35,2 |
+| KG-aware GPT-5.1 kg_rag@32 | 15,3 / 29,2 | 10,6 / 17,5 | 11,0 / 10,3 |
+| EDC+ GPT-5.1 | 22,5 / 65,4 | 37,7 / 76,4 | 35,9 / 56,0 |
+| EDC+ Mistral-Large | 17,3 / 53,9 | 26,7 / 69,9 | 31,0 / 52,2 |
+| EDC+ Mistral-Small | 12,8 / 45,2 | 19,4 / 62,4 | 17,2 / 28,7 |
+| RAKG Mistral-Small | 10,8 / 63,9 | 17,7 / 70,7 | 0 / 0 |
+| ReLiK RE | 19,5 / 57,5 | 13,6 / 61,6 | 0 / 0 |
+| REBEL | 10,3 / 41,1 | 7,7 / 51,1 | 0 / 0 |
+
+QID exact-match chính thức (P / R / F1): mine Exists 64,7 / 82,6 / 69,5, Deprecate 44,1 / 62,9 / 49,2;
+oracle Exists 60,3 / 49,3 / 52,5, Deprecate 34,4 / 34,4 / 34,4.
+
+- Bộ chấm tự viết lệch nhẹ so với chính chủ: Exists recall 0,891 vs 82,6; Deprecate 0,644 vs 62,9; oracle Deprecate
+  0,352 vs 34,4. Chưa rõ nguyên nhân (nghi khác cách gộp triple trùng giữa x/d hoặc lọc gold). Từ giờ báo số chính thức.
+- Completeness của mình cao hơn G-BERTScore-R ở Exists nhưng ngược lại với EDC+: đúng như README nói, G-R thưởng
+  giống nghĩa, C thưởng đúng dạng KG.

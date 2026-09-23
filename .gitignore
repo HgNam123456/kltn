@@ -27,3 +27,7 @@ Thumbs.db
 /results/*
 !/results/*.summary.json
 /.superpowers/
+/data/export/
+/kaggle/dataset_dev350/evaluation_set/
+!/results/kaggle/
+!/results/kaggle/*.txt
