@@ -1,0 +1,13 @@
+{
+  "id": "ngocnam2005/kgu-judge-emerge",
+  "title": "kgu-judge-emerge",
+  "code_file": "run_judge.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": ["ngocnam2005/kgu-emerge-data"],
+  "competition_sources": [],
+  "kernel_sources": []
+}

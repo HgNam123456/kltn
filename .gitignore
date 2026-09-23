@@ -31,3 +31,4 @@ Thumbs.db
 /kaggle/dataset_dev350/evaluation_set/
 !/results/kaggle/
 !/results/kaggle/*.txt
+/kaggle/dataset_kgu/bundle/
