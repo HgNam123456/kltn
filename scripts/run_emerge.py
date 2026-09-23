@@ -18,7 +18,7 @@ from tqdm import tqdm
 from kgu.data.emerge import OPS, load_kg_subset, load_snapshot
 from kgu.eval.emerge import bootstrap_ci, instance_scores, shipped_predictions
 from kgu.judge.emerge import candidates, index_out_edges, judge, to_ops
-from kgu.judge.emerge_add import allowed_relations, index_relations, judge_add
+from kgu.judge.emerge_add import KGShape, allowed_relations, index_relations, judge_add
 from kgu.llm import client_from_env
 
 SHIPPED = ["kg-aware/gpt-5.1/oracle", "kg-aware/gpt-5.1/kg_rag_32", "kg-aware/gpt-5.1/oracle_kg_rag"]
@@ -45,6 +45,8 @@ def main() -> None:
     ap.add_argument("--batch-size", type=int, default=12, help="số ứng viên mỗi lệnh gọi; 1 = phán từng cạnh")
     ap.add_argument("--add", action="store_true", help="chạy thêm bộ phán Add (một lệnh gọi/instance)")
     ap.add_argument("--exists", choices=["all", "llm"], default="all")
+    ap.add_argument("--no-add-norm", action="store_true",
+                    help="tắt chuẩn hóa Add v2 (đảo chiều / sửa quan hệ / thêm chiều nghịch đảo theo cấu trúc KG)")
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--out", type=Path, default=Path("results/emerge_dev.jsonl"))
     args = ap.parse_args()
@@ -58,12 +60,13 @@ def main() -> None:
         kg, labels = load_kg_subset(kg_path)
         out_edges = index_out_edges(kg)
         rels_of = index_relations(kg) if args.add else {}
+        shape = KGShape(kg) if args.add and not args.no_add_norm else None
         seen: dict[str, int] = {}
         for ex in load_snapshot(args.data_dir, snapshot):
             seen[ex.delta] = seen.get(ex.delta, 0) + 1
             if args.offset < seen[ex.delta] <= args.offset + args.per_delta:
                 jobs.append((ex, candidates(ex, out_edges), {**labels, **ex.labels},
-                             allowed_relations(ex, rels_of) if args.add else []))
+                             allowed_relations(ex, rels_of) if args.add else [], shape))
         keep = {ex.hash_id for ex, *_ in jobs}
         for path in sorted((args.data_dir / "evaluation_set" / f"snapshot_{snapshot}").glob("delta_*.jsonl")):
             with path.open(encoding="utf8") as f:
@@ -73,18 +76,21 @@ def main() -> None:
                         raw[d["hash_id"]] = d
 
     def run(job):
-        ex, cand, labels, relations = job
+        ex, cand, labels, relations, shape = job
         rec = {"hash_id": ex.hash_id, "snapshot": ex.snapshot, "delta": ex.delta, "title": ex.title}
         added: set = set()
+        added_raw: set = set()
         try:
             verdicts = (judge(ex, cand, labels, llm, args.batch_size) if args.judge == "llm"
                         else {tr: "holds" for tr in cand})
             if args.add and llm:
-                added = judge_add(ex, cand, relations, labels, llm)
+                added_raw = judge_add(ex, cand, relations, labels, llm)
+                added = shape.normalize(added_raw) if shape else added_raw
         except Exception as e:          # ghi lỗi theo instance, không dừng cả lượt chạy
             verdicts, rec["error"] = {}, repr(e)
         rec["verdicts"] = [[*tr, v] for tr, v in verdicts.items()]
         rec["added"] = sorted(added)
+        rec["added_raw"] = sorted(added_raw)
         rec["gold"] = {op: sorted(ex.gold[op]) for op in REPORT_OPS}
         return ex.hash_id, {**to_ops(verdicts, args.exists), "e-triples": added}, rec
 
@@ -105,7 +111,7 @@ def main() -> None:
     summary = {
         "n": len(jobs), "judge": args.judge, "batch_size": args.batch_size, "exists": args.exists,
         "errors": sum("error" in r for _, _, r in results),
-        "add": args.add,
+        "add": args.add, "add_norm": args.add and not args.no_add_norm,
         "with_candidates": sum(bool(c) for _, c, *_ in jobs), "candidates": sum(len(c) for _, c, *_ in jobs),
         "llm_calls": llm.n_calls if llm else 0, "seconds": round(seconds),
         "seconds_per_instance": round(seconds / len(jobs), 2),

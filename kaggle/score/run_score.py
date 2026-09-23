@@ -11,8 +11,9 @@ import subprocess
 # (jsonl Exists/Deprecate, jsonl Add hoặc None, tên file kết quả)
 JOBS = [
     ("emerge_dev350_v3_softyear.jsonl", "emerge_dev350_add_v1.jsonl", "emerge_dev350_v3_addv1.soft.json"),
+    ("emerge_dev350_v3_softyear.jsonl", "emerge_dev350_add_v2.jsonl", "emerge_dev350_v3_addv2.soft.json"),
 ]
-BASELINES = "kg-aware/gpt-5.1/oracle,kg-aware/gpt-5.1/kg_rag_32,kg-aware/gpt-5.1/oracle_kg_rag"
+BASELINES = "kg-aware/gpt-5.1/oracle"
 WORK = "/kaggle/working"
 REPO, BRANCH = "https://github.com/HgNam123456/kltn.git", "feat/core-pipeline"
 

@@ -16,11 +16,11 @@ import urllib.request
 
 RUNS = [
     ["--batch-size", "12", "--out", "results/emerge_dev350_v3_kaggle.jsonl"],
-    ["--judge", "add", "--out", "results/emerge_dev350_add_v1_kaggle.jsonl"],
+    ["--judge", "add", "--out", "results/emerge_dev350_add_v2_kaggle.jsonl"],
 ]
 # Sau khi phán: chấm mềm (C, G-BERTScore-R viết lại từ EMERGE) — (jsonl Exists/Deprecate, jsonl Add hoặc None, file ra)
-SCORE = [("results/emerge_dev350_v3_kaggle.jsonl", "results/emerge_dev350_add_v1_kaggle.jsonl",
-          "results/emerge_dev350_v3_addv1_kaggle.soft.json")]
+SCORE = [("results/emerge_dev350_v3_kaggle.jsonl", "results/emerge_dev350_add_v2_kaggle.jsonl",
+          "results/emerge_dev350_v3_addv2_kaggle.soft.json")]
 BASELINES = "kg-aware/gpt-5.1/oracle"
 WORKERS = "4"
 GGUF_REPO, GGUF_FILE = "unsloth/gemma-4-E4B-it-qat-GGUF", "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
@@ -58,13 +58,17 @@ if cached:
     sh(f"chmod +x {bin_dir}/llama-server")
 else:
     sh(f"git clone --depth 1 https://github.com/ggml-org/llama.cpp {WORK}/llama.cpp")
-    # Ảnh Kaggle không có libcuda.so ở chỗ FindCUDAToolkit tìm → CMake báo thiếu CUDA::cuda_driver.
-    # Trỏ vào stubs của toolkit (và liệt kê để chẩn đoán nếu vẫn lỗi).
-    sh("find / -name 'libcuda.so*' -not -path '*/proc/*' 2>/dev/null | head; ls /usr/local/cuda/lib64/stubs | head")
-    stubs = "/usr/local/cuda/lib64/stubs"
+    # Ảnh Kaggle không có libcuda.so ở chỗ FindCUDAToolkit tìm (không có cả stubs/) → CMake báo thiếu
+    # CUDA::cuda_driver. Dò file driver thật rồi trỏ thẳng vào.
+    libcuda = next((p for p in ("/usr/local/nvidia/lib64/libcuda.so", "/usr/local/cuda/compat/libcuda.so",
+                                "/usr/local/cuda/lib64/stubs/libcuda.so", "/usr/lib/x86_64-linux-gnu/libcuda.so")
+                    if os.path.exists(p)), None)
+    assert libcuda, "không tìm thấy libcuda.so"
+    print("libcuda:", libcuda, flush=True)
     sh(f"cmake -S {WORK}/llama.cpp -B {WORK}/llama.cpp/build -DGGML_CUDA=ON -DLLAMA_CURL=OFF "
        f"-DCMAKE_CUDA_ARCHITECTURES=native -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release "
-       f"-DCUDAToolkit_ROOT=/usr/local/cuda -DCMAKE_LIBRARY_PATH={stubs} -DCUDA_cuda_driver_LIBRARY={stubs}/libcuda.so")
+       f"-DCUDAToolkit_ROOT=/usr/local/cuda -DCMAKE_LIBRARY_PATH={os.path.dirname(libcuda)} "
+       f"-DCUDA_cuda_driver_LIBRARY={libcuda}")
     sh(f"cmake --build {WORK}/llama.cpp/build --target llama-server -j $(nproc)")
     os.makedirs(bin_dir, exist_ok=True)
     shutil.copy(f"{WORK}/llama.cpp/build/bin/llama-server", bin_dir)

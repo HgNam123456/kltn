@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections import defaultdict
+from collections import Counter, defaultdict
 from typing import Iterable
 
 from pydantic import BaseModel
@@ -66,6 +66,56 @@ def render(ex: EmergeExample, stored: list[Triple], relations: list[str], labels
             f"ENTITIES: {ent_lines}\n"
             f"STORED: {'; '.join(stored_lines) if stored_lines else '(none)'}\n"
             f"RELATIONS: {', '.join(labels.get(r, r) for r in relations)}")
+
+
+class KGShape:
+    """Thống kê cấu trúc KG-trước để chuẩn hóa đầu ra Add (v2), không cần kiểu entity (P31 chỉ phủ 65%):
+    - out_rels/in_rels: quan hệ mỗi entity đã phát ra / đã nhận trên cạnh 1-hop của nó;
+    - inverse: cặp quan hệ nghịch đảo (has part(s) <-> part of, position held <-> position holder, ...) rút từ
+      các cặp (h, r, t) & (t, r', h) cùng có trong KG (>= min_count lần và >= min_share số cạnh của r)."""
+
+    def __init__(self, kg: Iterable[Triple], min_count: int = 30, min_share: float = 0.3):
+        self.out_rels: dict[str, set[str]] = defaultdict(set)
+        self.in_rels: dict[str, set[str]] = defaultdict(set)
+        by_pair: dict[tuple[str, str], set[str]] = defaultdict(set)
+        rel_tot: Counter[str] = Counter()
+        for h, r, t in kg:
+            self.out_rels[h].add(r)
+            self.in_rels[t].add(r)
+            by_pair[(h, t)].add(r)
+            rel_tot[r] += 1
+        inv_cnt: Counter[tuple[str, str]] = Counter()
+        for (h, t), rs in by_pair.items():
+            for r2 in by_pair.get((t, h), ()):
+                for r in rs:
+                    if r != r2:
+                        inv_cnt[(r, r2)] += 1
+        self.inverse: dict[str, str] = {}
+        for (r, r2), c in inv_cnt.most_common():
+            if c >= min_count and c / rel_tot[r] >= min_share and r not in self.inverse:
+                self.inverse[r] = r2
+
+    def normalize(self, triples: Iterable[Triple]) -> set[Triple]:
+        """(1) đảo chiều nếu chiều ngược hợp với cạnh sẵn có của hai entity hơn (phim phát ra `cast member`,
+        diễn viên không); (2) nếu quan hệ chưa từng xuất hiện ở cả hai đầu mà có đúng một quan hệ h đã phát ra
+        và t đã nhận thì đổi sang quan hệ đó; (3) thêm chiều nghịch đảo vì gold Wikidata lưu cả hai chiều."""
+        out: set[Triple] = set()
+        for h, r, t in triples:
+            fwd = (r in self.out_rels[h]) + (r in self.in_rels[t])
+            rev = (r in self.out_rels[t]) + (r in self.in_rels[h])
+            if rev > fwd:
+                h, t, fwd, rev = t, h, rev, fwd
+            if fwd == 0:
+                cands = self.out_rels[h] & self.in_rels[t]
+                cands_rev = self.out_rels[t] & self.in_rels[h]
+                if len(cands) == 1 and not cands_rev:
+                    r = next(iter(cands))
+                elif len(cands_rev) == 1 and not cands:
+                    r, h, t = next(iter(cands_rev)), t, h
+            out.add((h, r, t))
+            if r in self.inverse:
+                out.add((t, self.inverse[r], h))
+        return out
 
 
 def judge_add(ex: EmergeExample, stored: list[Triple], relations: list[str], labels: dict[str, str],
