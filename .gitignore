@@ -32,3 +32,4 @@ Thumbs.db
 !/results/kaggle/
 !/results/kaggle/*.txt
 /kaggle/dataset_kgu/bundle/
+/kaggle/dataset_results/files/

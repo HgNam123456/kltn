@@ -18,6 +18,10 @@ RUNS = [
     ["--batch-size", "12", "--out", "results/emerge_dev350_v3_kaggle.jsonl"],
     ["--judge", "add", "--out", "results/emerge_dev350_add_v1_kaggle.jsonl"],
 ]
+# Sau khi phán: chấm mềm (C, G-BERTScore-R viết lại từ EMERGE) — (jsonl Exists/Deprecate, jsonl Add hoặc None, file ra)
+SCORE = [("results/emerge_dev350_v3_kaggle.jsonl", "results/emerge_dev350_add_v1_kaggle.jsonl",
+          "results/emerge_dev350_v3_addv1_kaggle.soft.json")]
+BASELINES = "kg-aware/gpt-5.1/oracle"
 WORKERS = "4"
 GGUF_REPO, GGUF_FILE = "unsloth/gemma-4-E4B-it-qat-GGUF", "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
 MTP_FILE = "mtp-gemma-4-E4B-it.gguf"
@@ -113,9 +117,17 @@ for args in RUNS:
     args = [a if a != out else f"{WORK}/{out}" for a in args]
     sh(f"cd {bundle} && python scripts/run_emerge.py --workers {WORKERS} " + " ".join(args)
        + f" 2>&1 | tee {WORK}/results/{os.path.basename(out)}.log", env=env)
+server.kill()
+
+# 6. chấm mềm ngay trên GPU (bộ phán đã xong nên VRAM trống)
+if SCORE:
+    sh("pip install -q sentence-transformers bert_score scipy")
+    for judge, add, out in SCORE:
+        args = f"--judge {WORK}/{judge}" + (f" --add {WORK}/{add}" if add else "")
+        sh(f"cd {bundle} && python scripts/score_emerge_soft.py {args} --baselines {BASELINES} --device cuda "
+           f"--out {WORK}/{out} 2>&1 | tee {WORK}/results/score.log", env=env)
 shutil.rmtree(bundle)                 # không đưa repo vào output
 
-server.kill()
 for f in glob.glob(f"{WORK}/models/*"):
     os.remove(f)                      # không đưa 4 GB model vào output
 print("DONE", flush=True)

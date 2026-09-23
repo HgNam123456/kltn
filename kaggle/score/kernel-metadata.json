@@ -1,0 +1,13 @@
+{
+  "id": "ngocnam2005/kgu-score-emerge",
+  "title": "kgu-score-emerge",
+  "code_file": "run_score.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": ["ngocnam2005/kgu-emerge-data", "ngocnam2005/kgu-results"],
+  "competition_sources": [],
+  "kernel_sources": []
+}
