@@ -1,0 +1,31 @@
+O - evaluation.misc.utils - 
+                               x-triples|C x-triples|R e-triples|C e-triples|R ee-triples|C ee-triples|R ee-kg-triples|C ee-kg-triples|R d-triples|C d-triples|R
+model                                                                                                                                                           
+mine/gemma4-e4b                     *92.8*      *91.3*        32.6      _74.1_          0.0          0.0             0.0             0.0      *69.0*      *70.6*
+kg-aware/gpt-5.1/oracle             _65.7_        53.2      *58.6*        50.9       *38.5*         43.5          *47.5*          _73.0_      _40.0_        35.2
+kg-aware/gpt-5.1/kg_rag_32            15.3        29.2        10.6        17.5         27.4         48.6            13.1            51.7        11.0        10.3
+kg-aware/gpt-5.1/oracle_kg_rag        52.0        49.7        22.7        31.1       _33.6_         51.2          _43.3_          *75.4*        13.8        13.4
+EDC+ GPT 5.1                          22.5      _65.4_      _37.7_      *76.4*         31.4       *76.6*            24.9            71.9        35.9      _56.0_
+EDC+ M-Lg                             17.3        53.9        26.7        69.9         26.5         69.6            22.9            69.9        31.0        52.2
+EDC+ M-Sm                             12.8        45.2        19.4        62.4         12.4         62.8            23.9            72.0        17.2        28.7
+EDC+ ZS M-Lg                           9.0        56.3         8.4        66.6         12.8         63.4             0.7            50.5         2.1         9.0
+KGGen M-Sm                             8.0        57.3        10.6        64.9         12.8         66.6             2.7            57.6         0.0         0.0
+RAKG M-Sm                             10.8        63.9        17.7        70.7         17.1       _70.7_             3.8            61.8         0.0         0.0
+ReLiK RE                              19.5        57.5        13.6        61.6         15.0         60.3             5.7            50.9         0.0         0.0
+REBEL                                 10.3        41.1         7.7        51.1         11.5         53.5             0.7            37.2         0.0         0.0
+09/23/2026 14:08:36 - INFO - evaluation.misc.utils - No overlapping (metric, evaluator_model, model) between agg and agg_open.
+/kaggle/working/emerge/src/evaluation/misc/utils.py:74: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  agg_all = pd.concat([agg, agg_open], ignore_index=True)
+09/23/2026 14:08:36 - INFO - evaluation.misc.utils - sanity check, all have to be in 1: 1    180
+Name: count, dtype: int64
+09/23/2026 14:08:36 - INFO - __main__ - 
+
+=== QID Exact-Match Metrics (P / R / F1) ===
+09/23/2026 14:08:36 - INFO - evaluation.misc.utils - 
+                               x-triples|P x-triples|R x-triples|F1 e-triples|P e-triples|R e-triples|F1 ee-triples|P ee-triples|R ee-triples|F1 ee-kg-triples|P ee-kg-triples|R ee-kg-triples|F1 d-triples|P d-triples|R d-triples|F1
+model                                                                                                                                                                                                                                 
+mine/gemma4-e4b                     *64.7*      *82.6*       *69.5*      _10.9_      _19.0_       _12.5_        *0.0*        *0.0*         *0.0*           *0.0*           *0.0*            *0.0*      *44.1*      *62.9*       *49.2*
+kg-aware/gpt-5.1/oracle             _60.3_      _49.3_       _52.5_      *37.7*      *42.3*       *38.4*        *0.0*        *0.0*         *0.0*           *0.0*           *0.0*            *0.0*      _34.4_      _34.4_       _34.4_
+kg-aware/gpt-5.1/kg_rag_32            18.7        17.4         15.3         5.2         6.8          5.5        *0.0*        *0.0*         *0.0*           *0.0*           *0.0*            *0.0*         6.4         8.6          7.0
+kg-aware/gpt-5.1/oracle_kg_rag        41.0        39.7         36.5         8.5        18.9         10.6        *0.0*        *0.0*         *0.0*           *0.0*           *0.0*            *0.0*        10.2        12.1         10.5
+09/23/2026 14:08:36 - INFO - __main__ - 
