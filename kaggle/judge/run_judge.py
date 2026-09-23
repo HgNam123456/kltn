@@ -54,8 +54,13 @@ if cached:
     sh(f"chmod +x {bin_dir}/llama-server")
 else:
     sh(f"git clone --depth 1 https://github.com/ggml-org/llama.cpp {WORK}/llama.cpp")
+    # Ảnh Kaggle không có libcuda.so ở chỗ FindCUDAToolkit tìm → CMake báo thiếu CUDA::cuda_driver.
+    # Trỏ vào stubs của toolkit (và liệt kê để chẩn đoán nếu vẫn lỗi).
+    sh("find / -name 'libcuda.so*' -not -path '*/proc/*' 2>/dev/null | head; ls /usr/local/cuda/lib64/stubs | head")
+    stubs = "/usr/local/cuda/lib64/stubs"
     sh(f"cmake -S {WORK}/llama.cpp -B {WORK}/llama.cpp/build -DGGML_CUDA=ON -DLLAMA_CURL=OFF "
-       f"-DCMAKE_CUDA_ARCHITECTURES=native -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release")
+       f"-DCMAKE_CUDA_ARCHITECTURES=native -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release "
+       f"-DCUDAToolkit_ROOT=/usr/local/cuda -DCMAKE_LIBRARY_PATH={stubs} -DCUDA_cuda_driver_LIBRARY={stubs}/libcuda.so")
     sh(f"cmake --build {WORK}/llama.cpp/build --target llama-server -j $(nproc)")
     os.makedirs(bin_dir, exist_ok=True)
     shutil.copy(f"{WORK}/llama.cpp/build/bin/llama-server", bin_dir)
