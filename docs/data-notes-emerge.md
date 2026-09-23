@@ -238,3 +238,25 @@ recall 0,213 / precision 0,122 — bằng v0. Tuân thủ "tối đa 5" (4,8 fac
 103/231 ca sót là sai quan hệ (55) hoặc ngược chiều (48). Prompt không sửa được → Add v2 phải chuẩn hóa bằng cấu trúc:
 đảo chiều khi (t, r, h) hợp kiểu entity hơn (h, r, t) theo thống kê KG; ánh xạ nhãn quan hệ gần nghĩa về quan hệ mà
 cặp kiểu (type(h), type(t)) thực sự mang trong KG. So công bằng: kg_rag@32 (không được cho relation type) 0,076 / 0,059.
+
+## 11. Bộ chấm mềm viết lại (23/09): C và G-BERTScore-R chạy được ngoài repo EMERGE
+
+Đọc `src/evaluation/scorers/completeness_scorer.py` và `scorers/misc/graph_matching.py` của EMERGE, viết lại thành
+`kgu/eval/emerge_soft.py` + `scripts/score_emerge_soft.py`. Mục đích: mọi bản thử có ngay số **cùng thang với bảng
+paper** (thay vì exact-match QID tự viết, vốn phạt nặng "đúng cặp, sai tên quan hệ / ngược chiều" mà bộ chấm chính chủ
+cho gần đúng). Chạy trên Kaggle: kernel `kgu-score-emerge` (`kaggle/score/`, chấm file jsonl đã có qua dataset
+`ngocnam2005/kgu-results`) và bước 6 của kernel `kgu-judge-emerge` (chấm ngay sau khi phán).
+
+Cách chính chủ tính (đã đối chiếu code, không phải đoán từ paper):
+- Chuỗi so khớp của một triple = `"head relation tail"` từ **nhãn**, chữ thường, `_` → space (`triple_labels`; QID không
+  dùng). Gold chỉ lấy triple được assessor xác nhận; bài không có gold cho op đó bị bỏ qua; bài có gold mà không có dự
+  đoán tính 0 (`score_empty_predictions_as_zero`).
+- **Completeness (C)**: `all-mpnet-base-v2`, mỗi gold lấy cosine lớn nhất với mọi dự đoán cùng op, "phủ" nếu > 0,9
+  (`completeness_threshold`). C = tỉ lệ gold được phủ, **gộp theo triple** trên toàn tập. **Không có precision** →
+  sinh thừa không bị trừ; đây là lý do Add v1 được 32,6 dù exact-match recall chỉ 0,19.
+- **G-BERTScore-R (G-R)**: BERTScore-F1 (`bert-base-uncased`, `idf=False`, không rescale) cho mọi cặp gold × dự đoán
+  trong một bài, ghép 1-1 bằng Hungarian (`linear_sum_assignment`, maximize), R = tổng điểm cặp đã ghép / số gold,
+  **trung bình theo bài**. G-P = tổng / số dự đoán (paper không báo).
+- Hệ quả khi đọc bảng: C thưởng đúng dạng KG (nhãn quan hệ Wikidata), G-R thưởng giống nghĩa; cả hai đều là recall.
+
+Kiểm chứng: chấm lại v3 + Add v1 và ba baseline kg-aware bằng bản viết lại, so với bảng chính thức mục 10.
