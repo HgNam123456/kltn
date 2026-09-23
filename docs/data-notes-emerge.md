@@ -315,3 +315,19 @@ Lưu ý cho khóa luận: cả C lẫn G-R đều là recall (không phạt th�
 
 Add v2 chạm EDC+ GPT-5.1 về C và G-R với model 4B; G-P gần như không đổi (thêm chiều nghịch đảo không làm loãng).
 Tham chiếu G-P của mình ở op khác: Exists 71,7 (oracle 65,1), Deprecate 49,1 (oracle 35,2).
+
+## 13. Hạ tầng Kaggle chạy trọn vẹn (23/09, kernel `kgu-judge-emerge` v3)
+
+Lỗi hai lượt đầu: CMake không thấy `CUDA::cuda_driver` — ảnh Kaggle không có `/usr/local/cuda/lib64/stubs/`, driver
+thật ở `/usr/local/nvidia/lib64/libcuda.so` → dò file rồi truyền `-DCUDA_cuda_driver_LIBRARY`. Build sm75 ~20 phút.
+Server lên với đủ cờ như máy local (4 slot, MTP draft, flash-attn). Binary đã lưu thành dataset
+`ngocnam2005/llama-server-cuda` (`kaggle/dataset_llama/`), kernel tự nhận → các lần sau bỏ bước build.
+
+Đối chiếu Kaggle T4 với máy local (dev 350, chấm mềm; `results/kaggle/emerge_dev350_v3_addv2_kaggle.soft.json`):
+
+| | Exists C / G-R | Add v2 C / G-R | Deprecate C / G-R | s/bài (Deprecate · Add) |
+|---|---|---|---|---|
+| Kaggle T4 | 92,0 / 90,7 | 37,0 / 75,0 | 69,7 / 70,8 | **1,07 · 1,35** |
+| Máy local | 92,8 / 91,3 | 36,6 / 75,9 | 69,0 / 70,6 | 4,8 · 6,2 |
+
+Lệch ≤ 0,9 điểm (nhiễu speculative/batch), nhanh gấp 4–5 lần → toàn bộ 3.500 bài ước ~70 phút/lượt trên Kaggle.

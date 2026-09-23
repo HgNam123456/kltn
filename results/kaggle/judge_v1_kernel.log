@@ -1,0 +1,85 @@
+$ git clone --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git /kaggle/working/kltn
+Cloning into '/kaggle/working/kltn'...
+data: /kaggle/input/datasets/ngocnam2005/kgu-emerge-data
+$ git clone --depth 1 https://github.com/ggml-org/llama.cpp /kaggle/working/llama.cpp
+Cloning into '/kaggle/working/llama.cpp'...
+$ cmake -S /kaggle/working/llama.cpp -B /kaggle/working/llama.cpp/build -DGGML_CUDA=ON -DLLAMA_CURL=OFF -DCMAKE_CUDA_ARCHITECTURES=native -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release
+-- The C compiler identification is GNU 11.4.0
+-- The CXX compiler identification is GNU 11.4.0
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- llama.cpp version: 0.4.1-dev
+CMAKE_BUILD_TYPE=Release
+-- Found Git: /usr/bin/git (found version "2.34.1")
+-- The ASM compiler identification is GNU
+-- Found assembler: /usr/bin/cc
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD
+-- Performing Test CMAKE_HAVE_LIBC_PTHREAD - Success
+-- Found Threads: TRUE
+-- Warning: ccache not found - consider installing it for faster compilation or disable this warning with GGML_CCACHE=OFF
+-- CMAKE_SYSTEM_PROCESSOR: x86_64
+-- GGML_SYSTEM_ARCH: x86
+-- Found OpenMP_C: -fopenmp (found version "4.5")
+-- Found OpenMP_CXX: -fopenmp (found version "4.5")
+-- Found OpenMP: TRUE (found version "4.5")
+-- Including CPU backend
+-- x86 detected
+-- Adding CPU backend variant ggml-cpu: -march=native 
+-- Found CUDAToolkit: /usr/local/cuda/targets/x86_64-linux/include (found version "12.8.93")
+-- CUDA Toolkit found
+-- The CUDA compiler identification is NVIDIA 12.8.93 with host compiler GNU 11.4.0
+-- Detecting CUDA compiler ABI info
+-- Detecting CUDA compiler ABI info - done
+-- Check for working CUDA compiler: /usr/local/cuda/bin/nvcc - skipped
+-- Detecting CUDA compile features
+-- Detecting CUDA compile features - done
+-- Using CMAKE_CUDA_ARCHITECTURES=75-real CMAKE_CUDA_ARCHITECTURES_NATIVE=75-real
+-- FlashAttention K-V type combinations: f16-f16;q4_0-q4_0;q8_0-q8_0;bf16-bf16
+-- Found NCCL: /usr/lib/x86_64-linux-gnu/libnccl.so
+-- CUDA host compiler is GNU 11.4.0
+-- Including CUDA backend
+-- ggml version: 0.25.0
+-- ggml commit:  42916d8
+-- Found OpenSSL: /usr/lib/x86_64-linux-gnu/libcrypto.so (found version "3.0.2")
+-- Performing Test OPENSSL_VERSION_SUPPORTED
+-- Performing Test OPENSSL_VERSION_SUPPORTED - Success
+-- OpenSSL found: 3.0.2
+-- Generating embedded license file for target: llama-app
+-- Configuring done (11.4s)
+CMake Error at ggml/src/ggml-cuda/CMakeLists.txt:171 (target_link_libraries):
+  Target "ggml-cuda" links to:
+
+    CUDA::cuda_driver
+
+  but the target was not found.  Possible reasons include:
+
+    * There is a typo in the target name.
+    * A find_package call is missing for an IMPORTED target.
+    * An ALIAS target is missing.
+
+
+
+CMake Generate step failed.  Build files cannot be regenerated correctly.
+-- Generating done (0.6s)
+Traceback (most recent call last):
+  File "/kaggle/src/script.py", line 57, in <module>
+    sh(f"cmake -S {WORK}/llama.cpp -B {WORK}/llama.cpp/build -DGGML_CUDA=ON -DLLAMA_CURL=OFF "
+  File "/kaggle/src/script.py", line 30, in sh
+    subprocess.run(cmd, shell=True, check=True, **kw)
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'cmake -S /kaggle/working/llama.cpp -B /kaggle/working/llama.cpp/build -DGGML_CUDA=ON -DLLAMA_CURL=OFF -DCMAKE_CUDA_ARCHITECTURES=native -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release' returned non-zero exit status 1.
+/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+  cells[i][c] = re.sub('\\\\\|', '|', cell)
+/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+  text = re.sub(r'_', '\_', text) # Escape underscores in display text
+[NbConvertApp] Converting notebook __script__.ipynb to html
+[NbConvertApp] Writing 295156 bytes to __results__.html
