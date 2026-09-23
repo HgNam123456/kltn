@@ -232,3 +232,9 @@ oracle Exists 60,3 / 49,3 / 52,5, Deprecate 34,4 / 34,4 / 34,4.
   0,352 vs 34,4. Chưa rõ nguyên nhân (nghi khác cách gộp triple trùng giữa x/d hoặc lọc gold). Từ giờ báo số chính thức.
 - Completeness của mình cao hơn G-BERTScore-R ở Exists nhưng ngược lại với EDC+: đúng như README nói, G-R thưởng
   giống nghĩa, C thưởng đúng dạng KG.
+
+### Add v1 (23/09)
+recall 0,213 / precision 0,122 — bằng v0. Tuân thủ "tối đa 5" (4,8 fact/bài) nhưng vẫn gấp 6 lần gold (1.668 / 273);
+103/231 ca sót là sai quan hệ (55) hoặc ngược chiều (48). Prompt không sửa được → Add v2 phải chuẩn hóa bằng cấu trúc:
+đảo chiều khi (t, r, h) hợp kiểu entity hơn (h, r, t) theo thống kê KG; ánh xạ nhãn quan hệ gần nghĩa về quan hệ mà
+cặp kiểu (type(h), type(t)) thực sự mang trong KG. So công bằng: kg_rag@32 (không được cho relation type) 0,076 / 0,059.
