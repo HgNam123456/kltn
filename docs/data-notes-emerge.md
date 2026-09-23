@@ -273,3 +273,32 @@ bản viết lại / chính thức, C / G-R:
 Lệch tối đa 0,4 điểm (Add oracle; nghi do chính chủ gộp triple trùng khác một chút), còn lại khớp đến 0,1. Kết luận:
 dùng bộ chấm mềm cho mọi lần so bản nội bộ; kernel `emerge-eval-dev350` chỉ để chốt số đưa vào khóa luận.
 Bộ chấm mềm cũng cho Mint+Add (oracle 38,5 / 43,5; mình 0 vì chưa làm).
+
+## 12. Add v2 (23/09): chuẩn hóa cấu trúc, không thêm lệnh gọi LLM
+
+Soi 231 ca sót của Add v1: 128 model không sinh gì cho cặp đó (sót thật: "killed in Baghdad" → place of death,
+ngôn ngữ nói…), 103 đúng cặp nhưng ngược chiều hoặc sai quan hệ. Ý định ban đầu là dùng kiểu entity (P31) để sửa,
+nhưng KG-trước thu gọn chỉ có P31 cho 65% entity được nhắc (nhiều entity dùng P279, snapshot EMERGE cũng đã lược) →
+thống kê theo kiểu quá thưa (10k/270k cạnh có kiểu ở cả hai đầu). Thay bằng ba luật chỉ dựa trên cạnh 1-hop sẵn có
+(`KGShape` trong `kgu/judge/emerge_add.py`, bật mặc định trong `run_emerge.py --judge add`, tắt bằng `--no-add-norm`;
+áp lên jsonl cũ bằng `scripts/normalize_emerge_add.py`):
+
+1. **Đảo chiều theo cạnh của chính entity**: (h, r, t) → (t, r, h) nếu t đã phát ra r / h đã nhận r nhiều hơn chiều
+   xuôi (phim phát ra `cast member`, diễn viên không).
+2. **Sửa quan hệ**: nếu r chưa từng xuất hiện ở cả hai đầu mà có đúng một quan hệ r' h đã phát ra và t đã nhận, đổi
+   sang r'.
+3. **Thêm chiều nghịch đảo**: gold Wikidata lưu cả hai chiều (`has part(s)`/`part of`, `position held`/`position
+   holder`, `father`/`child`…). Rút 53 cặp nghịch đảo từ chính KG-trước (cặp (h,r,t) & (t,r',h) cùng có ≥ 30 lần và
+   ≥ 30% số cạnh của r) và tự bổ sung chiều còn lại. Không lộ gold.
+
+Dev 350, exact-match (bộ chấm tự viết, thuần CPU):
+
+| Bản | TP / dự đoán | micro R / P | R / P theo bài |
+|---|---|---|---|
+| Add v1 | 42 / 1.668 | 0,154 / 0,025 | 0,213 / 0,122 |
+| + đảo chiều | 51 / 1.667 | 0,187 / 0,031 | 0,231 / 0,127 |
+| + sửa quan hệ | 60 / 1.663 | 0,220 / 0,036 | 0,238 / 0,132 |
+| **+ nghịch đảo = Add v2** | **65 / 1.798** | **0,238 / 0,036** | **0,274 / 0,139** |
+
+TP +55% không tốn lệnh gọi nào; precision không giảm. Điểm mềm (C, G-R) của Add v2 chấm trên Kaggle: xem bên dưới.
+Lưu ý cho khóa luận: cả C lẫn G-R đều là recall (không phạt thừa) → phải báo thêm G-P / exact P để trung thực.
