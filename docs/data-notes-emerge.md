@@ -260,3 +260,16 @@ Cách chính chủ tính (đã đối chiếu code, không phải đoán từ pa
 - Hệ quả khi đọc bảng: C thưởng đúng dạng KG (nhãn quan hệ Wikidata), G-R thưởng giống nghĩa; cả hai đều là recall.
 
 Kiểm chứng: chấm lại v3 + Add v1 và ba baseline kg-aware bằng bản viết lại, so với bảng chính thức mục 10.
+
+Kết quả kiểm chứng (kernel `kgu-score-emerge` v1, 115 giây kể cả cài thư viện; `results/kaggle/score_v1_kernel.log`),
+bản viết lại / chính thức, C / G-R:
+
+| Hệ | Exists | Add | Deprecate |
+|---|---|---|---|
+| mine v3 + Add v1 | 92,8 / 91,3 · 92,8 / 91,3 | 32,6 / 74,0 · 32,6 / 74,1 | 69,0 / 70,6 · 69,0 / 70,6 |
+| oracle | 65,7 / 53,2 · 65,7 / 53,2 | 59,0 / 50,9 · 58,6 / 50,9 | 40,0 / 35,2 · 40,0 / 35,2 |
+| kg_rag@32 | 15,3 / 29,2 · 15,3 / 29,2 | 10,6 / 17,4 · 10,6 / 17,5 | 11,0 / 10,3 · 11,0 / 10,3 |
+
+Lệch tối đa 0,4 điểm (Add oracle; nghi do chính chủ gộp triple trùng khác một chút), còn lại khớp đến 0,1. Kết luận:
+dùng bộ chấm mềm cho mọi lần so bản nội bộ; kernel `emerge-eval-dev350` chỉ để chốt số đưa vào khóa luận.
+Bộ chấm mềm cũng cho Mint+Add (oracle 38,5 / 43,5; mình 0 vì chưa làm).
