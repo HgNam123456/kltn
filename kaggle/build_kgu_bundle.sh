@@ -11,7 +11,7 @@ cp -r data/raw/emerge/evaluation_set data/raw/emerge/kg_subsets "$OUT/"
 rm -f "$OUT"/kg_subsets/*.stats.json
 cat > kaggle/dataset_kgu/dataset-metadata.json <<'EOF'
 {
-  "title": "EMERGE data for kgu (evaluation_set + 1-hop KG subsets)",
+  "title": "EMERGE data for kgu",
   "id": "ngocnam2005/kgu-emerge-data",
   "licenses": [{"name": "CC-BY-SA-4.0"}]
 }
