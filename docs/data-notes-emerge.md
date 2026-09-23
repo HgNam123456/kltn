@@ -302,3 +302,16 @@ Dev 350, exact-match (bộ chấm tự viết, thuần CPU):
 
 TP +55% không tốn lệnh gọi nào; precision không giảm. Điểm mềm (C, G-R) của Add v2 chấm trên Kaggle: xem bên dưới.
 Lưu ý cho khóa luận: cả C lẫn G-R đều là recall (không phạt thừa) → phải báo thêm G-P / exact P để trung thực.
+
+Điểm mềm (kernel `kgu-score-emerge` v2, `results/kaggle/emerge_dev350_v3_addv{1,2}.soft.json`), dev 350, Add:
+
+| Bản | C | G-R | G-P |
+|---|---|---|---|
+| Add v1 | 32,6 | 74,0 | 38,2 |
+| **Add v2** | **36,6** | **75,9** | 37,5 |
+| GPT-5.1 oracle (được cho relation type) | 59,0 | 50,9 | 45,1 |
+| EDC+ GPT-5.1 (chính thức) | 37,7 | 76,4 | – |
+| EDC+ Mistral-Small (chính thức) | 19,4 | 62,4 | – |
+
+Add v2 chạm EDC+ GPT-5.1 về C và G-R với model 4B; G-P gần như không đổi (thêm chiều nghịch đảo không làm loãng).
+Tham chiếu G-P của mình ở op khác: Exists 71,7 (oracle 65,1), Deprecate 49,1 (oracle 35,2).
