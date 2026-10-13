@@ -1,8 +1,9 @@
-"""Kaggle kernel: chạy lại baseline EMERGE (EDC+ ICL, EDC+ ZS, KGGen) bằng Gemma 4 E4B qua llama-server CUDA trên
-dev350, rồi gộp prediction vào evaluation_set để kernel emerge-eval-dev350 chấm cạnh bản GPT-5.1.
+"""Kaggle kernel: chạy lại baseline EMERGE (EDC+ ICL, EDC+ ZS, KGGen) và KARMA bằng Gemma 4 E4B qua llama-server CUDA
+trên dev350, rồi gộp prediction vào evaluation_set để kernel emerge-eval-dev350 chấm cạnh bản GPT-5.1.
 
 Đầu vào: dataset ngocnam2005/emerge-dev350-mine (evaluation_set dev350 kèm prediction 13 baseline + mine);
-         ngocnam2005/llama-server-cuda (binary đã build). Code EMERGE clone từ GitHub, ghim EMERGE_COMMIT.
+         ngocnam2005/llama-server-cuda (binary đã build). Code EMERGE ghim EMERGE_COMMIT, KARMA ghim KARMA_COMMIT
+         (bản gốc 03/2025), wrapper KARMA lấy từ repo kltn (scripts/karma_emerge.py).
 Đầu ra: /kaggle/working/evaluation_set/ (dev350 + prediction mới), raw/ (output thô từng baseline),
         summary.json (giây/instance, số triple), server.log, logs/*.log.
 LIMIT = số instance mỗi file delta (None = đủ 10/file = 350 bài). Sửa RUNS để chọn baseline.
@@ -14,16 +15,20 @@ import subprocess
 import time
 import urllib.request
 
-LIMIT = None
-RUNS = ["edc_icl", "edc_zs", "kggen"]
+LIMIT = 2
+RUNS = ["karma_biomed", "karma_general"]    # edc_icl, edc_zs, kggen đã chạy ở v2 (đã có trong dataset)
 NAMES = {                                   # tên chuẩn ghi vào predictions, đặt theo kiểu tên của EMERGE
     "edc_icl": "edc-plus-llamacpp/gemma-4-e4b",
     "edc_zs": "edc-plus-zshot-llamacpp/gemma-4-e4b",
     "kggen": "kg-gen/llamacpp/gemma-4-e4b",
+    "karma_biomed": "karma-biomed/llamacpp/gemma-4-e4b",     # prompt y sinh nguyên văn
+    "karma_general": "karma/llamacpp/gemma-4-e4b",           # chỉ thay cụm chỉ miền (GENERAL_PATCH)
 }
 EDC_CONFIGS = {"edc_icl": "edc_plus_icl_gpt_5_1", "edc_zs": "edc_plus_zs_gpt_5_1"}   # prompt/gen profile giữ nguyên
 WORKERS = 4
 EMERGE_REPO, EMERGE_COMMIT = "https://github.com/klimzaporojets/emerge.git", "f68891017e58dfe0d88ef84c19b455dcd8ecaece"
+KARMA_REPO, KARMA_COMMIT = "https://github.com/YuxingLu613/KARMA.git", "82d68ba"
+KGU_REPO, KGU_BRANCH = "https://github.com/HgNam123456/kltn.git", "feat/core-pipeline"
 GGUF_REPO, GGUF_FILE = "unsloth/gemma-4-E4B-it-qat-GGUF", "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
 MTP_FILE = "mtp-gemma-4-E4B-it.gguf"
 WORK = "/kaggle/working"
@@ -205,6 +210,18 @@ if "kggen" in RUNS:
         shutil.rmtree(raw)
         merge_entries.append({"dataset_title": "kggen", "input_dataset_path": renamed, "merge_predictions": True,
                               "predictions_model_name": NAMES["kggen"], "predictions_model_type": "kg-gen"})
+
+karma_runs = [r for r in RUNS if r.startswith("karma_")]
+if karma_runs:
+    sh(f"git clone -q {KARMA_REPO} {WORK}/karma && git -C {WORK}/karma checkout -q {KARMA_COMMIT}")
+    sh(f"git clone -q --depth 1 -b {KGU_BRANCH} {KGU_REPO} {WORK}/kltn")
+for run in karma_runs:
+    out = f"{RAW}/{run}/"
+    if timed(run, f"python -u {WORK}/kltn/scripts/karma_emerge.py --karma {WORK}/karma/karma_pipeline.py "
+                  f"--input {INPUT} --output {out} --variant {run.removeprefix('karma_')} --name {NAMES[run]} "
+                  f"--base-url {SERVER}/v1 --workers {WORKERS}", env=env):
+        merge_entries.append({"dataset_title": run, "input_dataset_path": out, "merge_predictions": True,
+                              "predictions_model_name": NAMES[run], "predictions_model_type": "kg-gen"})
 server.kill()
 
 # 5. gộp vào evaluation_set bằng bước merge của EMERGE
@@ -221,20 +238,26 @@ merged = [r for p in jsonl_files(final) for r in read_jsonl(p)]
 for run in RUNS:
     name = NAMES[run]
     preds = [r["predictions"][name] for r in merged if name in r.get("predictions", {})]
-    if run == "kggen":
-        sizes = [len(p.get("predicted_triples", [])) for p in preds]
-    else:
-        sizes = [sum(len(v) for v in p["predicted_triples_oie"].values()) for p in preds]
+    sizes = [sum(len(v) for v in p["predicted_triples_oie"].values()) if "predicted_triples_oie" in p
+             else len(p.get("predicted_triples", [])) for p in preds]
     t = timing.get(run, {"seconds": None, "ok": False})
     summary["runs"][name] = {
         **t, "n_with_prediction": len(preds), "n_empty": sum(s == 0 for s in sizes),
         "avg_triples": round(sum(sizes) / max(len(sizes), 1), 2),
         "sec_per_instance": round(t["seconds"] / n_input, 2) if t["seconds"] else None,
     }
+    stats = [p["karma_stats"] for p in preds if "karma_stats" in p]
+    if stats:                         # KARMA: Reader bỏ hết đoạn? REA trích bao nhiêu trước khi Evaluator lọc?
+        summary["runs"][name]["karma"] = {
+            "reader_dropped_all": sum(s.get("n_relevant_segments", 0) == 0 for s in stats),
+            "avg_relationships_before_filter": round(sum(s.get("n_relationships", 0) for s in stats) / len(stats), 2),
+            "errors": sum("error" in s for s in stats),
+        }
 json.dump(summary, open(f"{WORK}/summary.json", "w"), indent=1)
 print(json.dumps(summary, indent=1), flush=True)
 
-shutil.rmtree(EMERGE)                 # không đưa repo + schema vào output
+for d in (EMERGE, f"{WORK}/karma", f"{WORK}/kltn"):
+    shutil.rmtree(d, ignore_errors=True)   # không đưa repo + schema vào output
 shutil.rmtree(f"{WORK}/models")       # không đưa 4 GB model vào output
 shutil.rmtree(f"{WORK}/input")
 print("DONE", flush=True)
