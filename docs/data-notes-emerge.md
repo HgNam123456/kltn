@@ -331,3 +331,38 @@ Server lên với đủ cờ như máy local (4 slot, MTP draft, flash-attn). Bi
 | Máy local | 92,8 / 91,3 | 36,6 / 75,9 | 69,0 / 70,6 | 4,8 · 6,2 |
 
 Lệch ≤ 0,9 điểm (nhiễu speculative/batch), nhanh gấp 4–5 lần → toàn bộ 3.500 bài ước ~70 phút/lượt trên Kaggle.
+
+## 14. Baseline chạy lại bằng Gemma 4 E4B (12/10): so cùng model
+
+Mục đích: tách phần hơn nhờ pipeline khỏi phần hơn nhờ model. Kernel `kgu-baselines-gemma4` v2 (`kaggle/baselines/`)
+chạy code EMERGE ghim commit `f688910` với llama-server Gemma 4 E4B (cùng GGUF/cờ với kernel judge), dev 350:
+- **EDC+ ICL / ZS**: config `edc_plus_{icl,zs}_gpt_5_1` giữ nguyên prompt + generation profile, chỉ đổi khối `llm`
+  (`backend http`, `mode chat`, `model local`). Không canonicalize (giống bản GPT-5.1) → không cần e5-mistral-7b,
+  chỉ tải `documents.jsonl` của 7 snapshot.
+- **KGGen**: `kg-gen==0.4.0`, `model=hosted_vllm/local`, temp 0 / chunk 10240 như config Mistral (bản GPT-5.1 bị
+  kg-gen ép temp 1.0), `max_tokens` 4096 cho vừa 8192 ngữ cảnh/slot. Wrapper ghi khóa `kg-gen-<model>` → đổi tên
+  chuẩn trước khi merge.
+- Gộp bằng `merge.s0x_merge_predictions` của EMERGE; 350/350 bài có prediction, không bài rỗng; prediction cũ giữ
+  nguyên (đã so từng bài). Dataset `emerge-dev350-mine` đã thêm 3 model; chấm bằng kernel `emerge-eval-dev350` v5.
+
+Số chính thức (C / G-BERTScore-R), dev 350, bảng đầy đủ `results/kaggle/dev350_baselines_gemma4_tables.txt`.
+s/bài = wall / 350 trên T4, 4 slot song song (`results/kaggle/baselines_gemma4.summary.json`).
+
+| Model | Exists | Add | Mint+Add | Deprecate | s/bài |
+|---|---|---|---|---|---|
+| **mine/gemma4-e4b** (v3 + Add v1) | **92,8 / 91,3** | 32,6 / 74,1 | – | **69,0 / 70,6** | 1,07 + 1,35 |
+| EDC+ ICL GPT-5.1 | 22,5 / 65,4 | **37,7 / 76,4** | 31,4 / 76,6 | 35,9 / 56,0 | – |
+| EDC+ ICL Gemma 4 | 11,4 / 59,9 | 12,8 / 68,9 | 17,7 / 68,5 | 4,1 / 10,3 | 2,13 |
+| EDC+ ZS GPT-5.1 | 14,6 / 63,4 | 15,0 / 71,0 | 18,6 / 67,9 | 0,0 / 0,6 | – |
+| EDC+ ZS Gemma 4 | 9,1 / 58,3 | 11,4 / 67,1 | 11,9 / 64,7 | 0,7 / 2,7 | 1,82 |
+| KGGen GPT-5.1 | 13,3 / 62,8 | 14,3 / 68,1 | 13,7 / 68,2 | 0 / 0 | – |
+| KGGen Gemma 4 | 9,5 / 60,4 | 11,0 / 66,7 | 12,8 / 67,6 | 0 / 0 | 2,82 |
+
+- Đổi GPT-5.1 → Gemma 4 làm EDC+ ICL mất nặng nhất (Add C 37,7 → 12,8; Deprecate 35,9 → 4,1): Gemma gần như không
+  sinh action DEPRECATE (lượt thử 70 bài: 6 triple so với 67 của GPT-5.1, cùng prompt). EDC+ ZS và KGGen chỉ mất
+  1–7 điểm C — hai bản này với GPT-5.1 vốn đã thấp.
+- Cùng Gemma 4 E4B, pipeline của mình hơn baseline Gemma tốt nhất: Exists C +81 điểm, Deprecate C +65 điểm, Add C
+  +20 điểm, tốc độ tương đương (2,4 s/bài cho cả Exists/Deprecate + Add so với 1,8–2,8 s/bài). Phần hơn GPT-5.1
+  baseline vì vậy không đến từ model mạnh hơn.
+- Dòng mine trong bảng chính thức dùng Add **v1** (bản đã export vào dataset); Add v2 chấm mềm là 36,6 / 75,9 (§12).
+- Infer (ee-kg) ngoài phạm vi, không đưa vào bảng. KARMA (bản gốc 03/2025) làm sau; SAC-KG không có code → bỏ.

@@ -1,0 +1,16 @@
+{
+  "id": "ngocnam2005/kgu-baselines-gemma4",
+  "title": "kgu-baselines-gemma4",
+  "code_file": "run_baselines.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ngocnam2005/emerge-dev350-mine",
+    "ngocnam2005/llama-server-cuda"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

@@ -1,0 +1,31 @@
+{
+ "limit": null,
+ "n_input": 350,
+ "workers": 4,
+ "runs": {
+  "edc-plus-llamacpp/gemma-4-e4b": {
+   "seconds": 745.1,
+   "ok": true,
+   "n_with_prediction": 350,
+   "n_empty": 0,
+   "avg_triples": 16.79,
+   "sec_per_instance": 2.13
+  },
+  "edc-plus-zshot-llamacpp/gemma-4-e4b": {
+   "seconds": 637.2,
+   "ok": true,
+   "n_with_prediction": 350,
+   "n_empty": 0,
+   "avg_triples": 15.59,
+   "sec_per_instance": 1.82
+  },
+  "kg-gen/llamacpp/gemma-4-e4b": {
+   "seconds": 985.5,
+   "ok": true,
+   "n_with_prediction": 350,
+   "n_empty": 0,
+   "avg_triples": 11.41,
+   "sec_per_instance": 2.82
+  }
+ }
+}

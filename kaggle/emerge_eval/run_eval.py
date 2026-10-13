@@ -24,6 +24,9 @@ MODELS = [
     "edc-plus-open-ai/gpt-5.1/non-canonicalized", "edc-plus-azure_ai/Mistral-Large-2411",
     "edc-plus-azure_ai/Mistral-small", "edc-plus-zshot-azure_ai/Mistral-Large-2411",
     "kg-gen/azure_ai/Mistral-small", "rakg/azure_ai/Mistral-small", "relik-oie", "rebel",
+    # bản GPT-5.1 còn lại + baseline chạy lại bằng Gemma 4 E4B (kaggle/baselines/), cùng prompt, cùng dev350
+    "edc-plus-zshot-open_ai/GPT-5_1", "kg-gen/azure/gpt5.1",
+    "edc-plus-llamacpp/gemma-4-e4b", "edc-plus-zshot-llamacpp/gemma-4-e4b", "kg-gen/llamacpp/gemma-4-e4b",
 ]
 QID_MODELS = [MINE, "kg-aware/gpt-5.1/oracle", "kg-aware/gpt-5.1/kg_rag_32", "kg-aware/gpt-5.1/oracle_kg_rag"]
 
