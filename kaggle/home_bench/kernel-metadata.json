@@ -1,0 +1,15 @@
+{
+  "id": "ngocnam2005/kgu-home-benchmarks",
+  "title": "kgu-home-benchmarks",
+  "code_file": "run_home_bench.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "ngocnam2005/llama-server-cuda"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}
