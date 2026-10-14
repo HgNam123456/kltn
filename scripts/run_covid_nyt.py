@@ -20,13 +20,14 @@ _score = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(_score)
 
 
-def run_rows(rows: list[dict], kg, llm, out: Path) -> None:
+def run_rows(rows: list[dict], step, out: Path) -> None:
+    """step(text, date) -> list 5-tuple; dùng chung cho mình (TemporalKG) và baseline (atom_covid, kggen_covid)."""
     out.parent.mkdir(parents=True, exist_ok=True)
     with out.open("w", encoding="utf8") as f:
         for r in sorted(rows, key=lambda r: (r["date"], r["row"])):
             t0 = time.time()
             try:
-                qs = kg.update(r["text"], r["date"], llm)
+                qs = step(r["text"], r["date"])
             except Exception as e:                   # lỗi một nhóm ngày → rỗng (tính 0 điểm), chạy tiếp
                 print(f"!!! row {r['row']}: {e!r}"[:300], flush=True)
                 qs = []
@@ -45,7 +46,7 @@ def main() -> None:
     args = ap.parse_args()
     rows = sorted(_score.load_dataset(args.data), key=lambda r: (r["date"], r["row"]))[: args.limit]
     kg, llm = TemporalKG(), client_from_env()
-    run_rows(rows, kg, llm, args.out)
+    run_rows(rows, lambda text, date: kg.update(text, date, llm), args.out)
     Path(f"{args.out}.kg.json").write_text(json.dumps(kg.facts, ensure_ascii=False), encoding="utf8")
     print(f"{len(rows)} nhóm ngày, KG cuối {len(kg.facts)} fact, {llm.n_calls} lệnh gọi LLM → {args.out}")
 

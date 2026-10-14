@@ -64,16 +64,43 @@ def test_covid_runner_goes_in_date_order_and_flushes_each_row(tmp_path):
     rows = [{"row": 0, "date": "2020-02-01", "text": "b"}, {"row": 1, "date": "2020-01-01", "text": "a"}]
     seen = []
 
-    class KG:
-        facts = []
-
-        def update(self, text, date, llm):
-            seen.append(date)
-            if text == "b":
-                raise RuntimeError("boom")
-            return [("h", "r", "t", [date], [])]
+    def step(text, date):
+        seen.append(date)
+        if text == "b":
+            raise RuntimeError("boom")
+        return [("h", "r", "t", [date], [])]
     out = tmp_path / "o.jsonl"
-    m.run_rows(rows, KG(), None, out)
+    m.run_rows(rows, step, out)
     assert seen == ["2020-01-01", "2020-02-01"]
     got = [json.loads(line) for line in out.read_text(encoding="utf8").splitlines()]
     assert [(g["row"], g["quintuples"]) for g in got] == [(1, [["h", "r", "t", ["2020-01-01"], []]]), (0, [])]
+
+
+def test_atom_relationship_to_quintuple_normalizes_dates_and_drops_broken():
+    from types import SimpleNamespace as NS
+    m = _mod("atom_covid")
+    rel = NS(startNode=NS(name="Virus"), name="occurs_in", endNode=NS(name="China"), t_start="2020-01-24", t_end=[None, ""])
+    assert m.to_quintuple(rel) == ("Virus", "occurs_in", "China", ["2020-01-24"], [])
+    assert m.to_quintuple(NS(startNode=None, name="r", endNode=NS(name="x"), t_start=[], t_end=[])) is None
+
+
+def test_atom_flatten_skips_failed_containers():
+    from types import SimpleNamespace as NS
+    m = _mod("atom_covid")
+    rel = NS(startNode=NS(name="a"), name="r", endNode=NS(name="b"), t_start=[], t_end=[])
+    outs = [NS(relationships=[rel, None]), None, ValueError("bad json"), NS(relationships=None)]
+    assert m.flatten(outs) == [("a", "r", "b", [], [])]
+
+
+def test_kggen_relations_become_untimed_quintuples_sorted():
+    m = _mod("kggen_covid")
+    assert m.to_quintuples({("b", "r", "c"), ("a", "r", "b")}) == [("a", "r", "b", [], []), ("b", "r", "c", [], [])]
+
+
+def test_atom_schema_hint_carries_field_descriptions():
+    from pydantic import BaseModel, Field
+    m = _mod("atom_covid")
+
+    class AtomicFact(BaseModel):
+        atomic_fact: list[str] = Field(description="Decompose the paragraph into atomic facts.")
+    assert "Decompose the paragraph into atomic facts." in m.schema_hint(AtomicFact)
