@@ -1,0 +1,45 @@
+{
+ "limit": 20,
+ "bench": [
+  "webnlg"
+ ],
+ "runs": {
+  "edc": {
+   "ok": true,
+   "seconds": 212.0,
+   "sec_per_item": 10.6
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "c30f9a02c6c25da71399802f323a29755f3d00d7",
+ "webnlg_n": 20,
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "edc_embedder": "intfloat/e5-mistral-7b-instruct",
+ "webnlg": {
+  "edc": {
+   "Partial": {
+    "P": 0.755,
+    "R": 0.7682,
+    "F1": 0.7593
+   },
+   "Strict": {
+    "P": 0.7194,
+    "R": 0.7242,
+    "F1": 0.7211
+   },
+   "Exact": {
+    "P": 0.7402,
+    "R": 0.7477,
+    "F1": 0.7427
+   },
+   "lines": 20,
+   "scored": 20,
+   "empty": 1
+  }
+ },
+ "total_minutes": 4.3
+}

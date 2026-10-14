@@ -28,9 +28,9 @@ import subprocess
 import time
 import urllib.request
 
-LIMIT = 20
-BENCH = ["webnlg"]
-RUNS = ["edc"]                         # chạy thử v4: vá đủ khối free_model của EDC
+LIMIT = None
+BENCH = ["webnlg", "covid"]
+RUNS = ["mine_webnlg", "edc", "mine_covid", "atom_direct", "atom", "kggen"]
 DEV_N = 20                            # 20 nhóm ngày đầu (theo ngày) đã xem ở lượt chạy thử khi sửa prompt của mình
 EDC_TIMEOUT_H = 6                    # chặn EDC (gọi LLM tuần tự, lỗi API thì thử lại vô hạn)
 WORKERS = 4
