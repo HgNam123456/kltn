@@ -1,0 +1,13 @@
+{
+  "id": "ngocnam2005/kgu-covid-calibration",
+  "title": "kgu-covid-calibration",
+  "code_file": "run_calib.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}
