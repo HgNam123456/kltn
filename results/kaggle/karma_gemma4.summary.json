@@ -1,0 +1,33 @@
+{
+ "limit": null,
+ "n_input": 350,
+ "workers": 4,
+ "runs": {
+  "karma-biomed/llamacpp/gemma-4-e4b": {
+   "seconds": 641.3,
+   "ok": true,
+   "n_with_prediction": 350,
+   "n_empty": 345,
+   "avg_triples": 0.05,
+   "sec_per_instance": 1.83,
+   "karma": {
+    "reader_dropped_all": 341,
+    "avg_relationships_before_filter": 0.05,
+    "errors": 0
+   }
+  },
+  "karma/llamacpp/gemma-4-e4b": {
+   "seconds": 2685.5,
+   "ok": true,
+   "n_with_prediction": 350,
+   "n_empty": 13,
+   "avg_triples": 5.26,
+   "sec_per_instance": 7.67,
+   "karma": {
+    "reader_dropped_all": 9,
+    "avg_relationships_before_filter": 5.72,
+    "errors": 0
+   }
+  }
+ }
+}

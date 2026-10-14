@@ -15,7 +15,7 @@ import subprocess
 import time
 import urllib.request
 
-LIMIT = 2
+LIMIT = None
 RUNS = ["karma_biomed", "karma_general"]    # edc_icl, edc_zs, kggen đã chạy ở v2 (đã có trong dataset)
 NAMES = {                                   # tên chuẩn ghi vào predictions, đặt theo kiểu tên của EMERGE
     "edc_icl": "edc-plus-llamacpp/gemma-4-e4b",

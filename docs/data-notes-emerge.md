@@ -365,4 +365,56 @@ s/bài = wall / 350 trên T4, 4 slot song song (`results/kaggle/baselines_gemma4
   +20 điểm, tốc độ tương đương (2,4 s/bài cho cả Exists/Deprecate + Add so với 1,8–2,8 s/bài). Phần hơn GPT-5.1
   baseline vì vậy không đến từ model mạnh hơn.
 - Dòng mine trong bảng chính thức dùng Add **v1** (bản đã export vào dataset); Add v2 chấm mềm là 36,6 / 75,9 (§12).
-- Infer (ee-kg) ngoài phạm vi, không đưa vào bảng. KARMA (bản gốc 03/2025) làm sau; SAC-KG không có code → bỏ.
+- Infer (ee-kg) ngoài phạm vi, không đưa vào bảng. KARMA (bản gốc 03/2025): §16; SAC-KG không có code → bỏ.
+
+## 15. Vì sao baseline Gemma thấp (13/10): không phải lỗi chạy
+
+Kiểm phần chạy: không request nào bị cắt ngữ cảnh (dài nhất 5.726 / 8.192 token, ~1.400 lượt gọi, không lỗi HTTP);
+99,5% triple EDC+ đủ 4 phần với action hợp lệ, merge không bỏ triple nào, 350/350 bài parse được.
+
+So từng gold với dự đoán bằng chữ (`scripts/diagnose_emerge_baselines.py`), tỉ lệ trên số gold, dev 350:
+
+| | Exists: nối đúng 2 thực thể | … và đúng nhãn quan hệ | Add: nối đúng 2 thực thể | Deprecate: số dự đoán | Quan hệ là nhãn Wikidata |
+|---|---|---|---|---|---|
+| EDC+ ICL GPT-5.1 | 38,4% | 15,2% | 61,5% | 399 | 70,5% |
+| EDC+ ICL Gemma 4 | 26,4% | 3,1% | 47,6% | 38 | 22,0% |
+| EDC+ ZS GPT-5.1 | 34,6% | 3,8% | 53,1% | 6 | 17,8% |
+| EDC+ ZS Gemma 4 | 26,6% | 0,0% | 44,3% | 16 | 1,6% |
+| KGGen GPT-5.1 | 34,9% | 0,0% | 44,0% | 0 | 1,6% |
+| KGGen Gemma 4 | 29,7% | 0,0% | 44,3% | 0 | 0,9% |
+| KARMA Gemma 4 | 19,1% | 0,9% | 34,8% | 0 | 14,8% |
+
+1. **Tên quan hệ** là thứ C phạt nặng nhất: C chỉ tính gold đã phủ khi chuỗi "head relation tail" có cosine > 0,9 →
+   phải gần trùng nhãn Wikidata. GPT-5.1 bắt chước được nhãn Wikidata trong few-shot (70,5%), Gemma thì không (22%,
+   ghi `nationality`, `plays for` thay cho `country of citizenship`, `member of sports team`). Vì vậy G-R chỉ giảm
+   5–7 điểm trong khi C giảm một nửa. Bước canonicalize của EDC (EMERGE bỏ) sinh ra để sửa đúng chỗ này.
+2. **Trích ít fact hơn**: Gemma nối đúng 2 thực thể ít hơn GPT-5.1 ~12 điểm ở EDC+ ICL; KGGen gần ngang.
+3. **Deprecate**: Gemma hầu như không dùng action DEPRECATE (38 so với 399 của GPT-5.1, gold 145); few-shot chỉ có 7
+   ví dụ DEPRECATE trên 31.
+4. **Trần của đề bài với OIE**: gộp cả 7 lượt chạy chỉ nối được 57,1% gold Exists (Add 74,7%). Phần còn lại là fact
+   nền không có trong câu chữ (`AC Milan – sport – association football`), phải tra KG mới có → baseline OIE nào cũng
+   thấp ở Exists, kể cả GPT-5.1 (C 22,5); pipeline của mình tra KG nên được 92,8.
+
+Cách báo trong khóa luận: mốc chính là bản GPT-5.1 (số chính chủ); bản Gemma là phép so cùng model; báo cả C lẫn G-R
+và nói rõ C thưởng đúng dạng nhãn Wikidata.
+
+## 16. KARMA (bản gốc 82d68ba) bằng Gemma 4 (13/10)
+
+Code KARMA 03/2025 (một file `karma_pipeline.py`) gắn cứng miền y sinh: Reader giữ đoạn khi điểm "liên quan tri thức
+y sinh" > 0,2, NER tìm bệnh/thuốc/gene, quan hệ mẫu treats/causes. Conflict Resolution chỉ bắt 4 cặp quan hệ y sinh
+đối nghĩa (cùng head, tail) và chỉ quyết định giữ hay bỏ triple **mới**, không xóa triple cũ → KARMA không sinh được
+Deprecate trên EMERGE. Wrapper `scripts/karma_emerge.py` (test `tests/test_karma_emerge.py`): mỗi bài một pipeline mới,
+KG rỗng; hai biến thể — `karma-biomed` chạy nguyên văn, `karma` chỉ thay 15 cụm chỉ miền trong prompt (`GENERAL_PATCH`:
+y sinh → bách khoa, loại thực thể, bộ quan hệ mẫu → `member of`, `employer`, `educated at`…), few-shot trong system
+prompt giữ nguyên. Kernel `kgu-baselines-gemma4` v4, chấm bằng `emerge-eval-dev350` v6
+(`results/kaggle/dev350_karma_gemma4_tables.txt`, `results/kaggle/karma_gemma4.summary.json`).
+
+| | Exists C / R | Add C / R | Mint+Add C / R | Deprecate | Bài rỗng | triple/bài | s/bài |
+|---|---|---|---|---|---|---|---|
+| KARMA (đổi miền) | 7,0 / 50,9 | 15,4 / 61,9 | 11,5 / 62,5 | 0 / 0 | 13 | 5,3 | 7,67 |
+| KARMA nguyên văn (y sinh) | 0 / 0 | 0 / 0,9 | 0 / 0,6 | 0 / 0 | 345 | 0,05 | 1,83 |
+
+- Bản nguyên văn: Reader bỏ hết đoạn ở 341/350 bài → không dùng được ngoài miền y sinh.
+- Bản đổi miền: Add C 15,4 cao nhất trong các baseline Gemma nhờ bộ quan hệ mẫu gần nhãn Wikidata (14,8% quan hệ
+  trùng nhãn, KGGen 0,9%); nhưng Exists/G-R thấp nhất vì Summarizer nén đoạn còn 2–4 câu và Evaluator lọc bớt
+  (5,7 → 5,3 triple/bài) → nối đúng 2 thực thể chỉ 19,1% gold Exists. Chậm nhất: ~7 + 2×số triple lượt gọi mỗi bài.

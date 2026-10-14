@@ -1,0 +1,229 @@
+[{"stream_name":"stdout","time":2.444900691,"data":"input: /kaggle/input/datasets/ngocnam2005/emerge-dev350-mine -\u003e /kaggle/working/input/evaluation_set, 350 instance\n"}
+,{"stream_name":"stdout","time":2.444949825,"data":"$ git clone -q https://github.com/klimzaporojets/emerge.git /kaggle/working/emerge \u0026\u0026 git -C /kaggle/working/emerge checkout -q f68891017e58dfe0d88ef84c19b455dcd8ecaece\n"}
+,{"stream_name":"stdout","time":3.883834781,"data":"$ pip install -q huggingface_hub\n"}
+,{"stream_name":"stderr","time":9.845385354,"data":"\rFetching 10 files:   0%|          | 0/10 [00:00\u003c?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":10.168101822,"data":"\rFetching 10 files:  10%|█         | 1/10 [00:00\u003c00:01,  5.02it/s]\rFetching 10 files:  40%|████      | 4/10 [00:00\u003c00:00, 12.17it/s]\rFetching 10 files:  60%|██████    | 6/10 [00:00\u003c00:00, 14.52it/s]\rFetching 10 files: 100%|██████████| 10/10 [00:00\u003c00:00, 20.37it/s]\n"}
+,{"stream_name":"stdout","time":11.001783824,"data":"$ chmod +x /kaggle/working/llama-bin/llama-server\n"}
+,{"stream_name":"stdout","time":19.773748337,"data":"$ /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\n"}
+,{"stream_name":"stdout","time":41.818819231,"data":"$ git clone -q https://github.com/YuxingLu613/KARMA.git /kaggle/working/karma \u0026\u0026 git -C /kaggle/working/karma checkout -q 82d68ba\n"}
+,{"stream_name":"stdout","time":42.285421266,"data":"$ git clone -q --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git /kaggle/working/kltn\n"}
+,{"stream_name":"stdout","time":43.012173352,"data":"$ python -u /kaggle/working/kltn/scripts/karma_emerge.py --karma /kaggle/working/karma/karma_pipeline.py --input /kaggle/working/input/evaluation_set --output /kaggle/working/raw/karma_biomed/ --variant biomed --name karma-biomed/llamacpp/gemma-4-e4b --base-url http://127.0.0.1:8080/v1 --workers 4 2\u003e\u00261 | tee /kaggle/working/logs/karma_biomed.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":45.365567805,"data":"350 bài, variant=biomed, workers=4\n"}
+,{"stream_name":"stdout","time":94.259242444,"data":"25/350\n"}
+,{"stream_name":"stdout","time":144.58711328,"data":"50/350\n"}
+,{"stream_name":"stdout","time":201.217531651,"data":"75/350\n"}
+,{"stream_name":"stdout","time":246.029550114,"data":"100/350\n"}
+,{"stream_name":"stdout","time":287.733317873,"data":"125/350\n"}
+,{"stream_name":"stdout","time":339.053588031,"data":"150/350\n"}
+,{"stream_name":"stdout","time":382.94075961,"data":"175/350\n"}
+,{"stream_name":"stdout","time":426.142653678,"data":"200/350\n"}
+,{"stream_name":"stdout","time":461.734479597,"data":"225/350\n"}
+,{"stream_name":"stdout","time":507.815513577,"data":"250/350\n"}
+,{"stream_name":"stdout","time":549.67943617,"data":"275/350\n"}
+,{"stream_name":"stdout","time":590.185028172,"data":"300/350\n"}
+,{"stream_name":"stdout","time":642.922385653,"data":"325/350\n"}
+,{"stream_name":"stdout","time":683.968405566,"data":"350/350\n"}
+,{"stream_name":"stdout","time":684.274111068,"data":"$ python -u /kaggle/working/kltn/scripts/karma_emerge.py --karma /kaggle/working/karma/karma_pipeline.py --input /kaggle/working/input/evaluation_set --output /kaggle/working/raw/karma_general/ --variant general --name karma/llamacpp/gemma-4-e4b --base-url http://127.0.0.1:8080/v1 --workers 4 2\u003e\u00261 | tee /kaggle/working/logs/karma_general.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":685.585652093,"data":"350 bài, variant=general, workers=4\n"}
+,{"stream_name":"stdout","time":892.480415701,"data":"25/350\n"}
+,{"stream_name":"stdout","time":1104.464633917,"data":"50/350\n"}
+,{"stream_name":"stdout","time":1279.113733644,"data":"75/350\n"}
+,{"stream_name":"stdout","time":1490.944215338,"data":"100/350\n"}
+,{"stream_name":"stdout","time":1666.451459481,"data":"125/350\n"}
+,{"stream_name":"stdout","time":1849.598459172,"data":"150/350\n"}
+,{"stream_name":"stdout","time":2065.054206731,"data":"175/350\n"}
+,{"stream_name":"stdout","time":2230.92640549,"data":"200/350\n"}
+,{"stream_name":"stdout","time":2432.098108738,"data":"225/350\n"}
+,{"stream_name":"stdout","time":2603.642821508,"data":"250/350\n"}
+,{"stream_name":"stdout","time":2789.725851967,"data":"275/350\n"}
+,{"stream_name":"stdout","time":2989.22840505,"data":"300/350\n"}
+,{"stream_name":"stdout","time":3177.357331505,"data":"325/350\n"}
+,{"stream_name":"stdout","time":3369.502518997,"data":"350/350\n"}
+,{"stream_name":"stdout","time":3369.818588064,"data":"$ python -u -m merge.s0x_merge_predictions --config_file /kaggle/working/merge_config.json 2\u003e\u00261 | tee /kaggle/working/logs/merge.log\n"}
+,{"stream_name":"stdout","time":3369.919021753,"data":"10/13/2026 15:33:04 - INFO - __main__ - loading main dataset from /kaggle/working/input/evaluation_set/\n"}
+,{"stream_name":"stdout","time":3369.944146503,"data":"\rloading delta_2025-01-08.jsonl: 0it [00:00, ?it/s]\rloading delta_2025-01-08.jsonl: 10it [00:00, 1180.53it/s]\n"}
+,{"stream_name":"stdout","time":3369.962808566,"data":"\rloading delta_2025-01-15.jsonl: 0it [00:00, ?it/s]\rloading delta_2025-01-15.jsonl: 10it [00:00, 539.93it/s]\n"}
+,{"stream_name":"stdout","time":3369.972294906,"data":"\rloading delta_2025-01-22.jsonl: 0it [00:00, ?it/s]\rloading delta_2025-01-22.jsonl: 10it [00:00, 1079.84it/s]\n"}
+,{"stream_name":"stdout","time":3369.979532776,"data":"\rloading delta_2025-01-29.jsonl: 0it [00:00, ?it/s]\rloading delta_2025-01-29.jsonl: 10it [00:00, 1443.47it/s]\n"}
+,{"stream_name":"stdout","time":3369.988345429,"data":"\rloading delta_2025-02-05.jsonl: 0it [00:00, ?it/s]\rloading delta_2025-02-05.jsonl: 10it [00:00, 1164.18it/s]\n"}
+,{"stream_name":"stdout","time":3369.994506143,"data":"\rloading delta_2019-01-08.jsonl: 0it [00:00, ?it/s]\rloading delta_2019-01-08.jsonl: 10it [00:00, 1688.66it/s]\n"}
+,{"stream_name":"stdout","time":3370.002585229,"data":"\rloading delta_2019-01-15.jsonl: 0it [00:00, ?it/s]\rloading delta_2019-01-15.jsonl: 10it [00:00, 1275.06it/s]\n"}
+,{"stream_name":"stdout","time":3370.016948988,"data":"\rloading delta_2019-01-22.jsonl: 0it [00:00, ?it/s]\rloading delta_2019-01-22.jsonl: 10it [00:00, 716.38it/s]\n"}
+,{"stream_name":"stdout","time":3370.023629616,"data":"\rloading delta_2019-01-29.jsonl: 0it [00:00, ?it/s]\rloading delta_2019-01-29.jsonl: 10it [00:00, 1576.04it/s]\n"}
+,{"stream_name":"stdout","time":3370.030363227,"data":"\rloading delta_2019-02-05.jsonl: 0it [00:00, ?it/s]\rloading delta_2019-02-05.jsonl: 10it [00:00, 1541.97it/s]\n"}
+,{"stream_name":"stdout","time":3370.037745471,"data":"\rloading delta_2020-01-08.jsonl: 0it [00:00, ?it/s]\rloading delta_2020-01-08.jsonl: 10it [00:00, 1426.49it/s]\n"}
+,{"stream_name":"stdout","time":3370.050814533,"data":"\rloading delta_2020-01-15.jsonl: 0it [00:00, ?it/s]\rloading delta_2020-01-15.jsonl: 10it [00:00, 779.84it/s]\n"}
+,{"stream_name":"stdout","time":3370.056110487,"data":"\rloading delta_2020-01-22.jsonl: 0it [00:00, ?it/s]\rloading delta_2020-01-22.jsonl: 10it [00:00, 1995.77it/s]\n"}
+,{"stream_name":"stdout","time":3370.066113264,"data":"\rloading delta_2020-01-29.jsonl: 0it [00:00, ?it/s]\rloading delta_2020-01-29.jsonl: 10it [00:00, 1029.53it/s]\n"}
+,{"stream_name":"stdout","time":3370.077338735,"data":"\rloading delta_2020-02-05.jsonl: 0it [00:00, ?it/s]\rloading delta_2020-02-05.jsonl: 10it [00:00, 916.29it/s]\n"}
+,{"stream_name":"stdout","time":3370.083260614,"data":"\rloading delta_2021-01-08.jsonl: 0it [00:00, ?it/s]\rloading delta_2021-01-08.jsonl: 10it [00:00, 1787.02it/s]\n"}
+,{"stream_name":"stdout","time":3370.090860081,"data":"\rloading delta_2021-01-15.jsonl: 0it [00:00, ?it/s]\rloading delta_2021-01-15.jsonl: 10it [00:00, 1361.70it/s]\n"}
+,{"stream_name":"stdout","time":3370.10262937,"data":"\rloading delta_2021-01-22.jsonl: 0it [00:00, ?it/s]\rloading delta_2021-01-22.jsonl: 10it [00:00, 862.69it/s]\n"}
+,{"stream_name":"stdout","time":3370.110938118,"data":"\rloading delta_2021-01-29.jsonl: 0it [00:00, ?it/s]\rloading delta_2021-01-29.jsonl: 10it [00:00, 1269.46it/s]\n"}
+,{"stream_name":"stdout","time":3370.117649223,"data":"\rloading delta_2021-02-05.jsonl: 0it [00:00, ?it/s]\rloading delta_2021-02-05.jsonl: 10it [00:00, 1559.45it/s]\n"}
+,{"stream_name":"stdout","time":3370.132125517,"data":"\rloading delta_2024-01-08.jsonl: 0it [00:00, ?it/s]\rloading delta_2024-01-08.jsonl: 10it [00:00, 702.55it/s]\n"}
+,{"stream_name":"stdout","time":3370.137886285,"data":"\rloading delta_2024-01-15.jsonl: 0it [00:00, ?it/s]\rloading delta_2024-01-15.jsonl: 10it [00:00, 1884.83it/s]\n"}
+,{"stream_name":"stdout","time":3370.145599641,"data":"\rloading delta_2024-01-22.jsonl: 0it [00:00, ?it/s]\rloading delta_2024-01-22.jsonl: 10it [00:00, 1338.19it/s]\n"}
+,{"stream_name":"stdout","time":3370.155811866,"data":"\rloading delta_2024-01-29.jsonl: 0it [00:00, ?it/s]\rloading delta_2024-01-29.jsonl: 10it [00:00, 1002.77it/s]\n"}
+,{"stream_name":"stdout","time":3370.161569285,"data":"\rloading delta_2024-02-05.jsonl: 0it [00:00, ?it/s]\rloading delta_2024-02-05.jsonl: 10it [00:00, 1877.65it/s]\n"}
+,{"stream_name":"stdout","time":3370.167744628,"data":"\rloading delta_2023-01-08.jsonl: 0it [00:00, ?it/s]\rloading delta_2023-01-08.jsonl: 10it [00:00, 1719.82it/s]\n"}
+,{"stream_name":"stdout","time":3370.174507728,"data":"\rloading delta_2023-01-15.jsonl: 0it [00:00, ?it/s]\rloading delta_2023-01-15.jsonl: 10it [00:00, 1538.74it/s]\n"}
+,{"stream_name":"stdout","time":3370.184195898,"data":"\rloading delta_2023-01-22.jsonl: 0it [00:00, ?it/s]\rloading delta_2023-01-22.jsonl: 10it [00:00, 1066.76it/s]\n"}
+,{"stream_name":"stdout","time":3370.191945866,"data":"\rloading delta_2023-01-29.jsonl: 0it [00:00, ?it/s]\rloading delta_2023-01-29.jsonl: 10it [00:00, 1310.97it/s]\n"}
+,{"stream_name":"stdout","time":3370.200903348,"data":"\rloading delta_2023-02-05.jsonl: 0it [00:00, ?it/s]\rloading delta_2023-02-05.jsonl: 10it [00:00, 1170.32it/s]\n"}
+,{"stream_name":"stdout","time":3370.277029042,"data":"\rloading delta_2022-01-08.jsonl: 0it [00:00, ?it/s]\rloading delta_2022-01-08.jsonl: 10it [00:00, 132.26it/s]\n"}
+,{"stream_name":"stdout","time":3370.283547614,"data":"\rloading delta_2022-01-15.jsonl: 0it [00:00, ?it/s]\rloading delta_2022-01-15.jsonl: 10it [00:00, 1607.32it/s]\n"}
+,{"stream_name":"stdout","time":3370.289834712,"data":"\rloading delta_2022-01-22.jsonl: 0it [00:00, ?it/s]\rloading delta_2022-01-22.jsonl: 10it [00:00, 1638.08it/s]\n"}
+,{"stream_name":"stdout","time":3370.3002254,"data":"\rloading delta_2022-01-29.jsonl: 0it [00:00, ?it/s]\rloading delta_2022-01-29.jsonl: 10it [00:00, 995.28it/s]\n"}
+,{"stream_name":"stdout","time":3370.305597094,"data":"\rloading delta_2022-02-05.jsonl: 0it [00:00, ?it/s]\rloading delta_2022-02-05.jsonl: 10it [00:00, 1956.75it/s]\n"}
+,{"stream_name":"stdout","time":3370.305761457,"data":"10/13/2026 15:33:04 - INFO - __main__ - loaded 350 instances from main dataset\n"}
+,{"stream_name":"stdout","time":3370.30582068,"data":"10/13/2026 15:33:04 - INFO - __main__ - merging predictions: karma-biomed/llamacpp/gemma-4-e4b (type=kg-gen)\n"}
+,{"stream_name":"stdout","time":3370.306144294,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.306450917,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.306696707,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.306978182,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.307215589,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.307511928,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.30775469,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.308013771,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.3082712,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.308514717,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.308810604,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.309031441,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.309293245,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.309545961,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.309783732,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.310098025,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.310342659,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.310612091,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.31085886,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.311123412,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.311431753,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.311636532,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.311909255,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.31212981,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.312391587,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.312657379,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.312929795,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.313149808,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.31342298,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.31365458,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.313960463,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.314187992,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.314447195,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.314683115,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.314939344,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.315189995,"data":"10/13/2026 15:33:04 - INFO - __main__ - merging predictions: karma/llamacpp/gemma-4-e4b (type=kg-gen)\n"}
+,{"stream_name":"stdout","time":3370.315414152,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.315846203,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.316307136,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.316715926,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.317121425,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2025-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.317564316,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.317995994,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.318404654,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.318740286,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.319179515,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2019-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.319605527,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.32013498,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.320541794,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.320943287,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.321363682,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2020-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.321796275,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.322212485,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.322621563,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.323077895,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.323562949,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2021-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.323977273,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.324345799,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.32472784,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.325138966,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.325584205,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2024-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.325964531,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.326392594,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.32686188,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.327173514,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.327507153,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2023-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.327928597,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-01-08.jsonl\n"}
+,{"stream_name":"stdout","time":3370.328297827,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-01-15.jsonl\n"}
+,{"stream_name":"stdout","time":3370.32867442,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-01-22.jsonl\n"}
+,{"stream_name":"stdout","time":3370.329051037,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-01-29.jsonl\n"}
+,{"stream_name":"stdout","time":3370.329368913,"data":"10/13/2026 15:33:04 - INFO - __main__ - processing kg-gen file: delta_2022-02-05.jsonl\n"}
+,{"stream_name":"stdout","time":3370.329714994,"data":"10/13/2026 15:33:04 - INFO - __main__ - saving merged dataset to /kaggle/working/evaluation_set/\n"}
+,{"stream_name":"stdout","time":3370.346320231,"data":"\rwriting delta_2025-01-08.jsonl: 0it [00:00, ?it/s]\rwriting delta_2025-01-08.jsonl: 10it [00:00, 626.57it/s]\n"}
+,{"stream_name":"stdout","time":3370.376766422,"data":"\rwriting delta_2025-01-15.jsonl: 0it [00:00, ?it/s]\rwriting delta_2025-01-15.jsonl: 10it [00:00, 333.34it/s]\n"}
+,{"stream_name":"stdout","time":3370.394078267,"data":"\rwriting delta_2025-01-22.jsonl: 0it [00:00, ?it/s]\rwriting delta_2025-01-22.jsonl: 10it [00:00, 587.08it/s]\n"}
+,{"stream_name":"stdout","time":3370.40699586,"data":"\rwriting delta_2025-01-29.jsonl: 0it [00:00, ?it/s]\rwriting delta_2025-01-29.jsonl: 10it [00:00, 802.55it/s]\n"}
+,{"stream_name":"stdout","time":3370.418195659,"data":"\rwriting delta_2025-02-05.jsonl: 0it [00:00, ?it/s]\rwriting delta_2025-02-05.jsonl: 10it [00:00, 922.05it/s]\n"}
+,{"stream_name":"stdout","time":3370.429292375,"data":"\rwriting delta_2019-01-08.jsonl: 0it [00:00, ?it/s]\rwriting delta_2019-01-08.jsonl: 10it [00:00, 934.21it/s]\n"}
+,{"stream_name":"stdout","time":3370.444043653,"data":"\rwriting delta_2019-01-15.jsonl: 0it [00:00, ?it/s]\rwriting delta_2019-01-15.jsonl: 10it [00:00, 692.37it/s]\n"}
+,{"stream_name":"stdout","time":3370.466087627,"data":"\rwriting delta_2019-01-22.jsonl: 0it [00:00, ?it/s]\rwriting delta_2019-01-22.jsonl: 10it [00:00, 460.72it/s]\n"}
+,{"stream_name":"stdout","time":3370.478319438,"data":"\rwriting delta_2019-01-29.jsonl: 0it [00:00, ?it/s]\rwriting delta_2019-01-29.jsonl: 10it [00:00, 843.13it/s]\n"}
+,{"stream_name":"stdout","time":3370.490855624,"data":"\rwriting delta_2019-02-05.jsonl: 0it [00:00, ?it/s]\rwriting delta_2019-02-05.jsonl: 10it [00:00, 821.77it/s]\n"}
+,{"stream_name":"stdout","time":3370.504237986,"data":"\rwriting delta_2020-01-08.jsonl: 0it [00:00, ?it/s]\rwriting delta_2020-01-08.jsonl: 10it [00:00, 765.83it/s]\n"}
+,{"stream_name":"stdout","time":3370.523446952,"data":"\rwriting delta_2020-01-15.jsonl: 0it [00:00, ?it/s]\rwriting delta_2020-01-15.jsonl: 10it [00:00, 532.62it/s]\n"}
+,{"stream_name":"stdout","time":3370.532858284,"data":"\rwriting delta_2020-01-22.jsonl: 0it [00:00, ?it/s]\rwriting delta_2020-01-22.jsonl: 10it [00:00, 1084.25it/s]\n"}
+,{"stream_name":"stdout","time":3370.551280286,"data":"\rwriting delta_2020-01-29.jsonl: 0it [00:00, ?it/s]\rwriting delta_2020-01-29.jsonl: 10it [00:00, 557.60it/s]\n"}
+,{"stream_name":"stdout","time":3370.567810777,"data":"\rwriting delta_2020-02-05.jsonl: 0it [00:00, ?it/s]\rwriting delta_2020-02-05.jsonl: 10it [00:00, 616.59it/s]\n"}
+,{"stream_name":"stdout","time":3370.578906985,"data":"\rwriting delta_2021-01-08.jsonl: 0it [00:00, ?it/s]\rwriting delta_2021-01-08.jsonl: 10it [00:00, 932.07it/s]\n"}
+,{"stream_name":"stdout","time":3370.593048833,"data":"\rwriting delta_2021-01-15.jsonl: 0it [00:00, ?it/s]\rwriting delta_2021-01-15.jsonl: 10it [00:00, 724.45it/s]\n"}
+,{"stream_name":"stdout","time":3370.611339048,"data":"\rwriting delta_2021-01-22.jsonl: 0it [00:00, ?it/s]\rwriting delta_2021-01-22.jsonl: 10it [00:00, 558.50it/s]\n"}
+,{"stream_name":"stdout","time":3370.627574129,"data":"\rwriting delta_2021-01-29.jsonl: 0it [00:00, ?it/s]\rwriting delta_2021-01-29.jsonl: 10it [00:00, 630.79it/s]\n"}
+,{"stream_name":"stdout","time":3370.641368869,"data":"\rwriting delta_2021-02-05.jsonl: 0it [00:00, ?it/s]\rwriting delta_2021-02-05.jsonl: 10it [00:00, 744.40it/s]\n"}
+,{"stream_name":"stdout","time":3370.665194057,"data":"\rwriting delta_2024-01-08.jsonl: 0it [00:00, ?it/s]\rwriting delta_2024-01-08.jsonl: 10it [00:00, 428.59it/s]\n"}
+,{"stream_name":"stdout","time":3370.676543257,"data":"\rwriting delta_2024-01-15.jsonl: 0it [00:00, ?it/s]\rwriting delta_2024-01-15.jsonl: 10it [00:00, 907.60it/s]\n"}
+,{"stream_name":"stdout","time":3370.69094928,"data":"\rwriting delta_2024-01-22.jsonl: 0it [00:00, ?it/s]\rwriting delta_2024-01-22.jsonl: 10it [00:00, 711.57it/s]\n"}
+,{"stream_name":"stdout","time":3370.704260139,"data":"\rwriting delta_2024-01-29.jsonl: 0it [00:00, ?it/s]\rwriting delta_2024-01-29.jsonl: 10it [00:00, 764.81it/s]\n"}
+,{"stream_name":"stdout","time":3370.714781152,"data":"\rwriting delta_2024-02-05.jsonl: 0it [00:00, ?it/s]\rwriting delta_2024-02-05.jsonl: 10it [00:00, 993.39it/s]\n"}
+,{"stream_name":"stdout","time":3370.726255618,"data":"\rwriting delta_2023-01-08.jsonl: 0it [00:00, ?it/s]\rwriting delta_2023-01-08.jsonl: 10it [00:00, 906.31it/s]\n"}
+,{"stream_name":"stdout","time":3370.738549548,"data":"\rwriting delta_2023-01-15.jsonl: 0it [00:00, ?it/s]\rwriting delta_2023-01-15.jsonl: 10it [00:00, 834.09it/s]\n"}
+,{"stream_name":"stdout","time":3370.751188596,"data":"\rwriting delta_2023-01-22.jsonl: 0it [00:00, ?it/s]\rwriting delta_2023-01-22.jsonl: 10it [00:00, 810.06it/s]\n"}
+,{"stream_name":"stdout","time":3370.764457286,"data":"\rwriting delta_2023-01-29.jsonl: 0it [00:00, ?it/s]\rwriting delta_2023-01-29.jsonl: 10it [00:00, 768.31it/s]\n"}
+,{"stream_name":"stdout","time":3370.779353912,"data":"\rwriting delta_2023-02-05.jsonl: 0it [00:00, ?it/s]\rwriting delta_2023-02-05.jsonl: 10it [00:00, 688.55it/s]\n"}
+,{"stream_name":"stdout","time":3370.795063407,"data":"\rwriting delta_2022-01-08.jsonl: 0it [00:00, ?it/s]\rwriting delta_2022-01-08.jsonl: 10it [00:00, 655.67it/s]\n"}
+,{"stream_name":"stdout","time":3370.807233714,"data":"\rwriting delta_2022-01-15.jsonl: 0it [00:00, ?it/s]\rwriting delta_2022-01-15.jsonl: 10it [00:00, 846.79it/s]\n"}
+,{"stream_name":"stdout","time":3370.81869243,"data":"\rwriting delta_2022-01-22.jsonl: 0it [00:00, ?it/s]\rwriting delta_2022-01-22.jsonl: 10it [00:00, 908.39it/s]\n"}
+,{"stream_name":"stdout","time":3370.836224375,"data":"\rwriting delta_2022-01-29.jsonl: 0it [00:00, ?it/s]\rwriting delta_2022-01-29.jsonl: 10it [00:00, 579.04it/s]\n"}
+,{"stream_name":"stdout","time":3370.853347,"data":"\rwriting delta_2022-02-05.jsonl: 0it [00:00, ?it/s]\rwriting delta_2022-02-05.jsonl: 10it [00:00, 598.99it/s]\n"}
+,{"stream_name":"stdout","time":3370.853390077,"data":"10/13/2026 15:33:05 - INFO - __main__ - merged dataset saved\n"}
+,{"stream_name":"stdout","time":3371.338461195,"data":"{\n"}
+,{"stream_name":"stdout","time":3371.338486578,"data":" \"limit\": null,\n"}
+,{"stream_name":"stdout","time":3371.338491596,"data":" \"n_input\": 350,\n"}
+,{"stream_name":"stdout","time":3371.338495452,"data":" \"workers\": 4,\n"}
+,{"stream_name":"stdout","time":3371.338499328,"data":" \"runs\": {\n"}
+,{"stream_name":"stdout","time":3371.338503106,"data":"  \"karma-biomed/llamacpp/gemma-4-e4b\": {\n"}
+,{"stream_name":"stdout","time":3371.338507398,"data":"   \"seconds\": 641.3,\n"}
+,{"stream_name":"stdout","time":3371.338511283,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":3371.338514798,"data":"   \"n_with_prediction\": 350,\n"}
+,{"stream_name":"stdout","time":3371.338518767,"data":"   \"n_empty\": 345,\n"}
+,{"stream_name":"stdout","time":3371.338522355,"data":"   \"avg_triples\": 0.05,\n"}
+,{"stream_name":"stdout","time":3371.338526034,"data":"   \"sec_per_instance\": 1.83,\n"}
+,{"stream_name":"stdout","time":3371.33853017,"data":"   \"karma\": {\n"}
+,{"stream_name":"stdout","time":3371.338533799,"data":"    \"reader_dropped_all\": 341,\n"}
+,{"stream_name":"stdout","time":3371.338538067,"data":"    \"avg_relationships_before_filter\": 0.05,\n"}
+,{"stream_name":"stdout","time":3371.338541925,"data":"    \"errors\": 0\n"}
+,{"stream_name":"stdout","time":3371.338545579,"data":"   }\n"}
+,{"stream_name":"stdout","time":3371.338549292,"data":"  },\n"}
+,{"stream_name":"stdout","time":3371.338553426,"data":"  \"karma/llamacpp/gemma-4-e4b\": {\n"}
+,{"stream_name":"stdout","time":3371.338557707,"data":"   \"seconds\": 2685.5,\n"}
+,{"stream_name":"stdout","time":3371.338561766,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":3371.338565537,"data":"   \"n_with_prediction\": 350,\n"}
+,{"stream_name":"stdout","time":3371.338569386,"data":"   \"n_empty\": 13,\n"}
+,{"stream_name":"stdout","time":3371.33857312,"data":"   \"avg_triples\": 5.26,\n"}
+,{"stream_name":"stdout","time":3371.338577302,"data":"   \"sec_per_instance\": 7.67,\n"}
+,{"stream_name":"stdout","time":3371.338580808,"data":"   \"karma\": {\n"}
+,{"stream_name":"stdout","time":3371.33858456,"data":"    \"reader_dropped_all\": 9,\n"}
+,{"stream_name":"stdout","time":3371.338596915,"data":"    \"avg_relationships_before_filter\": 5.72,\n"}
+,{"stream_name":"stdout","time":3371.338601037,"data":"    \"errors\": 0\n"}
+,{"stream_name":"stdout","time":3371.338604802,"data":"   }\n"}
+,{"stream_name":"stdout","time":3371.338608536,"data":"  }\n"}
+,{"stream_name":"stdout","time":3371.338612401,"data":" }\n"}
+,{"stream_name":"stdout","time":3371.33861566,"data":"}\n"}
+,{"stream_name":"stdout","time":3371.366028089,"data":"DONE\n"}
+,{"stream_name":"stderr","time":3373.686539997,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":3373.686587239,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":3373.9393716,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":3373.939396159,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":3374.657788755,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":3375.589055144,"data":"[NbConvertApp] Writing 336715 bytes to __results__.html\n"}
+]
