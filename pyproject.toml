@@ -11,6 +11,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0"]
+bench = ["numpy>=1.26", "dateparser>=1.2"]          # chấm home benchmark (kgu.eval.atom_quality)
 
 [build-system]
 requires = ["setuptools>=68"]
