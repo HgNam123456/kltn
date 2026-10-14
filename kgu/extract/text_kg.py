@@ -3,7 +3,9 @@
   ép bằng enum trong json_schema (constrained decoding của llama-server);
 - TemporalKG: KG tự tích lũy qua tin tức theo thời gian. Mỗi đoạn: localize = fact đã lưu có head/tail xuất hiện
   trong đoạn (STORED) + quan hệ đã dùng (RELATIONS) → một lệnh gọi trả fact đoạn này nói (Exists + Add, kèm mốc
-  thời gian) và fact đã lưu bị đoạn này nói là hết đúng (Deprecate → đóng t_end).
+  thời gian) và fact đã lưu bị đoạn này nói là hết đúng (Deprecate → đóng t_end). Luật quy đổi mốc thời gian tương
+  đối và cách đặt tên quan hệ lấy theo quy ước công bố trong schema của ATOM (itext2kg Relationship.t_start/name) —
+  quy ước gold của 2020-COVID-NYT, như WebNLG dùng schema của dataset.
 Phần tĩnh của prompt (quan hệ, ví dụ) đặt trước, văn bản cần trích đặt cuối để llama-server dùng lại KV cache.
 """
 from __future__ import annotations
@@ -26,11 +28,16 @@ relation per fact, head and tail are short entity names (not clauses). A sentenc
 did what, where things are (X is_located_in Y), what belongs to what, quantities, statuses, causes. Reuse the exact \
 entity and relation names of STORED facts and RELATIONS when they mean the same thing; otherwise create a short \
 present-tense snake_case relation.
-2. valid_from: the date the fact starts or happens, ONLY if the passage states or implies a time ("on Sunday", "last \
-month", "in 2003", "17 years ago"): resolve it against the observation date to YYYY-MM-DD. valid_until: ONLY if the \
-passage says the fact stopped or will stop at some time. Otherwise leave them "". Do not put the observation date on \
-facts with no time in the passage; a one-time event gets valid_from only.
-3. In "ended", give the numbers of STORED facts the passage says are no longer true.
+2. valid_from: the date the fact starts or happens, ONLY if the passage states or implies a time; valid_until: ONLY \
+if the passage says the fact stopped or will stop at some time. Otherwise leave them "". Do not put the observation \
+date on facts with no time in the passage; a one-time event gets valid_from only. Write YYYY-MM-DD and resolve \
+relative times against the observation date: today → the observation date; yesterday → one day before; this week → \
+Monday of its week; last week → Monday of the week before; this month → first day of its month; last month → first \
+day of the month before; this year → January 1st of its year; last year → January 1st of the year before; a bare \
+year → January 1st of that year.
+3. Relations are single present-tense verbs (is_located_in, reports, cancels); for something no longer true keep the \
+affirmative relation and set valid_until.
+4. In "ended", give the numbers of STORED facts the passage says are no longer true.
 
 Example:
 OBSERVATION DATE: 2020-03-02

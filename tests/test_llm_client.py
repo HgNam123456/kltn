@@ -149,3 +149,17 @@ def test_openai_client_keeps_json_schema_when_both_formats_get_400():
         c.complete_json("sys", "user", Out)
     assert c._use_json_schema is True                       # không phải lỗi "không hỗ trợ json_schema"
     assert [k["response_format"]["type"] for k in c._completions.kwargs] == ["json_schema", "json_object"]
+
+
+def test_openai_client_caps_tokens_and_truncates_broken_output_on_retry():
+    c = OpenAICompatClient(base_url="http://x", api_key="k", model="m", max_retries=2, max_tokens=4096)
+    c._completions = _FakeCompletions(['{"answer": [' + "1, " * 5000, '{"answer": 5}'])
+    assert c.complete_json("sys", "user", Out).answer == 5
+    assert all(k["max_tokens"] == 4096 for k in c._completions.kwargs)
+    assert len(c._completions.kwargs[1]["messages"][-2]["content"]) <= 2000
+
+
+def test_openai_client_sends_no_max_tokens_by_default():
+    c = _client_with(['{"answer": 9}'])
+    c.complete_json("sys", "user", Out)
+    assert "max_tokens" not in c._completions.kwargs[0]

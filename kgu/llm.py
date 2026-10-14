@@ -42,8 +42,10 @@ class OpenAICompatClient:
     """Gọi bất kỳ endpoint OpenAI-compatible (vLLM, Ollama, OpenRouter, DashScope)."""
 
     def __init__(self, base_url: str, api_key: str, model: str, temperature: float = 0.0,
-                 max_retries: int = 3, timeout: float = 120.0, extra_body: dict | None = None) -> None:
+                 max_retries: int = 3, timeout: float = 120.0, extra_body: dict | None = None,
+                 max_tokens: int | None = None) -> None:
         self.model, self.temperature, self.max_retries = model, temperature, max_retries
+        self.max_tokens = max_tokens  # chặn output lặp vô tận (JSON list dài tới hết ngữ cảnh); None = không gửi
         self.extra_body = extra_body
         self.n_calls = 0
         self._completions = None
@@ -69,6 +71,8 @@ class OpenAICompatClient:
             # extra_body đi thẳng tới server (vd Qwen3.5: tắt "thinking" qua chat_template_kwargs, xem
             # client_from_env); None ⇒ không gửi trường này (endpoint khác có thể không hiểu/không cần).
             extra_kwargs = {} if self.extra_body is None else {"extra_body": self.extra_body}
+            if self.max_tokens:
+                extra_kwargs["max_tokens"] = self.max_tokens
             if self._use_json_schema:
                 from openai import BadRequestError
                 try:
@@ -96,7 +100,7 @@ class OpenAICompatClient:
                 return schema.model_validate_json(extract_json(raw))
             except (ValidationError, ValueError) as e:
                 last_err = e
-                messages.append({"role": "assistant", "content": raw})
+                messages.append({"role": "assistant", "content": raw[:2000]})   # output hỏng dài → không tràn ngữ cảnh
                 messages.append({"role": "user", "content":
                     f"Output không hợp lệ (error: {str(e)[:500]}). Xuất lại đúng schema, chỉ JSON."})
         raise LLMOutputError(f"invalid JSON after {self.max_retries} tries: {last_err}")
@@ -120,4 +124,5 @@ def client_from_env() -> OpenAICompatClient:
         model=os.environ.get("KGU_LLM_MODEL", "local"),
         timeout=float(os.environ.get("KGU_LLM_TIMEOUT", "300")),
         extra_body=extra_body,
+        max_tokens=int(os.environ["KGU_LLM_MAX_TOKENS"]) if os.environ.get("KGU_LLM_MAX_TOKENS") else None,
     )

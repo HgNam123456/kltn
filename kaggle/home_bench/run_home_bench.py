@@ -7,7 +7,7 @@ Gemma 4 E4B qua llama-server CUDA:
   (itext2kg 1.1.0, scripts/atom_covid.py), KGGen 0.4.0 (scripts/kggen_covid.py) vs mình (scripts/run_covid_nyt.py).
   Chấm scripts/score_covid_nyt.py với all-mpnet-base-v2 @ 0,7 (hiệu chỉnh: results/kaggle/covid_calibration.json),
   kèm --calibrate để số các cột GPT-4.1 phát hành nằm cùng bảng.
-Vá EDC để chạy với llama-server: tên model chứa "gpt" (EDC đi nhánh OpenAI) + OPENAI_BASE_URL; embedder nạp fp16 trên
+Vá EDC để chạy với llama-server (+ lỗi gốc: nhánh OpenAI giải phóng verify model chưa nạp): tên model chứa "gpt" (EDC đi nhánh OpenAI) + OPENAI_BASE_URL; embedder nạp fp16 trên
 GPU thứ hai (bản gốc nạp fp32 = 28 GB). Chỉ có 1 GPU → intfloat/multilingual-e5-large-instruct (ghi trong summary).
 Vá import của EDC: edc/utils/e5_mistral_utils.py (chỉ dùng cho refinement có adapter) nạp huggingface_hub.Repository và
 transformers.utils.get_full_repo_name đã bị gỡ ở bản mới → bọc try/except.
@@ -16,7 +16,7 @@ kernel baselines).
 
 Code + data COVID lấy từ repo kltn nhánh KGU_BRANCH. Dataset ngocnam2005/llama-server-cuda (binary đã build).
 LIMIT = số câu WebNLG / số nhóm ngày COVID (None = đủ). BENCH chọn benchmark, RUNS chọn hệ thống.
-Đầu ra /kaggle/working/out/: webnlg/<hệ>/canon_kg.txt + <hệ>_eval.txt, covid/<hệ>.jsonl, covid/scores.json,
+Đầu ra /kaggle/working/out/: webnlg/<hệ>/canon_kg.txt + <hệ>_eval.txt, covid/<hệ>.jsonl, covid/scores_covid[_heldout].json,
 summary.json, logs/*.log, server.log.
 """
 import ast
@@ -30,8 +30,9 @@ import urllib.request
 
 LIMIT = 20
 BENCH = ["webnlg", "covid"]
-RUNS = ["mine_webnlg", "edc", "mine_covid", "atom_direct"]    # chạy thử v2: sửa EDC/chấm/venv + prompt mình
-EDC_TIMEOUT_H = 6                     # chặn EDC (gọi LLM tuần tự, lỗi API thì thử lại vô hạn)
+RUNS = ["edc", "mine_covid"]          # chạy thử v3: vá free_model EDC + prompt mình (luật ngày ATOM, max_tokens)
+DEV_N = 20                            # 20 nhóm ngày đầu (theo ngày) đã xem ở lượt chạy thử khi sửa prompt của mình
+EDC_TIMEOUT_H = 6                    # chặn EDC (gọi LLM tuần tự, lỗi API thì thử lại vô hạn)
 WORKERS = 4
 KGU_REPO, KGU_BRANCH = "https://github.com/HgNam123456/kltn.git", "feat/core-pipeline"
 EDC_REPO, EDC_COMMIT = "https://github.com/clear-nus/edc.git", "02aad17e2fc1e9845c84746b384e7fd3160edc1a"
@@ -101,11 +102,12 @@ if "webnlg" in BENCH:
 if "covid" in BENCH:
     rows = sorted(read_jsonl(f"{KLTN}/data/covid_nyt/2020_covid_nyt.jsonl"), key=lambda r: (r["date"], r["row"]))
     rows = rows[:LIMIT]
-    COVID = f"{WORK}/covid.jsonl"
-    with open(COVID, "w", encoding="utf-8") as f:
-        for r in rows:
-            f.write(json.dumps(r, ensure_ascii=False) + "\n")
-    summary["covid_n"] = len(rows)
+    COVID, COVID_HELDOUT = f"{WORK}/covid.jsonl", f"{WORK}/covid_heldout.jsonl"
+    for path, part in ((COVID, rows), (COVID_HELDOUT, rows[DEV_N:])):
+        with open(path, "w", encoding="utf-8") as f:
+            for r in part:
+                f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    summary["covid_n"], summary["covid_dev_n"] = len(rows), min(DEV_N, len(rows))
 
 # 3. llama-server (giống kaggle/baselines/run_baselines.py), ghim GPU 0
 from huggingface_hub import hf_hub_download  # noqa: E402
@@ -150,7 +152,7 @@ summary["server_flags"] = cmd.replace(COMMON, "")
 
 env = {**os.environ, "PYTHONIOENCODING": "utf8", "TOKENIZERS_PARALLELISM": "false", "PYTHONPATH": KLTN,
        "KGU_LLM_BASE_URL": f"{SERVER}/v1", "KGU_LLM_MODEL": "local", "KGU_LLM_API_KEY": "none",
-       "KGU_LLM_EXTRA_BODY": "{}", "OPENAI_API_KEY": "none"}
+       "KGU_LLM_EXTRA_BODY": "{}", "KGU_LLM_MAX_TOKENS": "4096", "OPENAI_API_KEY": "none"}
 
 
 def timed(run: str, cmd: str, n: int, **kw) -> bool:
@@ -197,6 +199,12 @@ if "webnlg" in BENCH:
             open(f"{EDC}/edc/{f}", "w", encoding="utf-8").write(src.replace(imp, (
                 f"try:\n    {imp}\nexcept Exception:  # chỉ dùng cho refinement có adapter\n"
                 "    MistralForSequenceEmbedding = None")))
+        src = open(fw, encoding="utf-8").read()        # lỗi gốc: nhánh OpenAI vẫn giải phóng verify model chưa nạp
+        old = "            llm_utils.free_model(sc_verify_model, sc_verify_tokenizer)"
+        assert src.count(old) == 1, "vá free_model EDC không khớp source"
+        open(fw, "w", encoding="utf-8").write(src.replace(old, (
+            "            if not llm_utils.is_model_openai(self.sc_llm_name):\n"
+            "                llm_utils.free_model(sc_verify_model, sc_verify_tokenizer)")))
         edc_env = {**env, "OPENAI_KEY": "none", "OPENAI_BASE_URL": f"{SERVER}/v1", "PYTHONPATH": EDC,
                    "EDC_EMB_DEVICE": "cuda:1" if two_gpu else "cuda:0"}
         llm = "gpt-gemma-4-e4b"      # chứa "gpt" → nhánh OpenAI của EDC; llama-server bỏ qua tên model
@@ -272,13 +280,18 @@ if "webnlg" in BENCH:
 
 if "covid" in BENCH:
     preds = [f"--pred {p[:-6]}={OUT}/covid/{p}" for p in sorted(os.listdir(f"{OUT}/covid")) if p.endswith(".jsonl")]
-    try:
-        sh(f"python -u {KLTN}/scripts/score_covid_nyt.py --data {COVID} --calibrate {' '.join(preds)} "
-           f"--embedder {SCORE_EMBEDDER} --threshold {SCORE_THRESHOLD} --device cuda "
-           f"--out {OUT}/covid/scores.json 2>&1 | tee {LOGS}/score_covid.log", executable="/bin/bash", env=env)
-        summary["covid"] = json.load(open(f"{OUT}/covid/scores.json"))["results"][SCORE_EMBEDDER][SCORE_THRESHOLD]
-    except subprocess.CalledProcessError:
-        print("!!! chấm covid lỗi, xem logs/score_covid.log", flush=True)
+    for split, data in (("covid", COVID), ("covid_heldout", COVID_HELDOUT)):
+        if not os.path.getsize(data):
+            continue
+        try:
+            sh(f"set -o pipefail; python -u {KLTN}/scripts/score_covid_nyt.py --data {data} --calibrate "
+               f"{' '.join(preds)} --embedder {SCORE_EMBEDDER} --threshold {SCORE_THRESHOLD} --device cuda "
+               f"--out {OUT}/covid/scores_{split}.json 2>&1 | tee {LOGS}/score_{split}.log", executable="/bin/bash",
+               env=env)
+            summary[split] = json.load(open(f"{OUT}/covid/scores_{split}.json"))["results"][SCORE_EMBEDDER][
+                SCORE_THRESHOLD]
+        except subprocess.CalledProcessError:
+            print(f"!!! chấm {split} lỗi, xem logs/score_{split}.log", flush=True)
     summary["covid_outputs"] = {}
     for p in sorted(os.listdir(f"{OUT}/covid")):
         if p.endswith(".jsonl"):
