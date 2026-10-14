@@ -100,7 +100,7 @@ class TemporalKG:
         out = []
         for f in res.facts:
             q = (f.head.strip(), f.relation.strip(), f.tail.strip(), _ds(f.valid_from), _ds(f.valid_until))
-            if q[0] and q[1] and q[2] and q not in out:
+            if q[0] and q[1] and q[2] and q[0].lower() != q[2].lower() and q not in out:
                 out.append(q)
                 if not any(g[:3] == list(q[:3]) for g in self.facts):
                     self.facts.append(list(q))

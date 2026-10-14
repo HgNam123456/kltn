@@ -46,3 +46,11 @@ def test_temporal_kg_stored_needs_whole_word_and_is_capped():
     kg.update("A virus did things.", "2020-01-01", llm)
     assert llm.calls[0][1].count("| r |") == 2 and "US" not in llm.calls[0][1].split("RELATIONS")[0]
     assert all(not f[4] for f in kg.facts)                               # số ngoài khối STORED bị bỏ qua
+
+
+def test_temporal_kg_drops_self_loops_and_duplicates():
+    kg = TemporalKG()
+    f = {"head": "Virus", "relation": "r", "tail": "virus", "valid_from": "", "valid_until": ""}
+    g = {"head": "Virus", "relation": "r", "tail": "China", "valid_from": "", "valid_until": ""}
+    assert kg.update("t", "2020-01-01", FakeLLMClient([{"facts": [f, g, g], "ended": []}])) == [("Virus", "r", "China", [], [])]
+    assert len(kg.facts) == 1
