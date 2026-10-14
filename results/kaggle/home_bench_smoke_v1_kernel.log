@@ -1,0 +1,581 @@
+[{"stream_name":"stdout","time":1.5346506359999998,"data":"$ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader\n"}
+,{"stream_name":"stdout","time":1.5709123,"data":"['Tesla T4, 15360 MiB', 'Tesla T4, 15360 MiB']\n"}
+,{"stream_name":"stdout","time":1.5709541599999999,"data":"$ git clone -q --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git /kaggle/working/kltn\n"}
+,{"stream_name":"stdout","time":2.970328768,"data":"$ git -C /kaggle/working/kltn rev-parse HEAD\n"}
+,{"stream_name":"stdout","time":2.976891991,"data":"$ pip install -q dateparser nervaluate unidecode beautifulsoup4 regex 'openai\u003e=1'\n"}
+,{"stream_name":"stdout","time":8.490323947,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 322.4/322.4 kB 6.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.561927516,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 235.8/235.8 kB 10.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":11.25049066,"data":"$ git clone -q https://github.com/clear-nus/edc.git /kaggle/working/edc \u0026\u0026 git -C /kaggle/working/edc checkout -q 02aad17e2fc1e9845c84746b384e7fd3160edc1a\n"}
+,{"stream_name":"stdout","time":16.194233524,"data":"$ chmod +x /kaggle/working/llama-bin/llama-server\n"}
+,{"stream_name":"stderr","time":16.795222832,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":26.141945546,"data":"$ /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\n"}
+,{"stream_name":"stdout","time":46.180418376,"data":"$ python -u /kaggle/working/kltn/scripts/run_webnlg.py --input /kaggle/working/webnlg_in.txt --schema /kaggle/working/edc/schemas/webnlg_schema.csv --examples /kaggle/working/edc/few_shot_examples/webnlg/oie_few_shot_examples.txt --out /kaggle/working/out/webnlg/mine/canon_kg.txt --workers 4 2\u003e\u00261 | tee /kaggle/working/out/logs/mine_webnlg.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":80.247760698,"data":"20 câu, 20 câu có triple, 20 lệnh gọi LLM → /kaggle/working/out/webnlg/mine/canon_kg.txt\n"}
+,{"stream_name":"stdout","time":80.454810322,"data":"=== mine_webnlg: ok=True 34.3s, tổng 1 phút\n"}
+,{"stream_name":"stdout","time":80.455818469,"data":"$ timeout 6h python -u run.py --oie_llm gpt-gemma-4-e4b --sd_llm gpt-gemma-4-e4b --sc_llm gpt-gemma-4-e4b --sc_embedder intfloat/e5-mistral-7b-instruct --oie_few_shot_example_file_path /kaggle/working/edc/few_shot_examples/webnlg/oie_few_shot_examples.txt --sd_few_shot_example_file_path ./few_shot_examples/webnlg/sd_few_shot_examples.txt --input_text_file_path /kaggle/working/webnlg_in.txt --target_schema_path ./schemas/webnlg_schema.csv --output_dir /kaggle/working/edc_run --logging_verbose 2\u003e\u00261 | tee /kaggle/working/out/logs/edc.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":138.767864885,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":138.768329898,"data":"  File \"/kaggle/working/edc/run.py\", line 2, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":138.768347779,"data":"    from edc.edc_framework import EDC\n"}
+,{"stream_name":"stdout","time":138.768367793,"data":"  File \"/kaggle/working/edc/edc/edc_framework.py\", line 3, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":138.768374416,"data":"    from edc.schema_canonicalization import SchemaCanonicalizer\n"}
+,{"stream_name":"stdout","time":138.768464228,"data":"  File \"/kaggle/working/edc/edc/schema_canonicalization.py\", line 6, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":138.768478517,"data":"    from edc.utils.e5_mistral_utils import MistralForSequenceEmbedding\n"}
+,{"stream_name":"stdout","time":138.768492279,"data":"  File \"/kaggle/working/edc/edc/utils/e5_mistral_utils.py\", line 33, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":138.768496459,"data":"    from huggingface_hub import Repository, create_repo\n"}
+,{"stream_name":"stdout","time":138.768578001,"data":"ImportError: cannot import name 'Repository' from 'huggingface_hub' (/usr/local/lib/python3.13/dist-packages/huggingface_hub/__init__.py)\n"}
+,{"stream_name":"stdout","time":146.838133812,"data":"!!! edc lỗi, xem logs/edc.log\n"}
+,{"stream_name":"stdout","time":146.838189101,"data":"=== edc: ok=False 66.4s, tổng 2 phút\n"}
+,{"stream_name":"stdout","time":146.838205802,"data":"$ python -u /kaggle/working/kltn/scripts/run_covid_nyt.py --data /kaggle/working/covid.jsonl --out /kaggle/working/out/covid/mine.jsonl 2\u003e\u00261 | tee /kaggle/working/out/logs/mine_covid.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":213.970262332,"data":"20 nhóm ngày, KG cuối 79 fact, 20 lệnh gọi LLM → /kaggle/working/out/covid/mine.jsonl\n"}
+,{"stream_name":"stdout","time":214.199778964,"data":"=== mine_covid: ok=True 67.4s, tổng 4 phút\n"}
+,{"stream_name":"stdout","time":214.199816659,"data":"$ python -m venv /kaggle/working/venv_atom \u0026\u0026 /kaggle/working/venv_atom/bin/pip install -q itext2kg==1.1.0 dateparser\n"}
+,{"stream_name":"stderr","time":214.33457452,"data":"Error: Command '['/kaggle/working/venv_atom/bin/python3', '-m', 'ensurepip', '--upgrade', '--default-pip']' returned non-zero exit status 1.\n"}
+,{"stream_name":"stdout","time":214.345024478,"data":"$ pip install -q itext2kg==1.1.0 dateparser\n"}
+,{"stream_name":"stdout","time":217.251857982,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 15.8/15.8 MB 83.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.240691628,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 88.3/88.3 kB 2.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.281247276,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 43.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.31857278,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 461.3/461.3 kB 21.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.361134322,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 209.2/209.2 kB 9.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.392287,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.9/50.9 kB 2.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.428450962,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 313.9/313.9 kB 16.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.471740921,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 948.6/948.6 kB 37.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.506612021,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 80.4/80.4 kB 3.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.732485992,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 25.8/25.8 MB 76.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.771297204,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 295.8/295.8 kB 13.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.884845741,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 9.1/9.1 MB 93.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":415.934296946,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.5/2.5 MB 78.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":416.00093296,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 363.0/363.0 kB 16.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":416.035894532,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 66.5/66.5 kB 3.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":416.138809265,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.4/5.4 MB 98.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":440.319743333,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":440.319770417,"data":"bigframes 2.48.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":440.31978896,"data":"opencv-python-headless 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319793869,"data":"kaggle-environments 1.27.3 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319798054,"data":"litellm 1.85.7 requires openai\u003c3.0.0,\u003e=2.20.0, but you have openai 1.109.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319802039,"data":"nilearn 0.14.1 requires packaging\u003e=26.0.0, but you have packaging 25.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.31980685,"data":"mne 1.13.2 requires numpy\u003c3,\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319811152,"data":"opencv-python 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319815173,"data":"bayesian-optimization 3.3.0 requires numpy\u003e=2.1.3; python_full_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319819112,"data":"cesium 0.12.4 requires numpy\u003c3.0,\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319822879,"data":"google-colab 1.0.0 requires jupyter-server==2.20.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319826591,"data":"google-colab 1.0.0 requires pandas==2.2.3, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.31983007,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319847383,"data":"dopamine-rl 4.1.2 requires gym\u003c=0.25.2, but you have gym 0.26.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319850038,"data":"langgraph 1.2.11 requires langchain-core\u003c2,\u003e=1.4.7, but you have langchain-core 0.3.86 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.31985245,"data":"cupy-cuda12x 14.0.1 requires numpy\u003c2.6,\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319854758,"data":"moviepy 1.0.3 requires decorator\u003c5.0,\u003e=4.0.2, but you have decorator 5.3.1 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.31985712,"data":"ml-dtypes 0.6.0 requires numpy\u003e=2.0.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319859516,"data":"ml-dtypes 0.6.0 requires numpy\u003e=2.1.0; python_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319862951,"data":"langgraph-prebuilt 1.1.0 requires langchain-core\u003e=1.3.1, but you have langchain-core 0.3.86 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.3198654,"data":"tobler 0.14.0 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319867651,"data":"jax 0.11.1 requires numpy\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.31987065,"data":"opencv-contrib-python 4.14.0.94 requires numpy\u003e=2; python_version \u003e= \"3.9\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319873043,"data":"dm-tree 0.1.10 requires numpy\u003e=2.1.0; python_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319875381,"data":"jaxlib 0.11.1 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.31987768,"data":"xarray-einstats 0.11.0 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319879906,"data":"tifffile 2026.8.23 requires numpy\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319882126,"data":"pytensor 2.38.3 requires numpy\u003e=2.0, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.31988433,"data":"shap 0.52.0 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319886557,"data":"rasterio 1.5.1 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":440.319888815,"data":"langgraph-sdk 0.4.4 requires langchain-core\u003c2,\u003e=1.4.0, but you have langchain-core 0.3.86 which is incompatible.\n"}
+,{"stream_name":"stdout","time":440.851001983,"data":"$ python -u -W ignore /kaggle/working/kltn/scripts/atom_covid.py --mode direct --data /kaggle/working/covid.jsonl --out /kaggle/working/out/covid/atom-direct.jsonl 2\u003e\u00261 | tee /kaggle/working/out/logs/atom_direct.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":449.156499108,"data":"[2026-10-14 14:50:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🔍 Detected LLM Provider: OpenAI\n"}
+,{"stream_name":"stdout","time":449.156532328,"data":"[2026-10-14 14:50:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📊 Rate Limiting Config: 40 requests/batch, 8000 tokens/batch\n"}
+,{"stream_name":"stdout","time":449.766404284,"data":"[2026-10-14 14:50:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":449.766463076,"data":"[2026-10-14 14:50:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":449.76650214,"data":"[2026-10-14 14:50:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":455.642899117,"data":"[2026-10-14 14:50:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":455.645132648,"data":"[2026-10-14 14:50:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":455.645591662,"data":"[2026-10-14 14:50:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":455.645608017,"data":"[2026-10-14 14:50:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":460.746607275,"data":"[2026-10-14 14:50:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":460.748805913,"data":"[2026-10-14 14:50:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":460.748844879,"data":"[2026-10-14 14:50:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":460.748941419,"data":"[2026-10-14 14:50:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":463.725252737,"data":"[2026-10-14 14:50:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":463.727492004,"data":"[2026-10-14 14:50:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":463.727510193,"data":"[2026-10-14 14:50:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":463.727578748,"data":"[2026-10-14 14:50:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":473.671464972,"data":"[2026-10-14 14:50:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":473.673757055,"data":"[2026-10-14 14:50:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":473.673778554,"data":"[2026-10-14 14:50:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":473.673794116,"data":"[2026-10-14 14:50:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":476.710607804,"data":"[2026-10-14 14:50:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":476.713103627,"data":"[2026-10-14 14:50:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":476.713147173,"data":"[2026-10-14 14:50:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":476.713177213,"data":"[2026-10-14 14:50:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":480.924051296,"data":"[2026-10-14 14:50:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":480.926296754,"data":"[2026-10-14 14:50:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":480.926309851,"data":"[2026-10-14 14:50:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":480.926314861,"data":"[2026-10-14 14:50:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":491.900208469,"data":"[2026-10-14 14:50:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":491.90238215,"data":"[2026-10-14 14:50:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":491.902399341,"data":"[2026-10-14 14:50:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":491.902464938,"data":"[2026-10-14 14:50:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":497.095857201,"data":"[2026-10-14 14:51:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":497.098136259,"data":"[2026-10-14 14:51:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":497.098162334,"data":"[2026-10-14 14:51:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":497.098181508,"data":"[2026-10-14 14:51:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":499.062049911,"data":"[2026-10-14 14:51:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":499.064345255,"data":"[2026-10-14 14:51:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":499.064374873,"data":"[2026-10-14 14:51:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":499.064378948,"data":"[2026-10-14 14:51:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":503.990364356,"data":"[2026-10-14 14:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":503.992512091,"data":"[2026-10-14 14:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":503.992543655,"data":"[2026-10-14 14:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":503.992661283,"data":"[2026-10-14 14:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":505.991505568,"data":"[2026-10-14 14:51:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":505.993889961,"data":"[2026-10-14 14:51:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":505.993907109,"data":"[2026-10-14 14:51:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":505.993911413,"data":"[2026-10-14 14:51:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":513.701754473,"data":"[2026-10-14 14:51:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":513.704072119,"data":"[2026-10-14 14:51:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":513.704090731,"data":"[2026-10-14 14:51:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":513.704112163,"data":"[2026-10-14 14:51:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":519.011574852,"data":"[2026-10-14 14:51:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":519.013690408,"data":"[2026-10-14 14:51:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":519.013708522,"data":"[2026-10-14 14:51:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":519.014573891,"data":"[2026-10-14 14:51:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":522.966366425,"data":"[2026-10-14 14:51:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":522.968589025,"data":"[2026-10-14 14:51:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":522.968612468,"data":"[2026-10-14 14:51:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":522.969585985,"data":"[2026-10-14 14:51:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":526.622207446,"data":"[2026-10-14 14:51:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":526.624477862,"data":"[2026-10-14 14:51:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":526.624497935,"data":"[2026-10-14 14:51:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":526.624501407,"data":"[2026-10-14 14:51:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":530.434491236,"data":"[2026-10-14 14:51:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":530.436795137,"data":"[2026-10-14 14:51:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":530.436824564,"data":"[2026-10-14 14:51:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":530.436934178,"data":"[2026-10-14 14:51:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":535.382475472,"data":"[2026-10-14 14:51:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":535.38478958,"data":"[2026-10-14 14:51:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":535.385590891,"data":"[2026-10-14 14:51:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":535.385603808,"data":"[2026-10-14 14:51:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":542.203135905,"data":"[2026-10-14 14:51:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":542.205341014,"data":"[2026-10-14 14:51:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":542.205396902,"data":"[2026-10-14 14:51:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":542.205485661,"data":"[2026-10-14 14:51:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":550.074269915,"data":"[2026-10-14 14:51:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":550.076514987,"data":"[2026-10-14 14:51:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":550.076535902,"data":"[2026-10-14 14:51:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":550.076580262,"data":"[2026-10-14 14:51:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":555.146992479,"data":"[2026-10-14 14:52:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":555.147140394,"data":"direct: xong 20 nhóm ngày → /kaggle/working/out/covid/atom-direct.jsonl\n"}
+,{"stream_name":"stdout","time":556.07433821,"data":"=== atom_direct: ok=True 115.2s, tổng 9 phút\n"}
+,{"stream_name":"stdout","time":556.074373985,"data":"$ python -u -W ignore /kaggle/working/kltn/scripts/atom_covid.py --mode atom --data /kaggle/working/covid.jsonl --out /kaggle/working/out/covid/atom.jsonl 2\u003e\u00261 | tee /kaggle/working/out/logs/atom.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":563.850181714,"data":"[2026-10-14 14:52:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🔍 Detected LLM Provider: OpenAI\n"}
+,{"stream_name":"stdout","time":563.850208587,"data":"[2026-10-14 14:52:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📊 Rate Limiting Config: 40 requests/batch, 8000 tokens/batch\n"}
+,{"stream_name":"stdout","time":563.994335649,"data":"[2026-10-14 14:52:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 8 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":563.994382869,"data":"[2026-10-14 14:52:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 8 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":563.994389161,"data":"[2026-10-14 14:52:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 8 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":572.759374158,"data":"[2026-10-14 14:52:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 8 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":572.75952512,"data":"factoids 8/20\n"}
+,{"stream_name":"stdout","time":572.761312355,"data":"[2026-10-14 14:52:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 8 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":572.761336504,"data":"[2026-10-14 14:52:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 8 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":572.761450282,"data":"[2026-10-14 14:52:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 8 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":580.968036913,"data":"[2026-10-14 14:52:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 8 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":580.968143891,"data":"factoids 16/20\n"}
+,{"stream_name":"stdout","time":580.969449766,"data":"[2026-10-14 14:52:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 4 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":580.969484076,"data":"[2026-10-14 14:52:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 4 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":580.969568247,"data":"[2026-10-14 14:52:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 4 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":584.971616392,"data":"[2026-10-14 14:52:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 4 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":584.971656379,"data":"factoids 20/20\n"}
+,{"stream_name":"stdout","time":584.980725488,"data":"[2026-10-14 14:52:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 4 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":584.980761313,"data":"[2026-10-14 14:52:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 4 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":584.980765274,"data":"[2026-10-14 14:52:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 4 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":592.086223607,"data":"[2026-10-14 14:52:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 4 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":592.089539776,"data":"[2026-10-14 14:52:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 4 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":592.089559449,"data":"[2026-10-14 14:52:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 4 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":592.089611259,"data":"[2026-10-14 14:52:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 4 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":598.22290931,"data":"[2026-10-14 14:52:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 4 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":598.224993494,"data":"[2026-10-14 14:52:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":598.225007282,"data":"[2026-10-14 14:52:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":598.225025514,"data":"[2026-10-14 14:52:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":601.579236732,"data":"[2026-10-14 14:52:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":601.581872577,"data":"[2026-10-14 14:52:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 2 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":601.581888726,"data":"[2026-10-14 14:52:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 2 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":601.582007303,"data":"[2026-10-14 14:52:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 2 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":606.835652394,"data":"[2026-10-14 14:52:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 2 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":606.838562701,"data":"[2026-10-14 14:52:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 3 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":606.839599939,"data":"[2026-10-14 14:52:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 3 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":606.839618172,"data":"[2026-10-14 14:52:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 3 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":612.070749801,"data":"[2026-10-14 14:53:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 3 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":612.074733483,"data":"[2026-10-14 14:53:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 4 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":612.074765198,"data":"[2026-10-14 14:53:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 4 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":612.074870105,"data":"[2026-10-14 14:53:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 4 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":618.648797769,"data":"[2026-10-14 14:53:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 4 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":618.654270821,"data":"[2026-10-14 14:53:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 10 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":618.654295777,"data":"[2026-10-14 14:53:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 10 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":618.654344833,"data":"[2026-10-14 14:53:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 10 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":634.650369223,"data":"[2026-10-14 14:53:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 10 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":634.65372914,"data":"[2026-10-14 14:53:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 3 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":634.653752736,"data":"[2026-10-14 14:53:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 3 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":634.653756716,"data":"[2026-10-14 14:53:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 3 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":641.35969391,"data":"[2026-10-14 14:53:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 3 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":641.361998591,"data":"[2026-10-14 14:53:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":641.362016265,"data":"[2026-10-14 14:53:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":641.362067516,"data":"[2026-10-14 14:53:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":643.444104057,"data":"[2026-10-14 14:53:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":643.44843459,"data":"[2026-10-14 14:53:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 7 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":643.448552361,"data":"[2026-10-14 14:53:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 7 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":643.448564868,"data":"[2026-10-14 14:53:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 7 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":656.454209488,"data":"[2026-10-14 14:53:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 7 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":656.456500547,"data":"[2026-10-14 14:53:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 1 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":656.456521007,"data":"[2026-10-14 14:53:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 1 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":656.456731816,"data":"[2026-10-14 14:53:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 1 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":658.575014345,"data":"[2026-10-14 14:53:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 1 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":658.581624089,"data":"[2026-10-14 14:53:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 13 prompts into 2 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":658.581644229,"data":"[2026-10-14 14:53:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 13 contexts in 2 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":658.58179677,"data":"[2026-10-14 14:53:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/2 with 11 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":674.562271776,"data":"[2026-10-14 14:54:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI\n"}
+,{"stream_name":"stdout","time":676.562751968,"data":"[2026-10-14 14:54:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/2 with 2 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":681.105304876,"data":"[2026-10-14 14:54:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 13 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":681.108418337,"data":"[2026-10-14 14:54:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 3 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":681.108449774,"data":"[2026-10-14 14:54:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 3 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":681.108456759,"data":"[2026-10-14 14:54:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 3 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":687.140193248,"data":"[2026-10-14 14:54:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 3 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":687.143480078,"data":"[2026-10-14 14:54:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 3 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":687.143493859,"data":"[2026-10-14 14:54:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 3 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":687.143508804,"data":"[2026-10-14 14:54:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 3 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":692.938116966,"data":"[2026-10-14 14:54:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 3 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":692.940763007,"data":"[2026-10-14 14:54:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 2 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":692.940782619,"data":"[2026-10-14 14:54:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 2 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":692.940815367,"data":"[2026-10-14 14:54:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 2 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":696.75317651,"data":"[2026-10-14 14:54:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 2 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":696.756035548,"data":"[2026-10-14 14:54:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 2 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":696.756057087,"data":"[2026-10-14 14:54:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 2 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":696.75612062,"data":"[2026-10-14 14:54:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 2 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":701.384619929,"data":"[2026-10-14 14:54:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 2 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":701.387325693,"data":"[2026-10-14 14:54:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 2 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":701.387342783,"data":"[2026-10-14 14:54:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 2 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":701.387478936,"data":"[2026-10-14 14:54:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 2 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":706.351238871,"data":"[2026-10-14 14:54:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 2 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":706.354584746,"data":"[2026-10-14 14:54:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 3 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":706.35561126,"data":"[2026-10-14 14:54:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 3 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":706.355625779,"data":"[2026-10-14 14:54:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 3 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":712.005725955,"data":"[2026-10-14 14:54:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 3 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":712.009295565,"data":"[2026-10-14 14:54:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 5 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":712.009309094,"data":"[2026-10-14 14:54:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 5 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":712.009544544,"data":"[2026-10-14 14:54:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 5 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":722.255038812,"data":"[2026-10-14 14:54:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 5 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":722.259411112,"data":"[2026-10-14 14:54:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 7 prompts into 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":722.259466322,"data":"[2026-10-14 14:54:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 7 contexts in 1 batches for OpenAI API\n"}
+,{"stream_name":"stdout","time":722.259502513,"data":"[2026-10-14 14:54:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 7 requests (OpenAI)\n"}
+,{"stream_name":"stdout","time":733.380225723,"data":"[2026-10-14 14:55:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 7 requests for OpenAI\n"}
+,{"stream_name":"stdout","time":733.380455049,"data":"atom: xong 20 nhóm ngày → /kaggle/working/out/covid/atom.jsonl\n"}
+,{"stream_name":"stdout","time":734.285023215,"data":"=== atom: ok=True 178.2s, tổng 12 phút\n"}
+,{"stream_name":"stdout","time":734.285057142,"data":"$ pip install -q kg-gen==0.4.0\n"}
+,{"stream_name":"stdout","time":736.817832354,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.0/41.0 kB 1.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":737.425688495,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 40.9/40.9 kB 1.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.214687937,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 16.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.249226767,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.3/226.3 kB 12.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.288087204,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 756.0/756.0 kB 34.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.434658366,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.5/14.5 MB 94.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.502734499,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.5/45.5 kB 1.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.541012445,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.5/99.5 kB 4.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.575126339,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.0/52.0 kB 2.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.621338646,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 57.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.722174366,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 106.0 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":738.763507263,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 470.6/470.6 kB 19.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":744.414202944,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":744.414244175,"data":"bigframes 2.48.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\n"}
+,{"stream_name":"stderr","time":744.41426144,"data":"langchain-openai 0.2.14 requires openai\u003c2.0.0,\u003e=1.58.1, but you have openai 2.54.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414265784,"data":"itext2kg 1.1.0 requires openai\u003c2.0.0,\u003e=1.97.0, but you have openai 2.54.0 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414269497,"data":"langchain-core 0.3.86 requires packaging\u003c26.0.0,\u003e=23.2.0, but you have packaging 26.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414273266,"data":"mne 1.13.2 requires numpy\u003c3,\u003e=2.1, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414276848,"data":"bayesian-optimization 3.3.0 requires numpy\u003e=2.1.3; python_full_version \u003e= \"3.13\", but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414280651,"data":"google-colab 1.0.0 requires jupyter-server==2.20.0, but you have jupyter-server 2.12.5 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414284324,"data":"google-colab 1.0.0 requires pandas==2.2.3, but you have pandas 2.3.3 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414290838,"data":"google-colab 1.0.0 requires requests==2.32.4, but you have requests 2.34.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414293124,"data":"langgraph 1.2.11 requires langchain-core\u003c2,\u003e=1.4.7, but you have langchain-core 0.3.86 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414295483,"data":"langgraph-prebuilt 1.1.0 requires langchain-core\u003e=1.3.1, but you have langchain-core 0.3.86 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414297867,"data":"shap 0.52.0 requires numpy\u003e=2, but you have numpy 1.26.4 which is incompatible.\n"}
+,{"stream_name":"stderr","time":744.414300139,"data":"langgraph-sdk 0.4.4 requires langchain-core\u003c2,\u003e=1.4.0, but you have langchain-core 0.3.86 which is incompatible.\n"}
+,{"stream_name":"stdout","time":744.546743455,"data":"$ python -u /kaggle/working/kltn/scripts/kggen_covid.py --data /kaggle/working/covid.jsonl --out /kaggle/working/out/covid/kggen.jsonl 2\u003e\u00261 | tee /kaggle/working/out/logs/kggen.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":827.038072107,"data":"kggen: xong 20 nhóm ngày → /kaggle/working/out/covid/kggen.jsonl\n"}
+,{"stream_name":"stdout","time":828.927636546,"data":"=== kggen: ok=True 84.4s, tổng 14 phút\n"}
+,{"stream_name":"stdout","time":828.927865476,"data":"$ python evaluate/evaluation_script.py --edc_output /kaggle/working/out/webnlg/mine/canon_kg.txt --reference /kaggle/working/webnlg_ref.txt\n"}
+,{"stream_name":"stdout","time":831.076277447,"data":"!!! chấm webnlg mine lỗi: \n"}
+,{"stream_name":"stdout","time":831.076305845,"data":"/kaggle/working/edc/evaluate/evaluation_script.py:133: SyntaxWarning: invalid escape sequence '\\g'\n"}
+,{"stream_name":"stdout","time":831.076311662,"data":"  newtriple = re.sub(r\"([a-z])([A-Z])\", \"\\g\u003c1\u003e \\g\u003c2\u003e\", triple).lower()\n"}
+,{"stream_name":"stdout","time":831.076316967,"data":"/kaggle/working/edc/evaluate/evaluation_script.py:169: SyntaxWarning: invalid escape sequence '\\g'\n"}
+,{"stream_name":"stdout","time":831.076321872,"data":"  newtriple = re.sub(r\"([a-z])([A-Z])\", \"\\g\u003c1\u003e \\g\u003c2\u003e\", triple).lower()\n"}
+,{"stream_name":"stdout","time":831.076326318,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stdout","time":831.076330575,"data":"  File \"/kaggle/working/edc/evaluate/evaluation_script.py\", line 1276, in \u003cmodule\u003e\n"}
+,{"stream_name":"stdout","time":831.076335348,"data":"    main(gold_xml_path, result_xml_path)\n"}
+,{"stream_name":"stdout","time":831.076350532,"data":"    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":831.076354083,"data":"  File \"/kaggle/working/edc/evaluate/evaluation_script.py\", line 1263, in main\n"}
+,{"stream_name":"stdout","time":831.076357401,"data":"    totalsemevallist, totalsemevallistpertag = calculateAllScores(newreflist, newcandlist)\n"}
+,{"stream_name":"stdout","time":831.076361038,"data":"                                               ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":831.076366036,"data":"  File \"/kaggle/working/edc/evaluate/evaluation_script.py\", line 590, in calculateAllScores\n"}
+,{"stream_name":"stdout","time":831.076369367,"data":"    results, results_per_tag = evaluaterefcand(reference, triple)\n"}
+,{"stream_name":"stdout","time":831.076372871,"data":"                               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":831.076376239,"data":"  File \"/kaggle/working/edc/evaluate/evaluation_script.py\", line 565, in evaluaterefcand\n"}
+,{"stream_name":"stdout","time":831.076379667,"data":"    results, results_per_tag = evaluator.evaluate()\n"}
+,{"stream_name":"stdout","time":831.076382856,"data":"    ^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stdout","time":831.076385969,"data":"ValueError: too many values to unpack (expected 2)\n"}
+,{"stream_name":"stdout","time":831.076389324,"data":"\n"}
+,{"stream_name":"stdout","time":831.077318693,"data":"$ python -u /kaggle/working/kltn/scripts/score_covid_nyt.py --data /kaggle/working/covid.jsonl --calibrate --pred atom-direct=/kaggle/working/out/covid/atom-direct.jsonl --pred atom=/kaggle/working/out/covid/atom.jsonl --pred kggen=/kaggle/working/out/covid/kggen.jsonl --pred mine=/kaggle/working/out/covid/mine.jsonl --embedder sentence-transformers/all-mpnet-base-v2 --threshold 0.7 --device cuda --out /kaggle/working/out/covid/scores.json 2\u003e\u00261 | tee /kaggle/working/out/logs/score_covid.log\n"}
+,{"stream_name":"stdout","time":840.833101254,"data":"20 nhóm ngày, 6 hệ thống, 1387 câu cần nhúng\n"}
+,{"stream_name":"stdout","time":841.053203154,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":843.739819005,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 2654.34it/s]\n"}
+,{"stream_name":"stdout","time":851.647166831,"data":"sentence-transformers/all-mpnet-base-v2 @0.7 gpt41-direct: F1 0.5927 F1_skip 0.5927 F1_t 0.3143 MATCH 0.5291 HALL 0.326\n"}
+,{"stream_name":"stdout","time":851.716722229,"data":"sentence-transformers/all-mpnet-base-v2 @0.7 gpt41-atom: F1 0.5828 F1_skip 0.5828 F1_t 0.2601 MATCH 0.7495 HALL 0.5232\n"}
+,{"stream_name":"stdout","time":851.742615822,"data":"sentence-transformers/all-mpnet-base-v2 @0.7 atom-direct: F1 0.4544 F1_skip 0.4544 F1_t 0.1187 MATCH 0.3432 HALL 0.328\n"}
+,{"stream_name":"stdout","time":851.767141668,"data":"sentence-transformers/all-mpnet-base-v2 @0.7 atom: F1 0.501 F1_skip 0.501 F1_t 0.1454 MATCH 0.4217 HALL 0.383\n"}
+,{"stream_name":"stdout","time":851.772457658,"data":"sentence-transformers/all-mpnet-base-v2 @0.7 kggen: F1 0.496 F1_skip 0.496 F1_t 0.1405 MATCH 0.413 HALL 0.3793\n"}
+,{"stream_name":"stdout","time":851.783509317,"data":"sentence-transformers/all-mpnet-base-v2 @0.7 mine: F1 0.4524 F1_skip 0.4762 F1_t 0.0956 MATCH 0.3268 HALL 0.2155\n"}
+,{"stream_name":"stdout","time":851.784574005,"data":"pick {}\n"}
+,{"stream_name":"stdout","time":853.384804028,"data":"{\n"}
+,{"stream_name":"stdout","time":853.384824407,"data":" \"limit\": 20,\n"}
+,{"stream_name":"stdout","time":853.384837799,"data":" \"bench\": [\n"}
+,{"stream_name":"stdout","time":853.384841487,"data":"  \"webnlg\",\n"}
+,{"stream_name":"stdout","time":853.384845002,"data":"  \"covid\"\n"}
+,{"stream_name":"stdout","time":853.38484832,"data":" ],\n"}
+,{"stream_name":"stdout","time":853.384852032,"data":" \"runs\": {\n"}
+,{"stream_name":"stdout","time":853.384855807,"data":"  \"mine_webnlg\": {\n"}
+,{"stream_name":"stdout","time":853.384865057,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":853.384869282,"data":"   \"seconds\": 34.3,\n"}
+,{"stream_name":"stdout","time":853.384873325,"data":"   \"sec_per_item\": 1.71\n"}
+,{"stream_name":"stdout","time":853.384877224,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.384881051,"data":"  \"edc\": {\n"}
+,{"stream_name":"stdout","time":853.384884825,"data":"   \"ok\": false,\n"}
+,{"stream_name":"stdout","time":853.384888043,"data":"   \"seconds\": 66.4,\n"}
+,{"stream_name":"stdout","time":853.384891423,"data":"   \"sec_per_item\": 3.32\n"}
+,{"stream_name":"stdout","time":853.384894897,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.384898474,"data":"  \"mine_covid\": {\n"}
+,{"stream_name":"stdout","time":853.384902763,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":853.384906397,"data":"   \"seconds\": 67.4,\n"}
+,{"stream_name":"stdout","time":853.384910351,"data":"   \"sec_per_item\": 3.37\n"}
+,{"stream_name":"stdout","time":853.384914248,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.384918018,"data":"  \"atom_direct\": {\n"}
+,{"stream_name":"stdout","time":853.384921481,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":853.384924528,"data":"   \"seconds\": 115.2,\n"}
+,{"stream_name":"stdout","time":853.384927705,"data":"   \"sec_per_item\": 5.76\n"}
+,{"stream_name":"stdout","time":853.384931073,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.384934317,"data":"  \"atom\": {\n"}
+,{"stream_name":"stdout","time":853.384937478,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":853.384940665,"data":"   \"seconds\": 178.2,\n"}
+,{"stream_name":"stdout","time":853.38494445,"data":"   \"sec_per_item\": 8.91\n"}
+,{"stream_name":"stdout","time":853.384947665,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.384950664,"data":"  \"kggen\": {\n"}
+,{"stream_name":"stdout","time":853.38495415,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":853.384958085,"data":"   \"seconds\": 84.4,\n"}
+,{"stream_name":"stdout","time":853.384961707,"data":"   \"sec_per_item\": 4.22\n"}
+,{"stream_name":"stdout","time":853.384965082,"data":"  }\n"}
+,{"stream_name":"stdout","time":853.384968627,"data":" },\n"}
+,{"stream_name":"stdout","time":853.384973109,"data":" \"notes\": [\n"}
+,{"stream_name":"stdout","time":853.384976559,"data":"  \"venv atom lỗi → cài vào python hệ thống\"\n"}
+,{"stream_name":"stdout","time":853.38498121,"data":" ],\n"}
+,{"stream_name":"stdout","time":853.384984928,"data":" \"gpus\": [\n"}
+,{"stream_name":"stdout","time":853.384988737,"data":"  \"Tesla T4, 15360 MiB\",\n"}
+,{"stream_name":"stdout","time":853.384992877,"data":"  \"Tesla T4, 15360 MiB\"\n"}
+,{"stream_name":"stdout","time":853.384996718,"data":" ],\n"}
+,{"stream_name":"stdout","time":853.384999985,"data":" \"kltn_commit\": \"84cdc3c66825003686e892541d5acced16c4f25d\",\n"}
+,{"stream_name":"stdout","time":853.385003791,"data":" \"webnlg_n\": 20,\n"}
+,{"stream_name":"stdout","time":853.38500769,"data":" \"covid_n\": 20,\n"}
+,{"stream_name":"stdout","time":853.385011858,"data":" \"server_flags\": \" --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\",\n"}
+,{"stream_name":"stdout","time":853.385021067,"data":" \"edc_embedder\": \"intfloat/e5-mistral-7b-instruct\",\n"}
+,{"stream_name":"stdout","time":853.385026218,"data":" \"webnlg\": {\n"}
+,{"stream_name":"stdout","time":853.385029989,"data":"  \"mine\": {\n"}
+,{"stream_name":"stdout","time":853.385033832,"data":"   \"error\": true,\n"}
+,{"stream_name":"stdout","time":853.385037782,"data":"   \"lines\": 20,\n"}
+,{"stream_name":"stdout","time":853.385041637,"data":"   \"scored\": 20,\n"}
+,{"stream_name":"stdout","time":853.385045296,"data":"   \"empty\": 0\n"}
+,{"stream_name":"stdout","time":853.385048847,"data":"  }\n"}
+,{"stream_name":"stdout","time":853.385052617,"data":" },\n"}
+,{"stream_name":"stdout","time":853.385056382,"data":" \"covid\": {\n"}
+,{"stream_name":"stdout","time":853.385060363,"data":"  \"gpt41-direct\": {\n"}
+,{"stream_name":"stdout","time":853.385064263,"data":"   \"MATCH\": 0.5291,\n"}
+,{"stream_name":"stdout","time":853.385068216,"data":"   \"HALL\": 0.326,\n"}
+,{"stream_name":"stdout","time":853.385071585,"data":"   \"OM\": 0.4709,\n"}
+,{"stream_name":"stdout","time":853.385075487,"data":"   \"MATCH_t\": 0.2782,\n"}
+,{"stream_name":"stdout","time":853.385079339,"data":"   \"OM_t\": 0.1208,\n"}
+,{"stream_name":"stdout","time":853.385082827,"data":"   \"HALL_t\": 0.13,\n"}
+,{"stream_name":"stdout","time":853.385086716,"data":"   \"P\": 0.674,\n"}
+,{"stream_name":"stdout","time":853.38509078,"data":"   \"R\": 0.5291,\n"}
+,{"stream_name":"stdout","time":853.385094576,"data":"   \"F1\": 0.5927,\n"}
+,{"stream_name":"stdout","time":853.385098437,"data":"   \"P_t\": 0.3613,\n"}
+,{"stream_name":"stdout","time":853.385102448,"data":"   \"F1_t\": 0.3143,\n"}
+,{"stream_name":"stdout","time":853.385106212,"data":"   \"n_rows\": 20.0,\n"}
+,{"stream_name":"stdout","time":853.38511005,"data":"   \"MATCH_skip\": 0.5291,\n"}
+,{"stream_name":"stdout","time":853.38511404,"data":"   \"HALL_skip\": 0.326,\n"}
+,{"stream_name":"stdout","time":853.385117255,"data":"   \"OM_skip\": 0.4709,\n"}
+,{"stream_name":"stdout","time":853.385120512,"data":"   \"MATCH_t_skip\": 0.2782,\n"}
+,{"stream_name":"stdout","time":853.38512464,"data":"   \"OM_t_skip\": 0.1208,\n"}
+,{"stream_name":"stdout","time":853.38512805,"data":"   \"HALL_t_skip\": 0.13,\n"}
+,{"stream_name":"stdout","time":853.385131947,"data":"   \"P_skip\": 0.674,\n"}
+,{"stream_name":"stdout","time":853.385135817,"data":"   \"R_skip\": 0.5291,\n"}
+,{"stream_name":"stdout","time":853.385139639,"data":"   \"F1_skip\": 0.5927,\n"}
+,{"stream_name":"stdout","time":853.385143555,"data":"   \"P_t_skip\": 0.3613,\n"}
+,{"stream_name":"stdout","time":853.3851475,"data":"   \"F1_t_skip\": 0.3143,\n"}
+,{"stream_name":"stdout","time":853.385151068,"data":"   \"n_rows_skip\": 20.0\n"}
+,{"stream_name":"stdout","time":853.385154905,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.385158669,"data":"  \"gpt41-atom\": {\n"}
+,{"stream_name":"stdout","time":853.385162477,"data":"   \"MATCH\": 0.7495,\n"}
+,{"stream_name":"stdout","time":853.385166434,"data":"   \"HALL\": 0.5232,\n"}
+,{"stream_name":"stdout","time":853.385170362,"data":"   \"OM\": 0.2505,\n"}
+,{"stream_name":"stdout","time":853.385173914,"data":"   \"MATCH_t\": 0.3259,\n"}
+,{"stream_name":"stdout","time":853.385177639,"data":"   \"OM_t\": 0.2688,\n"}
+,{"stream_name":"stdout","time":853.385181398,"data":"   \"HALL_t\": 0.1547,\n"}
+,{"stream_name":"stdout","time":853.385189334,"data":"   \"P\": 0.4768,\n"}
+,{"stream_name":"stdout","time":853.385193769,"data":"   \"R\": 0.7495,\n"}
+,{"stream_name":"stdout","time":853.385197312,"data":"   \"F1\": 0.5828,\n"}
+,{"stream_name":"stdout","time":853.385200987,"data":"   \"P_t\": 0.2164,\n"}
+,{"stream_name":"stdout","time":853.385204856,"data":"   \"F1_t\": 0.2601,\n"}
+,{"stream_name":"stdout","time":853.385208788,"data":"   \"n_rows\": 20.0,\n"}
+,{"stream_name":"stdout","time":853.385212657,"data":"   \"MATCH_skip\": 0.7495,\n"}
+,{"stream_name":"stdout","time":853.385216577,"data":"   \"HALL_skip\": 0.5232,\n"}
+,{"stream_name":"stdout","time":853.385220223,"data":"   \"OM_skip\": 0.2505,\n"}
+,{"stream_name":"stdout","time":853.385224019,"data":"   \"MATCH_t_skip\": 0.3259,\n"}
+,{"stream_name":"stdout","time":853.385227726,"data":"   \"OM_t_skip\": 0.2688,\n"}
+,{"stream_name":"stdout","time":853.385234478,"data":"   \"HALL_t_skip\": 0.1547,\n"}
+,{"stream_name":"stdout","time":853.385238856,"data":"   \"P_skip\": 0.4768,\n"}
+,{"stream_name":"stdout","time":853.385242522,"data":"   \"R_skip\": 0.7495,\n"}
+,{"stream_name":"stdout","time":853.385246164,"data":"   \"F1_skip\": 0.5828,\n"}
+,{"stream_name":"stdout","time":853.385249949,"data":"   \"P_t_skip\": 0.2164,\n"}
+,{"stream_name":"stdout","time":853.385253796,"data":"   \"F1_t_skip\": 0.2601,\n"}
+,{"stream_name":"stdout","time":853.385257745,"data":"   \"n_rows_skip\": 20.0\n"}
+,{"stream_name":"stdout","time":853.385261683,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.385265262,"data":"  \"atom-direct\": {\n"}
+,{"stream_name":"stdout","time":853.385268979,"data":"   \"MATCH\": 0.3432,\n"}
+,{"stream_name":"stdout","time":853.385273079,"data":"   \"HALL\": 0.328,\n"}
+,{"stream_name":"stdout","time":853.385276999,"data":"   \"OM\": 0.6568,\n"}
+,{"stream_name":"stdout","time":853.385280929,"data":"   \"MATCH_t\": 0.0945,\n"}
+,{"stream_name":"stdout","time":853.385284752,"data":"   \"OM_t\": 0.1344,\n"}
+,{"stream_name":"stdout","time":853.385288449,"data":"   \"HALL_t\": 0.1144,\n"}
+,{"stream_name":"stdout","time":853.385292266,"data":"   \"P\": 0.672,\n"}
+,{"stream_name":"stdout","time":853.385296059,"data":"   \"R\": 0.3432,\n"}
+,{"stream_name":"stdout","time":853.385300002,"data":"   \"F1\": 0.4544,\n"}
+,{"stream_name":"stdout","time":853.385306395,"data":"   \"P_t\": 0.1595,\n"}
+,{"stream_name":"stdout","time":853.385310149,"data":"   \"F1_t\": 0.1187,\n"}
+,{"stream_name":"stdout","time":853.385313974,"data":"   \"n_rows\": 20.0,\n"}
+,{"stream_name":"stdout","time":853.385317996,"data":"   \"MATCH_skip\": 0.3432,\n"}
+,{"stream_name":"stdout","time":853.385321994,"data":"   \"HALL_skip\": 0.328,\n"}
+,{"stream_name":"stdout","time":853.385325976,"data":"   \"OM_skip\": 0.6568,\n"}
+,{"stream_name":"stdout","time":853.385329639,"data":"   \"MATCH_t_skip\": 0.0945,\n"}
+,{"stream_name":"stdout","time":853.385333531,"data":"   \"OM_t_skip\": 0.1344,\n"}
+,{"stream_name":"stdout","time":853.385337408,"data":"   \"HALL_t_skip\": 0.1144,\n"}
+,{"stream_name":"stdout","time":853.385341184,"data":"   \"P_skip\": 0.672,\n"}
+,{"stream_name":"stdout","time":853.385345073,"data":"   \"R_skip\": 0.3432,\n"}
+,{"stream_name":"stdout","time":853.385348938,"data":"   \"F1_skip\": 0.4544,\n"}
+,{"stream_name":"stdout","time":853.385352531,"data":"   \"P_t_skip\": 0.1595,\n"}
+,{"stream_name":"stdout","time":853.385356041,"data":"   \"F1_t_skip\": 0.1187,\n"}
+,{"stream_name":"stdout","time":853.385359879,"data":"   \"n_rows_skip\": 20.0\n"}
+,{"stream_name":"stdout","time":853.385373889,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.385377814,"data":"  \"atom\": {\n"}
+,{"stream_name":"stdout","time":853.385381479,"data":"   \"MATCH\": 0.4217,\n"}
+,{"stream_name":"stdout","time":853.385385522,"data":"   \"HALL\": 0.383,\n"}
+,{"stream_name":"stdout","time":853.385389438,"data":"   \"OM\": 0.5783,\n"}
+,{"stream_name":"stdout","time":853.385393301,"data":"   \"MATCH_t\": 0.1169,\n"}
+,{"stream_name":"stdout","time":853.385397238,"data":"   \"OM_t\": 0.1296,\n"}
+,{"stream_name":"stdout","time":853.385400528,"data":"   \"HALL_t\": 0.1753,\n"}
+,{"stream_name":"stdout","time":853.38540443,"data":"   \"P\": 0.617,\n"}
+,{"stream_name":"stdout","time":853.385408239,"data":"   \"R\": 0.4217,\n"}
+,{"stream_name":"stdout","time":853.385412029,"data":"   \"F1\": 0.501,\n"}
+,{"stream_name":"stdout","time":853.385415889,"data":"   \"P_t\": 0.1925,\n"}
+,{"stream_name":"stdout","time":853.385419915,"data":"   \"F1_t\": 0.1454,\n"}
+,{"stream_name":"stdout","time":853.385423478,"data":"   \"n_rows\": 20.0,\n"}
+,{"stream_name":"stdout","time":853.385427254,"data":"   \"MATCH_skip\": 0.4217,\n"}
+,{"stream_name":"stdout","time":853.385447127,"data":"   \"HALL_skip\": 0.383,\n"}
+,{"stream_name":"stdout","time":853.385455192,"data":"   \"OM_skip\": 0.5783,\n"}
+,{"stream_name":"stdout","time":853.385459091,"data":"   \"MATCH_t_skip\": 0.1169,\n"}
+,{"stream_name":"stdout","time":853.385462809,"data":"   \"OM_t_skip\": 0.1296,\n"}
+,{"stream_name":"stdout","time":853.385466616,"data":"   \"HALL_t_skip\": 0.1753,\n"}
+,{"stream_name":"stdout","time":853.385470391,"data":"   \"P_skip\": 0.617,\n"}
+,{"stream_name":"stdout","time":853.385474354,"data":"   \"R_skip\": 0.4217,\n"}
+,{"stream_name":"stdout","time":853.385478224,"data":"   \"F1_skip\": 0.501,\n"}
+,{"stream_name":"stdout","time":853.385482335,"data":"   \"P_t_skip\": 0.1925,\n"}
+,{"stream_name":"stdout","time":853.385486104,"data":"   \"F1_t_skip\": 0.1454,\n"}
+,{"stream_name":"stdout","time":853.385490018,"data":"   \"n_rows_skip\": 20.0\n"}
+,{"stream_name":"stdout","time":853.38549384,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.385497642,"data":"  \"kggen\": {\n"}
+,{"stream_name":"stdout","time":853.385501724,"data":"   \"MATCH\": 0.413,\n"}
+,{"stream_name":"stdout","time":853.385505554,"data":"   \"HALL\": 0.3793,\n"}
+,{"stream_name":"stdout","time":853.385509211,"data":"   \"OM\": 0.587,\n"}
+,{"stream_name":"stdout","time":853.385513003,"data":"   \"MATCH_t\": 0.1147,\n"}
+,{"stream_name":"stdout","time":853.385516892,"data":"   \"OM_t\": 0.2983,\n"}
+,{"stream_name":"stdout","time":853.38552076,"data":"   \"HALL_t\": 0.0,\n"}
+,{"stream_name":"stdout","time":853.385524669,"data":"   \"P\": 0.6207,\n"}
+,{"stream_name":"stdout","time":853.385528507,"data":"   \"R\": 0.413,\n"}
+,{"stream_name":"stdout","time":853.385532439,"data":"   \"F1\": 0.496,\n"}
+,{"stream_name":"stdout","time":853.385536307,"data":"   \"P_t\": 0.1812,\n"}
+,{"stream_name":"stdout","time":853.385540096,"data":"   \"F1_t\": 0.1405,\n"}
+,{"stream_name":"stdout","time":853.385543983,"data":"   \"n_rows\": 20.0,\n"}
+,{"stream_name":"stdout","time":853.385547824,"data":"   \"MATCH_skip\": 0.413,\n"}
+,{"stream_name":"stdout","time":853.385551434,"data":"   \"HALL_skip\": 0.3793,\n"}
+,{"stream_name":"stdout","time":853.385554694,"data":"   \"OM_skip\": 0.587,\n"}
+,{"stream_name":"stdout","time":853.385558534,"data":"   \"MATCH_t_skip\": 0.1147,\n"}
+,{"stream_name":"stdout","time":853.385561767,"data":"   \"OM_t_skip\": 0.2983,\n"}
+,{"stream_name":"stdout","time":853.385569616,"data":"   \"HALL_t_skip\": 0.0,\n"}
+,{"stream_name":"stdout","time":853.385573296,"data":"   \"P_skip\": 0.6207,\n"}
+,{"stream_name":"stdout","time":853.38557701,"data":"   \"R_skip\": 0.413,\n"}
+,{"stream_name":"stdout","time":853.385580944,"data":"   \"F1_skip\": 0.496,\n"}
+,{"stream_name":"stdout","time":853.385585245,"data":"   \"P_t_skip\": 0.1812,\n"}
+,{"stream_name":"stdout","time":853.385588874,"data":"   \"F1_t_skip\": 0.1405,\n"}
+,{"stream_name":"stdout","time":853.385592632,"data":"   \"n_rows_skip\": 20.0\n"}
+,{"stream_name":"stdout","time":853.385596454,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.38560007,"data":"  \"mine\": {\n"}
+,{"stream_name":"stdout","time":853.385603923,"data":"   \"MATCH\": 0.3268,\n"}
+,{"stream_name":"stdout","time":853.385607914,"data":"   \"HALL\": 0.2155,\n"}
+,{"stream_name":"stdout","time":853.385611552,"data":"   \"OM\": 0.6732,\n"}
+,{"stream_name":"stdout","time":853.385614874,"data":"   \"MATCH_t\": 0.0698,\n"}
+,{"stream_name":"stdout","time":853.385618265,"data":"   \"OM_t\": 0.0706,\n"}
+,{"stream_name":"stdout","time":853.385622234,"data":"   \"HALL_t\": 0.1864,\n"}
+,{"stream_name":"stdout","time":853.385625944,"data":"   \"P\": 0.7345,\n"}
+,{"stream_name":"stdout","time":853.38562971,"data":"   \"R\": 0.3268,\n"}
+,{"stream_name":"stdout","time":853.385633547,"data":"   \"F1\": 0.4524,\n"}
+,{"stream_name":"stdout","time":853.385637248,"data":"   \"P_t\": 0.1517,\n"}
+,{"stream_name":"stdout","time":853.385640974,"data":"   \"F1_t\": 0.0956,\n"}
+,{"stream_name":"stdout","time":853.385644665,"data":"   \"n_rows\": 20.0,\n"}
+,{"stream_name":"stdout","time":853.385648553,"data":"   \"MATCH_skip\": 0.344,\n"}
+,{"stream_name":"stdout","time":853.385652513,"data":"   \"HALL_skip\": 0.2268,\n"}
+,{"stream_name":"stdout","time":853.385656386,"data":"   \"OM_skip\": 0.656,\n"}
+,{"stream_name":"stdout","time":853.385660067,"data":"   \"MATCH_t_skip\": 0.0735,\n"}
+,{"stream_name":"stdout","time":853.385665716,"data":"   \"OM_t_skip\": 0.0743,\n"}
+,{"stream_name":"stdout","time":853.38566966,"data":"   \"HALL_t_skip\": 0.1962,\n"}
+,{"stream_name":"stdout","time":853.385673282,"data":"   \"P_skip\": 0.7732,\n"}
+,{"stream_name":"stdout","time":853.385677017,"data":"   \"R_skip\": 0.344,\n"}
+,{"stream_name":"stdout","time":853.385680738,"data":"   \"F1_skip\": 0.4762,\n"}
+,{"stream_name":"stdout","time":853.385684495,"data":"   \"P_t_skip\": 0.1596,\n"}
+,{"stream_name":"stdout","time":853.385688262,"data":"   \"F1_t_skip\": 0.1007,\n"}
+,{"stream_name":"stdout","time":853.38569199,"data":"   \"n_rows_skip\": 19.0\n"}
+,{"stream_name":"stdout","time":853.38569568,"data":"  }\n"}
+,{"stream_name":"stdout","time":853.385699392,"data":" },\n"}
+,{"stream_name":"stdout","time":853.385702925,"data":" \"covid_outputs\": {\n"}
+,{"stream_name":"stdout","time":853.385706709,"data":"  \"atom-direct\": {\n"}
+,{"stream_name":"stdout","time":853.385710524,"data":"   \"rows\": 20,\n"}
+,{"stream_name":"stdout","time":853.385714309,"data":"   \"empty\": 0,\n"}
+,{"stream_name":"stdout","time":853.385718171,"data":"   \"avg_quintuples\": 4.1,\n"}
+,{"stream_name":"stdout","time":853.385722024,"data":"   \"with_time\": 0.915\n"}
+,{"stream_name":"stdout","time":853.385725813,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.385729568,"data":"  \"atom\": {\n"}
+,{"stream_name":"stdout","time":853.385733391,"data":"   \"rows\": 20,\n"}
+,{"stream_name":"stdout","time":853.385737303,"data":"   \"empty\": 0,\n"}
+,{"stream_name":"stdout","time":853.385745254,"data":"   \"avg_quintuples\": 6.5,\n"}
+,{"stream_name":"stdout","time":853.385749201,"data":"   \"with_time\": 0.915\n"}
+,{"stream_name":"stdout","time":853.38575302,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.385756479,"data":"  \"kggen\": {\n"}
+,{"stream_name":"stdout","time":853.385760075,"data":"   \"rows\": 20,\n"}
+,{"stream_name":"stdout","time":853.385763665,"data":"   \"empty\": 0,\n"}
+,{"stream_name":"stdout","time":853.385767461,"data":"   \"avg_quintuples\": 5.85,\n"}
+,{"stream_name":"stdout","time":853.38577139,"data":"   \"with_time\": 0.0\n"}
+,{"stream_name":"stdout","time":853.38577522,"data":"  },\n"}
+,{"stream_name":"stdout","time":853.385778915,"data":"  \"mine\": {\n"}
+,{"stream_name":"stdout","time":853.385782777,"data":"   \"rows\": 20,\n"}
+,{"stream_name":"stdout","time":853.385786516,"data":"   \"empty\": 1,\n"}
+,{"stream_name":"stdout","time":853.385790079,"data":"   \"avg_quintuples\": 3.95,\n"}
+,{"stream_name":"stdout","time":853.385794085,"data":"   \"with_time\": 1.0\n"}
+,{"stream_name":"stdout","time":853.385797908,"data":"  }\n"}
+,{"stream_name":"stdout","time":853.385801668,"data":" },\n"}
+,{"stream_name":"stdout","time":853.385805459,"data":" \"total_minutes\": 14.2\n"}
+,{"stream_name":"stdout","time":853.385809295,"data":"}\n"}
+,{"stream_name":"stdout","time":853.395482244,"data":"DONE\n"}
+,{"stream_name":"stderr","time":855.13939496,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":855.139427945,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":855.470617105,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":855.470642077,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":856.358165776,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":856.92316615,"data":"[NbConvertApp] Writing 349855 bytes to __results__.html\n"}
+]

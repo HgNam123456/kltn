@@ -34,7 +34,8 @@ def test_temporal_kg_reuses_stored_facts_and_closes_ended_ones():
                                        "valid_from": "2020-01-24", "valid_until": ""}], "ended": []}])
     assert kg.update("Virus spreads in China.", "2020-01-28", first) == [("Virus", "occurs_in", "China", ["2020-01-24"], [])]
     second = FakeLLMClient([{"facts": [], "ended": [0]}])
-    kg.update("The Virus is gone from China.", "2020-03-01", second)
+    assert kg.update("The Virus is gone from China.", "2020-03-01", second) == [
+        ("Virus", "occurs_in", "China", ["2020-01-24"], ["2020-03-01"])]      # fact bị đóng cũng là fact của đoạn
     assert "[0] Virus | occurs_in | China" in second.calls[0][1]          # fact cũ có thực thể được nhắc → STORED
     assert kg.facts[0][4] == ["2020-03-01"]                              # bị báo ended → đóng t_end
 

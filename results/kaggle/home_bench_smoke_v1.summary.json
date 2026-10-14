@@ -1,0 +1,244 @@
+{
+ "limit": 20,
+ "bench": [
+  "webnlg",
+  "covid"
+ ],
+ "runs": {
+  "mine_webnlg": {
+   "ok": true,
+   "seconds": 34.3,
+   "sec_per_item": 1.71
+  },
+  "edc": {
+   "ok": false,
+   "seconds": 66.4,
+   "sec_per_item": 3.32
+  },
+  "mine_covid": {
+   "ok": true,
+   "seconds": 67.4,
+   "sec_per_item": 3.37
+  },
+  "atom_direct": {
+   "ok": true,
+   "seconds": 115.2,
+   "sec_per_item": 5.76
+  },
+  "atom": {
+   "ok": true,
+   "seconds": 178.2,
+   "sec_per_item": 8.91
+  },
+  "kggen": {
+   "ok": true,
+   "seconds": 84.4,
+   "sec_per_item": 4.22
+  }
+ },
+ "notes": [
+  "venv atom lỗi → cài vào python hệ thống"
+ ],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "84cdc3c66825003686e892541d5acced16c4f25d",
+ "webnlg_n": 20,
+ "covid_n": 20,
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "edc_embedder": "intfloat/e5-mistral-7b-instruct",
+ "webnlg": {
+  "mine": {
+   "error": true,
+   "lines": 20,
+   "scored": 20,
+   "empty": 0
+  }
+ },
+ "covid": {
+  "gpt41-direct": {
+   "MATCH": 0.5291,
+   "HALL": 0.326,
+   "OM": 0.4709,
+   "MATCH_t": 0.2782,
+   "OM_t": 0.1208,
+   "HALL_t": 0.13,
+   "P": 0.674,
+   "R": 0.5291,
+   "F1": 0.5927,
+   "P_t": 0.3613,
+   "F1_t": 0.3143,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.5291,
+   "HALL_skip": 0.326,
+   "OM_skip": 0.4709,
+   "MATCH_t_skip": 0.2782,
+   "OM_t_skip": 0.1208,
+   "HALL_t_skip": 0.13,
+   "P_skip": 0.674,
+   "R_skip": 0.5291,
+   "F1_skip": 0.5927,
+   "P_t_skip": 0.3613,
+   "F1_t_skip": 0.3143,
+   "n_rows_skip": 20.0
+  },
+  "gpt41-atom": {
+   "MATCH": 0.7495,
+   "HALL": 0.5232,
+   "OM": 0.2505,
+   "MATCH_t": 0.3259,
+   "OM_t": 0.2688,
+   "HALL_t": 0.1547,
+   "P": 0.4768,
+   "R": 0.7495,
+   "F1": 0.5828,
+   "P_t": 0.2164,
+   "F1_t": 0.2601,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.7495,
+   "HALL_skip": 0.5232,
+   "OM_skip": 0.2505,
+   "MATCH_t_skip": 0.3259,
+   "OM_t_skip": 0.2688,
+   "HALL_t_skip": 0.1547,
+   "P_skip": 0.4768,
+   "R_skip": 0.7495,
+   "F1_skip": 0.5828,
+   "P_t_skip": 0.2164,
+   "F1_t_skip": 0.2601,
+   "n_rows_skip": 20.0
+  },
+  "atom-direct": {
+   "MATCH": 0.3432,
+   "HALL": 0.328,
+   "OM": 0.6568,
+   "MATCH_t": 0.0945,
+   "OM_t": 0.1344,
+   "HALL_t": 0.1144,
+   "P": 0.672,
+   "R": 0.3432,
+   "F1": 0.4544,
+   "P_t": 0.1595,
+   "F1_t": 0.1187,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.3432,
+   "HALL_skip": 0.328,
+   "OM_skip": 0.6568,
+   "MATCH_t_skip": 0.0945,
+   "OM_t_skip": 0.1344,
+   "HALL_t_skip": 0.1144,
+   "P_skip": 0.672,
+   "R_skip": 0.3432,
+   "F1_skip": 0.4544,
+   "P_t_skip": 0.1595,
+   "F1_t_skip": 0.1187,
+   "n_rows_skip": 20.0
+  },
+  "atom": {
+   "MATCH": 0.4217,
+   "HALL": 0.383,
+   "OM": 0.5783,
+   "MATCH_t": 0.1169,
+   "OM_t": 0.1296,
+   "HALL_t": 0.1753,
+   "P": 0.617,
+   "R": 0.4217,
+   "F1": 0.501,
+   "P_t": 0.1925,
+   "F1_t": 0.1454,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.4217,
+   "HALL_skip": 0.383,
+   "OM_skip": 0.5783,
+   "MATCH_t_skip": 0.1169,
+   "OM_t_skip": 0.1296,
+   "HALL_t_skip": 0.1753,
+   "P_skip": 0.617,
+   "R_skip": 0.4217,
+   "F1_skip": 0.501,
+   "P_t_skip": 0.1925,
+   "F1_t_skip": 0.1454,
+   "n_rows_skip": 20.0
+  },
+  "kggen": {
+   "MATCH": 0.413,
+   "HALL": 0.3793,
+   "OM": 0.587,
+   "MATCH_t": 0.1147,
+   "OM_t": 0.2983,
+   "HALL_t": 0.0,
+   "P": 0.6207,
+   "R": 0.413,
+   "F1": 0.496,
+   "P_t": 0.1812,
+   "F1_t": 0.1405,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.413,
+   "HALL_skip": 0.3793,
+   "OM_skip": 0.587,
+   "MATCH_t_skip": 0.1147,
+   "OM_t_skip": 0.2983,
+   "HALL_t_skip": 0.0,
+   "P_skip": 0.6207,
+   "R_skip": 0.413,
+   "F1_skip": 0.496,
+   "P_t_skip": 0.1812,
+   "F1_t_skip": 0.1405,
+   "n_rows_skip": 20.0
+  },
+  "mine": {
+   "MATCH": 0.3268,
+   "HALL": 0.2155,
+   "OM": 0.6732,
+   "MATCH_t": 0.0698,
+   "OM_t": 0.0706,
+   "HALL_t": 0.1864,
+   "P": 0.7345,
+   "R": 0.3268,
+   "F1": 0.4524,
+   "P_t": 0.1517,
+   "F1_t": 0.0956,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.344,
+   "HALL_skip": 0.2268,
+   "OM_skip": 0.656,
+   "MATCH_t_skip": 0.0735,
+   "OM_t_skip": 0.0743,
+   "HALL_t_skip": 0.1962,
+   "P_skip": 0.7732,
+   "R_skip": 0.344,
+   "F1_skip": 0.4762,
+   "P_t_skip": 0.1596,
+   "F1_t_skip": 0.1007,
+   "n_rows_skip": 19.0
+  }
+ },
+ "covid_outputs": {
+  "atom-direct": {
+   "rows": 20,
+   "empty": 0,
+   "avg_quintuples": 4.1,
+   "with_time": 0.915
+  },
+  "atom": {
+   "rows": 20,
+   "empty": 0,
+   "avg_quintuples": 6.5,
+   "with_time": 0.915
+  },
+  "kggen": {
+   "rows": 20,
+   "empty": 0,
+   "avg_quintuples": 5.85,
+   "with_time": 0.0
+  },
+  "mine": {
+   "rows": 20,
+   "empty": 1,
+   "avg_quintuples": 3.95,
+   "with_time": 1.0
+  }
+ },
+ "total_minutes": 14.2
+}

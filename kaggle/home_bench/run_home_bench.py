@@ -30,7 +30,7 @@ import urllib.request
 
 LIMIT = 20
 BENCH = ["webnlg", "covid"]
-RUNS = ["mine_webnlg", "edc", "mine_covid", "atom_direct", "atom", "kggen"]
+RUNS = ["mine_webnlg", "edc", "mine_covid", "atom_direct"]    # chạy thử v2: sửa EDC/chấm/venv + prompt mình
 EDC_TIMEOUT_H = 6                     # chặn EDC (gọi LLM tuần tự, lỗi API thì thử lại vô hạn)
 WORKERS = 4
 KGU_REPO, KGU_BRANCH = "https://github.com/HgNam123456/kltn.git", "feat/core-pipeline"
@@ -72,14 +72,15 @@ summary["gpus"] = gpus
 print(gpus, flush=True)
 sh(f"git clone -q --depth 1 -b {KGU_BRANCH} {KGU_REPO} {KLTN}")
 summary["kltn_commit"] = sh(f"git -C {KLTN} rev-parse HEAD", capture=True).strip()
-sh("pip install -q dateparser nervaluate unidecode beautifulsoup4 regex 'openai>=1'")
+sh("pip install -q dateparser nervaluate==0.1.8 unidecode beautifulsoup4 regex 'openai>=1'")  # script EDC cần API nervaluate 0.1
 
 
 def venv(name: str, pkgs: str) -> str:
-    """venv sạch (itext2kg ghim numpy<2, không trộn với gói hệ thống); lỗi tạo venv → dùng python hệ thống."""
+    """venv sạch Python 3.11 bằng uv (itext2kg ghim numpy<2, chưa có wheel cho Python 3.13 của Kaggle; python -m venv
+    hỏng vì thiếu ensurepip); lỗi → dùng python hệ thống."""
     path = f"{WORK}/venv_{name}"
     try:
-        sh(f"python -m venv {path} && {path}/bin/pip install -q {pkgs}")
+        sh(f"pip install -q uv && uv venv -q --python 3.11 {path} && uv pip install -q --python {path}/bin/python {pkgs}")
         return f"{path}/bin/python"
     except subprocess.CalledProcessError:
         summary["notes"].append(f"venv {name} lỗi → cài vào python hệ thống")
@@ -188,9 +189,11 @@ if "webnlg" in BENCH:
             "model = SentenceTransformer(model_name, trust_remote_code=True, device=os.environ['EDC_EMB_DEVICE'], "
             "model_kwargs={'torch_dtype': __import__('torch').float16})")))
         imp = "from edc.utils.e5_mistral_utils import MistralForSequenceEmbedding"
-        for f in ("edc_framework.py", "schema_retriever.py", "entity_extraction.py"):
+        patched = [f for f in sorted(os.listdir(f"{EDC}/edc")) if f.endswith(".py")
+                   and imp in open(f"{EDC}/edc/{f}", encoding="utf-8").read()]
+        assert "edc_framework.py" in patched, "vá import EDC không khớp source"
+        for f in patched:
             src = open(f"{EDC}/edc/{f}", encoding="utf-8").read()
-            assert imp in src, f"vá import EDC không khớp {f}"
             open(f"{EDC}/edc/{f}", "w", encoding="utf-8").write(src.replace(imp, (
                 f"try:\n    {imp}\nexcept Exception:  # chỉ dùng cho refinement có adapter\n"
                 "    MistralForSequenceEmbedding = None")))
