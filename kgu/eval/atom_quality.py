@@ -18,7 +18,8 @@ import numpy as np
 
 @lru_cache(maxsize=None)
 def _parse(s: str) -> dt.date | None:
-    d = dateparser.parse(s, settings={"DATE_ORDER": "YMD", "PREFER_DAY_OF_MONTH": "first"})
+    d = dateparser.parse(s, settings={"DATE_ORDER": "YMD", "PREFER_DAY_OF_MONTH": "first",
+                                    "PREFER_MONTH_OF_YEAR": "first"})
     if d is None and "-" in s:                                              # "24-01-2020"
         d = dateparser.parse(s, settings={"DATE_ORDER": "DMY"})
     return d.date() if d is not None else None

@@ -32,3 +32,9 @@ def test_empty_prediction_counts_as_full_omission_not_skipped():
     assert out["match"] == 0 and out["om"] == 1
     s = summarize([out, {"match": 1, "hall": 0, "om": 0, "match_t": 1, "om_t": 0, "hall_t": 0, "n_pred": 1, "n_gold": 1}])
     assert s["R"] == 0.5 and s["n_rows"] == 2
+
+
+def test_dates_are_day_first_and_year_only_is_deterministic():
+    import datetime as dt
+    assert dates("05-03-2020") == {dt.date(2020, 3, 5)}                 # ATOM ghi DD-MM-YYYY
+    assert dates("2020") == {dt.date(2020, 1, 1)} and dates("01-2020") == {dt.date(2020, 1, 1)}
