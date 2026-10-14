@@ -29,8 +29,8 @@ import time
 import urllib.request
 
 LIMIT = 20
-BENCH = ["webnlg", "covid"]
-RUNS = ["edc", "mine_covid"]          # chạy thử v3: vá free_model EDC + prompt mình (luật ngày ATOM, max_tokens)
+BENCH = ["webnlg"]
+RUNS = ["edc"]                         # chạy thử v4: vá đủ khối free_model của EDC
 DEV_N = 20                            # 20 nhóm ngày đầu (theo ngày) đã xem ở lượt chạy thử khi sửa prompt của mình
 EDC_TIMEOUT_H = 6                    # chặn EDC (gọi LLM tuần tự, lỗi API thì thử lại vô hạn)
 WORKERS = 4
@@ -200,11 +200,13 @@ if "webnlg" in BENCH:
                 f"try:\n    {imp}\nexcept Exception:  # chỉ dùng cho refinement có adapter\n"
                 "    MistralForSequenceEmbedding = None")))
         src = open(fw, encoding="utf-8").read()        # lỗi gốc: nhánh OpenAI vẫn giải phóng verify model chưa nạp
-        old = "            llm_utils.free_model(sc_verify_model, sc_verify_tokenizer)"
+        old = ("            llm_utils.free_model(sc_verify_model, sc_verify_tokenizer)\n"
+               "            del self.loaded_model_dict[self.sc_llm_name]\n")
         assert src.count(old) == 1, "vá free_model EDC không khớp source"
         open(fw, "w", encoding="utf-8").write(src.replace(old, (
             "            if not llm_utils.is_model_openai(self.sc_llm_name):\n"
-            "                llm_utils.free_model(sc_verify_model, sc_verify_tokenizer)")))
+            "                llm_utils.free_model(sc_verify_model, sc_verify_tokenizer)\n"
+            "                del self.loaded_model_dict[self.sc_llm_name]\n")))
         edc_env = {**env, "OPENAI_KEY": "none", "OPENAI_BASE_URL": f"{SERVER}/v1", "PYTHONPATH": EDC,
                    "EDC_EMB_DEVICE": "cuda:1" if two_gpu else "cuda:0"}
         llm = "gpt-gemma-4-e4b"      # chứa "gpt" → nhánh OpenAI của EDC; llama-server bỏ qua tên model

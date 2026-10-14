@@ -1,0 +1,120 @@
+{
+ "limit": 20,
+ "bench": [
+  "webnlg",
+  "covid"
+ ],
+ "runs": {
+  "edc": {
+   "ok": false,
+   "seconds": 215.4,
+   "sec_per_item": 10.77
+  },
+  "mine_covid": {
+   "ok": true,
+   "seconds": 97.7,
+   "sec_per_item": 4.88
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "122c392d859203fa60154844d4e93990ceff4c00",
+ "webnlg_n": 20,
+ "covid_n": 20,
+ "covid_dev_n": 20,
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "edc_embedder": "intfloat/e5-mistral-7b-instruct",
+ "webnlg": {},
+ "covid": {
+  "gpt41-direct": {
+   "MATCH": 0.5291,
+   "HALL": 0.326,
+   "OM": 0.4709,
+   "MATCH_t": 0.2782,
+   "OM_t": 0.1208,
+   "HALL_t": 0.13,
+   "P": 0.674,
+   "R": 0.5291,
+   "F1": 0.5927,
+   "P_t": 0.3613,
+   "F1_t": 0.3143,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.5291,
+   "HALL_skip": 0.326,
+   "OM_skip": 0.4709,
+   "MATCH_t_skip": 0.2782,
+   "OM_t_skip": 0.1208,
+   "HALL_t_skip": 0.13,
+   "P_skip": 0.674,
+   "R_skip": 0.5291,
+   "F1_skip": 0.5927,
+   "P_t_skip": 0.3613,
+   "F1_t_skip": 0.3143,
+   "n_rows_skip": 20.0
+  },
+  "gpt41-atom": {
+   "MATCH": 0.7495,
+   "HALL": 0.5232,
+   "OM": 0.2505,
+   "MATCH_t": 0.3259,
+   "OM_t": 0.2688,
+   "HALL_t": 0.1547,
+   "P": 0.4768,
+   "R": 0.7495,
+   "F1": 0.5828,
+   "P_t": 0.2164,
+   "F1_t": 0.2601,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.7495,
+   "HALL_skip": 0.5232,
+   "OM_skip": 0.2505,
+   "MATCH_t_skip": 0.3259,
+   "OM_t_skip": 0.2688,
+   "HALL_t_skip": 0.1547,
+   "P_skip": 0.4768,
+   "R_skip": 0.7495,
+   "F1_skip": 0.5828,
+   "P_t_skip": 0.2164,
+   "F1_t_skip": 0.2601,
+   "n_rows_skip": 20.0
+  },
+  "mine": {
+   "MATCH": 0.3895,
+   "HALL": 0.3837,
+   "OM": 0.6105,
+   "MATCH_t": 0.087,
+   "OM_t": 0.1326,
+   "HALL_t": 0.1699,
+   "P": 0.6163,
+   "R": 0.3895,
+   "F1": 0.4773,
+   "P_t": 0.15,
+   "F1_t": 0.1102,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.3895,
+   "HALL_skip": 0.3837,
+   "OM_skip": 0.6105,
+   "MATCH_t_skip": 0.087,
+   "OM_t_skip": 0.1326,
+   "HALL_t_skip": 0.1699,
+   "P_skip": 0.6163,
+   "R_skip": 0.3895,
+   "F1_skip": 0.4773,
+   "P_t_skip": 0.15,
+   "F1_t_skip": 0.1102,
+   "n_rows_skip": 20.0
+  }
+ },
+ "covid_outputs": {
+  "mine": {
+   "rows": 20,
+   "empty": 0,
+   "avg_quintuples": 5.7,
+   "with_time": 0.877
+  }
+ },
+ "total_minutes": 6.4
+}
