@@ -1,0 +1,65 @@
+[{"stream_name":"stdout","time":1.406226979,"data":"$ git clone -q --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git /kaggle/working/kltn \u0026\u0026 git -C /kaggle/working/kltn log --oneline -1\n"}
+,{"stream_name":"stdout","time":3.037919324,"data":"95347c0 feat: COVID-NYT scorer (ATOM metric, local embedder) + Kaggle calibration kernel\n"}
+,{"stream_name":"stdout","time":3.039807952,"data":"$ pip install -q dateparser\n"}
+,{"stream_name":"stdout","time":8.710986789,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 322.4/322.4 kB 6.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":11.214336581,"data":"$ nvidia-smi --query-gpu=name,memory.total --format=csv\n"}
+,{"stream_name":"stdout","time":11.244226728,"data":"name, memory.total [MiB]\n"}
+,{"stream_name":"stdout","time":11.244263435,"data":"Tesla T4, 15360 MiB\n"}
+,{"stream_name":"stdout","time":11.244268385,"data":"Tesla T4, 15360 MiB\n"}
+,{"stream_name":"stdout","time":11.250161604,"data":"$ cd /kaggle/working/kltn \u0026\u0026 PYTHONPATH=. python scripts/score_covid_nyt.py --data data/covid_nyt/2020_covid_nyt.jsonl --calibrate --embedder sentence-transformers/all-mpnet-base-v2 BAAI/bge-large-en-v1.5 intfloat/e5-large-v2 --threshold 0.6 0.65 0.7 0.75 0.8 0.85 0.9 --device cuda --out /kaggle/working/covid_calibration.json\n"}
+,{"stream_name":"stdout","time":72.900104603,"data":"122 nhóm ngày, 2 hệ thống, 15497 câu cần nhúng\n"}
+,{"stream_name":"stderr","time":73.078721691,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":76.035666106,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 2661.04it/s]\n"}
+,{"stream_name":"stdout","time":102.154873589,"data":"sentence-transformers/all-mpnet-base-v2 @0.6 gpt41-direct: F1 0.5841 F1_skip 0.6139 F1_t 0.2719 MATCH 0.4684 HALL 0.175\n"}
+,{"stream_name":"stdout","time":102.155396799,"data":"sentence-transformers/all-mpnet-base-v2 @0.65 gpt41-direct: F1 0.5463 F1_skip 0.5739 F1_t 0.2566 MATCH 0.4386 HALL 0.2266\n"}
+,{"stream_name":"stdout","time":102.15587309,"data":"sentence-transformers/all-mpnet-base-v2 @0.7 gpt41-direct: F1 0.4952 F1_skip 0.52 F1_t 0.2356 MATCH 0.3978 HALL 0.295\n"}
+,{"stream_name":"stdout","time":102.156390876,"data":"sentence-transformers/all-mpnet-base-v2 @0.75 gpt41-direct: F1 0.4395 F1_skip 0.4616 F1_t 0.2137 MATCH 0.3536 HALL 0.37\n"}
+,{"stream_name":"stdout","time":102.156893951,"data":"sentence-transformers/all-mpnet-base-v2 @0.8 gpt41-direct: F1 0.3681 F1_skip 0.3869 F1_t 0.1824 MATCH 0.2959 HALL 0.464\n"}
+,{"stream_name":"stdout","time":102.157425148,"data":"sentence-transformers/all-mpnet-base-v2 @0.85 gpt41-direct: F1 0.3021 F1_skip 0.3178 F1_t 0.1547 MATCH 0.2436 HALL 0.5532\n"}
+,{"stream_name":"stdout","time":102.157887454,"data":"sentence-transformers/all-mpnet-base-v2 @0.9 gpt41-direct: F1 0.2204 F1_skip 0.2314 F1_t 0.1142 MATCH 0.1788 HALL 0.6634\n"}
+,{"stream_name":"stdout","time":104.818198132,"data":"sentence-transformers/all-mpnet-base-v2 @0.6 gpt41-atom: F1 0.714 F1_skip 0.714 F1_t 0.3593 MATCH 0.8133 HALL 0.3636\n"}
+,{"stream_name":"stdout","time":104.81870155,"data":"sentence-transformers/all-mpnet-base-v2 @0.65 gpt41-atom: F1 0.6772 F1_skip 0.6772 F1_t 0.3449 MATCH 0.7725 HALL 0.3971\n"}
+,{"stream_name":"stdout","time":104.819142468,"data":"sentence-transformers/all-mpnet-base-v2 @0.7 gpt41-atom: F1 0.6331 F1_skip 0.6331 F1_t 0.3256 MATCH 0.7231 HALL 0.437\n"}
+,{"stream_name":"stdout","time":104.819599301,"data":"sentence-transformers/all-mpnet-base-v2 @0.75 gpt41-atom: F1 0.5908 F1_skip 0.5908 F1_t 0.3084 MATCH 0.6759 HALL 0.4754\n"}
+,{"stream_name":"stdout","time":104.820032024,"data":"sentence-transformers/all-mpnet-base-v2 @0.8 gpt41-atom: F1 0.5239 F1_skip 0.5239 F1_t 0.282 MATCH 0.5998 HALL 0.535\n"}
+,{"stream_name":"stdout","time":104.820489611,"data":"sentence-transformers/all-mpnet-base-v2 @0.85 gpt41-atom: F1 0.4528 F1_skip 0.4528 F1_t 0.2458 MATCH 0.52 HALL 0.5989\n"}
+,{"stream_name":"stdout","time":104.820903703,"data":"sentence-transformers/all-mpnet-base-v2 @0.9 gpt41-atom: F1 0.3444 F1_skip 0.3444 F1_t 0.1904 MATCH 0.397 HALL 0.6958\n"}
+,{"stream_name":"stderr","time":110.745507997,"data":"\rLoading weights:   0%|          | 0/391 [00:00\u003c?, ?it/s]\rLoading weights:  70%|██████▉   | 273/391 [00:00\u003c00:00, 2691.69it/s]\rLoading weights: 100%|██████████| 391/391 [00:00\u003c00:00, 2735.02it/s]\n"}
+,{"stream_name":"stdout","time":170.928175895,"data":"BAAI/bge-large-en-v1.5 @0.6 gpt41-direct: F1 0.6735 F1_skip 0.7082 F1_t 0.3052 MATCH 0.5412 HALL 0.0594\n"}
+,{"stream_name":"stdout","time":170.928636469,"data":"BAAI/bge-large-en-v1.5 @0.65 gpt41-direct: F1 0.6556 F1_skip 0.6894 F1_t 0.2977 MATCH 0.5262 HALL 0.0814\n"}
+,{"stream_name":"stdout","time":170.929060638,"data":"BAAI/bge-large-en-v1.5 @0.7 gpt41-direct: F1 0.6209 F1_skip 0.6529 F1_t 0.2851 MATCH 0.4981 HALL 0.1265\n"}
+,{"stream_name":"stdout","time":170.929539787,"data":"BAAI/bge-large-en-v1.5 @0.75 gpt41-direct: F1 0.5685 F1_skip 0.5972 F1_t 0.2629 MATCH 0.4564 HALL 0.1974\n"}
+,{"stream_name":"stdout","time":170.929971181,"data":"BAAI/bge-large-en-v1.5 @0.8 gpt41-direct: F1 0.4918 F1_skip 0.5168 F1_t 0.2351 MATCH 0.3953 HALL 0.3\n"}
+,{"stream_name":"stdout","time":170.930444433,"data":"BAAI/bge-large-en-v1.5 @0.85 gpt41-direct: F1 0.396 F1_skip 0.4162 F1_t 0.1954 MATCH 0.3197 HALL 0.4305\n"}
+,{"stream_name":"stdout","time":170.930841838,"data":"BAAI/bge-large-en-v1.5 @0.9 gpt41-direct: F1 0.2784 F1_skip 0.2924 F1_t 0.1473 MATCH 0.2237 HALL 0.5825\n"}
+,{"stream_name":"stdout","time":173.508090884,"data":"BAAI/bge-large-en-v1.5 @0.6 gpt41-atom: F1 0.8078 F1_skip 0.8078 F1_t 0.4032 MATCH 0.9173 HALL 0.2783\n"}
+,{"stream_name":"stdout","time":173.508557788,"data":"BAAI/bge-large-en-v1.5 @0.65 gpt41-atom: F1 0.7867 F1_skip 0.7867 F1_t 0.394 MATCH 0.8939 HALL 0.2976\n"}
+,{"stream_name":"stdout","time":173.509010666,"data":"BAAI/bge-large-en-v1.5 @0.7 gpt41-atom: F1 0.7531 F1_skip 0.7531 F1_t 0.382 MATCH 0.8569 HALL 0.3283\n"}
+,{"stream_name":"stdout","time":173.509464463,"data":"BAAI/bge-large-en-v1.5 @0.75 gpt41-atom: F1 0.7092 F1_skip 0.7092 F1_t 0.3636 MATCH 0.8077 HALL 0.3679\n"}
+,{"stream_name":"stdout","time":173.509886284,"data":"BAAI/bge-large-en-v1.5 @0.8 gpt41-atom: F1 0.6473 F1_skip 0.6473 F1_t 0.3385 MATCH 0.7381 HALL 0.4236\n"}
+,{"stream_name":"stdout","time":173.510373318,"data":"BAAI/bge-large-en-v1.5 @0.85 gpt41-atom: F1 0.5516 F1_skip 0.5516 F1_t 0.2926 MATCH 0.6305 HALL 0.5098\n"}
+,{"stream_name":"stdout","time":173.510800365,"data":"BAAI/bge-large-en-v1.5 @0.9 gpt41-atom: F1 0.4365 F1_skip 0.4365 F1_t 0.2417 MATCH 0.4998 HALL 0.6125\n"}
+,{"stream_name":"stderr","time":186.414392462,"data":"\rLoading weights:   0%|          | 0/391 [00:00\u003c?, ?it/s]\rLoading weights:  56%|█████▋    | 220/391 [00:00\u003c00:00, 2196.79it/s]\rLoading weights: 100%|██████████| 391/391 [00:00\u003c00:00, 2400.06it/s]\n"}
+,{"stream_name":"stdout","time":254.202972219,"data":"intfloat/e5-large-v2 @0.6 gpt41-direct: F1 0.7173 F1_skip 0.7544 F1_t 0.3232 MATCH 0.5795 HALL 0.0097\n"}
+,{"stream_name":"stdout","time":254.204026582,"data":"intfloat/e5-large-v2 @0.65 gpt41-direct: F1 0.7173 F1_skip 0.7544 F1_t 0.3232 MATCH 0.5795 HALL 0.0097\n"}
+,{"stream_name":"stdout","time":254.204595123,"data":"intfloat/e5-large-v2 @0.7 gpt41-direct: F1 0.7151 F1_skip 0.752 F1_t 0.3231 MATCH 0.5775 HALL 0.0119\n"}
+,{"stream_name":"stdout","time":254.20508267,"data":"intfloat/e5-large-v2 @0.75 gpt41-direct: F1 0.6973 F1_skip 0.7334 F1_t 0.3177 MATCH 0.5618 HALL 0.0319\n"}
+,{"stream_name":"stdout","time":254.205541491,"data":"intfloat/e5-large-v2 @0.8 gpt41-direct: F1 0.6723 F1_skip 0.7068 F1_t 0.3074 MATCH 0.5401 HALL 0.0608\n"}
+,{"stream_name":"stdout","time":254.205992964,"data":"intfloat/e5-large-v2 @0.85 gpt41-direct: F1 0.624 F1_skip 0.6557 F1_t 0.2876 MATCH 0.5009 HALL 0.1234\n"}
+,{"stream_name":"stdout","time":254.20642838,"data":"intfloat/e5-large-v2 @0.9 gpt41-direct: F1 0.4943 F1_skip 0.5196 F1_t 0.2358 MATCH 0.3969 HALL 0.2956\n"}
+,{"stream_name":"stdout","time":259.423904837,"data":"intfloat/e5-large-v2 @0.6 gpt41-atom: F1 0.8729 F1_skip 0.8729 F1_t 0.4288 MATCH 0.9872 HALL 0.2177\n"}
+,{"stream_name":"stdout","time":259.42440256,"data":"intfloat/e5-large-v2 @0.65 gpt41-atom: F1 0.8729 F1_skip 0.8729 F1_t 0.4288 MATCH 0.9872 HALL 0.2177\n"}
+,{"stream_name":"stdout","time":259.424919805,"data":"intfloat/e5-large-v2 @0.7 gpt41-atom: F1 0.8713 F1_skip 0.8713 F1_t 0.4282 MATCH 0.9855 HALL 0.2192\n"}
+,{"stream_name":"stdout","time":259.425566997,"data":"intfloat/e5-large-v2 @0.75 gpt41-atom: F1 0.8429 F1_skip 0.8429 F1_t 0.4181 MATCH 0.9549 HALL 0.2456\n"}
+,{"stream_name":"stdout","time":259.426158641,"data":"intfloat/e5-large-v2 @0.8 gpt41-atom: F1 0.8005 F1_skip 0.8005 F1_t 0.4014 MATCH 0.9093 HALL 0.285\n"}
+,{"stream_name":"stdout","time":259.426794386,"data":"intfloat/e5-large-v2 @0.85 gpt41-atom: F1 0.7522 F1_skip 0.7522 F1_t 0.3806 MATCH 0.8565 HALL 0.3295\n"}
+,{"stream_name":"stdout","time":259.427311903,"data":"intfloat/e5-large-v2 @0.9 gpt41-atom: F1 0.6516 F1_skip 0.6516 F1_t 0.3379 MATCH 0.7439 HALL 0.4202\n"}
+,{"stream_name":"stdout","time":259.427667363,"data":"pick {'embedder': 'sentence-transformers/all-mpnet-base-v2', 'threshold': '0.7', 'gap': 0.0209, 'gpt41-direct': 0.52, 'gpt41-atom': 0.6331}\n"}
+,{"stream_name":"stdout","time":268.588849407,"data":"$ rm -rf /kaggle/working/kltn\n"}
+,{"stream_name":"stderr","time":270.814235897,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":270.814267499,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":271.212149027,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":271.212175409,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":272.01397622,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":273.314753846,"data":"[NbConvertApp] Writing 277407 bytes to __results__.html\n"}
+]
