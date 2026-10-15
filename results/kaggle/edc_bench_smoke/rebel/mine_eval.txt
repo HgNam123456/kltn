@@ -1,0 +1,111 @@
+-----------------------------------------------------------------
+Total scores
+-----------------------------------------------------------------
+Ent_type
+Correct: 277 Incorrect: 4 Partial: 0 Missed: 79
+Spurious: 128 Possible: 360 Actual: 409
+Precision: 0.6359953703703703 Recall: 0.6412037037037037
+F1: 0.6377865961199295
+-----------------------------------------------------------------
+Partial
+Correct: 268 Incorrect: 0 Partial: 13 Missed: 79
+Spurious: 128 Possible: 360 Actual: 409
+Precision: 0.6316550925925926 Recall: 0.6354166666666666
+F1: 0.6329365079365079
+-----------------------------------------------------------------
+Strict
+Correct: 265 Incorrect: 16 Partial: 0 Missed: 79
+Spurious: 128 Possible: 360 Actual: 409
+Precision: 0.6111111111111112 Recall: 0.6134259259259259
+F1: 0.6118827160493827
+-----------------------------------------------------------------
+Exact
+Correct: 268 Incorrect: 13 Partial: 0 Missed: 79
+Spurious: 128 Possible: 360 Actual: 409
+Precision: 0.6180555555555556 Recall: 0.6203703703703703
+F1: 0.6188271604938271
+-----------------------------------------------------------------
+Scores per tag
+-----------------------------------------------------------------
+Subjects
+-----------------------------------------------------------------
+Ent_type
+Correct: 94 Incorrect: 3 Partial: 0 Missed: 23
+Spurious: 40 Possible: 120 Actual: 137
+Precision: 0.6527777777777778 Recall: 0.6527777777777778
+F1: 0.6527777777777778
+-----------------------------------------------------------------
+Partial
+Correct: 92 Incorrect: 0 Partial: 5 Missed: 23
+Spurious: 40 Possible: 120 Actual: 137
+Precision: 0.6458333333333334 Recall: 0.65625
+F1: 0.6493055555555556
+-----------------------------------------------------------------
+Strict
+Correct: 89 Incorrect: 8 Partial: 0 Missed: 23
+Spurious: 40 Possible: 120 Actual: 137
+Precision: 0.6180555555555556 Recall: 0.6180555555555556
+F1: 0.6180555555555556
+-----------------------------------------------------------------
+Exact
+Correct: 92 Incorrect: 5 Partial: 0 Missed: 23
+Spurious: 40 Possible: 120 Actual: 137
+Precision: 0.6284722222222222 Recall: 0.6388888888888888
+F1: 0.6319444444444444
+-----------------------------------------------------------------
+Predicates
+-----------------------------------------------------------------
+Ent_type
+Correct: 90 Incorrect: 0 Partial: 0 Missed: 30
+Spurious: 47 Possible: 120 Actual: 137
+Precision: 0.6163194444444444 Recall: 0.625
+F1: 0.6185185185185185
+-----------------------------------------------------------------
+Partial
+Correct: 86 Incorrect: 0 Partial: 4 Missed: 30
+Spurious: 47 Possible: 120 Actual: 137
+Precision: 0.6067708333333334 Recall: 0.6111111111111112
+F1: 0.6078703703703704
+-----------------------------------------------------------------
+Strict
+Correct: 86 Incorrect: 4 Partial: 0 Missed: 30
+Spurious: 47 Possible: 120 Actual: 137
+Precision: 0.5972222222222222 Recall: 0.5972222222222222
+F1: 0.5972222222222222
+-----------------------------------------------------------------
+Exact
+Correct: 86 Incorrect: 4 Partial: 0 Missed: 30
+Spurious: 47 Possible: 120 Actual: 137
+Precision: 0.5972222222222222 Recall: 0.5972222222222222
+F1: 0.5972222222222222
+-----------------------------------------------------------------
+Objects
+-----------------------------------------------------------------
+Ent_type
+Correct: 93 Incorrect: 1 Partial: 0 Missed: 26
+Spurious: 41 Possible: 120 Actual: 135
+Precision: 0.640625 Recall: 0.6458333333333334
+F1: 0.6416666666666667
+-----------------------------------------------------------------
+Partial
+Correct: 90 Incorrect: 0 Partial: 4 Missed: 26
+Spurious: 41 Possible: 120 Actual: 135
+Precision: 0.6362847222222222 Recall: 0.6388888888888888
+F1: 0.6368055555555555
+-----------------------------------------------------------------
+Strict
+Correct: 90 Incorrect: 4 Partial: 0 Missed: 26
+Spurious: 41 Possible: 120 Actual: 135
+Precision: 0.625 Recall: 0.625
+F1: 0.625
+-----------------------------------------------------------------
+Exact
+Correct: 90 Incorrect: 4 Partial: 0 Missed: 26
+Spurious: 41 Possible: 120 Actual: 135
+Precision: 0.625 Recall: 0.625
+F1: 0.625
+-----------------------------------------------------------------
+Full triple scores
+-----------------------------------------------------------------
+Precision: 0.4111111111111111 Recall: 0.4111111111111111
+F1: 0.4111111111111111

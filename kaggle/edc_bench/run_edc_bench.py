@@ -4,8 +4,9 @@ làm với WebNLG ở kernel kgu-home-benchmarks (kaggle/home_bench/run_home_ben
 llama-server CUDA. EDC: OIE → schema definition → schema canonicalization theo target schema (không refinement),
 embedder e5-mistral-7b-instruct fp16 trên GPU thứ hai. Mình: scripts/run_webnlg.py (một lệnh gọi/câu, quan hệ ép theo
 schema của bộ, cùng file few-shot OIE của EDC cho bộ đó). Chấm evaluate/evaluation_script.py của EDC
-(Partial/Strict/Exact, không LLM judge). Gold REBEL đúng 4 triple/câu, Wiki-NRE 2–4 → script chấm (duyệt hoán vị
-triple) không chậm như WebNLG (tới 7 triple/câu).
+(Partial/Strict/Exact, không LLM judge) qua scripts/edc_eval_fast.py: script gốc thử mọi hoán vị ghép triple (n! với
+n = max(số dự đoán, số gold); lượt chạy thử: 30 câu REBEL của EDC mất 10,9 phút, câu 12+ triple không bao giờ xong) →
+bản nhanh chỉ thay bước tìm hoán vị bằng gán tối ưu chọn đúng hoán vị gốc chọn (kiểm toàn văn: kgu-edc-eval-check).
 
 Prompt REBEL của mình ~28k ký tự (196 quan hệ kèm mô tả + enum trong JSON schema) → mỗi slot CTX_PER_SLOT token thay vì
 8.192, để prompt + max_tokens 4.096 vẫn vừa ngữ cảnh.
@@ -232,8 +233,8 @@ for ds in DATASETS:
             continue
         t0 = time.time()
         try:
-            text = sh(f"python evaluate/evaluation_script.py --edc_output {cand} --reference {DATA[ds]['ref']}",
-                      cwd=EDC, capture=True, env=env)
+            text = sh(f"python {KLTN}/scripts/edc_eval_fast.py --edc_script evaluate/evaluation_script.py "
+                      f"--edc_output {cand} --reference {DATA[ds]['ref']}", cwd=EDC, capture=True, env=env)
             open(f"{OUT}/{ds}/{system}_eval.txt", "w", encoding="utf-8").write(text)
             summary[ds][system] = {**parse_eval(text), **n_parseable(cand)}
         except subprocess.CalledProcessError as e:

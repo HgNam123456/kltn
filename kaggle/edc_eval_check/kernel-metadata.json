@@ -1,0 +1,13 @@
+{
+  "id": "ngocnam2005/kgu-edc-eval-check",
+  "title": "kgu-edc-eval-check",
+  "code_file": "run_check.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": []
+}
