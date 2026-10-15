@@ -55,3 +55,50 @@ def test_temporal_kg_drops_self_loops_and_duplicates():
     g = {"head": "Virus", "relation": "r", "tail": "China", "valid_from": "", "valid_until": ""}
     assert kg.update("t", "2020-01-01", FakeLLMClient([{"facts": [f, g, g], "ended": []}])) == [("Virus", "r", "China", [], [])]
     assert len(kg.facts) == 1
+
+
+def _f(head, rel, tail, sentence):
+    return {"head": head, "relation": rel, "tail": tail, "valid_from": "", "valid_until": "", "sentence": sentence}
+
+
+def test_condense_mode_extracts_on_numbered_sentences_and_refills_uncovered_ones():
+    kg = TemporalKG(condense=True)
+    kg.facts = [["Italy", "has_status", "Low Case Count", [], []]]
+    llm = FakeLLMClient([
+        {"sentences": ["Italy reports 5 cases.", "Lombardy is in Italy.", "Milan is in Lombardy."]},
+        {"facts": [_f("Italy", "reports", "5 Cases", 1), _f("Rome", "is_in", "Italy", 99)], "ended": []},
+        {"facts": [_f("Lombardy", "is_located_in", "Italy", 2), _f("Milan", "is_located_in", "Lombardy", 3)],
+         "ended": [0]},
+    ])
+    out = kg.update("Italy reports 5 cases in Lombardy, Italy, and Milan.", "2020-03-02", llm)
+    assert out == [("Italy", "reports", "5 Cases", [], []), ("Rome", "is_in", "Italy", [], []),
+                   ("Lombardy", "is_located_in", "Italy", [], []), ("Milan", "is_located_in", "Lombardy", [], [])]
+    assert "[1] Italy reports 5 cases.\n[2] Lombardy is in Italy.\n[3] Milan is in Lombardy." in llm.calls[1][1]
+    assert "[2] Lombardy is in Italy.\n[3] Milan" in llm.calls[2][1] and "[1] Italy" not in llm.calls[2][1]
+    assert kg.facts[0][4] == []                       # "ended" của lệnh bổ sung bị bỏ qua
+    assert kg.last_stats == {"sentences": 3, "missing_before": 0, "missing_after": 0, "refill_sentences": 2}
+
+
+def test_condense_mode_falls_back_to_passage_when_condense_gives_nothing():
+    kg = TemporalKG(condense=True)
+    llm = FakeLLMClient([{"sentences": []},
+                         {"facts": [{"head": "Virus", "relation": "occurs_in", "tail": "China",
+                                     "valid_from": "", "valid_until": ""}], "ended": []}])
+    assert kg.update("Virus spreads in China.", "2020-01-28", llm) == [("Virus", "occurs_in", "China", [], [])]
+    assert "Passage: Virus spreads in China." in llm.calls[1][1] and "SENTENCES" not in llm.calls[1][1]
+
+
+def test_condense_mode_falls_back_to_passage_when_condense_output_is_broken():
+    kg = TemporalKG(condense=True)
+    llm = FakeLLMClient([{"sentence": "truncated"}, {"facts": [], "ended": []}])
+    assert kg.update("Virus spreads in China.", "2020-01-28", llm) == []
+    assert "condense_error" in kg.last_stats and "Passage: Virus spreads in China." in llm.calls[1][1]
+
+
+def test_stored_matches_passage_through_aliases():
+    kg = TemporalKG()
+    kg.facts = [["World Health Organization", "warns", "Countries", [], []]]
+    kg.aliases = {"World Health Organization": {"WHO"}}
+    llm = FakeLLMClient([{"facts": [], "ended": []}])
+    kg.update("WHO said the risk is high.", "2020-03-01", llm)
+    assert "[0] World Health Organization | warns | Countries" in llm.calls[0][1]

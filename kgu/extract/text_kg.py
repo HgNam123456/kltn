@@ -6,6 +6,8 @@
   thời gian) và fact đã lưu bị đoạn này nói là hết đúng (Deprecate → đóng t_end). Luật quy đổi mốc thời gian tương
   đối và cách đặt tên quan hệ lấy theo quy ước công bố trong schema của ATOM (itext2kg Relationship.t_start/name) —
   quy ước gold của 2020-COVID-NYT, như WebNLG dùng schema của dataset.
+Khi condense=True (spec 2026-10-15-condense-canonicalize-design.md §2.2): đoạn tin được rút thành câu đơn
+(kgu.extract.condense), trích trên câu đánh số, câu chưa có fact được trích bổ sung một lệnh nữa.
 Phần tĩnh của prompt (quan hệ, ví dụ) đặt trước, văn bản cần trích đặt cuối để llama-server dùng lại KV cache.
 """
 from __future__ import annotations
@@ -15,6 +17,8 @@ from collections import Counter
 from typing import Literal
 
 from pydantic import BaseModel, create_model
+
+from kgu.extract.condense import condense as condense_text
 
 SCHEMA_SYSTEM = """Extract the facts the text states as (subject, relation, object) triples, using ONLY the listed \
 relations. Subjects and objects are names or values copied from the text, written like in the examples. A fact counts \
@@ -91,14 +95,37 @@ def _ds(v: str) -> list[str]:
     return [v.strip()] if v and v.strip() else []
 
 
+SENTENCE_NOTE = """
+
+The passages are given as numbered simple SENTENCES. For each fact also give "sentence": the number of the sentence \
+it comes from. Every sentence states at least one fact; do not skip any sentence."""
+
+
+class TFactS(TFact):
+    sentence: int
+
+
+class TOutS(BaseModel):
+    facts: list[TFactS]
+    ended: list[int]
+
+
+def _numbered(sents: list[str], idx) -> str:
+    return "SENTENCES:\n" + "\n".join(f"[{i}] {sents[i - 1]}" for i in idx)
+
+
 class TemporalKG:
-    def __init__(self, max_stored: int = 40, max_relations: int = 60):
+    def __init__(self, max_stored: int = 40, max_relations: int = 60, condense: bool = False):
         self.facts: list[list] = []                    # [head, relation, tail, t_start(list), t_end(list)]
         self.max_stored, self.max_relations = max_stored, max_relations
+        self.use_condense = condense                   # False = v0: trích thẳng trên đoạn tin
+        self.aliases: dict[str, set[str]] = {}         # tên chung → bí danh (bước gộp tên, kgu.extract.canonicalize)
+        self.last_stats: dict = {}                     # thống kê của lần update gần nhất
 
     def _stored(self, text: str) -> list[int]:
         low = text.lower()
-        seen = lambda e: re.search(rf"(?<!\w){re.escape(e.lower())}(?!\w)", low) is not None    # noqa: E731
+        seen = lambda e: any(re.search(rf"(?<!\w){re.escape(n.lower())}(?!\w)", low)        # noqa: E731
+                             for n in (e, *self.aliases.get(e, ())))
         hits = [i for i, f in enumerate(self.facts) if seen(f[0]) or seen(f[2])]
         return hits[-self.max_stored:]                 # giữ fact mới nhất khi phải cắt
 
@@ -107,16 +134,37 @@ class TemporalKG:
         rels = [r for r, _ in Counter(f[1] for f in self.facts).most_common(self.max_relations)]
         lines = "\n".join(f"[{k}] {self.facts[i][0]} | {self.facts[i][1]} | {self.facts[i][2]}"
                           for k, i in enumerate(stored))
-        user = (f"OBSERVATION DATE: {obs_date}\nSTORED:\n{lines or '(none)'}\n"
-                f"RELATIONS: {', '.join(rels) or '(none)'}\nPassage: {text}")
-        res = llm.complete_json(TEMPORAL_SYSTEM, user, TOut)
+        head = (f"OBSERVATION DATE: {obs_date}\nSTORED:\n{lines or '(none)'}\n"
+                f"RELATIONS: {', '.join(rels) or '(none)'}\n")
+        self.last_stats = {}
+        sents: list[str] = []
+        if self.use_condense:
+            try:
+                sents, cstats = condense_text(text, llm)
+                self.last_stats.update(cstats)
+            except Exception as e:                     # rút câu hỏng → trích trên đoạn gốc như v0
+                self.last_stats["condense_error"] = repr(e)[:200]
+        if sents:
+            system = TEMPORAL_SYSTEM + SENTENCE_NOTE
+            res = llm.complete_json(system, head + _numbered(sents, range(1, len(sents) + 1)), TOutS)
+            facts = list(res.facts)
+            todo = sorted(set(range(1, len(sents) + 1)) - {f.sentence for f in facts})
+            self.last_stats["refill_sentences"] = len(todo)
+            if todo:
+                try:                                   # câu chưa có fact → trích riêng; "ended" của lệnh này bỏ qua
+                    facts += llm.complete_json(system, head + _numbered(sents, todo), TOutS).facts
+                except Exception as e:
+                    self.last_stats["refill_error"] = repr(e)[:200]
+        else:
+            res = llm.complete_json(TEMPORAL_SYSTEM, head + f"Passage: {text}", TOut)
+            facts = res.facts
         out = []
         for k in res.ended:
             if 0 <= k < len(stored) and not self.facts[stored[k]][4]:
                 f = self.facts[stored[k]]
                 f[4] = [obs_date]
                 out.append((f[0], f[1], f[2], list(f[3]), [obs_date]))     # đoạn này nói fact đã hết → fact của đoạn
-        for f in res.facts:
+        for f in facts:
             q = (f.head.strip(), f.relation.strip(), f.tail.strip(), _ds(f.valid_from), _ds(f.valid_until))
             if q[0] and q[1] and q[2] and q[0].lower() != q[2].lower() and q not in out:
                 out.append(q)
