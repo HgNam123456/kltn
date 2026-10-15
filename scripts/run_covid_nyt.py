@@ -44,6 +44,20 @@ def run_rows(rows: list[dict], step, out: Path, extra=None, after=None) -> None:
                 after(k)
 
 
+def canon_round(canon, kg, k: int, rounds: list) -> None:
+    """Gộp tên một vòng sau nhóm ngày k. Lỗi (CUDA, embedder, ...) được ghi vào rounds thay vì raise, để run không
+    dừng trước khi ghi <out>.kg.json / aliases / canon.json — mất các file đó là mất toàn bộ KG và lịch sử gộp."""
+    t0 = time.time()
+    try:
+        stats = canon.run_round(kg)
+    except Exception as e:
+        rounds.append({"after_group": k, "seconds": round(time.time() - t0, 1), "error": repr(e)[:300]})
+        print(f"!!! gộp tên sau nhóm {k}: {e!r}"[:300], flush=True)
+        return
+    rounds.append({"after_group": k, "seconds": round(time.time() - t0, 1), "stats": stats})
+    print(f"gộp tên sau nhóm {k}: {stats}", flush=True)
+
+
 def main() -> None:
     from kgu.llm import client_from_env
 
@@ -73,10 +87,7 @@ def main() -> None:
 
     def after(k: int) -> None:
         if canon and (k % args.canon_every == 0 or k == len(rows)):
-            t0 = time.time()
-            stats = canon.run_round(kg)
-            rounds.append({"after_group": k, "seconds": round(time.time() - t0, 1), "stats": stats})
-            print(f"gộp tên sau nhóm {k}: {stats}", flush=True)
+            canon_round(canon, kg, k, rounds)
             last[0] = llm.n_calls                    # lệnh gọi gộp tên không tính vào nhóm ngày sau
 
     run_rows(rows, lambda text, date: kg.update(text, date, llm), args.out, extra=extra, after=after)

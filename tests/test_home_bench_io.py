@@ -137,3 +137,22 @@ def test_audit_summary_counts_only_labelled_rows():
             {"same": "False", "correct": "1"}, {"same": "False", "correct": " "}]
     assert m.summarize(rows) == {"yes": {"n": 2, "correct": 1, "accuracy": 0.5},
                                  "no": {"n": 1, "correct": 1, "accuracy": 1.0}}
+
+
+def test_canon_round_records_errors_instead_of_raising():
+    m = _mod("run_covid_nyt")
+
+    class Boom:
+        def run_round(self, kg):
+            raise RuntimeError("cuda oom")
+
+    class Ok:
+        def run_round(self, kg):
+            return [{"kind": "entity"}]
+
+    rounds = []
+    m.canon_round(Boom(), None, 3, rounds)
+    assert len(rounds) == 1 and rounds[0]["after_group"] == 3 and "seconds" in rounds[0]
+    assert "RuntimeError" in rounds[0]["error"] and "stats" not in rounds[0]
+    m.canon_round(Ok(), None, 4, rounds)
+    assert rounds[1]["after_group"] == 4 and rounds[1]["stats"] == [{"kind": "entity"}] and "error" not in rounds[1]
