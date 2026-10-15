@@ -14,17 +14,11 @@ from typing import Literal
 import numpy as np
 from pydantic import BaseModel, create_model
 
-ENTITY_SYSTEM = """You clean the entity names of a knowledge graph built from news. Each GROUP has an ANCHOR name and \
-CANDIDATE names that look similar, each followed by facts where it appears. For every candidate decide if it names \
-exactly the same real-world entity as the anchor: write a short reason first, then "same": true or false. Related, \
-broader, narrower, a part of, or a different instance (another place, person, number or date) is NOT the same. Then \
-give "canonical": the clearest complete name among the anchor and the candidates you marked same."""
+ENTITY_SYSTEM = """You clean the entity names of a knowledge graph built from news. Each GROUP has an ANCHOR name and CANDIDATE names that look similar, each followed by facts where it appears. For every candidate decide if it is just another name for exactly the same real-world entity as the anchor: an abbreviation, a translation, or a spelling, case, plural or formatting variant (underscores, "the"). Write a short reason first, then "same": true or false. It is NOT the same, so "same" is false, if the candidate is broader or narrower, a specific type or instance, a part or a region of it, an event, outbreak, process or action involving it ("outbreak of X", "identification of X", "have X"), or another place, person, number or date. If your reason says any of these, "same" must be false. Then give "canonical": the clearest complete name among the anchor and the candidates you marked same.
+Examples: "WHO" / "World Health Organization" -> same; "new_coronavirus" / "new coronavirus" -> same; "Washington" / "WASHINGTON" -> same; "coronavirus" / "coronavirus outbreak" -> not same (an event); "China" / "central China" -> not same (a region); "virus" / "identification of the virus" -> not same (an action)."""
 
-RELATION_SYSTEM = """You clean the relation names of a knowledge graph built from news. Each GROUP has an ANCHOR \
-relation and CANDIDATE relations that look similar, each followed by facts that use it. For every candidate decide if \
-it means exactly the same as the anchor in the same direction (head -> tail): write a short reason first, then \
-"same": true or false. Broader, narrower, opposite or reversed relations are NOT the same. Then give "canonical": the \
-clearest name among the anchor and the candidates you marked same."""
+RELATION_SYSTEM = """You clean the relation names of a knowledge graph built from news. Each GROUP has an ANCHOR relation and CANDIDATE relations that look similar, each followed by facts that use it. For every candidate decide if it means exactly the same as the anchor in the same direction (head -> tail), differing only in tense, number, wording or formatting. Write a short reason first, then "same": true or false. Broader, narrower, opposite or reversed relations are NOT the same; if your reason says so, "same" must be false. Then give "canonical": the clearest name among the anchor and the candidates you marked same.
+Examples: "is_located_in" / "are_located_in" / "located_in" -> same; "spread_to" / "spreads_to" -> same; "causes" / "caused_by" -> not same (reversed); "reports" / "denies" -> not same (opposite)."""
 
 
 def kmeans(X: np.ndarray, k: int, seed: int = 0, iters: int = 50) -> np.ndarray:

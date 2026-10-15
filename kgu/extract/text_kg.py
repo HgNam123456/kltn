@@ -91,14 +91,16 @@ class TOut(BaseModel):
     ended: list[int]
 
 
+_HEADER = re.compile(r"(?im)^\s*observation date:.*(?:\n|$)")   # dòng metadata đầu mỗi đoạn COVID-NYT
+
+
 def _ds(v: str) -> list[str]:
     return [v.strip()] if v and v.strip() else []
 
 
 SENTENCE_NOTE = """
 
-The passages are given as numbered simple SENTENCES. For each fact also give "sentence": the number of the sentence \
-it comes from. Every sentence states at least one fact; do not skip any sentence."""
+The passages are given as numbered simple SENTENCES. For each fact also give "sentence": the number of the sentence it comes from. Extract every fact the sentences state; a sentence may state several facts or none (an opinion, a question). Head and tail are short entity names written as in the text (normal words with spaces, never snake_case). Never use a date, a weekday or the observation date as head or tail: times go only in valid_from and valid_until."""
 
 
 class TFactS(TFact):
@@ -140,7 +142,7 @@ class TemporalKG:
         sents: list[str] = []
         if self.use_condense:
             try:
-                sents, cstats = condense_text(text, llm)
+                sents, cstats = condense_text(_HEADER.sub("", text), llm)
                 self.last_stats.update(cstats)
             except Exception as e:                     # rút câu hỏng → trích trên đoạn gốc như v0
                 self.last_stats["condense_error"] = repr(e)[:200]
@@ -158,6 +160,7 @@ class TemporalKG:
         else:
             res = llm.complete_json(TEMPORAL_SYSTEM, head + f"Passage: {text}", TOut)
             facts = res.facts
+        alias_of = {a: c for c, al in self.aliases.items() for a in al}   # bí danh → tên chung
         out = []
         for k in res.ended:
             if 0 <= k < len(stored) and not self.facts[stored[k]][4]:
@@ -168,6 +171,7 @@ class TemporalKG:
             q = (f.head.strip(), f.relation.strip(), f.tail.strip(), _ds(f.valid_from), _ds(f.valid_until))
             if q[0] and q[1] and q[2] and q[0].lower() != q[2].lower() and q not in out:
                 out.append(q)
-                if not any(g[:3] == list(q[:3]) for g in self.facts):
-                    self.facts.append(list(q))
+                m = [alias_of.get(q[0], q[0]), q[1], alias_of.get(q[2], q[2]), q[3], q[4]]   # lưu dưới tên chung
+                if not any(g[:3] == m[:3] for g in self.facts):
+                    self.facts.append(m)
         return out

@@ -102,3 +102,22 @@ def test_stored_matches_passage_through_aliases():
     llm = FakeLLMClient([{"facts": [], "ended": []}])
     kg.update("WHO said the risk is high.", "2020-03-01", llm)
     assert "[0] World Health Organization | warns | Countries" in llm.calls[0][1]
+
+
+def test_condense_mode_drops_the_observation_date_header_before_condensing():
+    kg = TemporalKG(condense=True)
+    llm = FakeLLMClient([{"sentences": ["Virus spreads in China."]}, {"facts": [], "ended": []},
+                         {"facts": [], "ended": []}])
+    kg.update("Observation date: 2020-01-28\nVirus spreads in China.", "2020-01-28", llm)
+    assert "Virus spreads in China." in llm.calls[0][1]
+    assert "Observation date" not in llm.calls[0][1]
+
+
+def test_new_facts_are_stored_under_the_canonical_name_of_an_alias():
+    kg = TemporalKG()
+    kg.aliases = {"World Health Organization": {"WHO"}}
+    llm = FakeLLMClient([{"facts": [{"head": "WHO", "relation": "warns", "tail": "Countries",
+                                     "valid_from": "", "valid_until": ""}], "ended": []}])
+    out = kg.update("WHO warns countries.", "2020-03-01", llm)
+    assert out == [("WHO", "warns", "Countries", [], [])]
+    assert kg.facts == [["World Health Organization", "warns", "Countries", [], []]]
