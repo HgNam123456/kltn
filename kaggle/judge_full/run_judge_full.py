@@ -9,16 +9,21 @@ trên TOÀN BỘ 3.500 bài của EMERGE evaluation set (bản dev350 là kaggle
 Sửa RUNS để chọn lượt chạy.
 """
 import glob
+import json
 import os
 import shutil
 import subprocess
 import time
 import urllib.request
 
-RUNS = [                                     # --per-delta 100 = đủ 100 bài mỗi file delta = 3.500 bài
-    ["--per-delta", "100", "--batch-size", "12", "--out", "results/emerge_full_v3_kaggle.jsonl"],
-    ["--per-delta", "100", "--judge", "add", "--out", "results/emerge_full_add_v2_kaggle.jsonl"],
+RUNS = [                                     # đủ 3.500 bài = 100 bài mỗi file delta, chạy theo khúc CHUNK bài/delta
+    ["--batch-size", "12", "--out", "results/emerge_full_v3_kaggle.jsonl"],
+    ["--judge", "add", "--out", "results/emerge_full_add_v2_kaggle.jsonl"],
 ]
+# Lượt 1 (15/10) chạy cả 100 bài/delta trong một tiến trình → hết RAM sau 150 bài (mỗi job giữ một bản sao bảng nhãn KG
+# của snapshot, scripts/run_emerge.py) → OOM killer giết cả llama-server. Mỗi tiến trình chỉ chạy CHUNK bài/delta
+# (--offset), rồi ghép các phần theo thứ tự.
+CHUNK = 20
 # Sau khi phán: chấm mềm (C, G-BERTScore-R viết lại từ EMERGE) — (jsonl Exists/Deprecate, jsonl Add hoặc None, file ra)
 SCORE = [("results/emerge_full_v3_kaggle.jsonl", "results/emerge_full_add_v2_kaggle.jsonl",
           "results/emerge_full_v3_addv2_kaggle.soft.json")]
@@ -98,30 +103,54 @@ def healthy() -> bool:
         return False
 
 
-server = None
-for cmd in ATTEMPTS:
-    print(f"$ {cmd}", flush=True)
-    log = open(f"{WORK}/server.log", "ab")
-    server = subprocess.Popen(cmd, shell=True, stdout=log, stderr=subprocess.STDOUT)
-    for _ in range(180):
-        if healthy() or server.poll() is not None:
-            break
-        time.sleep(2)
-    if healthy():
-        break
-    print("server không lên, thử bộ cờ khác", flush=True)
-    server.kill()
-assert healthy(), "llama-server không khởi động được, xem server.log"
+def start_server():
+    for cmd in ATTEMPTS:
+        print(f"$ {cmd}", flush=True)
+        log = open(f"{WORK}/server.log", "ab")
+        proc = subprocess.Popen(cmd, shell=True, stdout=log, stderr=subprocess.STDOUT)
+        for _ in range(180):
+            if healthy() or proc.poll() is not None:
+                break
+            time.sleep(2)
+        if healthy():
+            return proc
+        print("server không lên, thử bộ cờ khác", flush=True)
+        proc.kill()
+    raise SystemExit("llama-server không khởi động được, xem server.log")
+
+
+server = start_server()
 
 # 5. chạy các lượt
 env = {**os.environ, "PYTHONPATH": bundle, "PYTHONIOENCODING": "utf8",
        "KGU_LLM_BASE_URL": "http://127.0.0.1:8080/v1", "KGU_LLM_MODEL": "local", "KGU_LLM_API_KEY": "none"}
 os.makedirs(f"{WORK}/results", exist_ok=True)
 for args in RUNS:
-    out = args[args.index("--out") + 1]
-    args = [a if a != out else f"{WORK}/{out}" for a in args]
-    sh(f"cd {bundle} && python scripts/run_emerge.py --workers {WORKERS} " + " ".join(args)
-       + f" 2>&1 | tee {WORK}/results/{os.path.basename(out)}.log", env=env)
+    out = f"{WORK}/{args[args.index('--out') + 1]}"
+    base = [a for a in args[:args.index("--out")]]
+    parts = []
+    for offset in range(0, 100, CHUNK):
+        if not healthy():                          # server chết ở khúc trước → dựng lại, không để cả lượt lỗi
+            print("!!! llama-server không trả lời, khởi động lại", flush=True)
+            server.kill()
+            server = start_server()
+        part = out.replace(".jsonl", f".part{offset:02d}.jsonl")
+        try:
+            sh(f"set -o pipefail; cd {bundle} && python scripts/run_emerge.py --workers {WORKERS} --per-delta {CHUNK} "
+               f"--offset {offset} " + " ".join(base) + f" --out {part} 2>&1 | tee {part}.log",
+               env=env, executable="/bin/bash")
+            parts.append(part)
+        except subprocess.CalledProcessError:
+            print(f"!!! khúc offset={offset} lỗi, xem {part}.log", flush=True)
+    with open(out, "w", encoding="utf8") as f:   # ghép các phần theo thứ tự offset
+        for part in parts:
+            f.write(open(part, encoding="utf8").read())
+    summaries = [json.load(open(part.replace(".jsonl", ".summary.json"), encoding="utf8")) for part in parts]
+    json.dump({"chunk": CHUNK, "parts": len(parts), "n": sum(x["n"] for x in summaries),
+               "errors": sum(x["errors"] for x in summaries), "llm_calls": sum(x["llm_calls"] for x in summaries),
+               "seconds": sum(x["seconds"] for x in summaries),
+               "seconds_per_instance": round(sum(x["seconds"] for x in summaries) / max(sum(x["n"] for x in summaries), 1), 2)},
+              open(out.replace(".jsonl", ".summary.json"), "w"), indent=1)
 server.kill()
 
 # 6. chấm mềm ngay trên GPU (bộ phán đã xong nên VRAM trống)
