@@ -1,0 +1,76 @@
+[{"stream_name":"stdout","time":0.944220694,"data":"$ git clone -q --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git /kaggle/working/kltn\n"}
+,{"stream_name":"stdout","time":2.255967515,"data":"$ git clone -q https://github.com/clear-nus/edc.git /kaggle/working/edc \u0026\u0026 git -C /kaggle/working/edc checkout -q 02aad17e2fc1e9845c84746b384e7fd3160edc1a\n"}
+,{"stream_name":"stdout","time":2.994291058,"data":"$ pip install -q nervaluate==0.1.8 unidecode beautifulsoup4 regex\n"}
+,{"stream_name":"stdout","time":7.07615553,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 235.8/235.8 kB 4.7 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":9.950683313999999,"data":"$ git -C /kaggle/working/kltn rev-parse HEAD\n"}
+,{"stream_name":"stdout","time":9.960509495,"data":"$ cp /kaggle/working/kltn/results/kaggle/home_bench/webnlg/edc_canon_kg.txt /kaggle/working/cand/webnlg_edc/canon_kg.txt\n"}
+,{"stream_name":"stdout","time":9.976935514000001,"data":"$ python /kaggle/working/kltn/scripts/edc_eval_fast.py --edc_script evaluate/evaluation_script.py --edc_output /kaggle/working/cand/webnlg_edc/canon_kg.txt --reference /kaggle/working/webnlg_edc_ref.txt\n"}
+,{"stream_name":"stdout","time":44.459947832,"data":"=== webnlg_edc: identical=False 34.5s [('Precision: 0.13732780149096674 Recall: 0.06795245061383348', 'Precision: 0.13732780149096677 Recall: 0.06795245061383348')]\n"}
+,{"stream_name":"stdout","time":44.46295344,"data":"$ cp /kaggle/working/kltn/results/kaggle/home_bench/webnlg/mine_canon_kg.txt /kaggle/working/cand/webnlg_mine/canon_kg.txt\n"}
+,{"stream_name":"stdout","time":44.466782096,"data":"$ python /kaggle/working/kltn/scripts/edc_eval_fast.py --edc_script evaluate/evaluation_script.py --edc_output /kaggle/working/cand/webnlg_mine/canon_kg.txt --reference /kaggle/working/webnlg_mine_ref.txt\n"}
+,{"stream_name":"stdout","time":73.318958479,"data":"=== webnlg_mine: identical=False 28.9s [('Precision: 0.1370203049482799 Recall: 0.06773385207541856', 'Precision: 0.13702030494827988 Recall: 0.06773385207541856')]\n"}
+,{"stream_name":"stdout","time":73.321914483,"data":"$ cp /kaggle/working/kltn/results/kaggle/edc_bench_smoke/rebel/edc_canon_kg.txt /kaggle/working/cand/rebel_edc/canon_kg.txt\n"}
+,{"stream_name":"stdout","time":73.325173647,"data":"$ python /kaggle/working/kltn/scripts/edc_eval_fast.py --edc_script evaluate/evaluation_script.py --edc_output /kaggle/working/cand/rebel_edc/canon_kg.txt --reference /kaggle/working/rebel_edc_ref.txt\n"}
+,{"stream_name":"stdout","time":77.064466277,"data":"=== rebel_edc: identical=True 3.7s []\n"}
+,{"stream_name":"stdout","time":77.067734202,"data":"$ cp /kaggle/working/kltn/results/kaggle/edc_bench_smoke/rebel/mine_canon_kg.txt /kaggle/working/cand/rebel_mine/canon_kg.txt\n"}
+,{"stream_name":"stdout","time":77.070797238,"data":"$ python /kaggle/working/kltn/scripts/edc_eval_fast.py --edc_script evaluate/evaluation_script.py --edc_output /kaggle/working/cand/rebel_mine/canon_kg.txt --reference /kaggle/working/rebel_mine_ref.txt\n"}
+,{"stream_name":"stdout","time":80.290980705,"data":"=== rebel_mine: identical=True 3.2s []\n"}
+,{"stream_name":"stdout","time":80.291768041,"data":"$ cp /kaggle/working/kltn/results/kaggle/edc_bench_smoke/wiki-nre/edc_canon_kg.txt /kaggle/working/cand/wiki-nre_edc/canon_kg.txt\n"}
+,{"stream_name":"stdout","time":80.294699592,"data":"$ python /kaggle/working/kltn/scripts/edc_eval_fast.py --edc_script evaluate/evaluation_script.py --edc_output /kaggle/working/cand/wiki-nre_edc/canon_kg.txt --reference /kaggle/working/wiki-nre_edc_ref.txt\n"}
+,{"stream_name":"stdout","time":83.266119427,"data":"=== wiki-nre_edc: identical=True 3.0s []\n"}
+,{"stream_name":"stdout","time":83.267128373,"data":"$ cp /kaggle/working/kltn/results/kaggle/edc_bench_smoke/wiki-nre/mine_canon_kg.txt /kaggle/working/cand/wiki-nre_mine/canon_kg.txt\n"}
+,{"stream_name":"stdout","time":83.270905353,"data":"$ python /kaggle/working/kltn/scripts/edc_eval_fast.py --edc_script evaluate/evaluation_script.py --edc_output /kaggle/working/cand/wiki-nre_mine/canon_kg.txt --reference /kaggle/working/wiki-nre_mine_ref.txt\n"}
+,{"stream_name":"stdout","time":86.174645095,"data":"=== wiki-nre_mine: identical=True 2.9s []\n"}
+,{"stream_name":"stdout","time":86.174951553,"data":"{\n"}
+,{"stream_name":"stdout","time":86.174966589,"data":" \"kltn_commit\": \"6aeec4fa9b6180bacaab32faafb0c51ced7ee7ca\",\n"}
+,{"stream_name":"stdout","time":86.17497189,"data":" \"cases\": {\n"}
+,{"stream_name":"stdout","time":86.174976134,"data":"  \"webnlg_edc\": {\n"}
+,{"stream_name":"stdout","time":86.174980237,"data":"   \"identical\": false,\n"}
+,{"stream_name":"stdout","time":86.17498431,"data":"   \"seconds\": 34.5,\n"}
+,{"stream_name":"stdout","time":86.174988661,"data":"   \"first_diffs\": [\n"}
+,{"stream_name":"stdout","time":86.174992323,"data":"    [\n"}
+,{"stream_name":"stdout","time":86.174996333,"data":"     \"Precision: 0.13732780149096674 Recall: 0.06795245061383348\",\n"}
+,{"stream_name":"stdout","time":86.175000002,"data":"     \"Precision: 0.13732780149096677 Recall: 0.06795245061383348\"\n"}
+,{"stream_name":"stdout","time":86.175004717,"data":"    ]\n"}
+,{"stream_name":"stdout","time":86.17500849,"data":"   ]\n"}
+,{"stream_name":"stdout","time":86.175012362,"data":"  },\n"}
+,{"stream_name":"stdout","time":86.175016069,"data":"  \"webnlg_mine\": {\n"}
+,{"stream_name":"stdout","time":86.175020065,"data":"   \"identical\": false,\n"}
+,{"stream_name":"stdout","time":86.175023999,"data":"   \"seconds\": 28.9,\n"}
+,{"stream_name":"stdout","time":86.17502792,"data":"   \"first_diffs\": [\n"}
+,{"stream_name":"stdout","time":86.175031777,"data":"    [\n"}
+,{"stream_name":"stdout","time":86.175035826,"data":"     \"Precision: 0.1370203049482799 Recall: 0.06773385207541856\",\n"}
+,{"stream_name":"stdout","time":86.175039944,"data":"     \"Precision: 0.13702030494827988 Recall: 0.06773385207541856\"\n"}
+,{"stream_name":"stdout","time":86.175043973,"data":"    ]\n"}
+,{"stream_name":"stdout","time":86.175047581,"data":"   ]\n"}
+,{"stream_name":"stdout","time":86.175051072,"data":"  },\n"}
+,{"stream_name":"stdout","time":86.175055098,"data":"  \"rebel_edc\": {\n"}
+,{"stream_name":"stdout","time":86.175058875,"data":"   \"identical\": true,\n"}
+,{"stream_name":"stdout","time":86.175061344,"data":"   \"seconds\": 3.7,\n"}
+,{"stream_name":"stdout","time":86.175063963,"data":"   \"first_diffs\": []\n"}
+,{"stream_name":"stdout","time":86.175066363,"data":"  },\n"}
+,{"stream_name":"stdout","time":86.175068609,"data":"  \"rebel_mine\": {\n"}
+,{"stream_name":"stdout","time":86.1750721,"data":"   \"identical\": true,\n"}
+,{"stream_name":"stdout","time":86.175075801,"data":"   \"seconds\": 3.2,\n"}
+,{"stream_name":"stdout","time":86.175079512,"data":"   \"first_diffs\": []\n"}
+,{"stream_name":"stdout","time":86.175083551,"data":"  },\n"}
+,{"stream_name":"stdout","time":86.175087347,"data":"  \"wiki-nre_edc\": {\n"}
+,{"stream_name":"stdout","time":86.175091687,"data":"   \"identical\": true,\n"}
+,{"stream_name":"stdout","time":86.175095593,"data":"   \"seconds\": 3.0,\n"}
+,{"stream_name":"stdout","time":86.175099876,"data":"   \"first_diffs\": []\n"}
+,{"stream_name":"stdout","time":86.175103622,"data":"  },\n"}
+,{"stream_name":"stdout","time":86.175107249,"data":"  \"wiki-nre_mine\": {\n"}
+,{"stream_name":"stdout","time":86.175122158,"data":"   \"identical\": true,\n"}
+,{"stream_name":"stdout","time":86.175126077,"data":"   \"seconds\": 2.9,\n"}
+,{"stream_name":"stdout","time":86.175129854,"data":"   \"first_diffs\": []\n"}
+,{"stream_name":"stdout","time":86.175133965,"data":"  }\n"}
+,{"stream_name":"stdout","time":86.175137801,"data":" },\n"}
+,{"stream_name":"stdout","time":86.17514151,"data":" \"all_identical\": false\n"}
+,{"stream_name":"stdout","time":86.175145371,"data":"}\n"}
+,{"stream_name":"stderr","time":88.523715992,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":88.523753043,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":88.91479892,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":88.914850828,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":90.057709558,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":91.431151494,"data":"[NbConvertApp] Writing 291422 bytes to __results__.html\n"}
+]

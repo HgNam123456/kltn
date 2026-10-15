@@ -1,0 +1,46 @@
+{
+ "kltn_commit": "6aeec4fa9b6180bacaab32faafb0c51ced7ee7ca",
+ "cases": {
+  "webnlg_edc": {
+   "identical": false,
+   "seconds": 34.5,
+   "first_diffs": [
+    [
+     "Precision: 0.13732780149096674 Recall: 0.06795245061383348",
+     "Precision: 0.13732780149096677 Recall: 0.06795245061383348"
+    ]
+   ]
+  },
+  "webnlg_mine": {
+   "identical": false,
+   "seconds": 28.9,
+   "first_diffs": [
+    [
+     "Precision: 0.1370203049482799 Recall: 0.06773385207541856",
+     "Precision: 0.13702030494827988 Recall: 0.06773385207541856"
+    ]
+   ]
+  },
+  "rebel_edc": {
+   "identical": true,
+   "seconds": 3.7,
+   "first_diffs": []
+  },
+  "rebel_mine": {
+   "identical": true,
+   "seconds": 3.2,
+   "first_diffs": []
+  },
+  "wiki-nre_edc": {
+   "identical": true,
+   "seconds": 3.0,
+   "first_diffs": []
+  },
+  "wiki-nre_mine": {
+   "identical": true,
+   "seconds": 2.9,
+   "first_diffs": []
+  }
+ },
+ "all_identical": false
+}
