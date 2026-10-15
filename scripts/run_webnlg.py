@@ -1,6 +1,7 @@
 """Pipeline của mình (module Add, quan hệ ép theo schema — kgu.extract.text_kg.extract_schema) trên WebNLG test của
 EDC (clear-nus/edc datasets/webnlg.txt, 1.165 câu). Ra file định dạng canon_kg.txt của EDC (1 dòng/câu, str của list
 triple) để chấm bằng evaluate/evaluation_script.py của EDC. Dùng cùng file few-shot OIE của EDC cho WebNLG.
+Chạy y nguyên cho REBEL và Wiki-NRE của EDC (đổi --input/--schema/--examples; kaggle/edc_bench/run_edc_bench.py).
 
 Dùng: KGU_LLM_BASE_URL=http://127.0.0.1:8080/v1 python scripts/run_webnlg.py --input edc/datasets/webnlg.txt
       --schema edc/schemas/webnlg_schema.csv --examples edc/few_shot_examples/webnlg/oie_few_shot_examples.txt
