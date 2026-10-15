@@ -1238,7 +1238,7 @@ if __name__ == "__main__":
 - [ ] **Step 4: Chạy toàn bộ test, phải pass**
 
 Run: `.venv/Scripts/python.exe -m pytest -q`
-Expected: toàn bộ pass (116 test cũ + 26 test mới = 142 passed).
+Expected: toàn bộ pass (120 test cũ + 26 test mới = 146 passed).
 
 - [ ] **Step 5: Commit**
 
