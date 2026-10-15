@@ -418,3 +418,85 @@ prompt giữ nguyên. Kernel `kgu-baselines-gemma4` v4, chấm bằng `emerge-ev
 - Bản đổi miền: Add C 15,4 cao nhất trong các baseline Gemma nhờ bộ quan hệ mẫu gần nhãn Wikidata (14,8% quan hệ
   trùng nhãn, KGGen 0,9%); nhưng Exists/G-R thấp nhất vì Summarizer nén đoạn còn 2–4 câu và Evaluator lọc bớt
   (5,7 → 5,3 triple/bài) → nối đúng 2 thực thể chỉ 19,1% gold Exists. Chậm nhất: ~7 + 2×số triple lượt gọi mỗi bài.
+
+## 17. So trên benchmark sân nhà của baseline (14/10): WebNLG (EDC), 2020-COVID-NYT (ATOM)
+
+Không paper baseline nào đo cập nhật KG (§ benchmark của 5 paper), nên ngoài EMERGE còn chấm trên đúng benchmark mà
+baseline tự dùng, mọi hệ thống cùng Gemma 4 E4B qua llama-server (kernel `kgu-home-benchmarks`,
+`kaggle/home_bench/run_home_bench.py`). Hai benchmark chỉ đo trích xuất (không KG sẵn, không Deprecate) → "mình" là
+module Add chạy không cần KG Wikidata (`kgu/extract/text_kg.py`):
+- WebNLG: bộ quan hệ lấy từ schema của dataset (159 quan hệ + mô tả) thay cho quan hệ của KG lân cận, ép bằng enum
+  trong json_schema; một lệnh gọi/câu, cùng file few-shot OIE của EDC (`scripts/run_webnlg.py`).
+- COVID-NYT: KG tự tích lũy theo thứ tự ngày (`TemporalKG`): mỗi nhóm ngày thấy fact đã lưu có nhắc thực thể của nó
+  + quan hệ đã dùng, một lệnh gọi trả fact của đoạn (Exists + Add, kèm t_start/t_end) và fact cũ bị báo hết đúng
+  (đóng t_end) (`scripts/run_covid_nyt.py`).
+
+Baseline chạy bằng code gốc:
+- EDC: clear-nus/edc @ 02aad17 (OIE → schema definition → canonicalization, không refinement), embedder
+  e5-mistral-7b-instruct như paper (fp16, GPU thứ hai). Vá: tên model chứa "gpt" (nhánh OpenAI) + OPENAI_BASE_URL;
+  import `e5_mistral_utils` (chỉ cho refinement) bọc try/except vì `huggingface_hub.Repository` đã bị gỡ; lỗi gốc ở
+  nhánh OpenAI — khối giải phóng model cuối canonicalization xóa verify model chưa từng nạp → bọc điều kiện.
+- ATOM (itext2kg 1.1.0, venv Python 3.11): `scripts/atom_covid.py` làm y script đánh giá của họ — 2 bước (factoid →
+  5-tuple, mỗi factoid một lệnh gọi) và trích thẳng. Vá: `with_structured_output(method="json_schema")` (issue #44) và
+  đưa JSON schema kèm mô tả field vào prompt như OpenAI làm với response_format — llama-server chỉ dùng schema để ép
+  ngữ pháp, không vá thì Gemma không thấy hướng dẫn chính của ATOM (nằm trong mô tả field). `return_exceptions=True`
+  để một lệnh gọi hỏng chỉ mất factoid đó.
+- KGGen 0.4.0: `generate()` trên từng nhóm ngày, `hosted_vllm/local`, temperature 0, max_tokens 4096; không có thời
+  gian → t_start/t_end rỗng.
+
+Bộ chấm:
+- WebNLG: `evaluate/evaluation_script.py` của EDC (nervaluate 0.1.8 — bản mới đổi API). Script lặng lẽ bỏ dòng không
+  parse được (cả gold) → báo số dòng thực sự được chấm.
+- COVID-NYT: metric ATOM cài lại (`kgu/eval/atom_quality.py`, `scripts/score_covid_nyt.py`): ghép 1-1 tham lam theo
+  cosine "h r t" > ngưỡng; MATCH/HALL/OM; MATCH_t khi cả t_start, t_end khớp (ngày đọc thành tập date). Embedding
+  OpenAI của họ thay bằng local, chọn bằng cách chấm 6 cột GPT-4.1 phát hành trong dataset (kernel
+  `kgu-covid-calibration`, `results/kaggle/covid_calibration.json`): all-mpnet-base-v2 @ 0,7 (cùng embedder với C của
+  EMERGE, cùng ngưỡng gốc của ATOM) tái lập Table 2: trích thẳng F1 0,520 (paper 0,504), ATOM 0,633 (0,638); thời gian
+  0,236 (0,220), 0,326 (0,313). Bài có gold mà hệ thống ra rỗng tính 0 (script gốc bỏ qua; báo cả *_skip).
+
+Dữ liệu: bản phát hành có 122 nhóm ngày (01–06/2020), 3.918 gold — paper ghi 274 nhóm / 7.210; gold do Claude soạn. 20 nhóm đầu (theo ngày) đã xem ở 3 lượt chạy thử khi sửa prompt của mình (tách fact nguyên tử; chỉ gán ngày
+khi văn bản nói tới thời gian, luật quy đổi ngày tương đối lấy từ schema ATOM = quy ước gold; max_tokens chặn output
+lặp) → báo thêm số trên 102 nhóm held-out. Prompt WebNLG không sửa sau lượt thử. Few-shot WebNLG của EDC (dùng chung)
+lấy từ chính tập test (câu 1, 2, …) — như paper EDC.
+
+### Kết quả (kernel `kgu-home-benchmarks` v5, 14–15/10; `results/kaggle/home_bench/`)
+
+WebNLG test (1.165 câu, cả 1.165 dòng đều được chấm; EDC 7 dòng rỗng, mình 0):
+
+| Gemma 4 E4B | Partial P / R / F1 | Strict F1 | Exact F1 | Lệnh gọi LLM / câu | Phút |
+|---|---|---|---|---|---|
+| EDC (OIE → SD → SC, e5-mistral-7b) | 69,8 / 72,1 / **70,6** | 63,9 | 66,8 | ≥ 2 (+ verify từng quan hệ) | 50 |
+| Mình (Add, quan hệ ép theo schema) | 73,7 / 75,8 / **74,4** | 68,3 | 71,1 | 1 | 20 |
+
+→ Mình hơn EDC +3,8 Partial / +4,4 Strict / +4,3 Exact F1 trên chính benchmark của EDC, cùng model, ít lệnh gọi hơn.
+Cùng ý với §15: chọn quan hệ trong schema ngay lúc trích (constrained decoding) thay cho trích tự do rồi canonicalize.
+
+2020-COVID-NYT (metric ATOM, all-mpnet-base-v2 @ 0,7; nhóm ngày ra rỗng tính 0). 122 nhóm / 102 nhóm held-out
+(bỏ 20 nhóm dev):
+
+| | F1 | P | R | F1 held-out | F1_t | MATCH_t | HALL_t | 5-tuple/nhóm | % có mốc t |
+|---|---|---|---|---|---|---|---|---|---|
+| GPT-4.1 trích thẳng (cột phát hành) | 49,5 | 65,6 | 39,8 | 47,4 | 23,8 | 19,1 | 13,8 | | |
+| GPT-4.1 ATOM (cột phát hành) | 63,3 | 56,3 | 72,3 | 64,2 | 32,9 | 37,2 | 21,3 | | |
+| ATOM 2 bước, Gemma | **52,5** | 67,4 | **43,0** | **52,6** | 13,7 | 11,1 | 23,1 | 20,5 | 89 |
+| KGGen, Gemma | 48,3 | 72,1 | 36,3 | 47,6 | **26,4** | **19,6** | 0 | 13,7 | 0 |
+| Mình, Gemma | 45,4 | **76,3** | 32,3 | 43,1 | 10,9 | 7,7 | 14,9 | 11,3 | 80 |
+| ATOM trích thẳng, Gemma | 38,3 | 74,3 | 25,8 | 36,0 | 12,3 | 8,3 | 9,5 | 8,7 | 81 |
+
+(gold: 32,1 5-tuple/nhóm, 34,2% có mốc thời gian.)
+
+- Cùng kiểu một lượt gọi mỗi đoạn, mình hơn ATOM trích thẳng +7,1 F1 (held-out +7,1); precision cao nhất bảng
+  (76,3, hơn cả GPT-4.1). Thua ATOM 2 bước −7,1 và KGGen −2,9 vì recall: mình 11,3 fact/nhóm, ATOM 20,5, gold 32,1.
+  Tách factoid rồi gọi LLM cho từng factoid (ATOM: 10,3 factoid/nhóm → ~11 lệnh gọi/nhóm, 49 phút) là kỹ thuật tăng recall bổ trợ, ghép
+  được vào bước trích của mình; benchmark này không đo phần cập nhật (Exists/Deprecate với KG có sẵn) mà pipeline
+  của mình nhắm tới.
+- F1 thời gian thưởng việc KHÔNG gán ngày: 65,8% gold không có mốc, MATCH_t tính rỗng = rỗng là khớp → KGGen (không
+  sinh thời gian) dẫn đầu F1_t. ATOM và mình gán mốc cho 80–90% fact → HALL_t cao. Báo F1_t kèm chú thích này.
+- Gemma kéo ATOM từ 63,3 (GPT-4.1) xuống 52,5; trích thẳng 49,5 → 38,3.
+- Lỗi: mình mất 1/122 nhóm (output JSON dài quá 4.096 token ở nhóm 38), ATOM trích thẳng 1/122.
+- Thời gian kernel 420 phút, trong đó 230 phút là script chấm WebNLG của EDC chạy trên output EDC (chấm output của mình chỉ 8
+  phút; chưa tìm nguyên nhân); các hệ thống: mình WebNLG 20, EDC 50, mình COVID 21, ATOM trích thẳng 23, ATOM 49, KGGen 15 phút.
+
+Cách báo trong khóa luận: bảng "sân nhà" là bằng chứng phụ cho EMERGE — trên WebNLG mình hơn EDC; trên COVID-NYT
+(chỉ đo trích xuất) mình ngang nhóm baseline một lượt (hơn ATOM trích thẳng, dưới KGGen 3 điểm), dưới ATOM 2 bước do
+recall; nói rõ quy trình dev/held-out và chú thích F1_t.
