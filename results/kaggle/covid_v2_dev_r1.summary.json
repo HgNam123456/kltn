@@ -1,0 +1,289 @@
+{
+ "limit": 20,
+ "variants": [
+  "v0",
+  "v1",
+  "v2"
+ ],
+ "canon_every": 10,
+ "tau": 0.75,
+ "runs": {
+  "v0": {
+   "ok": true,
+   "seconds": 93.3,
+   "sec_per_item": 4.67
+  },
+  "v1": {
+   "ok": true,
+   "seconds": 196.3,
+   "sec_per_item": 9.82
+  },
+  "v2": {
+   "ok": true,
+   "seconds": 277.9,
+   "sec_per_item": 13.89
+  }
+ },
+ "outputs": {
+  "v0": {
+   "rows": 20,
+   "empty": 0,
+   "avg_quintuples": 5.6,
+   "calls": 20,
+   "avg_sentences": 0.0,
+   "missing_before": 0,
+   "missing_after": 0,
+   "refill_sentences": 0,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  },
+  "v1": {
+   "rows": 20,
+   "empty": 0,
+   "avg_quintuples": 8.7,
+   "calls": 51,
+   "avg_sentences": 7.7,
+   "missing_before": 13,
+   "missing_after": 4,
+   "refill_sentences": 4,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  },
+  "v2": {
+   "rows": 20,
+   "empty": 0,
+   "avg_quintuples": 8.2,
+   "calls": 52,
+   "avg_sentences": 7.65,
+   "missing_before": 13,
+   "missing_after": 4,
+   "refill_sentences": 5,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  }
+ },
+ "canon": {
+  "v2": [
+   {
+    "after_group": 10,
+    "seconds": 17.9,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 112,
+      "clusters": 12,
+      "groups": 8,
+      "calls": 5,
+      "errors": 0,
+      "merged": 8
+     },
+     {
+      "kind": "relation",
+      "names": 51,
+      "clusters": 6,
+      "groups": 1,
+      "calls": 1,
+      "errors": 0,
+      "merged": 0
+     }
+    ]
+   },
+   {
+    "after_group": 20,
+    "seconds": 23.9,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 212,
+      "clusters": 22,
+      "groups": 13,
+      "calls": 8,
+      "errors": 0,
+      "merged": 4
+     },
+     {
+      "kind": "relation",
+      "names": 89,
+      "clusters": 9,
+      "groups": 3,
+      "calls": 2,
+      "errors": 0,
+      "merged": 0
+     }
+    ]
+   }
+  ]
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "94f86021c8f69dd96f17f5907be4e50cac21ee18",
+ "covid_n": 20,
+ "heldout_n": 0,
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "covid": {
+  "v0": {
+   "MATCH": 0.4006,
+   "HALL": 0.3478,
+   "OM": 0.5994,
+   "MATCH_t": 0.0548,
+   "OM_t": 0.1651,
+   "HALL_t": 0.1807,
+   "P": 0.6522,
+   "R": 0.4006,
+   "F1": 0.4964,
+   "P_t": 0.1175,
+   "F1_t": 0.0748,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.4006,
+   "HALL_skip": 0.3478,
+   "OM_skip": 0.5994,
+   "MATCH_t_skip": 0.0548,
+   "OM_t_skip": 0.1651,
+   "HALL_t_skip": 0.1807,
+   "P_skip": 0.6522,
+   "R_skip": 0.4006,
+   "F1_skip": 0.4964,
+   "P_t_skip": 0.1175,
+   "F1_t_skip": 0.0748,
+   "n_rows_skip": 20.0
+  },
+  "v1": {
+   "MATCH": 0.5076,
+   "HALL": 0.4771,
+   "OM": 0.4924,
+   "MATCH_t": 0.2189,
+   "OM_t": 0.1857,
+   "HALL_t": 0.103,
+   "P": 0.5229,
+   "R": 0.5076,
+   "F1": 0.5151,
+   "P_t": 0.2202,
+   "F1_t": 0.2196,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.5076,
+   "HALL_skip": 0.4771,
+   "OM_skip": 0.4924,
+   "MATCH_t_skip": 0.2189,
+   "OM_t_skip": 0.1857,
+   "HALL_t_skip": 0.103,
+   "P_skip": 0.5229,
+   "R_skip": 0.5076,
+   "F1_skip": 0.5151,
+   "P_t_skip": 0.2202,
+   "F1_t_skip": 0.2196,
+   "n_rows_skip": 20.0
+  },
+  "v2": {
+   "MATCH": 0.4877,
+   "HALL": 0.4677,
+   "OM": 0.5123,
+   "MATCH_t": 0.2307,
+   "OM_t": 0.1828,
+   "HALL_t": 0.0742,
+   "P": 0.5323,
+   "R": 0.4877,
+   "F1": 0.509,
+   "P_t": 0.2581,
+   "F1_t": 0.2436,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.4877,
+   "HALL_skip": 0.4677,
+   "OM_skip": 0.5123,
+   "MATCH_t_skip": 0.2307,
+   "OM_t_skip": 0.1828,
+   "HALL_t_skip": 0.0742,
+   "P_skip": 0.5323,
+   "R_skip": 0.4877,
+   "F1_skip": 0.509,
+   "P_t_skip": 0.2581,
+   "F1_t_skip": 0.2436,
+   "n_rows_skip": 20.0
+  }
+ },
+ "merge": {
+  "v0": {
+   "entity": {
+    "precision": 0.9254,
+    "recall": 0.8864,
+    "f1": 0.9054,
+    "kg_names": 140,
+    "similar_pairs": 20,
+    "gold_mentions": 408,
+    "gold_unique": 193,
+    "gold_merged": 176
+   },
+   "relation": {
+    "precision": 0.98,
+    "recall": 0.9333,
+    "f1": 0.9561,
+    "kg_names": 54,
+    "similar_pairs": 3,
+    "gold_mentions": 204,
+    "gold_unique": 142,
+    "gold_merged": 45
+   }
+  },
+  "v1": {
+   "entity": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "kg_names": 229,
+    "similar_pairs": 212,
+    "gold_mentions": 408,
+    "gold_unique": 193,
+    "gold_merged": 176
+   },
+   "relation": {
+    "precision": 0.9748,
+    "recall": 0.9333,
+    "f1": 0.9536,
+    "kg_names": 85,
+    "similar_pairs": 3,
+    "gold_mentions": 204,
+    "gold_unique": 142,
+    "gold_merged": 45
+   }
+  },
+  "v2": {
+   "entity": {
+    "precision": 0.0,
+    "recall": 0.0,
+    "f1": 0.0,
+    "kg_names": 208,
+    "similar_pairs": 201,
+    "gold_mentions": 408,
+    "gold_unique": 193,
+    "gold_merged": 176
+   },
+   "relation": {
+    "precision": 0.9652,
+    "recall": 0.9111,
+    "f1": 0.9374,
+    "kg_names": 89,
+    "similar_pairs": 4,
+    "gold_mentions": 204,
+    "gold_unique": 142,
+    "gold_merged": 45
+   }
+  }
+ },
+ "canon_errors": {
+  "v0": 0,
+  "v1": 0,
+  "v2": 0
+ },
+ "total_minutes": 10.8
+}

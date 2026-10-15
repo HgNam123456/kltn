@@ -1,0 +1,50 @@
+[
+ {
+  "after_group": 10,
+  "seconds": 11.6,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 85,
+    "clusters": 9,
+    "groups": 7,
+    "calls": 4,
+    "errors": 0,
+    "merged": 1
+   },
+   {
+    "kind": "relation",
+    "names": 46,
+    "clusters": 5,
+    "groups": 0,
+    "calls": 0,
+    "errors": 0,
+    "merged": 0
+   }
+  ]
+ },
+ {
+  "after_group": 20,
+  "seconds": 17.6,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 176,
+    "clusters": 18,
+    "groups": 11,
+    "calls": 7,
+    "errors": 0,
+    "merged": 3
+   },
+   {
+    "kind": "relation",
+    "names": 86,
+    "clusters": 9,
+    "groups": 1,
+    "calls": 1,
+    "errors": 0,
+    "merged": 0
+   }
+  ]
+ }
+]

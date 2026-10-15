@@ -1,0 +1,289 @@
+{
+ "limit": 20,
+ "variants": [
+  "v0",
+  "v1",
+  "v2"
+ ],
+ "canon_every": 10,
+ "tau": 0.75,
+ "runs": {
+  "v0": {
+   "ok": true,
+   "seconds": 81.5,
+   "sec_per_item": 4.08
+  },
+  "v1": {
+   "ok": true,
+   "seconds": 143.4,
+   "sec_per_item": 7.17
+  },
+  "v2": {
+   "ok": true,
+   "seconds": 217.4,
+   "sec_per_item": 10.87
+  }
+ },
+ "outputs": {
+  "v0": {
+   "rows": 20,
+   "empty": 0,
+   "avg_quintuples": 5.5,
+   "calls": 20,
+   "avg_sentences": 0.0,
+   "missing_before": 0,
+   "missing_after": 0,
+   "refill_sentences": 0,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  },
+  "v1": {
+   "rows": 20,
+   "empty": 2,
+   "avg_quintuples": 6.65,
+   "calls": 54,
+   "avg_sentences": 6.1,
+   "missing_before": 14,
+   "missing_after": 2,
+   "refill_sentences": 7,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  },
+  "v2": {
+   "rows": 20,
+   "empty": 2,
+   "avg_quintuples": 6.85,
+   "calls": 53,
+   "avg_sentences": 6.1,
+   "missing_before": 14,
+   "missing_after": 2,
+   "refill_sentences": 6,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  }
+ },
+ "canon": {
+  "v2": [
+   {
+    "after_group": 10,
+    "seconds": 11.6,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 85,
+      "clusters": 9,
+      "groups": 7,
+      "calls": 4,
+      "errors": 0,
+      "merged": 1
+     },
+     {
+      "kind": "relation",
+      "names": 46,
+      "clusters": 5,
+      "groups": 0,
+      "calls": 0,
+      "errors": 0,
+      "merged": 0
+     }
+    ]
+   },
+   {
+    "after_group": 20,
+    "seconds": 17.6,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 176,
+      "clusters": 18,
+      "groups": 11,
+      "calls": 7,
+      "errors": 0,
+      "merged": 3
+     },
+     {
+      "kind": "relation",
+      "names": 86,
+      "clusters": 9,
+      "groups": 1,
+      "calls": 1,
+      "errors": 0,
+      "merged": 0
+     }
+    ]
+   }
+  ]
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "f23a077e8349364ae922eefe821f72d1986fe7cc",
+ "covid_n": 20,
+ "heldout_n": 0,
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "covid": {
+  "v0": {
+   "MATCH": 0.3936,
+   "HALL": 0.2855,
+   "OM": 0.6064,
+   "MATCH_t": 0.0877,
+   "OM_t": 0.1505,
+   "HALL_t": 0.1554,
+   "P": 0.7145,
+   "R": 0.3936,
+   "F1": 0.5076,
+   "P_t": 0.1695,
+   "F1_t": 0.1156,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.3936,
+   "HALL_skip": 0.2855,
+   "OM_skip": 0.6064,
+   "MATCH_t_skip": 0.0877,
+   "OM_t_skip": 0.1505,
+   "HALL_t_skip": 0.1554,
+   "P_skip": 0.7145,
+   "R_skip": 0.3936,
+   "F1_skip": 0.5076,
+   "P_t_skip": 0.1695,
+   "F1_t_skip": 0.1156,
+   "n_rows_skip": 20.0
+  },
+  "v1": {
+   "MATCH": 0.4824,
+   "HALL": 0.3346,
+   "OM": 0.5176,
+   "MATCH_t": 0.1905,
+   "OM_t": 0.2227,
+   "HALL_t": 0.0693,
+   "P": 0.5654,
+   "R": 0.4824,
+   "F1": 0.5206,
+   "P_t": 0.2462,
+   "F1_t": 0.2148,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.536,
+   "HALL_skip": 0.3718,
+   "OM_skip": 0.464,
+   "MATCH_t_skip": 0.2117,
+   "OM_t_skip": 0.2474,
+   "HALL_t_skip": 0.077,
+   "P_skip": 0.6282,
+   "R_skip": 0.536,
+   "F1_skip": 0.5785,
+   "P_t_skip": 0.2735,
+   "F1_t_skip": 0.2387,
+   "n_rows_skip": 18.0
+  },
+  "v2": {
+   "MATCH": 0.475,
+   "HALL": 0.3114,
+   "OM": 0.525,
+   "MATCH_t": 0.2019,
+   "OM_t": 0.2058,
+   "HALL_t": 0.0672,
+   "P": 0.5886,
+   "R": 0.475,
+   "F1": 0.5257,
+   "P_t": 0.2908,
+   "F1_t": 0.2383,
+   "n_rows": 20.0,
+   "MATCH_skip": 0.5277,
+   "HALL_skip": 0.346,
+   "OM_skip": 0.4723,
+   "MATCH_t_skip": 0.2243,
+   "OM_t_skip": 0.2287,
+   "HALL_t_skip": 0.0747,
+   "P_skip": 0.654,
+   "R_skip": 0.5277,
+   "F1_skip": 0.5841,
+   "P_t_skip": 0.3231,
+   "F1_t_skip": 0.2648,
+   "n_rows_skip": 18.0
+  }
+ },
+ "merge": {
+  "v0": {
+   "entity": {
+    "precision": 0.9542,
+    "recall": 0.9261,
+    "f1": 0.94,
+    "kg_names": 124,
+    "similar_pairs": 13,
+    "gold_mentions": 408,
+    "gold_unique": 193,
+    "gold_merged": 176
+   },
+   "relation": {
+    "precision": 0.9793,
+    "recall": 0.9333,
+    "f1": 0.9558,
+    "kg_names": 59,
+    "similar_pairs": 3,
+    "gold_mentions": 204,
+    "gold_unique": 142,
+    "gold_merged": 45
+   }
+  },
+  "v1": {
+   "entity": {
+    "precision": 0.9106,
+    "recall": 0.8807,
+    "f1": 0.8954,
+    "kg_names": 173,
+    "similar_pairs": 21,
+    "gold_mentions": 408,
+    "gold_unique": 193,
+    "gold_merged": 176
+   },
+   "relation": {
+    "precision": 0.9924,
+    "recall": 0.9778,
+    "f1": 0.985,
+    "kg_names": 73,
+    "similar_pairs": 1,
+    "gold_mentions": 204,
+    "gold_unique": 142,
+    "gold_merged": 45
+   }
+  },
+  "v2": {
+   "entity": {
+    "precision": 0.9277,
+    "recall": 0.9034,
+    "f1": 0.9154,
+    "kg_names": 173,
+    "similar_pairs": 17,
+    "gold_mentions": 408,
+    "gold_unique": 193,
+    "gold_merged": 176
+   },
+   "relation": {
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "kg_names": 86,
+    "similar_pairs": 0,
+    "gold_mentions": 204,
+    "gold_unique": 142,
+    "gold_merged": 45
+   }
+  }
+ },
+ "canon_errors": {
+  "v0": 0,
+  "v1": 0,
+  "v2": 0
+ },
+ "total_minutes": 8.4
+}
