@@ -104,3 +104,36 @@ def test_atom_schema_hint_carries_field_descriptions():
     class AtomicFact(BaseModel):
         atomic_fact: list[str] = Field(description="Decompose the paragraph into atomic facts.")
     assert "Decompose the paragraph into atomic facts." in m.schema_hint(AtomicFact)
+
+
+def test_covid_runner_adds_row_stats_and_calls_after_each_group(tmp_path):
+    m = _mod("run_covid_nyt")
+    rows = [{"row": 0, "date": "2020-01-02", "text": "b"}, {"row": 1, "date": "2020-01-01", "text": "a"}]
+    done = []
+    out = tmp_path / "o.jsonl"
+    m.run_rows(rows, lambda text, date: [], out, extra=lambda: {"calls": 2, "sentences": 3}, after=done.append)
+    got = [json.loads(line) for line in out.read_text(encoding="utf8").splitlines()]
+    assert [(g["row"], g["calls"], g["sentences"]) for g in got] == [(1, 2, 3), (0, 2, 3)] and done == [1, 2]
+
+
+def test_audit_sample_is_stratified_deterministic_and_skips_errors():
+    m = _mod("audit_merges")
+    recs = [{"id": i, "same": i % 3 == 0} for i in range(300)] + [{"id": 300, "error": "x"}]
+    a = m.sample(recs, n=10, seed=0)
+    assert a == m.sample(recs, n=10, seed=0) and len(a) == 10 and sum(r["same"] for r in a) == 5
+    assert [r["id"] for r in a] == sorted(r["id"] for r in a)
+
+
+def test_audit_sample_fills_from_the_other_side_when_one_is_short():
+    m = _mod("audit_merges")
+    recs = [{"id": 0, "same": True}] + [{"id": i, "same": False} for i in range(1, 20)]
+    a = m.sample(recs, n=10)
+    assert len(a) == 10 and sum(r["same"] for r in a) == 1
+
+
+def test_audit_summary_counts_only_labelled_rows():
+    m = _mod("audit_merges")
+    rows = [{"same": "True", "correct": "1"}, {"same": "True", "correct": "0"},
+            {"same": "False", "correct": "1"}, {"same": "False", "correct": " "}]
+    assert m.summarize(rows) == {"yes": {"n": 2, "correct": 1, "accuracy": 0.5},
+                                 "no": {"n": 1, "correct": 1, "accuracy": 1.0}}
