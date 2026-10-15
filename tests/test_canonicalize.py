@@ -145,3 +145,17 @@ def test_apply_mapping_dedups_drops_self_loops_and_moves_aliases():
     assert kg.aliases == {"A": {"A2", "A3"}}
     apply_mapping(kg, "relation", {"r": "rel"})
     assert [f[1] for f in kg.facts] == ["rel", "rel"] and kg.aliases == {"A": {"A2", "A3"}}
+
+
+def test_failed_cluster_is_retried_next_round(tmp_path):
+    kg, llm = who_kg(), FakeLLMClient([])
+    canon = Canonicalizer(fake_embed(), llm, log_path=tmp_path / "m.jsonl")
+    ent, _ = canon.run_round(kg)
+    assert (ent["calls"], ent["errors"]) == (1, 1) and kg.facts == who_kg().facts
+    llm.responses.append({"groups": [{"group": 0, "decisions": [
+        {"name": "WHO", "reason": "anchor itself", "same": True},
+        {"name": "World Health Organization", "reason": "same agency", "same": True}],
+        "canonical": "World Health Organization"}]})
+    ent, _ = canon.run_round(kg)                                   # cụm lỗi được hỏi lại
+    assert (ent["calls"], ent["errors"], ent["merged"]) == (1, 0, 1)
+    assert kg.aliases == {"World Health Organization": {"WHO"}} and kg.facts[0][0] == "World Health Organization"

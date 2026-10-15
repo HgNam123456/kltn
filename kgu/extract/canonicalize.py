@@ -166,6 +166,7 @@ class Canonicalizer:
             by_cluster = candidate_groups(names, X, labels, counts, self.tau, blocked)
             stats.update(clusters=len(set(labels.tolist())), groups=sum(map(len, by_cluster.values())))
             mapping: dict[str, str] = {}
+            failed: set[str] = set()                               # tên thuộc cụm lỗi → hỏi lại ở lượt sau
             for c, groups in by_cluster.items():
                 if all(m in self.seen[kind] for g in groups for m in g["members"]):
                     continue                                       # cụm không có tên mới → đã xét ở lượt trước
@@ -174,13 +175,16 @@ class Canonicalizer:
                     out = self._ask(kind, groups, context)
                 except Exception as e:                             # lệnh gọi hỏng → bỏ cụm này, KG giữ nguyên
                     stats["errors"] += 1
+                    failed |= {m for g in groups for m in g["members"]}
                     self._log({"round": self.round, "kind": kind, "cluster": c, "error": repr(e)[:300]})
                     continue
                 mapping.update(self._decide(kind, c, groups, context, out))
             apply_mapping(kg, kind, mapping)
             stats["merged"] = len(mapping)
             self.seen[kind] |= set(mapping.values())
-        self.seen[kind] |= set(names)
+            self.seen[kind] |= set(names) - failed
+        else:
+            self.seen[kind] |= set(names)
         return stats
 
     def _ask(self, kind: str, groups: list[dict], context: dict[str, list[str]]):
