@@ -1,0 +1,134 @@
+{
+ "limit": null,
+ "datasets": [
+  "rebel",
+  "wiki-nre"
+ ],
+ "runs": {
+  "mine_rebel": {
+   "ok": true,
+   "seconds": 1241.0,
+   "sec_per_item": 1.24
+  },
+  "edc_rebel": {
+   "ok": true,
+   "seconds": 3634.8,
+   "sec_per_item": 3.63
+  },
+  "mine_wiki-nre": {
+   "ok": true,
+   "seconds": 882.8,
+   "sec_per_item": 0.88
+  },
+  "edc_wiki-nre": {
+   "ok": true,
+   "seconds": 2479.9,
+   "sec_per_item": 2.48
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "6aeec4fa9b6180bacaab32faafb0c51ced7ee7ca",
+ "n": {
+  "rebel": 1000,
+  "wiki-nre": 1000
+ },
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 12288 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "edc_embedder": "intfloat/e5-mistral-7b-instruct",
+ "rebel": {
+  "edc": {
+   "Partial": {
+    "P": 0.4884,
+    "R": 0.4981,
+    "F1": 0.4921
+   },
+   "Strict": {
+    "P": 0.4418,
+    "R": 0.4478,
+    "F1": 0.4441
+   },
+   "Exact": {
+    "P": 0.4596,
+    "R": 0.466,
+    "F1": 0.4621
+   },
+   "lines": 1000,
+   "scored": 1000,
+   "empty": 0,
+   "avg_triples": 5.49,
+   "score_minutes": 0.8
+  },
+  "mine": {
+   "Partial": {
+    "P": 0.5485,
+    "R": 0.5594,
+    "F1": 0.5525
+   },
+   "Strict": {
+    "P": 0.5046,
+    "R": 0.5108,
+    "F1": 0.5069
+   },
+   "Exact": {
+    "P": 0.5185,
+    "R": 0.5253,
+    "F1": 0.521
+   },
+   "lines": 1000,
+   "scored": 1000,
+   "empty": 1,
+   "avg_triples": 4.41,
+   "score_minutes": 0.5
+  }
+ },
+ "wiki-nre": {
+  "edc": {
+   "Partial": {
+    "P": 0.6198,
+    "R": 0.6245,
+    "F1": 0.6217
+   },
+   "Strict": {
+    "P": 0.6068,
+    "R": 0.6104,
+    "F1": 0.6082
+   },
+   "Exact": {
+    "P": 0.611,
+    "R": 0.6146,
+    "F1": 0.6125
+   },
+   "lines": 1000,
+   "scored": 1000,
+   "empty": 4,
+   "avg_triples": 3.77,
+   "score_minutes": 0.4
+  },
+  "mine": {
+   "Partial": {
+    "P": 0.66,
+    "R": 0.6639,
+    "F1": 0.6615
+   },
+   "Strict": {
+    "P": 0.6497,
+    "R": 0.6526,
+    "F1": 0.6508
+   },
+   "Exact": {
+    "P": 0.6519,
+    "R": 0.6548,
+    "F1": 0.653
+   },
+   "lines": 1000,
+   "scored": 1000,
+   "empty": 0,
+   "avg_triples": 3.6,
+   "score_minutes": 0.3
+  }
+ },
+ "total_minutes": 140.0
+}

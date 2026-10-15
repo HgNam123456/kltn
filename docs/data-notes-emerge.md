@@ -495,8 +495,35 @@ Cùng ý với §15: chọn quan hệ trong schema ngay lúc trích (constrained
 - Gemma kéo ATOM từ 63,3 (GPT-4.1) xuống 52,5; trích thẳng 49,5 → 38,3.
 - Lỗi: mình mất 1/122 nhóm (output JSON dài quá 4.096 token ở nhóm 38), ATOM trích thẳng 1/122.
 - Thời gian kernel 420 phút, trong đó 230 phút là script chấm WebNLG của EDC chạy trên output EDC (chấm output của mình chỉ 8
-  phút; chưa tìm nguyên nhân); các hệ thống: mình WebNLG 20, EDC 50, mình COVID 21, ATOM trích thẳng 23, ATOM 49, KGGen 15 phút.
+  phút; nguyên nhân: script thử mọi hoán vị ghép triple, n! với n = max(số dự đoán, số gold) — xem REBEL/Wiki-NRE dưới);
+  các hệ thống: mình WebNLG 20, EDC 50, mình COVID 21, ATOM trích thẳng 23, ATOM 49, KGGen 15 phút.
 
-Cách báo trong khóa luận: bảng "sân nhà" là bằng chứng phụ cho EMERGE — trên WebNLG mình hơn EDC; trên COVID-NYT
+### REBEL và Wiki-NRE (kernel `kgu-edc-rebel-wikinre`, 15–16/10; `results/kaggle/edc_bench/`)
+
+Hai benchmark còn lại của paper EDC, bản trong repo EDC @ 02aad17: mỗi bộ 1.000 câu, schema 196 (REBEL) / 45 (Wiki-NRE)
+quan hệ. Cách chạy y WebNLG (`kaggle/edc_bench/run_edc_bench.py`): mình = `scripts/run_webnlg.py` với schema + file
+few-shot OIE của EDC cho từng bộ; EDC = OIE → SD → SC, e5-mistral-7b. Prompt REBEL của mình ~28k ký tự (196 quan hệ
+kèm mô tả) → mỗi slot 12.288 token. Không sửa prompt sau lượt chạy thử 30 câu (lượt đó chỉ để dò hạ tầng).
+
+Chấm: script gốc của EDC thử mọi hoán vị (n!) → 30 câu REBEL của EDC mất 10,9 phút, câu 12+ triple không bao giờ
+xong. `scripts/edc_eval_fast.py` chỉ thay bước tìm hoán vị bằng gán tối ưu (Hungarian) chọn đúng hoán vị script gốc
+chọn (n ≤ 7 vẫn duyệt đủ); kiểm toàn văn stdout với script gốc trên WebNLG 1.165 câu (cả EDC và mình) và 30 câu
+REBEL/Wiki-NRE: trùng hoàn toàn, trừ 1 ulp ở dòng "Full triple scores" của sklearn trên WebNLG (kernel
+`kgu-edc-eval-check`, `results/kaggle/edc_eval_check.summary.json`). Chấm 1.000 câu còn 0,3–0,8 phút.
+
+| Gemma 4 E4B | Partial P / R / F1 | Strict F1 | Exact F1 | Triple/câu | Câu rỗng | Phút |
+|---|---|---|---|---|---|---|
+| REBEL, EDC | 48,8 / 49,8 / **49,2** | 44,4 | 46,2 | 5,49 | 0 | 61 |
+| REBEL, mình | 54,9 / 55,9 / **55,3** | 50,7 | 52,1 | 4,41 | 1 | 21 |
+| Wiki-NRE, EDC | 62,0 / 62,5 / **62,2** | 60,8 | 61,3 | 3,77 | 4 | 41 |
+| Wiki-NRE, mình | 66,0 / 66,4 / **66,2** | 65,1 | 65,3 | 3,60 | 0 | 15 |
+
+(cả 1.000 dòng mỗi bộ đều được chấm; log không có lỗi/retry.)
+
+→ Mình hơn EDC trên cả ba benchmark của EDC: WebNLG +3,8, REBEL +6,0, Wiki-NRE +4,0 Partial F1 (Strict +4,4 / +6,3 /
++4,3), nhanh gấp ~3 lần, 1 lệnh gọi/câu. Khoảng cách lớn nhất ở REBEL (schema lớn nhất): chọn quan hệ trong schema
+ngay lúc trích bằng enum thay cho trích tự do rồi canonicalize về 196 quan hệ.
+
+Cách báo trong khóa luận: bảng "sân nhà" là bằng chứng phụ cho EMERGE — trên WebNLG, REBEL, Wiki-NRE mình hơn EDC; trên COVID-NYT
 (chỉ đo trích xuất) mình ngang nhóm baseline một lượt (hơn ATOM trích thẳng, dưới KGGen 3 điểm), dưới ATOM 2 bước do
 recall; nói rõ quy trình dev/held-out và chú thích F1_t.
