@@ -1,0 +1,23 @@
+{
+ "limit": null,
+ "n_input": 3500,
+ "workers": 4,
+ "runs": {
+  "edc-plus-llamacpp/gemma-4-e4b": {
+   "seconds": 6770.6,
+   "ok": true,
+   "n_with_prediction": 3500,
+   "n_empty": 0,
+   "avg_triples": 15.65,
+   "sec_per_instance": 1.93
+  },
+  "kg-gen/llamacpp/gemma-4-e4b": {
+   "seconds": 8828.2,
+   "ok": true,
+   "n_with_prediction": 3500,
+   "n_empty": 3,
+   "avg_triples": 11.03,
+   "sec_per_instance": 2.52
+  }
+ }
+}

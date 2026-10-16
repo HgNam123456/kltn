@@ -1,0 +1,146 @@
+10/15/2026 21:46:41 - INFO - __main__ - loading main dataset from /kaggle/working/input/evaluation_set/
+loading delta_2019-01-08.jsonl: 0it [00:00, ?it/s]loading delta_2019-01-08.jsonl: 100it [00:00, 1468.61it/s]
+loading delta_2019-01-15.jsonl: 0it [00:00, ?it/s]loading delta_2019-01-15.jsonl: 100it [00:00, 1294.39it/s]
+loading delta_2019-01-22.jsonl: 0it [00:00, ?it/s]loading delta_2019-01-22.jsonl: 100it [00:00, 1086.05it/s]
+loading delta_2019-01-29.jsonl: 0it [00:00, ?it/s]loading delta_2019-01-29.jsonl: 48it [00:00, 438.91it/s]loading delta_2019-01-29.jsonl: 100it [00:00, 668.83it/s]
+loading delta_2019-02-05.jsonl: 0it [00:00, ?it/s]loading delta_2019-02-05.jsonl: 100it [00:00, 1377.39it/s]
+loading delta_2022-01-08.jsonl: 0it [00:00, ?it/s]loading delta_2022-01-08.jsonl: 100it [00:00, 1282.65it/s]
+loading delta_2022-01-15.jsonl: 0it [00:00, ?it/s]loading delta_2022-01-15.jsonl: 100it [00:00, 1423.43it/s]
+loading delta_2022-01-22.jsonl: 0it [00:00, ?it/s]loading delta_2022-01-22.jsonl: 41it [00:00, 212.14it/s]loading delta_2022-01-22.jsonl: 100it [00:00, 437.98it/s]
+loading delta_2022-01-29.jsonl: 0it [00:00, ?it/s]loading delta_2022-01-29.jsonl: 100it [00:00, 1500.07it/s]
+loading delta_2022-02-05.jsonl: 0it [00:00, ?it/s]loading delta_2022-02-05.jsonl: 100it [00:00, 1475.26it/s]
+loading delta_2024-01-08.jsonl: 0it [00:00, ?it/s]loading delta_2024-01-08.jsonl: 100it [00:00, 1247.47it/s]
+loading delta_2024-01-15.jsonl: 0it [00:00, ?it/s]loading delta_2024-01-15.jsonl: 48it [00:00, 164.36it/s]loading delta_2024-01-15.jsonl: 100it [00:00, 296.07it/s]
+loading delta_2024-01-22.jsonl: 0it [00:00, ?it/s]loading delta_2024-01-22.jsonl: 100it [00:00, 1185.81it/s]
+loading delta_2024-01-29.jsonl: 0it [00:00, ?it/s]loading delta_2024-01-29.jsonl: 100it [00:00, 1290.74it/s]
+loading delta_2024-02-05.jsonl: 0it [00:00, ?it/s]loading delta_2024-02-05.jsonl: 100it [00:00, 1538.58it/s]
+loading delta_2025-01-08.jsonl: 0it [00:00, ?it/s]loading delta_2025-01-08.jsonl: 47it [00:00, 119.22it/s]loading delta_2025-01-08.jsonl: 100it [00:00, 232.68it/s]
+loading delta_2025-01-15.jsonl: 0it [00:00, ?it/s]loading delta_2025-01-15.jsonl: 100it [00:00, 1179.34it/s]
+loading delta_2025-01-22.jsonl: 0it [00:00, ?it/s]loading delta_2025-01-22.jsonl: 100it [00:00, 1214.22it/s]
+loading delta_2025-01-29.jsonl: 0it [00:00, ?it/s]loading delta_2025-01-29.jsonl: 100it [00:00, 1368.37it/s]
+loading delta_2025-02-05.jsonl: 0it [00:00, ?it/s]loading delta_2025-02-05.jsonl: 45it [00:00, 94.17it/s]loading delta_2025-02-05.jsonl: 100it [00:00, 192.61it/s]
+loading delta_2023-01-08.jsonl: 0it [00:00, ?it/s]loading delta_2023-01-08.jsonl: 100it [00:00, 1457.70it/s]
+loading delta_2023-01-15.jsonl: 0it [00:00, ?it/s]loading delta_2023-01-15.jsonl: 100it [00:00, 1342.89it/s]
+loading delta_2023-01-22.jsonl: 0it [00:00, ?it/s]loading delta_2023-01-22.jsonl: 100it [00:00, 1463.08it/s]
+loading delta_2023-01-29.jsonl: 0it [00:00, ?it/s]loading delta_2023-01-29.jsonl: 100it [00:00, 1399.72it/s]
+loading delta_2023-02-05.jsonl: 0it [00:00, ?it/s]loading delta_2023-02-05.jsonl: 90it [00:00, 148.13it/s]loading delta_2023-02-05.jsonl: 100it [00:00, 162.89it/s]
+loading delta_2020-01-08.jsonl: 0it [00:00, ?it/s]loading delta_2020-01-08.jsonl: 100it [00:00, 1496.74it/s]
+loading delta_2020-01-15.jsonl: 0it [00:00, ?it/s]loading delta_2020-01-15.jsonl: 100it [00:00, 1226.09it/s]
+loading delta_2020-01-22.jsonl: 0it [00:00, ?it/s]loading delta_2020-01-22.jsonl: 100it [00:00, 1501.52it/s]
+loading delta_2020-01-29.jsonl: 0it [00:00, ?it/s]loading delta_2020-01-29.jsonl: 100it [00:00, 1266.21it/s]
+loading delta_2020-02-05.jsonl: 0it [00:00, ?it/s]loading delta_2020-02-05.jsonl: 100it [00:00, 1252.38it/s]
+loading delta_2021-01-08.jsonl: 0it [00:00, ?it/s]loading delta_2021-01-08.jsonl: 100it [00:00, 1272.22it/s]
+loading delta_2021-01-15.jsonl: 0it [00:00, ?it/s]loading delta_2021-01-15.jsonl: 46it [00:00, 64.38it/s]loading delta_2021-01-15.jsonl: 100it [00:00, 131.25it/s]
+loading delta_2021-01-22.jsonl: 0it [00:00, ?it/s]loading delta_2021-01-22.jsonl: 100it [00:00, 1117.97it/s]
+loading delta_2021-01-29.jsonl: 0it [00:00, ?it/s]loading delta_2021-01-29.jsonl: 100it [00:00, 1105.94it/s]
+loading delta_2021-02-05.jsonl: 0it [00:00, ?it/s]loading delta_2021-02-05.jsonl: 100it [00:00, 1087.50it/s]
+10/15/2026 21:46:46 - INFO - __main__ - loaded 3500 instances from main dataset
+10/15/2026 21:46:46 - INFO - __main__ - merging predictions: edc-plus-llamacpp/gemma-4-e4b (type=edc)
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2019-01-08_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2019-01-15_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2019-01-22_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2019-01-29_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2019-02-05_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2022-01-08_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2022-01-15_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2022-01-22_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2022-01-29_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2022-02-05_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2024-01-08_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2024-01-15_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2024-01-22_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2024-01-29_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2024-02-05_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2025-01-08_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2025-01-15_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2025-01-22_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2025-01-29_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2025-02-05_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2023-01-08_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2023-01-15_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2023-01-22_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2023-01-29_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2023-02-05_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2020-01-08_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2020-01-15_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2020-01-22_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2020-01-29_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2020-02-05_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2021-01-08_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2021-01-15_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2021-01-22_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2021-01-29_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - processing EDC file: delta_2021-02-05_last_processed_results_list.json
+10/15/2026 21:46:46 - INFO - __main__ - merging predictions: kg-gen/llamacpp/gemma-4-e4b (type=kg-gen)
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2019-01-08.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2019-01-15.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2019-01-22.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2019-01-29.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2019-02-05.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2022-01-08.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2022-01-15.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2022-01-22.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2022-01-29.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2022-02-05.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2024-01-08.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2024-01-15.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2024-01-22.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2024-01-29.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2024-02-05.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2025-01-08.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2025-01-15.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2025-01-22.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2025-01-29.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2025-02-05.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2023-01-08.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2023-01-15.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2023-01-22.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2023-01-29.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2023-02-05.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2020-01-08.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2020-01-15.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2020-01-22.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2020-01-29.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2020-02-05.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2021-01-08.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2021-01-15.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2021-01-22.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2021-01-29.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - processing kg-gen file: delta_2021-02-05.jsonl
+10/15/2026 21:46:46 - INFO - __main__ - saving merged dataset to /kaggle/working/evaluation_set/
+writing delta_2019-01-08.jsonl: 0it [00:00, ?it/s]writing delta_2019-01-08.jsonl: 86it [00:00, 855.76it/s]writing delta_2019-01-08.jsonl: 100it [00:00, 879.21it/s]
+writing delta_2019-01-15.jsonl: 0it [00:00, ?it/s]writing delta_2019-01-15.jsonl: 82it [00:00, 792.70it/s]writing delta_2019-01-15.jsonl: 100it [00:00, 812.84it/s]
+writing delta_2019-01-22.jsonl: 0it [00:00, ?it/s]writing delta_2019-01-22.jsonl: 64it [00:00, 635.65it/s]writing delta_2019-01-22.jsonl: 100it [00:00, 639.62it/s]
+writing delta_2019-01-29.jsonl: 0it [00:00, ?it/s]writing delta_2019-01-29.jsonl: 81it [00:00, 808.50it/s]writing delta_2019-01-29.jsonl: 100it [00:00, 754.73it/s]
+writing delta_2019-02-05.jsonl: 0it [00:00, ?it/s]writing delta_2019-02-05.jsonl: 76it [00:00, 752.76it/s]writing delta_2019-02-05.jsonl: 100it [00:00, 759.46it/s]
+writing delta_2022-01-08.jsonl: 0it [00:00, ?it/s]writing delta_2022-01-08.jsonl: 73it [00:00, 724.84it/s]writing delta_2022-01-08.jsonl: 100it [00:00, 770.93it/s]
+writing delta_2022-01-15.jsonl: 0it [00:00, ?it/s]writing delta_2022-01-15.jsonl: 71it [00:00, 693.71it/s]writing delta_2022-01-15.jsonl: 100it [00:00, 762.61it/s]
+writing delta_2022-01-22.jsonl: 0it [00:00, ?it/s]writing delta_2022-01-22.jsonl: 85it [00:00, 841.42it/s]writing delta_2022-01-22.jsonl: 100it [00:00, 813.35it/s]
+writing delta_2022-01-29.jsonl: 0it [00:00, ?it/s]writing delta_2022-01-29.jsonl: 72it [00:00, 713.35it/s]writing delta_2022-01-29.jsonl: 100it [00:00, 678.51it/s]
+writing delta_2022-02-05.jsonl: 0it [00:00, ?it/s]writing delta_2022-02-05.jsonl: 74it [00:00, 739.73it/s]writing delta_2022-02-05.jsonl: 100it [00:00, 761.82it/s]
+writing delta_2024-01-08.jsonl: 0it [00:00, ?it/s]writing delta_2024-01-08.jsonl: 69it [00:00, 681.80it/s]writing delta_2024-01-08.jsonl: 100it [00:00, 691.10it/s]
+writing delta_2024-01-15.jsonl: 0it [00:00, ?it/s]writing delta_2024-01-15.jsonl: 80it [00:00, 795.77it/s]writing delta_2024-01-15.jsonl: 100it [00:00, 669.92it/s]
+writing delta_2024-01-22.jsonl: 0it [00:00, ?it/s]writing delta_2024-01-22.jsonl: 70it [00:00, 696.55it/s]writing delta_2024-01-22.jsonl: 100it [00:00, 655.84it/s]
+writing delta_2024-01-29.jsonl: 0it [00:00, ?it/s]writing delta_2024-01-29.jsonl: 77it [00:00, 760.15it/s]writing delta_2024-01-29.jsonl: 100it [00:00, 789.10it/s]
+writing delta_2024-02-05.jsonl: 0it [00:00, ?it/s]writing delta_2024-02-05.jsonl: 88it [00:00, 878.45it/s]writing delta_2024-02-05.jsonl: 100it [00:00, 841.97it/s]
+writing delta_2025-01-08.jsonl: 0it [00:00, ?it/s]writing delta_2025-01-08.jsonl: 67it [00:00, 668.58it/s]writing delta_2025-01-08.jsonl: 100it [00:00, 716.23it/s]
+writing delta_2025-01-15.jsonl: 0it [00:00, ?it/s]writing delta_2025-01-15.jsonl: 67it [00:00, 666.31it/s]writing delta_2025-01-15.jsonl: 100it [00:00, 721.59it/s]
+writing delta_2025-01-22.jsonl: 0it [00:00, ?it/s]writing delta_2025-01-22.jsonl: 79it [00:00, 782.30it/s]writing delta_2025-01-22.jsonl: 100it [00:00, 712.22it/s]
+writing delta_2025-01-29.jsonl: 0it [00:00, ?it/s]writing delta_2025-01-29.jsonl: 76it [00:00, 753.10it/s]writing delta_2025-01-29.jsonl: 100it [00:00, 771.23it/s]
+writing delta_2025-02-05.jsonl: 0it [00:00, ?it/s]writing delta_2025-02-05.jsonl: 61it [00:00, 604.59it/s]writing delta_2025-02-05.jsonl: 100it [00:00, 651.53it/s]
+writing delta_2023-01-08.jsonl: 0it [00:00, ?it/s]writing delta_2023-01-08.jsonl: 92it [00:00, 907.91it/s]writing delta_2023-01-08.jsonl: 100it [00:00, 902.98it/s]
+writing delta_2023-01-15.jsonl: 0it [00:00, ?it/s]writing delta_2023-01-15.jsonl: 78it [00:00, 774.03it/s]writing delta_2023-01-15.jsonl: 100it [00:00, 793.16it/s]
+writing delta_2023-01-22.jsonl: 0it [00:00, ?it/s]writing delta_2023-01-22.jsonl: 82it [00:00, 810.15it/s]writing delta_2023-01-22.jsonl: 100it [00:00, 819.47it/s]
+writing delta_2023-01-29.jsonl: 0it [00:00, ?it/s]writing delta_2023-01-29.jsonl: 84it [00:00, 837.92it/s]writing delta_2023-01-29.jsonl: 100it [00:00, 835.59it/s]
+writing delta_2023-02-05.jsonl: 0it [00:00, ?it/s]writing delta_2023-02-05.jsonl: 75it [00:00, 736.08it/s]writing delta_2023-02-05.jsonl: 100it [00:00, 786.42it/s]
+writing delta_2020-01-08.jsonl: 0it [00:00, ?it/s]writing delta_2020-01-08.jsonl: 87it [00:00, 858.10it/s]writing delta_2020-01-08.jsonl: 100it [00:00, 851.42it/s]
+writing delta_2020-01-15.jsonl: 0it [00:00, ?it/s]writing delta_2020-01-15.jsonl: 60it [00:00, 595.97it/s]writing delta_2020-01-15.jsonl: 100it [00:00, 670.61it/s]
+writing delta_2020-01-22.jsonl: 0it [00:00, ?it/s]writing delta_2020-01-22.jsonl: 87it [00:00, 865.50it/s]writing delta_2020-01-22.jsonl: 100it [00:00, 867.84it/s]
+writing delta_2020-01-29.jsonl: 0it [00:00, ?it/s]writing delta_2020-01-29.jsonl: 71it [00:00, 697.73it/s]writing delta_2020-01-29.jsonl: 100it [00:00, 716.77it/s]
+writing delta_2020-02-05.jsonl: 0it [00:00, ?it/s]writing delta_2020-02-05.jsonl: 77it [00:00, 760.21it/s]writing delta_2020-02-05.jsonl: 100it [00:00, 688.71it/s]
+writing delta_2021-01-08.jsonl: 0it [00:00, ?it/s]writing delta_2021-01-08.jsonl: 71it [00:00, 700.94it/s]writing delta_2021-01-08.jsonl: 100it [00:00, 742.57it/s]
+writing delta_2021-01-15.jsonl: 0it [00:00, ?it/s]writing delta_2021-01-15.jsonl: 65it [00:00, 630.24it/s]writing delta_2021-01-15.jsonl: 100it [00:00, 640.52it/s]
+writing delta_2021-01-22.jsonl: 0it [00:00, ?it/s]writing delta_2021-01-22.jsonl: 68it [00:00, 671.03it/s]writing delta_2021-01-22.jsonl: 100it [00:00, 637.96it/s]
+writing delta_2021-01-29.jsonl: 0it [00:00, ?it/s]writing delta_2021-01-29.jsonl: 65it [00:00, 649.46it/s]writing delta_2021-01-29.jsonl: 100it [00:00, 603.75it/s]
+writing delta_2021-02-05.jsonl: 0it [00:00, ?it/s]writing delta_2021-02-05.jsonl: 56it [00:00, 554.94it/s]writing delta_2021-02-05.jsonl: 100it [00:00, 600.26it/s]
+10/15/2026 21:46:51 - INFO - __main__ - merged dataset saved

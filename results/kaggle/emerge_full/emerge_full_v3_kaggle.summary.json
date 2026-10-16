@@ -1,0 +1,9 @@
+{
+ "chunk": 20,
+ "parts": 5,
+ "n": 3500,
+ "errors": 0,
+ "llm_calls": 3234,
+ "seconds": 3373,
+ "seconds_per_instance": 0.96
+}

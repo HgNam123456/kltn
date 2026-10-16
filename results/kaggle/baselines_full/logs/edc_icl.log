@@ -1,0 +1,1088 @@
+args_value_is: {'config_file': '/kaggle/working/edc_icl_edc_config.json', 'loglevel': None, 'max_workers': 4, 'batch_size': 16, 'wait_for_restart_time': 400, 'restart_apptainer_script_name': None, 'cuda_device_apptainer': 1, 'use_restart_script': True, 'run_canonicalizer': False, 'llm': {'base_url': 'http://127.0.0.1:8080', 'backend': 'http', 'model': 'local', 'concurrency': 4, 'timeout': 600, 'api_key_env': None, 'api_version': 'v1', 'mode': 'chat', 'model_max_context': None}, 'generation_profiles': {'GEN_OIE': {'temperature': 0.2, 'max_new_tokens': 2048}, 'GEN_SD': {'temperature': 0.7, 'max_new_tokens': 2048}, 'GEN_SC_VERIFY': {'temperature': 0.1, 'max_new_tokens': 6}}, 'oie_llm': None, 'oie_few_shot_example_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/few_shot_examples/emerge/oie_few_shot_examples.txt', 'oie_prompt_template_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/prompt_templates_emerge/oie_template_no_update.txt', 'sd_llm': None, 'sd_few_shot_example_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/few_shot_examples/emerge/sd_few_shot_examples.txt', 'sd_prompt_template_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/prompt_templates_emerge/sd_template.txt', 'sc_llm': None, 'ee_llm': None, 'enrich_schema': False, 'sc_prompt_template_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/prompt_templates_emerge/sc_template.txt', 'sc_embedder': 'intfloat/e5-mistral-7b-instruct', 'sr_embedder': 'intfloat/e5-mistral-7b-instruct', 'sr_adapter_path': None, 'refinement_iterations': 0, 'oie_refine_prompt_template_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/prompt_templates_emerge/oie_r_template_no_update.txt', 'oie_refine_few_shot_example_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/few_shot_examples/emerge/oie_few_shot_refine_examples.txt', 'ee_prompt_template_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/prompt_templates_emerge/ee_template.txt', 'ee_few_shot_example_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/few_shot_examples/emerge/ee_few_shot_examples.txt', 'em_prompt_template_file_path': 'src/benchmarks/wrappers/edc_plus/edc_tt2kg/prompt_templates_emerge/em_template.txt', 'base_input_dir': '/kaggle/working/input/evaluation_set/', 'base_input_dir_last_processed': '/kaggle/working/raw/edc_icl/', 'base_target_schema_dir': './data/indices/relik_edc_relation_indexes/', 'base_relations_cache_dir': '/kaggle/working/edc_cache/', 'base_output_dir': '/kaggle/working/raw/edc_icl/', 'snapshots_to_predict': [{'input_dir': 'snapshot_2019-01-01', 'target_schema_path': '2019-01-01/documents.jsonl', 'cache_path': 'relations-dict-2019-01-01.pickle'}, {'input_dir': 'snapshot_2020-01-01', 'target_schema_path': '2020-01-01/documents.jsonl', 'cache_path': 'relations-dict-2020-01-01.pickle'}, {'input_dir': 'snapshot_2021-01-01', 'target_schema_path': '2021-01-01/documents.jsonl', 'cache_path': 'relations-dict-2021-01-01.pickle'}, {'input_dir': 'snapshot_2022-01-01', 'target_schema_path': '2022-01-01/documents.jsonl', 'cache_path': 'relations-dict-2022-01-01.pickle'}, {'input_dir': 'snapshot_2023-01-01', 'target_schema_path': '2023-01-01/documents.jsonl', 'cache_path': 'relations-dict-2023-01-01.pickle'}, {'input_dir': 'snapshot_2024-01-01', 'target_schema_path': '2024-01-01/documents.jsonl', 'cache_path': 'relations-dict-2024-01-01.pickle'}, {'input_dir': 'snapshot_2025-01-01', 'target_schema_path': '2025-01-01/documents.jsonl', 'cache_path': 'relations-dict-2025-01-01.pickle'}], 'input_parser': 'tt2kg', 'schema_parser': 'tt2kg'}
+llm_cfg_is: {'base_url': 'http://127.0.0.1:8080', 'backend': 'http', 'model': 'local', 'concurrency': 4, 'timeout': 600, 'api_key_env': None, 'api_version': 'v1', 'mode': 'chat', 'model_max_context': None}
+**************************************************************************
+*************processing delta_2019-01-15.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2019-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2019-01-08.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2019-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2019-01-29.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2019-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2019-01-22.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2019-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2019-02-05.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2019-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2020-02-05.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2020-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2020-01-22.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2020-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2020-01-29.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2020-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2020-01-08.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2020-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2020-01-15.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2020-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2021-01-15.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2021-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2021-01-22.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2021-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2021-01-29.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2021-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2021-01-08.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2021-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2021-02-05.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2021-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2022-02-05.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2022-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2022-01-08.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2022-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2022-01-29.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2022-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2022-01-15.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2022-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2022-01-22.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2022-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2023-01-15.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2023-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2023-01-22.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2023-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2023-02-05.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2023-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2023-01-08.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2023-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2023-01-29.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2023-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2024-01-15.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2024-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2024-01-29.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2024-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2024-01-08.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2024-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2024-02-05.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2024-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2024-01-22.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2024-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2025-01-15.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2025-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2025-01-22.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2025-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2025-02-05.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2025-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2025-01-29.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2025-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+**************************************************************************
+*************processing delta_2025-01-08.jsonl inside /kaggle/working/input/evaluation_set/snapshot_2025-01-01
+**************************************************************************
+starting_extract_kg
+ending_extract_kg
+batch_offset: 16, len(json_results_list): 16, len(json_canon_in_text_list): 16, len(json_canon_not_in_text_list): 16
+nr_processed_batches: 1 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 32, len(json_results_list): 32, len(json_canon_in_text_list): 32, len(json_canon_not_in_text_list): 32
+nr_processed_batches: 2 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 48, len(json_results_list): 48, len(json_canon_in_text_list): 48, len(json_canon_not_in_text_list): 48
+nr_processed_batches: 3 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 64, len(json_results_list): 64, len(json_canon_in_text_list): 64, len(json_canon_not_in_text_list): 64
+nr_processed_batches: 4 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 80, len(json_results_list): 80, len(json_canon_in_text_list): 80, len(json_canon_not_in_text_list): 80
+nr_processed_batches: 5 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 96, len(json_results_list): 96, len(json_canon_in_text_list): 96, len(json_canon_not_in_text_list): 96
+nr_processed_batches: 6 , size current: 16
+starting_extract_kg
+ending_extract_kg
+batch_offset: 100, len(json_results_list): 100, len(json_canon_in_text_list): 100, len(json_canon_not_in_text_list): 100
+nr_processed_batches: 7 , size current: 4
+!! BYE BYE I am done BYE BYE!!!!

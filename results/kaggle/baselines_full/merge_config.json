@@ -1,0 +1,21 @@
+{
+ "input_main_dataset_path": "/kaggle/working/input/evaluation_set/",
+ "output_merged_dataset_path": "/kaggle/working/evaluation_set/",
+ "input_other_datasets_paths": [
+  {
+   "dataset_title": "edc_icl",
+   "input_dataset_path": "/kaggle/working/raw/edc_icl/",
+   "merge_predictions": true,
+   "predictions_model_name": "edc-plus-llamacpp/gemma-4-e4b",
+   "predictions_model_type": "edc",
+   "canonicalize": false
+  },
+  {
+   "dataset_title": "kggen",
+   "input_dataset_path": "/kaggle/working/raw/kggen/",
+   "merge_predictions": true,
+   "predictions_model_name": "kg-gen/llamacpp/gemma-4-e4b",
+   "predictions_model_type": "kg-gen"
+  }
+ ]
+}
