@@ -1,0 +1,633 @@
+{
+ "limit": null,
+ "variants": [
+  "v0",
+  "v1",
+  "v2"
+ ],
+ "canon_every": 10,
+ "tau": 0.75,
+ "runs": {
+  "v0": {
+   "ok": true,
+   "seconds": 1185.7,
+   "sec_per_item": 9.72
+  },
+  "v1": {
+   "ok": true,
+   "seconds": 2624.6,
+   "sec_per_item": 21.51
+  },
+  "v2": {
+   "ok": true,
+   "seconds": 3433.5,
+   "sec_per_item": 28.14
+  }
+ },
+ "outputs": {
+  "v0": {
+   "rows": 122,
+   "empty": 1,
+   "avg_quintuples": 10.51,
+   "calls": 124,
+   "avg_sentences": 0.0,
+   "missing_before": 0,
+   "missing_after": 0,
+   "refill_sentences": 0,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  },
+  "v1": {
+   "rows": 122,
+   "empty": 2,
+   "avg_quintuples": 17.09,
+   "calls": 349,
+   "avg_sentences": 17.27,
+   "missing_before": 200,
+   "missing_after": 28,
+   "refill_sentences": 16,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  },
+  "v2": {
+   "rows": 122,
+   "empty": 2,
+   "avg_quintuples": 16.76,
+   "calls": 354,
+   "avg_sentences": 17.3,
+   "missing_before": 201,
+   "missing_after": 24,
+   "refill_sentences": 21,
+   "errors": {
+    "condense_error": 0,
+    "fill_error": 0,
+    "refill_error": 0
+   }
+  }
+ },
+ "canon": {
+  "v2": [
+   {
+    "after_group": 10,
+    "seconds": 15.4,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 100,
+      "clusters": 10,
+      "groups": 7,
+      "calls": 4,
+      "errors": 0,
+      "merged": 2
+     },
+     {
+      "kind": "relation",
+      "names": 50,
+      "clusters": 5,
+      "groups": 2,
+      "calls": 2,
+      "errors": 0,
+      "merged": 1
+     }
+    ]
+   },
+   {
+    "after_group": 20,
+    "seconds": 26.6,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 197,
+      "clusters": 20,
+      "groups": 16,
+      "calls": 9,
+      "errors": 0,
+      "merged": 6
+     },
+     {
+      "kind": "relation",
+      "names": 91,
+      "clusters": 10,
+      "groups": 1,
+      "calls": 1,
+      "errors": 0,
+      "merged": 0
+     }
+    ]
+   },
+   {
+    "after_group": 30,
+    "seconds": 35.4,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 375,
+      "clusters": 38,
+      "groups": 17,
+      "calls": 13,
+      "errors": 0,
+      "merged": 4
+     },
+     {
+      "kind": "relation",
+      "names": 173,
+      "clusters": 18,
+      "groups": 4,
+      "calls": 3,
+      "errors": 0,
+      "merged": 0
+     }
+    ]
+   },
+   {
+    "after_group": 40,
+    "seconds": 67.2,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 713,
+      "clusters": 72,
+      "groups": 26,
+      "calls": 18,
+      "errors": 0,
+      "merged": 10
+     },
+     {
+      "kind": "relation",
+      "names": 348,
+      "clusters": 35,
+      "groups": 10,
+      "calls": 9,
+      "errors": 0,
+      "merged": 3
+     }
+    ]
+   },
+   {
+    "after_group": 50,
+    "seconds": 75.9,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 998,
+      "clusters": 100,
+      "groups": 39,
+      "calls": 28,
+      "errors": 0,
+      "merged": 12
+     },
+     {
+      "kind": "relation",
+      "names": 484,
+      "clusters": 49,
+      "groups": 12,
+      "calls": 5,
+      "errors": 0,
+      "merged": 4
+     }
+    ]
+   },
+   {
+    "after_group": 60,
+    "seconds": 81.7,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 1235,
+      "clusters": 124,
+      "groups": 33,
+      "calls": 21,
+      "errors": 0,
+      "merged": 14
+     },
+     {
+      "kind": "relation",
+      "names": 567,
+      "clusters": 57,
+      "groups": 18,
+      "calls": 8,
+      "errors": 0,
+      "merged": 1
+     }
+    ]
+   },
+   {
+    "after_group": 70,
+    "seconds": 102.3,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 1564,
+      "clusters": 157,
+      "groups": 43,
+      "calls": 28,
+      "errors": 0,
+      "merged": 12
+     },
+     {
+      "kind": "relation",
+      "names": 730,
+      "clusters": 73,
+      "groups": 25,
+      "calls": 12,
+      "errors": 0,
+      "merged": 8
+     }
+    ]
+   },
+   {
+    "after_group": 80,
+    "seconds": 71.8,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 1773,
+      "clusters": 178,
+      "groups": 47,
+      "calls": 20,
+      "errors": 0,
+      "merged": 9
+     },
+     {
+      "kind": "relation",
+      "names": 804,
+      "clusters": 81,
+      "groups": 23,
+      "calls": 9,
+      "errors": 0,
+      "merged": 1
+     }
+    ]
+   },
+   {
+    "after_group": 90,
+    "seconds": 76.0,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 1960,
+      "clusters": 196,
+      "groups": 53,
+      "calls": 19,
+      "errors": 0,
+      "merged": 6
+     },
+     {
+      "kind": "relation",
+      "names": 885,
+      "clusters": 89,
+      "groups": 22,
+      "calls": 7,
+      "errors": 0,
+      "merged": 5
+     }
+    ]
+   },
+   {
+    "after_group": 100,
+    "seconds": 53.4,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 2165,
+      "clusters": 217,
+      "groups": 41,
+      "calls": 16,
+      "errors": 0,
+      "merged": 4
+     },
+     {
+      "kind": "relation",
+      "names": 969,
+      "clusters": 97,
+      "groups": 30,
+      "calls": 7,
+      "errors": 0,
+      "merged": 2
+     }
+    ]
+   },
+   {
+    "after_group": 110,
+    "seconds": 82.0,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 2355,
+      "clusters": 236,
+      "groups": 52,
+      "calls": 23,
+      "errors": 0,
+      "merged": 13
+     },
+     {
+      "kind": "relation",
+      "names": 1050,
+      "clusters": 105,
+      "groups": 40,
+      "calls": 10,
+      "errors": 0,
+      "merged": 3
+     }
+    ]
+   },
+   {
+    "after_group": 120,
+    "seconds": 85.3,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 2508,
+      "clusters": 251,
+      "groups": 59,
+      "calls": 22,
+      "errors": 0,
+      "merged": 7
+     },
+     {
+      "kind": "relation",
+      "names": 1119,
+      "clusters": 112,
+      "groups": 43,
+      "calls": 11,
+      "errors": 0,
+      "merged": 2
+     }
+    ]
+   },
+   {
+    "after_group": 122,
+    "seconds": 21.4,
+    "stats": [
+     {
+      "kind": "entity",
+      "names": 2539,
+      "clusters": 254,
+      "groups": 43,
+      "calls": 5,
+      "errors": 0,
+      "merged": 4
+     },
+     {
+      "kind": "relation",
+      "names": 1133,
+      "clusters": 114,
+      "groups": 29,
+      "calls": 2,
+      "errors": 0,
+      "merged": 1
+     }
+    ]
+   }
+  ]
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "6bdeb80bf8316cba1a9036f6302f6eb50312f1c2",
+ "covid_n": 122,
+ "heldout_n": 102,
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "covid": {
+  "v0": {
+   "MATCH": 0.2965,
+   "HALL": 0.2439,
+   "OM": 0.7035,
+   "MATCH_t": 0.0567,
+   "OM_t": 0.0819,
+   "HALL_t": 0.1579,
+   "P": 0.7479,
+   "R": 0.2965,
+   "F1": 0.4246,
+   "P_t": 0.1538,
+   "F1_t": 0.0828,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.2989,
+   "HALL_skip": 0.2459,
+   "OM_skip": 0.7011,
+   "MATCH_t_skip": 0.0571,
+   "OM_t_skip": 0.0826,
+   "HALL_t_skip": 0.1592,
+   "P_skip": 0.7541,
+   "R_skip": 0.2989,
+   "F1_skip": 0.4281,
+   "P_t_skip": 0.1551,
+   "F1_t_skip": 0.0835,
+   "n_rows_skip": 121.0
+  },
+  "v1": {
+   "MATCH": 0.4004,
+   "HALL": 0.3386,
+   "OM": 0.5996,
+   "MATCH_t": 0.1749,
+   "OM_t": 0.1191,
+   "HALL_t": 0.1064,
+   "P": 0.645,
+   "R": 0.4004,
+   "F1": 0.4941,
+   "P_t": 0.2955,
+   "F1_t": 0.2197,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.4071,
+   "HALL_skip": 0.3442,
+   "OM_skip": 0.5929,
+   "MATCH_t_skip": 0.1778,
+   "OM_t_skip": 0.1211,
+   "HALL_t_skip": 0.1082,
+   "P_skip": 0.6558,
+   "R_skip": 0.4071,
+   "F1_skip": 0.5023,
+   "P_t_skip": 0.3004,
+   "F1_t_skip": 0.2234,
+   "n_rows_skip": 120.0
+  },
+  "v2": {
+   "MATCH": 0.4044,
+   "HALL": 0.3269,
+   "OM": 0.5956,
+   "MATCH_t": 0.1817,
+   "OM_t": 0.1255,
+   "HALL_t": 0.0972,
+   "P": 0.6567,
+   "R": 0.4044,
+   "F1": 0.5006,
+   "P_t": 0.3012,
+   "F1_t": 0.2266,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.4112,
+   "HALL_skip": 0.3323,
+   "OM_skip": 0.5888,
+   "MATCH_t_skip": 0.1847,
+   "OM_t_skip": 0.1276,
+   "HALL_t_skip": 0.0988,
+   "P_skip": 0.6677,
+   "R_skip": 0.4112,
+   "F1_skip": 0.5089,
+   "P_t_skip": 0.3062,
+   "F1_t_skip": 0.2304,
+   "n_rows_skip": 120.0
+  }
+ },
+ "covid_heldout": {
+  "v0": {
+   "MATCH": 0.2811,
+   "HALL": 0.2316,
+   "OM": 0.7189,
+   "MATCH_t": 0.0564,
+   "OM_t": 0.0655,
+   "HALL_t": 0.1592,
+   "P": 0.7586,
+   "R": 0.2811,
+   "F1": 0.4102,
+   "P_t": 0.1536,
+   "F1_t": 0.0825,
+   "n_rows": 102.0,
+   "MATCH_skip": 0.2839,
+   "HALL_skip": 0.2339,
+   "OM_skip": 0.7161,
+   "MATCH_t_skip": 0.057,
+   "OM_t_skip": 0.0661,
+   "HALL_t_skip": 0.1608,
+   "P_skip": 0.7661,
+   "R_skip": 0.2839,
+   "F1_skip": 0.4142,
+   "P_t_skip": 0.1551,
+   "F1_t_skip": 0.0833,
+   "n_rows_skip": 101.0
+  },
+  "v1": {
+   "MATCH": 0.3826,
+   "HALL": 0.3253,
+   "OM": 0.6174,
+   "MATCH_t": 0.1715,
+   "OM_t": 0.0975,
+   "HALL_t": 0.1135,
+   "P": 0.6551,
+   "R": 0.3826,
+   "F1": 0.4831,
+   "P_t": 0.3022,
+   "F1_t": 0.2189,
+   "n_rows": 102.0,
+   "MATCH_skip": 0.3902,
+   "HALL_skip": 0.3318,
+   "OM_skip": 0.6098,
+   "MATCH_t_skip": 0.175,
+   "OM_t_skip": 0.0994,
+   "HALL_t_skip": 0.1158,
+   "P_skip": 0.6682,
+   "R_skip": 0.3902,
+   "F1_skip": 0.4927,
+   "P_t_skip": 0.3082,
+   "F1_t_skip": 0.2232,
+   "n_rows_skip": 100.0
+  },
+  "v2": {
+   "MATCH": 0.3862,
+   "HALL": 0.3142,
+   "OM": 0.6138,
+   "MATCH_t": 0.1751,
+   "OM_t": 0.106,
+   "HALL_t": 0.105,
+   "P": 0.6662,
+   "R": 0.3862,
+   "F1": 0.4889,
+   "P_t": 0.3021,
+   "F1_t": 0.2217,
+   "n_rows": 102.0,
+   "MATCH_skip": 0.3939,
+   "HALL_skip": 0.3205,
+   "OM_skip": 0.6061,
+   "MATCH_t_skip": 0.1786,
+   "OM_t_skip": 0.1081,
+   "HALL_t_skip": 0.1071,
+   "P_skip": 0.6795,
+   "R_skip": 0.3939,
+   "F1_skip": 0.4987,
+   "P_t_skip": 0.3082,
+   "F1_t_skip": 0.2262,
+   "n_rows_skip": 100.0
+  }
+ },
+ "merge": {
+  "v0": {
+   "entity": {
+    "precision": 0.9562,
+    "recall": 0.925,
+    "f1": 0.9403,
+    "kg_names": 1605,
+    "similar_pairs": 273,
+    "gold_mentions": 7836,
+    "gold_unique": 3452,
+    "gold_merged": 3641
+   },
+   "relation": {
+    "precision": 0.9862,
+    "recall": 0.9746,
+    "f1": 0.9803,
+    "kg_names": 739,
+    "similar_pairs": 44,
+    "gold_mentions": 3918,
+    "gold_unique": 1849,
+    "gold_merged": 1732
+   }
+  },
+  "v1": {
+   "entity": {
+    "precision": 0.8842,
+    "recall": 0.836,
+    "f1": 0.8594,
+    "kg_names": 2682,
+    "similar_pairs": 597,
+    "gold_mentions": 7836,
+    "gold_unique": 3452,
+    "gold_merged": 3641
+   },
+   "relation": {
+    "precision": 0.9677,
+    "recall": 0.9492,
+    "f1": 0.9583,
+    "kg_names": 1195,
+    "similar_pairs": 88,
+    "gold_mentions": 3918,
+    "gold_unique": 1849,
+    "gold_merged": 1732
+   }
+  },
+  "v2": {
+   "entity": {
+    "precision": 0.931,
+    "recall": 0.8995,
+    "f1": 0.9149,
+    "kg_names": 2535,
+    "similar_pairs": 366,
+    "gold_mentions": 7836,
+    "gold_unique": 3452,
+    "gold_merged": 3641
+   },
+   "relation": {
+    "precision": 0.9774,
+    "recall": 0.9636,
+    "f1": 0.9705,
+    "kg_names": 1132,
+    "similar_pairs": 63,
+    "gold_mentions": 3918,
+    "gold_unique": 1849,
+    "gold_merged": 1732
+   }
+  }
+ },
+ "canon_errors": {
+  "v0": 0,
+  "v1": 0,
+  "v2": 0
+ },
+ "total_minutes": 123.0
+}

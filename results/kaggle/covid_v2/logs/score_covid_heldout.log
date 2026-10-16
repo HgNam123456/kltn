@@ -1,0 +1,6 @@
+102 nhóm ngày, 3 hệ thống, 7738 câu cần nhúng
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 2487.75it/s]
+sentence-transformers/all-mpnet-base-v2 @0.7 v0: F1 0.4102 F1_skip 0.4142 F1_t 0.0825 MATCH 0.2811 HALL 0.2316
+sentence-transformers/all-mpnet-base-v2 @0.7 v1: F1 0.4831 F1_skip 0.4927 F1_t 0.2189 MATCH 0.3826 HALL 0.3253
+sentence-transformers/all-mpnet-base-v2 @0.7 v2: F1 0.4889 F1_skip 0.4987 F1_t 0.2217 MATCH 0.3862 HALL 0.3142

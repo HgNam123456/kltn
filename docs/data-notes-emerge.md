@@ -559,3 +559,29 @@ C / G-R (x = Exists, e = Add, ee = Mint+Add, ee-kg = Infer, d = Deprecate):
   57,0/46,8/49,7, 32,6/34,8/32,5, 34,2/33,9/34,0.
 - Điểm mềm (`emerge_full_v3_addv2_kaggle.soft.json`) lệch số chính thức ≤ 0,9 (Add 40,2/75,9 vs 39,3/75,2).
 - So với dev350 (số chính thức, Add v1): Exists 92,8 → 91,3; Deprecate 69,0 → 63,3 (dev350 chỉ 145 gold Deprecate).
+
+## 19. COVID-NYT: rút câu đơn + gộp tên (v0/v1/v2, 16/10; kernel `kgu-covid-condense-canon` v4 @6bdeb80)
+
+Spec/plan: `docs/superpowers/specs/2026-10-15-condense-canonicalize-design.md`. v0 = bản cũ (1 lệnh/nhóm); v1 = rút
+câu đơn (condense + bù ý thiếu) rồi trích theo câu đánh số (+ bù câu chưa có fact); v2 = v1 + cứ 10 nhóm ngày gộp tên
+(k-means trên all-mpnet, nhóm cosine ≥ 0,75 cùng chữ số, một lệnh gọi/cụm, LLM trả có/không + lý do).
+3 lượt dev trên 20 nhóm đầu (`results/kaggle/covid_v2_dev_r{1,2,3}*`): r2 bỏ header "Observation date" + cấm ngày/
+snake_case làm thực thể + prompt gộp chặt hơn; r3 sửa regex header (2/122 đoạn dính liền văn bản → r2 xóa sạch đoạn).
+v0 riêng 3 lượt dev: 49,6 / 50,8 / 52,6 → nhiễu giữa lượt ~±1,5 F1 trên 20 nhóm.
+
+Toàn bộ 122 nhóm (`results/kaggle/covid_v2/`), metric ATOM all-mpnet @ 0,7, nhóm rỗng tính 0:
+
+| | F1 | P | R | F1 held-out (102) | 5-tuple/nhóm | F1_t | lệnh gọi | phút |
+|---|---|---|---|---|---|---|---|---|
+| v0 | 42,5 | 74,8 | 29,6 | 41,0 | 10,5 | 8,3 | 124 | 20 |
+| v1 | 49,4 | 64,5 | 40,0 | 48,3 | 17,1 | 22,0 | 349 | 44 |
+| v2 | **50,1** | 65,7 | 40,4 | **48,9** | 16,8 | 22,7 | 354 + 312 gộp | 57 |
+
+- v2 − v0 = +7,6 F1 (held-out +7,9). v0 lượt này 42,5, lượt `kgu-home-benchmarks` v5 là 45,4 → dao động giữa lượt ~3
+  F1 trên 122 nhóm; so baseline (ATOM 52,5, KGGen 48,3 từ lượt khác) cần nói rõ.
+- Condense: 17,3 câu/nhóm; mục có số/tên riêng bị sót 201 → 24 sau lệnh bù; 21 câu cần lệnh bù fact. Rỗng: v2 2/122
+  (nhóm 38: JSON lặp, có ở cả v0; nhóm 50).
+- Gộp tên: 583 quyết định (488 thực thể, 95 quan hệ), "có" 134 (103 + 31), 29 chỉ khác hoa/thường; 0 lỗi lệnh gọi.
+  Metric gộp kiểu ATOM (cặp cosine > 0,8): thực thể F1 v1 85,9 → v2 91,5 (cặp gần trùng 597 → 366); quan hệ 95,8 → 97,1.
+  Sai thấy được: "new coronavirus" → "coronavirus outbreak", "SoftBank" → "news about SoftBank". Mẫu 100 quyết định
+  (50 có) để kiểm tay: `results/kaggle/covid_v2_audit.csv` (cột `correct`; chấm: `scripts/audit_merges.py --labels`).

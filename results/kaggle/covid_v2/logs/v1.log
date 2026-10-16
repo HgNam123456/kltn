@@ -1,0 +1,3 @@
+!!! row 38: LLMOutputError('invalid JSON after 3 tries: 1 validation error for TOutS\n  Invalid JSON: EOF while parsing a list at line 370 column 5 [type=json_invalid, input_value=\'{\\n  "facts": [\\n    {\\n...  "sentence": 45\\n    }\', input_type=str]\n    For further information visit https://e
+!!! row 50: LLMOutputError('invalid JSON after 3 tries: 1 validation error for TOutS\n  Invalid JSON: EOF while parsing a list at line 362 column 5 [type=json_invalid, input_value=\'{\\n  "facts": [\\n    {\\n...  "sentence": 43\\n    }\', input_type=str]\n    For further information visit https://e
+122 nhóm ngày, KG cuối 2057 fact, 349 lệnh gọi LLM → /kaggle/working/out/v1.jsonl

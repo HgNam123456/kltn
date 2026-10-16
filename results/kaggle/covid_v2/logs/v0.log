@@ -1,0 +1,2 @@
+!!! row 38: LLMOutputError('invalid JSON after 3 tries: 1 validation error for TOut\n  Invalid JSON: EOF while parsing a list at line 282 column 5 [type=json_invalid, input_value=\'{\\n  "facts": [\\n    {\\n...l": "2020-03-19"\\n    }\', input_type=str]\n    For further information visit https://er
+122 nhóm ngày, KG cuối 1266 fact, 124 lệnh gọi LLM → /kaggle/working/out/v0.jsonl
