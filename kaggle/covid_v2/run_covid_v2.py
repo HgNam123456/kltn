@@ -14,7 +14,7 @@ import subprocess
 import time
 import urllib.request
 
-LIMIT = 20
+LIMIT = None
 VARIANTS = ["v0", "v1", "v2"]
 DEV_N = 20
 CANON_EVERY, TAU = 10, 0.75

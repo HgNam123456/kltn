@@ -1,0 +1,68 @@
+{
+ "v0": {
+  "entity": {
+   "precision": 0.9544,
+   "recall": 0.9261,
+   "f1": 0.94,
+   "kg_names": 123,
+   "similar_pairs": 13,
+   "gold_mentions": 408,
+   "gold_unique": 193,
+   "gold_merged": 176
+  },
+  "relation": {
+   "precision": 0.9868,
+   "recall": 0.9556,
+   "f1": 0.9709,
+   "kg_names": 52,
+   "similar_pairs": 2,
+   "gold_mentions": 204,
+   "gold_unique": 142,
+   "gold_merged": 45
+  }
+ },
+ "v1": {
+  "entity": {
+   "precision": 0.8818,
+   "recall": 0.8636,
+   "f1": 0.8726,
+   "kg_names": 205,
+   "similar_pairs": 24,
+   "gold_mentions": 408,
+   "gold_unique": 193,
+   "gold_merged": 176
+  },
+  "relation": {
+   "precision": 0.9748,
+   "recall": 0.9333,
+   "f1": 0.9536,
+   "kg_names": 85,
+   "similar_pairs": 3,
+   "gold_mentions": 204,
+   "gold_unique": 142,
+   "gold_merged": 45
+  }
+ },
+ "v2": {
+  "entity": {
+   "precision": 0.9289,
+   "recall": 0.9148,
+   "f1": 0.9218,
+   "kg_names": 197,
+   "similar_pairs": 15,
+   "gold_mentions": 408,
+   "gold_unique": 193,
+   "gold_merged": 176
+  },
+  "relation": {
+   "precision": 0.9754,
+   "recall": 0.9333,
+   "f1": 0.9539,
+   "kg_names": 82,
+   "similar_pairs": 3,
+   "gold_mentions": 204,
+   "gold_unique": 142,
+   "gold_merged": 45
+  }
+ }
+}
