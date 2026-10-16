@@ -585,3 +585,14 @@ Toàn bộ 122 nhóm (`results/kaggle/covid_v2/`), metric ATOM all-mpnet @ 0,7, 
   Metric gộp kiểu ATOM (cặp cosine > 0,8): thực thể F1 v1 85,9 → v2 91,5 (cặp gần trùng 597 → 366); quan hệ 95,8 → 97,1.
   Sai thấy được: "new coronavirus" → "coronavirus outbreak", "SoftBank" → "news about SoftBank". Mẫu 100 quyết định
   (50 có) để kiểm tay: `results/kaggle/covid_v2_audit.csv` (cột `correct`; chấm: `scripts/audit_merges.py --labels`).
+
+### 18b. Điều kiện `mentions` = hyperlink Wikipedia (17/10)
+
+`mentions` của EMERGE là hyperlink trong đoạn Wikipedia (`target_entity` = trang được link), không phải nhãn gold soạn
+tay; pipeline dùng chúng để chọn thực thể và tra cạnh KG-trước. KG con (`kg_subsets`) cũng chỉ chứa lân cận 1-hop của các
+thực thể được hyperlink. Thử biến thể không hyperlink trên đủ 3.500 bài (CPU, không LLM): thực thể chủ đề
+(`anchor_page_qid`) + hàng xóm 1-hop của nó có nhãn KG khớp văn bản → bắt 20,4% hyperlink (precision 65,5%), ứng viên
+1,9/bài (hyperlink: 5,8); phủ 16,0% gold Exists (hyperlink: 99,3%), 32,0% Deprecate (91,2%), 8,7% Add có cả hai đầu được
+liên kết; anchor chỉ có cạnh trong KG con ở 63,4% bài; chỉ 21,8% gold Exists dính tới anchor. → Biến thể không hyperlink
+cần bộ liên kết trên toàn Wikidata; EMERGE tự làm việc tương tự bằng ReLiK (`kg_rag@32`, 13,8 C Exists). Quyết định 17/10:
+không chạy, báo rõ điều kiện (pipeline nằm giữa `kg_rag@32` và oracle về thông tin đầu vào).
