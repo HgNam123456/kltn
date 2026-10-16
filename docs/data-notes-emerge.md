@@ -527,3 +527,35 @@ ngay lúc trích bằng enum thay cho trích tự do rồi canonicalize về 196
 Cách báo trong khóa luận: bảng "sân nhà" là bằng chứng phụ cho EMERGE — trên WebNLG, REBEL, Wiki-NRE mình hơn EDC; trên COVID-NYT
 (chỉ đo trích xuất) mình ngang nhóm baseline một lượt (hơn ATOM trích thẳng, dưới KGGen 3 điểm), dưới ATOM 2 bước do
 recall; nói rõ quy trình dev/held-out và chú thích F1_t.
+
+## 18. EMERGE toàn bộ 3.500 bài (15–16/10): số CHÍNH THỨC
+
+Chạy: mình = kernel `kgu-judge-emerge-full` v2 (20 bài/delta mỗi tiến trình — v1 hết RAM sau 150 bài vì mỗi job chép
+bảng nhãn KG của snapshot; khởi động lại llama-server nếu chết), Exists/Deprecate v3 + Add v2. EDC+ ICL và KGGen bằng
+Gemma = kernel `kgu-baselines-full` (EDC+ ZS, KARMA chỉ có số dev350 — quota GPU). Ghép bằng
+`scripts/export_emerge_predictions.py` vào evaluation_set ra từ kernel baseline → dataset `ngocnam2005/emerge-full-mine`
+→ kernel `emerge-eval-full` (`kaggle/emerge_eval_full/`, bộ chấm chính chủ, config `…_zs_fixed_with_kg`, không nạp KG).
+EDC+ Gemma có `predicted_triples` rỗng ở mọi bài (cả dev350): bộ chấm đọc `predicted_triples_oie` — không phải lỗi.
+Kết quả: `results/kaggle/emerge_full/` (`eval_full_tables.txt`).
+
+C / G-R (x = Exists, e = Add, ee = Mint+Add, ee-kg = Infer, d = Deprecate):
+
+| | Exists | Add | Mint+Add | Infer | Deprecate | s/bài |
+|---|---|---|---|---|---|---|
+| Mình (Gemma) | **91,3 / 90,7** | 39,3 / 75,2 | 0 / 0 | 0 / 0 | **63,3 / 67,4** | 2,28 |
+| EDC+ ICL (Gemma) | 12,5 / 59,2 | 19,9 / 69,8 | 19,0 / 68,8 | 13,4 / 64,2 | 6,3 / 11,4 | 1,93 |
+| KGGen (Gemma) | 10,2 / 59,1 | 15,5 / 66,7 | 12,9 / 65,7 | 1,9 / 56,4 | 0 / 0 | 2,52 |
+| KG-aware oracle GPT-5.1 | 60,4 / 50,3 | 46,5 / 42,9 | 43,2 / 47,6 | 50,3 / 75,9 | 37,4 / 35,8 | |
+| EDC+ ICL GPT-5.1 | 25,7 / 66,3 | 40,2 / 77,5 | 35,6 / 77,3 | 21,9 / 72,4 | 34,8 / 53,2 | |
+| EDC+ ZS GPT-5.1 | 15,5 / 64,3 | 22,6 / 71,5 | 18,9 / 69,6 | 5,8 / 52,5 | 1,5 / 3,2 | |
+| KGGen GPT-5.1 | 12,8 / 62,7 | 15,2 / 68,1 | 13,3 / 67,0 | 3,3 / 59,1 | 0 / 0 | |
+
+- Chấm lại prediction GPT-5.1 phát hành cho ĐÚNG từng số EDC+ GPT-5.1 và KGGen GPT-5.1 trong Bảng 3 paper EMERGE v2
+  (arXiv 2507.03617v2, 07/04/2026, cùng 3.500 bài) → số chạy lại và số công bố so trực tiếp được. Oracle không có
+  trong paper; README repo ghi Deprecate 38,4 / 36,9 (mình chấm 37,4 / 35,8), các thao tác khác trùng.
+- Cùng Gemma: mình hơn EDC+ ICL +78,8 / +19,4 / +57,0 C (Exists / Add / Deprecate). Hơn EDC+ GPT-5.1 +65,6 Exists,
+  +28,5 Deprecate; Add −0,9. Hơn oracle +30,9 Exists, +25,9 Deprecate; Add −7,2. Mint+Add = 0 (chưa mint thực thể).
+- QID exact match (P/R/F1): mình Exists 65,0/81,4/69,6, Add 14,4/24,9/16,7, Deprecate 40,0/57,6/44,5; oracle
+  57,0/46,8/49,7, 32,6/34,8/32,5, 34,2/33,9/34,0.
+- Điểm mềm (`emerge_full_v3_addv2_kaggle.soft.json`) lệch số chính thức ≤ 0,9 (Add 40,2/75,9 vs 39,3/75,2).
+- So với dev350 (số chính thức, Add v1): Exists 92,8 → 91,3; Deprecate 69,0 → 63,3 (dev350 chỉ 145 gold Deprecate).

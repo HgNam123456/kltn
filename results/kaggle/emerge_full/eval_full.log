@@ -1,0 +1,1400 @@
+10/16/2026 14:29:41 - INFO - numexpr.utils - NumExpr defaulting to 4 threads.
+10/16/2026 14:30:10 - INFO - datasets - TensorFlow version 2.20.0 available.
+10/16/2026 14:30:10 - INFO - datasets - JAX version 0.11.1 available.
+10/16/2026 14:30:21 - INFO - __main__ - After parse_args(): /kaggle/working/out/config.json
+10/16/2026 14:30:21 - INFO - __main__ - Loading JSON config from /kaggle/working/out/config.json
+10/16/2026 14:30:21 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [start_of_evaluation] allocated=0.00GB reserved=0.00GB total=14.56GB
+Current Directory: /kaggle/input/datasets/ngocnam2005/emerge-full-mine/
+Current Directory: /kaggle/input/datasets/ngocnam2005/emerge-full-mine/snapshot_2025-01-01
+10/16/2026 14:30:21 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2025-01-22.jsonl
+10/16/2026 14:30:21 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2025-02-05.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 3092 ; fraction: 0.0 ; size of dataset_loaded: 100 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:21 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2025-02-05.jsonl
+10/16/2026 14:30:21 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2025-01-29.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 6478 ; fraction: 0.0 ; size of dataset_loaded: 200 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:21 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2025-01-29.jsonl
+10/16/2026 14:30:22 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2025-01-15.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 9711 ; fraction: 0.0 ; size of dataset_loaded: 300 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:22 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2025-01-15.jsonl
+10/16/2026 14:30:22 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2025-01-08.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 13058 ; fraction: 0.0 ; size of dataset_loaded: 400 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:22 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2025-01-08.jsonl
+Current Directory: /kaggle/input/datasets/ngocnam2005/emerge-full-mine/snapshot_2023-01-01
+10/16/2026 14:30:23 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2023-01-22.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 16093 ; fraction: 0.0 ; size of dataset_loaded: 500 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:23 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2023-01-22.jsonl
+10/16/2026 14:30:23 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2023-01-29.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 19440 ; fraction: 0.0 ; size of dataset_loaded: 600 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:23 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2023-01-29.jsonl
+10/16/2026 14:30:23 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2023-01-08.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 22500 ; fraction: 0.0 ; size of dataset_loaded: 700 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:23 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2023-01-08.jsonl
+10/16/2026 14:30:24 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2023-02-05.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 25360 ; fraction: 0.0 ; size of dataset_loaded: 800 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:24 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2023-02-05.jsonl
+10/16/2026 14:30:24 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2023-01-15.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 28403 ; fraction: 0.0 ; size of dataset_loaded: 900 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:24 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2023-01-15.jsonl
+Current Directory: /kaggle/input/datasets/ngocnam2005/emerge-full-mine/snapshot_2022-01-01
+10/16/2026 14:30:24 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2022-01-22.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 31370 ; fraction: 0.0 ; size of dataset_loaded: 1000 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:24 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2022-01-22.jsonl
+10/16/2026 14:30:24 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2022-02-05.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 34276 ; fraction: 0.0 ; size of dataset_loaded: 1100 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:24 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2022-02-05.jsonl
+10/16/2026 14:30:25 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2022-01-29.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 37476 ; fraction: 0.0 ; size of dataset_loaded: 1200 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:25 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2022-01-29.jsonl
+10/16/2026 14:30:25 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2022-01-15.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 40696 ; fraction: 0.0 ; size of dataset_loaded: 1300 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:25 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2022-01-15.jsonl
+10/16/2026 14:30:25 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2022-01-08.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 43672 ; fraction: 0.0 ; size of dataset_loaded: 1400 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:25 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2022-01-08.jsonl
+Current Directory: /kaggle/input/datasets/ngocnam2005/emerge-full-mine/snapshot_2020-01-01
+10/16/2026 14:30:26 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2020-01-22.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 46825 ; fraction: 0.0 ; size of dataset_loaded: 1500 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:26 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2020-01-22.jsonl
+10/16/2026 14:30:26 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2020-01-08.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 49302 ; fraction: 0.0 ; size of dataset_loaded: 1600 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:26 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2020-01-08.jsonl
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2020-01-15.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 52055 ; fraction: 0.0 ; size of dataset_loaded: 1700 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2020-01-15.jsonl
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2020-02-05.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 55156 ; fraction: 0.0 ; size of dataset_loaded: 1800 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2020-02-05.jsonl
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2020-01-29.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 58244 ; fraction: 0.0 ; size of dataset_loaded: 1900 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2020-01-29.jsonl
+Current Directory: /kaggle/input/datasets/ngocnam2005/emerge-full-mine/snapshot_2024-01-01
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2024-01-29.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 61454 ; fraction: 0.0 ; size of dataset_loaded: 2000 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2024-01-29.jsonl
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2024-02-05.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 64568 ; fraction: 0.0 ; size of dataset_loaded: 2100 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2024-02-05.jsonl
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2024-01-15.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 67471 ; fraction: 0.0 ; size of dataset_loaded: 2200 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:27 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2024-01-15.jsonl
+10/16/2026 14:30:28 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2024-01-08.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 70839 ; fraction: 0.0 ; size of dataset_loaded: 2300 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:28 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2024-01-08.jsonl
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2024-01-22.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 73809 ; fraction: 0.0 ; size of dataset_loaded: 2400 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2024-01-22.jsonl
+Current Directory: /kaggle/input/datasets/ngocnam2005/emerge-full-mine/snapshot_2021-01-01
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2021-01-15.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 77414 ; fraction: 0.0 ; size of dataset_loaded: 2500 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2021-01-15.jsonl
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2021-02-05.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 80871 ; fraction: 0.0 ; size of dataset_loaded: 2600 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2021-02-05.jsonl
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2021-01-22.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 84135 ; fraction: 0.0 ; size of dataset_loaded: 2700 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2021-01-22.jsonl
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2021-01-08.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 87305 ; fraction: 0.0 ; size of dataset_loaded: 2800 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:29 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2021-01-08.jsonl
+10/16/2026 14:30:30 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2021-01-29.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 90896 ; fraction: 0.0 ; size of dataset_loaded: 2900 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:30 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2021-01-29.jsonl
+Current Directory: /kaggle/input/datasets/ngocnam2005/emerge-full-mine/snapshot_2019-01-01
+10/16/2026 14:30:30 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2019-01-08.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 94508 ; fraction: 0.0 ; size of dataset_loaded: 3000 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:30 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2019-01-08.jsonl
+10/16/2026 14:30:31 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2019-01-22.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 97494 ; fraction: 0.0 ; size of dataset_loaded: 3100 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:31 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2019-01-22.jsonl
+10/16/2026 14:30:31 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2019-01-15.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 101098 ; fraction: 0.0 ; size of dataset_loaded: 3200 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:31 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2019-01-15.jsonl
+10/16/2026 14:30:32 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2019-01-29.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 104514 ; fraction: 0.0 ; size of dataset_loaded: 3300 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:32 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2019-01-29.jsonl
+10/16/2026 14:30:32 - INFO - dataset.emerge.loader.dataset_loader - File to be processed: delta_2019-02-05.jsonl nr_canonicalized_triples: 0 tot_nr_non_canonicalized_triples: 108030 ; fraction: 0.0 ; size of dataset_loaded: 3400 aliases: {'rebel', 'kg-prompt', 'edc', 'kg-gen', 'rakg', 'relik'}
+10/16/2026 14:30:32 - INFO - dataset.emerge.loader.dataset_loader - reading dataset file delta_2019-02-05.jsonl
+---DONE---
+Loading snapshots:   0%|          | 0/7 [00:00<?, ?it/s]Loading snapshots: 100%|██████████| 7/7 [00:00<00:00, 45449.11it/s]
+10/16/2026 14:30:32 - INFO - evaluation.orchestrator.evaluation_orchestrator - begin_loading_from_cache: /kaggle/working/out/wiki_eval_result.pkl
+10/16/2026 14:30:32 - INFO - evaluation.orchestrator.evaluation_orchestrator - end_loading_from_cache: /kaggle/working/out/wiki_eval_result.pkl
+evaluation preloading EMERGE:   0%|          | 0/3500 [00:00<?, ?it/s]evaluation preloading EMERGE:   4%|▍         | 154/3500 [00:00<00:02, 1525.91it/s]evaluation preloading EMERGE:   9%|▉         | 309/3500 [00:00<00:02, 1537.21it/s]evaluation preloading EMERGE:  13%|█▎        | 463/3500 [00:00<00:01, 1532.19it/s]evaluation preloading EMERGE:  18%|█▊        | 642/3500 [00:00<00:01, 1632.98it/s]evaluation preloading EMERGE:  23%|██▎       | 818/3500 [00:00<00:01, 1678.23it/s]evaluation preloading EMERGE:  28%|██▊       | 991/3500 [00:00<00:01, 1693.47it/s]evaluation preloading EMERGE:  34%|███▎      | 1178/3500 [00:00<00:01, 1747.45it/s]evaluation preloading EMERGE:  39%|███▉      | 1359/3500 [00:00<00:01, 1762.92it/s]evaluation preloading EMERGE:  44%|████▍     | 1539/3500 [00:00<00:01, 1773.19it/s]evaluation preloading EMERGE:  49%|████▉     | 1722/3500 [00:01<00:00, 1785.29it/s]evaluation preloading EMERGE:  54%|█████▍    | 1901/3500 [00:01<00:00, 1724.88it/s]evaluation preloading EMERGE:  59%|█████▉    | 2074/3500 [00:01<00:00, 1720.97it/s]evaluation preloading EMERGE:  64%|██████▍   | 2252/3500 [00:01<00:00, 1738.23it/s]evaluation preloading EMERGE:  69%|██████▉   | 2427/3500 [00:01<00:00, 1692.11it/s]evaluation preloading EMERGE:  74%|███████▍  | 2597/3500 [00:01<00:00, 1626.64it/s]evaluation preloading EMERGE:  79%|███████▉  | 2761/3500 [00:01<00:00, 1587.75it/s]evaluation preloading EMERGE:  83%|████████▎ | 2921/3500 [00:01<00:00, 1584.91it/s]evaluation preloading EMERGE:  89%|████████▊ | 3099/3500 [00:01<00:00, 1638.90it/s]evaluation preloading EMERGE:  93%|█████████▎| 3264/3500 [00:01<00:00, 1604.64it/s]evaluation preloading EMERGE:  98%|█████████▊| 3436/3500 [00:02<00:00, 1637.87it/s]evaluation preloading EMERGE: 100%|██████████| 3500/3500 [00:02<00:00, 1664.64it/s]
+10/16/2026 14:30:34 - INFO - evaluation.preloader.preloader_emerge - tot_nr_read_lines: 3500, len(df_cie_triples_lst): 82191 , tot_nr_tkgu_triples: 36082
+10/16/2026 14:30:35 - INFO - evaluation.orchestrator.evaluation_orchestrator - execution_time_preload: 0.06 min (3.57 s)
+10/16/2026 14:30:35 - INFO - evaluation.evaluator.evaluator - starting evaluation pipeline
+10/16/2026 14:30:35 - INFO - evaluation.evaluator.evaluator - running metric: completeness
+10/16/2026 14:30:35 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:30:35 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: mine/gemma4-e4b -- x-triples
+10/16/2026 14:30:35 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:30:35 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.000s | done_openie: 0.000s | filter: 0.000s | total: 0.000s
+10/16/2026 14:30:35 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 2135
+10/16/2026 14:30:35 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [before_loading_sentence_transformer] allocated=0.00GB reserved=0.00GB total=14.56GB
+10/16/2026 14:30:35 - INFO - sentence_transformers.base.model - No device provided, using cuda:0
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/agent-harnesses "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/modules.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/modules.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config_sentence_transformers.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config_sentence_transformers.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - sentence_transformers.base.model - Loading SentenceTransformer model from sentence-transformers/all-mpnet-base-v2.
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+10/16/2026 14:30:36 - WARNING - huggingface_hub.utils._http - Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config_sentence_transformers.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/README.md "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/README.md "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/modules.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/sentence_bert_config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/sentence_bert_config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+10/16/2026 14:30:36 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-mpnet-base-v2/xet-read-token/e8c3b32edf5434bc2275fc9bab85f82640a19130 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 2282.99it/s]
+10/16/2026 14:30:40 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 14:30:40 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 14:30:40 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 14:30:40 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 14:30:40 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:40 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/tokenizer_config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:40 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/tokenizer_config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/tokenizer_config.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-mpnet-base-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-mpnet-base-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/vocab.txt "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/vocab.txt "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/vocab.txt "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/tokenizer.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/tokenizer.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/tokenizer.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/added_tokens.json "HTTP/1.1 404 Not Found"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/special_tokens_map.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/special_tokens_map.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/special_tokens_map.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/chat_template.jinja "HTTP/1.1 404 Not Found"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+10/16/2026 14:30:41 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-mpnet-base-v2 "HTTP/1.1 200 OK"
+10/16/2026 14:30:42 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [after_loading_sentence_transformer] allocated=0.41GB reserved=0.46GB total=14.56GB
+10/16/2026 14:31:47 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:31:48 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:31:48 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:31:48 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:31:48 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: mine/gemma4-e4b -- e-triples
+10/16/2026 14:31:48 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:31:48 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.012s | done_openie: 0.007s | filter: 0.007s | total: 0.027s
+10/16/2026 14:31:48 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1387
+10/16/2026 14:32:08 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:32:09 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:32:09 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:32:09 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:32:09 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: mine/gemma4-e4b -- ee-triples
+10/16/2026 14:32:09 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:32:09 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.007s | done_openie: 0.007s | filter: 0.007s | total: 0.021s
+10/16/2026 14:32:09 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1461
+10/16/2026 14:32:12 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:32:14 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:32:14 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:32:14 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:32:14 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: mine/gemma4-e4b -- ee-kg-triples
+10/16/2026 14:32:14 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:32:14 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.007s | done_openie: 0.007s | filter: 0.007s | total: 0.021s
+10/16/2026 14:32:14 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1500
+10/16/2026 14:32:25 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:32:27 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:32:27 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:32:27 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:32:27 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: mine/gemma4-e4b -- d-triples
+10/16/2026 14:32:27 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:32:27 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.009s | done_openie: 0.007s | filter: 0.007s | total: 0.023s
+10/16/2026 14:32:27 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1420
+10/16/2026 14:32:38 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:32:39 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:32:39 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:32:39 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:32:39 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-llamacpp/gemma-4-e4b -- x-triples
+10/16/2026 14:32:39 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:32:39 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.010s | done_openie: 0.008s | filter: 0.009s | total: 0.027s
+10/16/2026 14:32:39 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 2135
+10/16/2026 14:33:51 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:33:52 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:33:52 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:33:52 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:33:52 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-llamacpp/gemma-4-e4b -- e-triples
+10/16/2026 14:33:52 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:33:52 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.012s | done_openie: 0.010s | filter: 0.011s | total: 0.034s
+10/16/2026 14:33:52 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1387
+10/16/2026 14:34:20 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:34:22 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:34:22 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:34:22 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:34:22 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-llamacpp/gemma-4-e4b -- ee-triples
+10/16/2026 14:34:22 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:34:22 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.010s | done_openie: 0.009s | filter: 0.010s | total: 0.029s
+10/16/2026 14:34:22 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1461
+10/16/2026 14:34:49 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:34:50 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:34:50 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:34:50 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:34:50 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-llamacpp/gemma-4-e4b -- ee-kg-triples
+10/16/2026 14:34:50 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:34:50 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.011s | done_openie: 0.011s | filter: 0.011s | total: 0.033s
+10/16/2026 14:34:50 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1500
+10/16/2026 14:35:30 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:35:32 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:35:32 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:35:32 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:35:32 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-llamacpp/gemma-4-e4b -- d-triples
+10/16/2026 14:35:32 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:35:32 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.013s | done_openie: 0.013s | filter: 0.013s | total: 0.039s
+10/16/2026 14:35:32 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1420
+10/16/2026 14:35:36 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:35:37 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:35:37 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:35:37 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:35:37 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/llamacpp/gemma-4-e4b -- x-triples
+10/16/2026 14:35:37 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:35:37 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.011s | done_openie: 0.011s | filter: 0.010s | total: 0.032s
+10/16/2026 14:35:37 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 2135
+10/16/2026 14:37:03 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:37:04 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:37:04 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:37:04 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:37:04 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/llamacpp/gemma-4-e4b -- e-triples
+10/16/2026 14:37:04 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:37:04 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.014s | done_openie: 0.016s | filter: 0.014s | total: 0.044s
+10/16/2026 14:37:04 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1387
+10/16/2026 14:37:38 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:37:40 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:37:40 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:37:40 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:37:40 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/llamacpp/gemma-4-e4b -- ee-triples
+10/16/2026 14:37:40 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:37:40 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.013s | done_openie: 0.015s | filter: 0.012s | total: 0.040s
+10/16/2026 14:37:40 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1461
+10/16/2026 14:38:12 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:38:13 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:38:13 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:38:13 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:38:13 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/llamacpp/gemma-4-e4b -- ee-kg-triples
+10/16/2026 14:38:13 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:38:13 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.013s | done_openie: 0.015s | filter: 0.013s | total: 0.041s
+10/16/2026 14:38:13 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1500
+10/16/2026 14:39:07 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:39:09 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:39:09 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:39:09 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:39:09 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/llamacpp/gemma-4-e4b -- d-triples
+10/16/2026 14:39:09 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:39:09 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.015s | done_openie: 0.017s | filter: 0.014s | total: 0.046s
+10/16/2026 14:39:09 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1420
+10/16/2026 14:39:11 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:39:13 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:39:13 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:39:13 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:39:13 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-aware/gpt-5.1/oracle -- x-triples
+10/16/2026 14:39:13 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:39:13 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.016s | done_openie: 0.019s | filter: 0.015s | total: 0.050s
+10/16/2026 14:39:13 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 2135
+10/16/2026 14:39:58 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:40:00 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:40:00 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:40:00 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:40:00 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-aware/gpt-5.1/oracle -- e-triples
+10/16/2026 14:40:00 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:40:00 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.018s | done_openie: 0.023s | filter: 0.018s | total: 0.059s
+10/16/2026 14:40:00 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1387
+10/16/2026 14:40:09 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:40:10 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:40:10 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:40:10 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:40:10 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-aware/gpt-5.1/oracle -- ee-triples
+10/16/2026 14:40:10 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:40:10 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.017s | done_openie: 0.020s | filter: 0.015s | total: 0.053s
+10/16/2026 14:40:10 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1461
+10/16/2026 14:40:21 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:40:23 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:40:23 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:40:23 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:40:23 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-aware/gpt-5.1/oracle -- ee-kg-triples
+10/16/2026 14:40:23 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:40:23 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.016s | done_openie: 0.019s | filter: 0.016s | total: 0.051s
+10/16/2026 14:40:23 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1500
+10/16/2026 14:40:51 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:40:52 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:40:52 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:40:52 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:40:52 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-aware/gpt-5.1/oracle -- d-triples
+10/16/2026 14:40:52 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:40:53 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.019s | done_openie: 0.020s | filter: 0.021s | total: 0.061s
+10/16/2026 14:40:53 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1420
+10/16/2026 14:40:58 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:41:00 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:41:00 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:41:00 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:41:00 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- x-triples
+10/16/2026 14:41:00 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:41:00 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.018s | done_openie: 0.022s | filter: 0.019s | total: 0.059s
+10/16/2026 14:41:00 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 2135
+10/16/2026 14:42:21 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:42:23 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:42:23 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:42:23 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:42:23 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- e-triples
+10/16/2026 14:42:23 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:42:23 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.023s | done_openie: 0.025s | filter: 0.023s | total: 0.070s
+10/16/2026 14:42:23 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1387
+10/16/2026 14:42:56 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:42:58 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:42:58 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:42:58 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:42:58 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- ee-triples
+10/16/2026 14:42:58 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:42:58 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.020s | done_openie: 0.025s | filter: 0.021s | total: 0.066s
+10/16/2026 14:42:58 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1461
+10/16/2026 14:43:30 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:43:32 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:43:32 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:43:32 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:43:32 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- ee-kg-triples
+10/16/2026 14:43:32 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:43:32 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.021s | done_openie: 0.025s | filter: 0.021s | total: 0.067s
+10/16/2026 14:43:32 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1500
+10/16/2026 14:44:17 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:44:19 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:44:19 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:44:19 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:44:19 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- d-triples
+10/16/2026 14:44:19 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:44:19 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.022s | done_openie: 0.026s | filter: 0.022s | total: 0.070s
+10/16/2026 14:44:19 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1420
+10/16/2026 14:44:29 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:44:31 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:44:31 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:44:31 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:44:31 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-zshot-open_ai/GPT-5_1 -- x-triples
+10/16/2026 14:44:31 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:44:31 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.020s | done_openie: 0.027s | filter: 0.023s | total: 0.070s
+10/16/2026 14:44:31 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 2135
+10/16/2026 14:46:08 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:46:10 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:46:10 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:46:10 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:46:10 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-zshot-open_ai/GPT-5_1 -- e-triples
+10/16/2026 14:46:10 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:46:10 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.024s | done_openie: 0.030s | filter: 0.022s | total: 0.077s
+10/16/2026 14:46:10 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1387
+10/16/2026 14:46:49 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:46:51 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:46:51 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:46:51 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:46:51 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-zshot-open_ai/GPT-5_1 -- ee-triples
+10/16/2026 14:46:51 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:46:51 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.023s | done_openie: 0.029s | filter: 0.021s | total: 0.073s
+10/16/2026 14:46:51 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1461
+10/16/2026 14:47:29 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:47:31 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:47:31 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:47:31 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:47:31 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-zshot-open_ai/GPT-5_1 -- ee-kg-triples
+10/16/2026 14:47:31 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:47:31 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.022s | done_openie: 0.032s | filter: 0.023s | total: 0.077s
+10/16/2026 14:47:31 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1500
+10/16/2026 14:48:03 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:48:05 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:48:05 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:48:05 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:48:05 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: edc-plus-zshot-open_ai/GPT-5_1 -- d-triples
+10/16/2026 14:48:05 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:48:05 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.026s | done_openie: 0.036s | filter: 0.026s | total: 0.088s
+10/16/2026 14:48:05 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1420
+10/16/2026 14:48:08 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:48:10 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:48:10 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:48:10 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:48:10 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/azure/gpt5.1 -- x-triples
+10/16/2026 14:48:10 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:48:10 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.022s | done_openie: 0.030s | filter: 0.022s | total: 0.075s
+10/16/2026 14:48:10 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 2135
+10/16/2026 14:49:58 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:50:00 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:50:00 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:50:00 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:50:00 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/azure/gpt5.1 -- e-triples
+10/16/2026 14:50:00 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:50:00 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.027s | done_openie: 0.038s | filter: 0.026s | total: 0.091s
+10/16/2026 14:50:00 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1387
+10/16/2026 14:50:45 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:50:47 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:50:47 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:50:47 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:50:47 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/azure/gpt5.1 -- ee-triples
+10/16/2026 14:50:47 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:50:47 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.025s | done_openie: 0.038s | filter: 0.026s | total: 0.089s
+10/16/2026 14:50:47 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1461
+10/16/2026 14:51:31 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:51:33 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:51:33 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:51:33 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:51:33 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/azure/gpt5.1 -- ee-kg-triples
+10/16/2026 14:51:33 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:51:33 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.025s | done_openie: 0.039s | filter: 0.026s | total: 0.091s
+10/16/2026 14:51:33 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1500
+10/16/2026 14:52:41 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:52:43 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:52:43 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:52:43 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:52:43 - INFO - evaluation.evaluator.metrics.completeness - calculating_completeness_for: kg-gen/azure/gpt5.1 -- d-triples
+10/16/2026 14:52:43 - INFO - evaluation.evaluator.metrics.completeness - starting_potentially_slow_part
+10/16/2026 14:52:43 - INFO - evaluation.evaluator.metrics.completeness - ending_potentially_slow_part | done_cie: 0.026s | done_openie: 0.043s | filter: 0.028s | total: 0.098s
+10/16/2026 14:52:43 - INFO - evaluation.evaluator.metrics.completeness - len(gt_pred_triples): 1420
+10/16/2026 14:52:45 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_cache
+10/16/2026 14:52:47 - INFO - evaluation.evaluator.metrics.completeness - end_saving_cache
+10/16/2026 14:52:47 - INFO - evaluation.evaluator.metrics.completeness - ==================================================================
+10/16/2026 14:52:47 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [completeness_before_cleanup_nr_processed=35] allocated=1.67GB reserved=2.36GB total=14.56GB
+10/16/2026 14:52:47 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [completeness_after_cleanup_nr_processed=35] allocated=1.67GB reserved=1.82GB total=14.56GB
+10/16/2026 14:52:47 - INFO - evaluation.evaluator.metrics.completeness - begin_saving_the_dfs_completeness
+10/16/2026 14:52:47 - INFO - evaluation.evaluator.evaluator - running metric: graph_judge
+10/16/2026 14:52:47 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bleu_rouge
+10/16/2026 14:52:47 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 2135
+10/16/2026 14:52:48 - INFO - absl - Using default tokenizer.
+10/16/2026 14:52:49 - INFO - absl - Using default tokenizer.
+10/16/2026 14:52:49 - INFO - absl - Using default tokenizer.
+10/16/2026 14:52:49 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:13 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:54:15 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:54:15 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1387
+10/16/2026 14:54:16 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:16 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:16 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:16 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:18 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:54:21 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:54:21 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1461
+10/16/2026 14:54:21 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:21 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:21 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:21 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:21 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:54:23 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:54:23 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1500
+10/16/2026 14:54:24 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:24 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:24 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:24 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:24 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:54:26 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:54:26 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1420
+10/16/2026 14:54:27 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:27 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:27 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:27 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:28 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:54:30 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:54:30 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 2135
+10/16/2026 14:54:31 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:31 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:32 - INFO - absl - Using default tokenizer.
+10/16/2026 14:54:32 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:22 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:55:25 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:55:25 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1387
+10/16/2026 14:55:26 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:26 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:26 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:26 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:30 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:55:32 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:55:32 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1461
+10/16/2026 14:55:33 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:33 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:33 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:33 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:37 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:55:39 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:55:39 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1500
+10/16/2026 14:55:40 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:40 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:40 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:40 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:46 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:55:49 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:55:49 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1420
+10/16/2026 14:55:49 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:49 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:49 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:49 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:49 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:55:52 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:55:52 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 2135
+10/16/2026 14:55:54 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:54 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:54 - INFO - absl - Using default tokenizer.
+10/16/2026 14:55:54 - INFO - absl - Using default tokenizer.
+10/16/2026 14:56:54 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:56:57 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:56:57 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1387
+10/16/2026 14:56:58 - INFO - absl - Using default tokenizer.
+10/16/2026 14:56:58 - INFO - absl - Using default tokenizer.
+10/16/2026 14:56:58 - INFO - absl - Using default tokenizer.
+10/16/2026 14:56:58 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:04 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:57:06 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:57:06 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1461
+10/16/2026 14:57:07 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:07 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:07 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:07 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:12 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:57:15 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:57:15 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1500
+10/16/2026 14:57:16 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:16 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:16 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:16 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:26 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:57:28 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:57:28 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1420
+10/16/2026 14:57:28 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:28 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:28 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:28 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:29 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:57:31 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:57:31 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 2135
+10/16/2026 14:57:32 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:32 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:32 - INFO - absl - Using default tokenizer.
+10/16/2026 14:57:32 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:07 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:58:09 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:58:10 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1387
+10/16/2026 14:58:13 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:13 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:13 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:13 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:16 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:58:19 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:58:19 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1461
+10/16/2026 14:58:19 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:19 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:19 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:19 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:21 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:58:23 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:58:23 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1500
+10/16/2026 14:58:24 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:24 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:24 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:24 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:27 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:58:30 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:58:30 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1420
+10/16/2026 14:58:30 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:30 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:30 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:30 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:31 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:58:33 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:58:33 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 2135
+10/16/2026 14:58:35 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:35 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:35 - INFO - absl - Using default tokenizer.
+10/16/2026 14:58:35 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:24 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:59:27 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:59:27 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1387
+10/16/2026 14:59:28 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:28 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:28 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:28 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:33 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:59:36 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:59:36 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1461
+10/16/2026 14:59:37 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:37 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:37 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:37 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:42 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:59:45 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:59:45 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1500
+10/16/2026 14:59:46 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:46 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:46 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:46 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:54 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 14:59:57 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 14:59:57 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1420
+10/16/2026 14:59:57 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:57 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:57 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:57 - INFO - absl - Using default tokenizer.
+10/16/2026 14:59:58 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:00:01 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:00:01 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 2135
+10/16/2026 15:00:03 - INFO - absl - Using default tokenizer.
+10/16/2026 15:00:03 - INFO - absl - Using default tokenizer.
+10/16/2026 15:00:03 - INFO - absl - Using default tokenizer.
+10/16/2026 15:00:03 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:15 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:01:17 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:01:17 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1387
+10/16/2026 15:01:18 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:18 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:18 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:18 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:26 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:01:28 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:01:28 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1461
+10/16/2026 15:01:30 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:30 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:30 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:30 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:36 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:01:38 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:01:39 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1500
+10/16/2026 15:01:39 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:39 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:39 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:39 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:43 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:01:45 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:01:46 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1420
+10/16/2026 15:01:46 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:46 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:46 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:46 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:46 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:01:49 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:01:49 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 2135
+10/16/2026 15:01:51 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:51 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:52 - INFO - absl - Using default tokenizer.
+10/16/2026 15:01:52 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:21 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:03:24 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:03:24 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1387
+10/16/2026 15:03:25 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:25 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:25 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:25 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:33 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:03:36 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:03:36 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1461
+10/16/2026 15:03:38 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:38 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:38 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:38 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:46 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:03:48 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:03:49 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1500
+10/16/2026 15:03:50 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:50 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:50 - INFO - absl - Using default tokenizer.
+10/16/2026 15:03:50 - INFO - absl - Using default tokenizer.
+10/16/2026 15:04:07 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:04:09 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:04:10 - INFO - evaluation.evaluator.metrics.graph_judge - len(gt_pred_triples): 1420
+10/16/2026 15:04:10 - INFO - absl - Using default tokenizer.
+10/16/2026 15:04:10 - INFO - absl - Using default tokenizer.
+10/16/2026 15:04:10 - INFO - absl - Using default tokenizer.
+10/16/2026 15:04:10 - INFO - absl - Using default tokenizer.
+10/16/2026 15:04:10 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:04:13 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:04:13 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_the_dfs_similarity_bleu_rouge
+10/16/2026 15:04:13 - INFO - evaluation.evaluator.metrics.graph_judge - elapsed_bleu_rouge: 685.61 seconds (11.43 minutes)
+10/16/2026 15:04:13 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2
+10/16/2026 15:04:13 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:04:13 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: mine/gemma4-e4b -- x-triples
+10/16/2026 15:04:13 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:04:13 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [before_loading_sentence_transformer] allocated=0.04GB reserved=1.82GB total=14.56GB
+10/16/2026 15:04:13 - INFO - sentence_transformers.base.model - No device provided, using cuda:0
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/modules.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config_sentence_transformers.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:14 - INFO - sentence_transformers.base.model - Loading SentenceTransformer model from sentence-transformers/all-mpnet-base-v2.
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config_sentence_transformers.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/README.md "HTTP/1.1 200 OK"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/modules.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/sentence_bert_config.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 2208.31it/s]
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/processor_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/video_preprocessor_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 15:04:14 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/preprocessor_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/tokenizer_config.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/config.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/tokenizer_config.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-mpnet-base-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-mpnet-base-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-mpnet-base-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-mpnet-base-v2/e8c3b32edf5434bc2275fc9bab85f82640a19130/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+10/16/2026 15:04:15 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-mpnet-base-v2 "HTTP/1.1 200 OK"
+10/16/2026 15:04:15 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [after_loading_sentence_transformer] allocated=0.45GB reserved=1.82GB total=14.56GB
+10/16/2026 15:05:22 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:05:22 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:05:22 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:05:25 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:05:25 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:05:25 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:05:25 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: mine/gemma4-e4b -- e-triples
+10/16/2026 15:05:25 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:05:39 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:05:39 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:05:39 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:05:42 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:05:42 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:05:42 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:05:42 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: mine/gemma4-e4b -- ee-triples
+10/16/2026 15:05:42 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:05:44 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:05:44 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:05:45 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:05:47 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:05:47 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:05:47 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:05:47 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: mine/gemma4-e4b -- ee-kg-triples
+10/16/2026 15:05:48 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:05:51 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:05:51 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:05:51 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:05:54 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:05:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:05:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:05:54 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: mine/gemma4-e4b -- d-triples
+10/16/2026 15:05:54 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:06:00 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:06:00 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:06:00 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:06:03 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:06:03 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:06:03 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:06:03 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-llamacpp/gemma-4-e4b -- x-triples
+10/16/2026 15:06:03 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:07:06 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:07:06 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:07:07 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:07:09 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:07:09 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:07:09 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:07:09 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-llamacpp/gemma-4-e4b -- e-triples
+10/16/2026 15:07:10 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:07:29 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:07:29 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:07:29 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:07:32 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:07:32 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:07:32 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:07:32 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-llamacpp/gemma-4-e4b -- ee-triples
+10/16/2026 15:07:32 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:07:51 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:07:51 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:07:51 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:07:54 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:07:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:07:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:07:54 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-llamacpp/gemma-4-e4b -- ee-kg-triples
+10/16/2026 15:07:54 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:08:12 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:08:12 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:08:12 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:08:15 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:08:15 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:08:15 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:08:15 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-llamacpp/gemma-4-e4b -- d-triples
+10/16/2026 15:08:15 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:08:19 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:08:19 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:08:19 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:08:22 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:08:22 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:08:22 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:08:22 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/llamacpp/gemma-4-e4b -- x-triples
+10/16/2026 15:08:22 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:09:46 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:09:46 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:09:46 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:09:49 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:09:49 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:09:49 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:09:49 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/llamacpp/gemma-4-e4b -- e-triples
+10/16/2026 15:09:49 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:10:20 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:10:20 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:10:21 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:10:24 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:10:24 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:10:24 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:10:24 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/llamacpp/gemma-4-e4b -- ee-triples
+10/16/2026 15:10:24 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:10:51 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:10:51 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:10:52 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:10:55 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:10:55 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:10:55 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:10:55 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/llamacpp/gemma-4-e4b -- ee-kg-triples
+10/16/2026 15:10:55 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:11:31 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:11:31 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:11:32 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:11:35 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:11:35 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:11:35 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:11:35 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/llamacpp/gemma-4-e4b -- d-triples
+10/16/2026 15:11:35 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:11:37 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:11:37 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:11:38 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:11:41 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:11:41 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:11:41 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:11:41 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-aware/gpt-5.1/oracle -- x-triples
+10/16/2026 15:11:41 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:12:18 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:12:18 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:12:18 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:12:22 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:12:22 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:12:22 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:12:22 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-aware/gpt-5.1/oracle -- e-triples
+10/16/2026 15:12:22 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:12:27 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:12:27 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:12:27 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:12:30 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:12:30 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:12:30 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:12:30 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-aware/gpt-5.1/oracle -- ee-triples
+10/16/2026 15:12:31 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:12:37 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:12:37 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:12:37 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:12:41 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:12:41 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:12:41 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:12:41 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-aware/gpt-5.1/oracle -- ee-kg-triples
+10/16/2026 15:12:41 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:12:50 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:12:50 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:12:51 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:12:54 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:12:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:12:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:12:54 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-aware/gpt-5.1/oracle -- d-triples
+10/16/2026 15:12:54 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:12:57 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:12:57 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:12:58 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:13:01 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:13:01 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:13:01 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:13:01 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- x-triples
+10/16/2026 15:13:01 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:14:09 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:14:09 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:14:09 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:14:13 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:14:13 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:14:13 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:14:13 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- e-triples
+10/16/2026 15:14:13 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:14:37 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:14:37 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:14:38 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:14:41 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:14:41 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:14:41 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:14:41 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- ee-triples
+10/16/2026 15:14:41 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:15:06 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:15:06 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:15:06 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:15:09 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:15:09 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:15:09 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:15:09 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- ee-kg-triples
+10/16/2026 15:15:10 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:15:31 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:15:31 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:15:31 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:15:35 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:15:35 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:15:35 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:15:35 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- d-triples
+10/16/2026 15:15:35 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:15:41 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:15:41 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:15:41 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:15:44 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:15:44 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:15:44 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:15:44 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-zshot-open_ai/GPT-5_1 -- x-triples
+10/16/2026 15:15:45 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:17:20 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:17:20 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:17:21 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:17:24 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:17:24 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:17:24 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:17:24 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-zshot-open_ai/GPT-5_1 -- e-triples
+10/16/2026 15:17:24 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:17:57 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:17:57 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:17:57 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:18:01 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:18:01 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:18:01 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:18:01 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-zshot-open_ai/GPT-5_1 -- ee-triples
+10/16/2026 15:18:01 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:18:31 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:18:31 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:18:31 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:18:35 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:18:35 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:18:35 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:18:35 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-zshot-open_ai/GPT-5_1 -- ee-kg-triples
+10/16/2026 15:18:35 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:18:47 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:18:47 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:18:47 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:18:51 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:18:51 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:18:51 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:18:51 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: edc-plus-zshot-open_ai/GPT-5_1 -- d-triples
+10/16/2026 15:18:51 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:18:54 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:18:54 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:18:54 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:18:58 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:18:58 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:18:58 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:18:58 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/azure/gpt5.1 -- x-triples
+10/16/2026 15:18:58 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:20:50 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:20:50 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:20:50 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:20:54 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:20:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:20:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:20:54 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/azure/gpt5.1 -- e-triples
+10/16/2026 15:20:54 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:21:35 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:21:35 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:21:35 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:21:38 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:21:38 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:21:38 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:21:38 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/azure/gpt5.1 -- ee-triples
+10/16/2026 15:21:39 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:22:17 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:22:17 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:22:17 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:22:21 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:22:21 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:22:21 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:22:21 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/azure/gpt5.1 -- ee-kg-triples
+10/16/2026 15:22:21 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:23:10 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:23:10 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:23:10 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:23:14 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:23:14 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:23:14 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:23:14 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_st-all-mpnet-base-v2_for: kg-gen/azure/gpt5.1 -- d-triples
+10/16/2026 15:23:14 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:23:16 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:23:16 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:23:17 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:23:20 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:23:20 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:23:22 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_the_dfs_graph_judge_st-all-mpnet-base-v2
+10/16/2026 15:23:22 - INFO - evaluation.evaluator.metrics.graph_judge - elapsed_graph_judge_st-all-mpnet-base-v2: 1149.13 seconds (19.15 minutes)
+10/16/2026 15:23:22 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base
+10/16/2026 15:23:22 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:23:22 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: mine/gemma4-e4b -- x-triples
+10/16/2026 15:23:22 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:23:23 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [before_loading_bert_scorer] allocated=0.04GB reserved=0.06GB total=14.56GB
+10/16/2026 15:23:24 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/config.json "HTTP/1.1 200 OK"
+10/16/2026 15:23:24 - INFO - httpx - HTTP Request: GET https://huggingface.co/bert-base-uncased/resolve/main/config.json "HTTP/1.1 200 OK"
+10/16/2026 15:23:24 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+10/16/2026 15:23:24 - INFO - httpx - HTTP Request: GET https://huggingface.co/bert-base-uncased/resolve/main/tokenizer_config.json "HTTP/1.1 200 OK"
+10/16/2026 15:23:25 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/bert-base-uncased/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:23:25 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/google-bert/bert-base-uncased/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+10/16/2026 15:23:25 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/bert-base-uncased/tree/main?recursive=true&expand=false "HTTP/1.1 307 Temporary Redirect"
+10/16/2026 15:23:25 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/google-bert/bert-base-uncased/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+10/16/2026 15:23:26 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/vocab.txt "HTTP/1.1 200 OK"
+10/16/2026 15:23:26 - INFO - httpx - HTTP Request: GET https://huggingface.co/bert-base-uncased/resolve/main/vocab.txt "HTTP/1.1 200 OK"
+10/16/2026 15:23:27 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/tokenizer.json "HTTP/1.1 200 OK"
+10/16/2026 15:23:27 - INFO - httpx - HTTP Request: GET https://huggingface.co/bert-base-uncased/resolve/main/tokenizer.json "HTTP/1.1 200 OK"
+10/16/2026 15:23:27 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/added_tokens.json "HTTP/1.1 404 Not Found"
+10/16/2026 15:23:28 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/special_tokens_map.json "HTTP/1.1 404 Not Found"
+10/16/2026 15:23:28 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/chat_template.jinja "HTTP/1.1 404 Not Found"
+10/16/2026 15:23:28 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/config.json "HTTP/1.1 200 OK"
+10/16/2026 15:23:28 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+10/16/2026 15:23:29 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/config.json "HTTP/1.1 200 OK"
+10/16/2026 15:23:29 - INFO - httpx - HTTP Request: HEAD https://huggingface.co/bert-base-uncased/resolve/main/model.safetensors "HTTP/1.1 302 Found"
+10/16/2026 15:23:29 - INFO - httpx - HTTP Request: GET https://huggingface.co/api/models/google-bert/bert-base-uncased/xet-read-token/86b5e0934494bd15c9632b12f734a8a67f723594 "HTTP/1.1 200 OK"
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 2353.10it/s]
+[transformers] [1mBertModel LOAD REPORT[0m from: bert-base-uncased
+Key                                        | Status     |  | 
+-------------------------------------------+------------+--+-
+cls.seq_relationship.bias                  | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.bias   | UNEXPECTED |  | 
+cls.predictions.transform.LayerNorm.weight | UNEXPECTED |  | 
+cls.predictions.bias                       | UNEXPECTED |  | 
+cls.predictions.transform.dense.bias       | UNEXPECTED |  | 
+cls.seq_relationship.weight                | UNEXPECTED |  | 
+cls.predictions.transform.dense.weight     | UNEXPECTED |  | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+10/16/2026 15:23:31 - INFO - evaluation.evaluator.metrics.base - GPU_MEMORY [after_loading_bert_scorer] allocated=0.37GB reserved=0.41GB total=14.56GB
+10/16/2026 15:24:43 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:24:43 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:24:44 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:24:48 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:24:48 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:24:48 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:24:48 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: mine/gemma4-e4b -- e-triples
+10/16/2026 15:24:48 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:24:57 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:24:57 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:24:57 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:25:01 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:25:01 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:25:01 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:25:01 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: mine/gemma4-e4b -- ee-triples
+10/16/2026 15:25:01 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:25:01 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:25:01 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:25:01 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:25:05 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:25:05 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:25:05 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:25:05 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: mine/gemma4-e4b -- ee-kg-triples
+10/16/2026 15:25:05 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:25:05 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:25:05 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:25:05 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:25:09 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:25:09 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:25:09 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:25:09 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: mine/gemma4-e4b -- d-triples
+10/16/2026 15:25:09 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:25:11 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:25:11 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:25:12 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:25:15 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:25:15 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:25:15 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:25:15 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-llamacpp/gemma-4-e4b -- x-triples
+10/16/2026 15:25:16 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:26:26 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:26:26 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:26:27 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:26:30 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:26:30 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:26:30 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:26:30 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-llamacpp/gemma-4-e4b -- e-triples
+10/16/2026 15:26:30 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:26:49 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:26:49 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:26:50 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:26:53 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:26:53 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:26:53 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:26:53 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-llamacpp/gemma-4-e4b -- ee-triples
+10/16/2026 15:26:53 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:27:10 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:27:10 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:27:10 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:27:14 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:27:14 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:27:14 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:27:14 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-llamacpp/gemma-4-e4b -- ee-kg-triples
+10/16/2026 15:27:14 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:27:30 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:27:30 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:27:31 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:27:34 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:27:34 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:27:34 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:27:34 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-llamacpp/gemma-4-e4b -- d-triples
+10/16/2026 15:27:34 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:27:35 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:27:35 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:27:36 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:27:39 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:27:39 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:27:39 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:27:39 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/llamacpp/gemma-4-e4b -- x-triples
+10/16/2026 15:27:40 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:29:01 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:29:01 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:29:02 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:29:05 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:29:05 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:29:05 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:29:05 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/llamacpp/gemma-4-e4b -- e-triples
+10/16/2026 15:29:05 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:29:28 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:29:28 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:29:29 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:29:33 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:29:33 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:29:33 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:29:33 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/llamacpp/gemma-4-e4b -- ee-triples
+10/16/2026 15:29:33 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:29:57 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:29:57 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:29:58 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:30:02 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:30:02 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:30:02 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:30:02 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/llamacpp/gemma-4-e4b -- ee-kg-triples
+10/16/2026 15:30:02 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:30:34 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:30:34 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:30:34 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:30:38 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:30:38 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:30:38 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:30:38 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/llamacpp/gemma-4-e4b -- d-triples
+10/16/2026 15:30:38 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:30:38 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:30:38 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:30:39 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:30:43 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:30:43 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:30:43 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:30:43 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-aware/gpt-5.1/oracle -- x-triples
+10/16/2026 15:30:43 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:31:17 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:31:17 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:31:18 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:31:22 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:31:22 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:22 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:22 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-aware/gpt-5.1/oracle -- e-triples
+10/16/2026 15:31:22 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:31:25 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:31:25 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:31:25 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:31:29 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:31:29 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:29 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:29 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-aware/gpt-5.1/oracle -- ee-triples
+10/16/2026 15:31:29 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:31:34 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:31:34 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:31:34 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:31:39 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:31:39 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:39 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:39 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-aware/gpt-5.1/oracle -- ee-kg-triples
+10/16/2026 15:31:39 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:31:45 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:31:45 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:31:46 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:31:50 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:31:50 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:50 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:50 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-aware/gpt-5.1/oracle -- d-triples
+10/16/2026 15:31:50 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:31:50 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:31:50 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:31:51 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:31:55 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:31:55 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:55 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:31:55 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- x-triples
+10/16/2026 15:31:55 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:33:08 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:33:08 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:33:09 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:33:13 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:33:13 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:33:13 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:33:13 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- e-triples
+10/16/2026 15:33:13 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:33:34 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:33:34 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:33:35 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:33:39 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:33:39 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:33:39 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:33:39 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- ee-triples
+10/16/2026 15:33:39 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:34:00 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:34:00 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:34:01 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:34:05 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:34:05 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:34:05 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:34:05 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- ee-kg-triples
+10/16/2026 15:34:05 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:34:23 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:34:23 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:34:24 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:34:28 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:34:28 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:34:28 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:34:28 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-open-ai/gpt-5.1/non-canonicalized -- d-triples
+10/16/2026 15:34:28 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:34:32 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:34:32 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:34:32 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:34:37 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:34:37 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:34:37 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:34:37 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-zshot-open_ai/GPT-5_1 -- x-triples
+10/16/2026 15:34:37 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:36:23 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:36:23 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:36:24 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:36:28 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:36:28 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:36:28 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:36:28 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-zshot-open_ai/GPT-5_1 -- e-triples
+10/16/2026 15:36:29 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:36:56 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:36:56 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:36:56 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:37:01 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:37:01 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:37:01 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:37:01 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-zshot-open_ai/GPT-5_1 -- ee-triples
+10/16/2026 15:37:01 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:37:27 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:37:27 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:37:27 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:37:32 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:37:32 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:37:32 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:37:32 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-zshot-open_ai/GPT-5_1 -- ee-kg-triples
+10/16/2026 15:37:32 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:37:43 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:37:44 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:37:44 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:37:48 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:37:48 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:37:48 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:37:48 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: edc-plus-zshot-open_ai/GPT-5_1 -- d-triples
+10/16/2026 15:37:49 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:37:49 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:37:49 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:37:49 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:37:54 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:37:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:37:54 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:37:54 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/azure/gpt5.1 -- x-triples
+10/16/2026 15:37:54 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 2135
+10/16/2026 15:40:01 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:40:02 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:40:02 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:40:07 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:40:07 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:40:07 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:40:07 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/azure/gpt5.1 -- e-triples
+10/16/2026 15:40:07 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1387
+10/16/2026 15:40:40 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:40:40 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:40:41 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:40:45 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:40:45 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:40:45 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:40:45 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/azure/gpt5.1 -- ee-triples
+10/16/2026 15:40:45 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1461
+10/16/2026 15:41:21 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:41:21 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:41:22 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:41:27 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:41:27 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:41:27 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:41:27 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/azure/gpt5.1 -- ee-kg-triples
+10/16/2026 15:41:27 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1500
+10/16/2026 15:42:13 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:42:13 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:42:13 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:42:18 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:42:18 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:42:18 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:42:18 - INFO - evaluation.evaluator.metrics.graph_judge - calculating_graph_judge_bert-base_for: kg-gen/azure/gpt5.1 -- d-triples
+10/16/2026 15:42:18 - INFO - evaluation.evaluator.metrics.graph_judge - graph_judge len(gt_pred_triples): 1420
+10/16/2026 15:42:18 - INFO - evaluation.scorers.graph_scorers - begin_calculating_to_ret_final
+10/16/2026 15:42:18 - INFO - evaluation.scorers.graph_scorers - end_calculating_to_ret_final
+10/16/2026 15:42:18 - INFO - evaluation.evaluator.metrics.graph_judge - begin_saving_cache
+10/16/2026 15:42:23 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_cache
+10/16/2026 15:42:23 - INFO - evaluation.evaluator.metrics.graph_judge - ==================================================================
+10/16/2026 15:42:25 - INFO - evaluation.evaluator.metrics.graph_judge - end_saving_the_dfs_graph_judge_bert-base
+10/16/2026 15:42:25 - INFO - evaluation.evaluator.metrics.graph_judge - elapsed_graph_judge_bert-base: 1142.70 seconds (19.05 minutes)
+10/16/2026 15:42:25 - INFO - evaluation.evaluator.evaluator - running metric: cie_exact_match
+10/16/2026 15:42:25 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for mine/gemma4-e4b / x-triples (2135 instances)
+10/16/2026 15:42:30 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for mine/gemma4-e4b / e-triples (1387 instances)
+10/16/2026 15:42:35 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for mine/gemma4-e4b / ee-triples (1461 instances)
+10/16/2026 15:42:40 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for mine/gemma4-e4b / ee-kg-triples (1500 instances)
+10/16/2026 15:42:45 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for mine/gemma4-e4b / d-triples (1420 instances)
+10/16/2026 15:42:50 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-llamacpp/gemma-4-e4b / x-triples (2135 instances)
+10/16/2026 15:42:55 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-llamacpp/gemma-4-e4b / e-triples (1387 instances)
+10/16/2026 15:43:00 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-llamacpp/gemma-4-e4b / ee-triples (1461 instances)
+10/16/2026 15:43:05 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-llamacpp/gemma-4-e4b / ee-kg-triples (1500 instances)
+10/16/2026 15:43:10 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-llamacpp/gemma-4-e4b / d-triples (1420 instances)
+10/16/2026 15:43:15 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/llamacpp/gemma-4-e4b / x-triples (2135 instances)
+10/16/2026 15:43:21 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/llamacpp/gemma-4-e4b / e-triples (1387 instances)
+10/16/2026 15:43:25 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/llamacpp/gemma-4-e4b / ee-triples (1461 instances)
+10/16/2026 15:43:31 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/llamacpp/gemma-4-e4b / ee-kg-triples (1500 instances)
+10/16/2026 15:43:36 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/llamacpp/gemma-4-e4b / d-triples (1420 instances)
+10/16/2026 15:43:41 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-aware/gpt-5.1/oracle / x-triples (2135 instances)
+10/16/2026 15:43:46 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-aware/gpt-5.1/oracle / e-triples (1387 instances)
+10/16/2026 15:43:51 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-aware/gpt-5.1/oracle / ee-triples (1461 instances)
+10/16/2026 15:43:56 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-aware/gpt-5.1/oracle / ee-kg-triples (1500 instances)
+10/16/2026 15:44:01 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-aware/gpt-5.1/oracle / d-triples (1420 instances)
+10/16/2026 15:44:06 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-open-ai/gpt-5.1/non-canonicalized / x-triples (2135 instances)
+10/16/2026 15:44:12 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-open-ai/gpt-5.1/non-canonicalized / e-triples (1387 instances)
+10/16/2026 15:44:16 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-open-ai/gpt-5.1/non-canonicalized / ee-triples (1461 instances)
+10/16/2026 15:44:22 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-open-ai/gpt-5.1/non-canonicalized / ee-kg-triples (1500 instances)
+10/16/2026 15:44:27 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-open-ai/gpt-5.1/non-canonicalized / d-triples (1420 instances)
+10/16/2026 15:44:32 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-zshot-open_ai/GPT-5_1 / x-triples (2135 instances)
+10/16/2026 15:44:37 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-zshot-open_ai/GPT-5_1 / e-triples (1387 instances)
+10/16/2026 15:44:42 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-zshot-open_ai/GPT-5_1 / ee-triples (1461 instances)
+10/16/2026 15:44:47 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-zshot-open_ai/GPT-5_1 / ee-kg-triples (1500 instances)
+10/16/2026 15:44:52 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for edc-plus-zshot-open_ai/GPT-5_1 / d-triples (1420 instances)
+10/16/2026 15:44:57 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/azure/gpt5.1 / x-triples (2135 instances)
+10/16/2026 15:45:02 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/azure/gpt5.1 / e-triples (1387 instances)
+10/16/2026 15:45:07 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/azure/gpt5.1 / ee-triples (1461 instances)
+10/16/2026 15:45:13 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/azure/gpt5.1 / ee-kg-triples (1500 instances)
+10/16/2026 15:45:18 - INFO - evaluation.evaluator.metrics.cie_exact_match - calculating cie_exact_match for kg-gen/azure/gpt5.1 / d-triples (1420 instances)
+10/16/2026 15:45:23 - INFO - evaluation.evaluator.evaluator - evaluation pipeline finished
+10/16/2026 15:45:23 - INFO - evaluation.orchestrator.evaluation_orchestrator - updating cache
+10/16/2026 15:45:28 - INFO - __main__ - begin_filter_by_assessor_evaluation
+10/16/2026 15:45:31 - INFO - evaluation.misc.utils - df_wiki_metrics_cie.shape: (1677270, 10)
+10/16/2026 15:45:31 - INFO - evaluation.misc.utils - df_wiki_metrics_cie_filtered.shape: (1585409, 10)
+10/16/2026 15:45:31 - INFO - evaluation.misc.utils - df_preds_gt_cie.shape: (82191, 24)
+10/16/2026 15:45:31 - INFO - evaluation.misc.utils - df_preds_gt_cie_filtered.shape: (69068, 25)
+10/16/2026 15:45:32 - INFO - __main__ - end_filter_by_assessor_evaluation
+10/16/2026 15:45:32 - INFO - __main__ - begin_adding_completeness_metric
+10/16/2026 15:45:36 - INFO - evaluation.misc.utils - No overlapping (metric, evaluator_model, model) between agg and agg_open.
+10/16/2026 15:45:36 - INFO - evaluation.misc.utils - sanity check, all have to be in 1: 1    70
+Name: count, dtype: int64
+10/16/2026 15:45:36 - INFO - evaluation.misc.utils - 
+                              x-triples|C x-triples|R e-triples|C e-triples|R ee-triples|C ee-triples|R ee-kg-triples|C ee-kg-triples|R d-triples|C d-triples|R
+model                                                                                                                                                          
+mine/gemma4-e4b                    *91.3*      *90.7*        39.3      _75.2_          0.0          0.0             0.0             0.0      *63.3*      *67.4*
+edc-plus-llamacpp/gemma-4-e4b        12.5        59.2        19.9        69.8         19.0         68.8            13.4            64.2         6.3        11.4
+kg-gen/llamacpp/gemma-4-e4b          10.2        59.1        15.5        66.7         12.9         65.7             1.9            56.4         0.0         0.0
+kg-aware/gpt-5.1/oracle            _60.4_        50.3      *46.5*        42.9       *43.2*         47.6          *50.3*          *75.9*      _37.4_        35.8
+EDC+ GPT 5.1                         25.7      _66.3_      _40.2_      *77.5*       _35.6_       *77.3*          _21.9_          _72.4_        34.8      _53.2_
+EDC+ ZS GPT 5.1                      15.5        64.3        22.6        71.5         18.9       _69.6_             5.8            52.5         1.5         3.2
+KGGen GPT 5.1                        12.8        62.7        15.2        68.1         13.3         67.0             3.3            59.1         0.0         0.0
+10/16/2026 15:45:37 - INFO - evaluation.misc.utils - No overlapping (metric, evaluator_model, model) between agg and agg_open.
+/kaggle/working/emerge/src/evaluation/misc/utils.py:74: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.
+  agg_all = pd.concat([agg, agg_open], ignore_index=True)
+10/16/2026 15:45:37 - INFO - evaluation.misc.utils - sanity check, all have to be in 1: 1    105
+Name: count, dtype: int64
+10/16/2026 15:45:37 - INFO - __main__ - 
+
+=== QID Exact-Match Metrics (P / R / F1) ===
+10/16/2026 15:45:37 - INFO - evaluation.misc.utils - 
+                        x-triples|P x-triples|R x-triples|F1 e-triples|P e-triples|R e-triples|F1 ee-triples|P ee-triples|R ee-triples|F1 ee-kg-triples|P ee-kg-triples|R ee-kg-triples|F1 d-triples|P d-triples|R d-triples|F1
+model                                                                                                                                                                                                                          
+mine/gemma4-e4b              *65.0*      *81.4*       *69.6*      _14.4_      _24.9_       _16.7_        *0.0*        *0.0*         *0.0*           *0.0*           *0.0*            *0.0*      *40.0*      *57.6*       *44.5*
+kg-aware/gpt-5.1/oracle      _57.0_      _46.8_       _49.7_      *32.6*      *34.8*       *32.5*        *0.0*        *0.0*         *0.0*           *0.0*           *0.0*            *0.0*      _34.2_      _33.9_       _34.0_
+10/16/2026 15:45:37 - INFO - __main__ - end_adding_completeness_metric
+10/16/2026 15:45:37 - INFO - __main__ - === evaluation run finished (this invocation only) ===
