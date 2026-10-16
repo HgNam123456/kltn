@@ -91,7 +91,8 @@ class TOut(BaseModel):
     ended: list[int]
 
 
-_HEADER = re.compile(r"(?im)^\s*observation date:.*(?:\n|$)")   # dòng metadata đầu mỗi đoạn COVID-NYT
+# metadata đầu mỗi đoạn COVID-NYT; chỉ bỏ đúng "Observation date: <ngày>" vì 2/122 đoạn dính liền văn bản, không xuống dòng
+_HEADER = re.compile(r"(?im)^[ \t]*observation date:[ \t]*\d{4}-\d{2}-\d{2}[ \t]*\n?")
 
 
 def _ds(v: str) -> list[str]:

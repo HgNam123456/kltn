@@ -113,6 +113,15 @@ def test_condense_mode_drops_the_observation_date_header_before_condensing():
     assert "Observation date" not in llm.calls[0][1]
 
 
+def test_condense_mode_keeps_the_passage_when_the_header_has_no_line_break():
+    kg = TemporalKG(condense=True)                    # 2/122 nhóm COVID-NYT: "…2020-02-07This year's edition…"
+    llm = FakeLLMClient([{"sentences": ["Art Basel was canceled."]}, {"facts": [], "ended": []},
+                         {"facts": [], "ended": []}])
+    kg.update("Observation date: 2020-02-07Art Basel was canceled.", "2020-02-07", llm)
+    assert "Art Basel was canceled." in llm.calls[0][1]
+    assert "Observation date" not in llm.calls[0][1]
+
+
 def test_new_facts_are_stored_under_the_canonical_name_of_an_alias():
     kg = TemporalKG()
     kg.aliases = {"World Health Organization": {"WHO"}}
