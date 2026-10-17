@@ -4,7 +4,10 @@ COVID-NYT hiện tại) và (b) KGGen 0.4.0 (scripts/kggen_mine.py), cả hai b�
 rồi chấm (scripts/score_mine.py) bằng đúng hàm truy xuất của kg-gen (all-MiniLM-L6-v2, k=8, sâu 2) với judge Gemma
 thay cho gpt-5 của bản gốc. Chấm lại cả ba KG phát hành trong dataset (KGGen, GraphRAG, OpenIE của paper) để đo độ lệch
 do đổi judge so với cột *_accuracy của dataset.
-LIMIT = số bài (None = đủ). KGGEN_CLUSTER bật bước gom cụm của KGGen.
+LIMIT = số bài (None = đủ). KGGEN_CLUSTER bật bước gom cụm của KGGen: tắt — lượt 1 (17/10) gom cụm bằng Gemma lặp mãi
+vì Gemma trả nhãn ngoài danh sách cho phép, 6 bài sau ~10 giờ, kernel bị cắt ở 12 giờ; các lượt KGGen trên COVID-NYT và
+EMERGE cũng không gom cụm. KG của mình đã dựng xong ở lượt 1 (results/kaggle/mine/mine.jsonl) → dùng lại (REUSE_MINE).
+Mỗi bước có TIMEOUT để một bước treo không ăn hết 12 giờ.
 Đầu ra /kaggle/working/out/: mine.jsonl, kggen.jsonl, scores.json (+ scores.<hệ>.jsonl từng fact), summary.json, logs/.
 """
 import json
@@ -15,7 +18,9 @@ import time
 import urllib.request
 
 LIMIT = None
-KGGEN_CLUSTER = True
+KGGEN_CLUSTER = False
+REUSE_MINE = True
+TIMEOUT = {"mine": "3h", "kggen": "2h", "score": "5h"}
 WORKERS = 4
 KGU_REPO, KGU_BRANCH = "https://github.com/HgNam123456/kltn.git", "feat/core-pipeline"
 GGUF_REPO, GGUF_FILE = "unsloth/gemma-4-E4B-it-qat-GGUF", "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
@@ -108,7 +113,8 @@ env = {**os.environ, "PYTHONIOENCODING": "utf8", "TOKENIZERS_PARALLELISM": "fals
 def timed(run: str, cmd: str) -> bool:
     t0 = time.time()
     try:
-        sh(f"{cmd} 2>&1 | tee {LOGS}/{run}.log; test ${{PIPESTATUS[0]}} -eq 0", executable="/bin/bash", env=env)
+        sh(f"timeout {TIMEOUT[run]} {cmd} 2>&1 | tee {LOGS}/{run}.log; test ${{PIPESTATUS[0]}} -eq 0",
+           executable="/bin/bash", env=env)
         ok = True
     except subprocess.CalledProcessError:
         print(f"!!! {run} lỗi, xem logs/{run}.log", flush=True)
@@ -120,8 +126,13 @@ def timed(run: str, cmd: str) -> bool:
 
 # 3. dựng KG: mình (embedder gộp tên trên GPU 1) và KGGen
 emb_device = "cuda:1" if len(gpus) >= 2 else "cuda:0"
-timed("mine", f"python -u {KLTN}/scripts/run_mine.py --data {data} --out {OUT}/mine.jsonl --workers {WORKERS} "
-              f"--device {emb_device}")
+reused = f"{KLTN}/results/kaggle/mine/mine.jsonl"
+if REUSE_MINE and not LIMIT and os.path.exists(reused):
+    shutil.copy(reused, f"{OUT}/mine.jsonl")
+    summary["notes"].append(f"mine.jsonl dùng lại từ lượt 1 ({reused}, commit {summary['kltn_commit'][:7]})")
+else:
+    timed("mine", f"python -u {KLTN}/scripts/run_mine.py --data {data} --out {OUT}/mine.jsonl --workers {WORKERS} "
+                  f"--device {emb_device}")
 timed("kggen", f"python -u {KLTN}/scripts/kggen_mine.py --data {data} --out {OUT}/kggen.jsonl --workers {WORKERS}"
                + (" --cluster" if KGGEN_CLUSTER else ""))
 

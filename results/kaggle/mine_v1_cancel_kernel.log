@@ -1,0 +1,78 @@
+[{"stream_name":"stdout","time":0.849404956,"data":"$ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader\n"}
+,{"stream_name":"stdout","time":0.891986409,"data":"$ git clone -q --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git /kaggle/working/kltn\n"}
+,{"stream_name":"stdout","time":2.389472736,"data":"$ git -C /kaggle/working/kltn rev-parse HEAD\n"}
+,{"stream_name":"stdout","time":2.394594303,"data":"$ pip install -q dateparser 'openai\u003e=1' kg-gen==0.4.0\n"}
+,{"stream_name":"stdout","time":7.703018722,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.0/41.0 kB 1.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.713370524,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 322.4/322.4 kB 9.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.760076556,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 29.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.787533316,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.3/226.3 kB 12.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.819929622,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 756.0/756.0 kB 32.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.971667911,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.5/14.5 MB 91.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":9.020889548,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.5/45.5 kB 2.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":9.053125429,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.5/99.5 kB 4.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":9.082571752,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.0/52.0 kB 2.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":9.168011092,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 103.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":9.195870557,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 472.1/472.1 kB 25.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":17.132082208,"data":"$ chmod +x /kaggle/working/llama-bin/llama-server\n"}
+,{"stream_name":"stderr","time":17.249183627,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":25.549838196,"data":"$ /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\n"}
+,{"stream_name":"stdout","time":37.588302236,"data":"$ python -u /kaggle/working/kltn/scripts/run_mine.py --data /kaggle/working/mine/data/train-00000-of-00001.parquet --out /kaggle/working/out/mine.jsonl --workers 4 --device cuda:1 2\u003e\u00261 | tee /kaggle/working/out/logs/mine.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":75.840635299,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":78.958185919,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 2527.84it/s]\n"}
+,{"stream_name":"stdout","time":4581.051446814,"data":"100 bài, 2733 lệnh gọi LLM → /kaggle/working/out/mine.jsonl\n"}
+,{"stream_name":"stdout","time":4586.070779945,"data":"=== mine: ok=True 4548.5s, tổng 76 phút\n"}
+,{"stream_name":"stdout","time":4586.070836749,"data":"$ python -u /kaggle/working/kltn/scripts/kggen_mine.py --data /kaggle/working/mine/data/train-00000-of-00001.parquet --out /kaggle/working/out/kggen.jsonl --workers 4 --cluster 2\u003e\u00261 | tee /kaggle/working/out/logs/kggen.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":4746.030145367,"data":"Validation failed for item 'contains' potentially belonging to cluster 'Verbs': Failed to parse field validated_items: 3 validation errors for list[literal['is ready to','mimic appearance of','reveals','must pump','contains']]\n"}
+,{"stream_name":"stdout","time":4746.030186901,"data":"0\n"}
+,{"stream_name":"stdout","time":4746.030191722,"data":"  Input should be 'is ready to', 'mimic appearance of', 'reveals', 'must pump' or 'contains' [type=literal_error, input_value='is', input_type=str]\n"}
+,{"stream_name":"stdout","time":4746.030196657,"data":"    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\n"}
+,{"stream_name":"stdout","time":4746.03021631,"data":"1\n"}
+,{"stream_name":"stdout","time":4746.030221922,"data":"  Input should be 'is ready to', 'mimic appearance of', 'reveals', 'must pump' or 'contains' [type=literal_error, input_value='are', input_type=str]\n"}
+,{"stream_name":"stdout","time":4746.030227541,"data":"    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\n"}
+,{"stream_name":"stdout","time":4746.03023362,"data":"2\n"}
+,{"stream_name":"stdout","time":4746.030238625,"data":"  Input should be 'is ready to', 'mimic appearance of', 'reveals', 'must pump' or 'contains' [type=literal_error, input_value='has', input_type=str]\n"}
+,{"stream_name":"stdout","time":4746.030243804,"data":"    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\n"}
+,{"stream_name":"stdout","time":4746.030248757,"data":"\n"}
+,{"stream_name":"stdout","time":4746.030253397,"data":"Adapter JSONAdapter failed to parse the LM response. \n"}
+,{"stream_name":"stdout","time":4746.030367302,"data":"\n"}
+,{"stream_name":"stdout","time":4746.030387254,"data":"LM Response: ```json\n"}
+,{"stream_name":"stdout","time":4746.030393994,"data":"{\n"}
+,{"stream_name":"stdout","time":4746.030399489,"data":"  \"validated_items\": [\n"}
+,{"stream_name":"stdout","time":4746.030404927,"data":"    \"is\",\n"}
+,{"stream_name":"stdout","time":4746.030410283,"data":"    \"are\",\n"}
+,{"stream_name":"stdout","time":4746.030415471,"data":"    \"has\",\n"}
+,{"stream_name":"stdout","time":4746.030420228,"data":"    \"contains\"\n"}
+,{"stream_name":"stdout","time":4746.030425047,"data":"  ]\n"}
+,{"stream_name":"stdout","time":4746.030429712,"data":"}\n"}
+,{"stream_name":"stdout","time":4746.030435504,"data":"``` \n"}
+,{"stream_name":"stdout","time":4746.030440902,"data":"\n"}
+,{"stream_name":"stdout","time":4746.030446049,"data":"Expected to find output fields in the LM response: [validated_items] \n"}
+,{"stream_name":"stdout","time":4746.030451601,"data":"\n"}
+,{"stream_name":"stdout","time":4746.030457337,"data":"Actual output fields parsed from the LM response: [validated_items] \n"}
+,{"stream_name":"stdout","time":4746.030474491,"data":"\n"}
+,{"stream_name":"stdout","time":4746.03047932,"data":"\n"}
+,{"stream_name":"stdout","time":6753.334001218,"data":"Validation failed for item 'functional magnetic resonance imaging (fMRI)' potentially belonging to cluster 'brain imaging techniques': Failed to parse field validated_items: 2 validation errors for list[literal['physiological processes']]\n"}
+,{"stream_name":"stdout","time":6753.334079751,"data":"0\n"}
+,{"stream_name":"stdout","time":6753.334086333,"data":"  Input should be 'physiological processes' [type=literal_error, input_value='brain imaging techniques', input_type=str]\n"}
+,{"stream_name":"stdout","time":6753.334091438,"data":"    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\n"}
+,{"stream_name":"stdout","time":6753.334096216,"data":"1\n"}
+,{"stream_name":"stdout","time":6753.334100624,"data":"  Input should be 'physiological processes' [type=literal_error, input_value='functional magnetic resonance imaging (fMRI)', input_type=str]\n"}
+,{"stream_name":"stdout","time":6753.334105563,"data":"    For further information visit https://errors.pydantic.dev/2.13/v/literal_error\n"}
+,{"stream_name":"stdout","time":6753.334110256,"data":"\n"}
+,{"stream_name":"stdout","time":6753.33411482,"data":"Adapter JSONAdapter failed to parse the LM response. \n"}
+,{"stream_name":"stdout","time":6753.334124946,"data":"\n"}
+,{"stream_name":"stdout","time":6753.334128505,"data":"LM Response: ```json\n"}
+,{"stream_name":"stdout","time":6753.334131541,"data":"{\n"}
+,{"stream_name":"stdout","time":6753.334135038,"data":"  \"validated_items\": [\n"}
+,{"stream_name":"stdout","time":6753.334155776,"data":"    \"brain imaging techniques\",\n"}
+,{"stream_name":"stdout","time":6753.334161591,"data":"    \"functional magnetic resonance imaging (fMRI)\"\n"}
+,{"stream_name":"stdout","time":6753.334167024,"data":"  ]\n"}
+,{"stream_name":"stdout","time":6753.334172068,"data":"}\n"}
+,{"stream_name":"stdout","time":6753.334176368,"data":"``` \n"}
+,{"stream_name":"stdout","time":6753.334180639,"data":"\n"}
+,{"stream_name":"stdout","time":6753.334184982,"data":"Expected to find output fields in the LM response: [validated_items] \n"}
+,{"stream_name":"stdout","time":6753.33418961,"data":"\n"}
+,{"stream_name":"stdout","time":6753.334193986,"data":"Actual output fields parsed from the LM response: [validated_items] \n"}
+,{"stream_name":"stdout","time":6753.33419856,"data":"\n"}
+,{"stream_name":"stdout","time":6753.334202781,"data":"\n"}
+]
