@@ -585,6 +585,15 @@ Toàn bộ 122 nhóm (`results/kaggle/covid_v2/`), metric ATOM all-mpnet @ 0,7, 
   Metric gộp kiểu ATOM (cặp cosine > 0,8): thực thể F1 v1 85,9 → v2 91,5 (cặp gần trùng 597 → 366); quan hệ 95,8 → 97,1.
   Sai thấy được: "new coronavirus" → "coronavirus outbreak", "SoftBank" → "news about SoftBank". Mẫu 100 quyết định
   (50 có) để kiểm tay: `results/kaggle/covid_v2_audit.csv` (cột `correct`; chấm: `scripts/audit_merges.py --labels`).
+- Kiểm mẫu 100 quyết định (17/10; người gán là Claude Opus 5.5 theo yêu cầu, không phải người; lý do từng ca sai/khó ở
+  cột `note`). Đúng khi gộp hai tên chỉ khác bề mặt (hoa/thường, số ít/nhiều của danh từ chỉ loại, chức danh, mạo từ,
+  thì của cùng động từ); sai khi gộp cá thể vào nhóm, đảo chủ động/bị động, bỏ thể tương lai/thói quen, hoặc hai khái
+  niệm khác nhau. "Có" đúng 37/50 (74%; 9/9 ca chỉ khác hoa/thường đều đúng), "không" đúng 46/50 (92%). 13 ca gộp sai:
+  cá thể → nhóm 5 (Officer → Officers, expert → Experts, speaker, EMS worker, government), khái niệm khác 4 ("news about
+  SoftBank" → SoftBank, threat ↔ fears, scourge, Hong Kong police ↔ authorities), đảo chủ động/bị động 2
+  (canceled/have_been_canceled, announced/was_announced), bỏ thể 2 (will_open → opened, usually_). 4 ca bỏ sót: hai
+  triple trùng "road-test requirement", hai nút dateline, birthday/birthdays, report/report_on. Ước lượng trên cả 583
+  quyết định: ~35 gộp sai trong 134 "có", ~36 bỏ sót trong 449 "không" (mẫu 50 mỗi bên, sai số ±12 điểm ở 95%).
 
 ### 18b. Điều kiện `mentions` = hyperlink Wikipedia (17/10)
 
