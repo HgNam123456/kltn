@@ -1,0 +1,70 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2438.89it/s]
+=== mine: {'essays': 100, 'queries': 1500, 'accuracy': 0.854, 'micro': 0.854, 'judge_errors': 0, 'no_graph': 0}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2660.75it/s]
+=== kggen: {'essays': 100, 'queries': 1500, 'accuracy': 0.75933, 'micro': 0.75933, 'judge_errors': 0, 'no_graph': 0}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2668.33it/s]
+=== released:kggen: {'essays': 100, 'queries': 1500, 'accuracy': 0.11, 'micro': 0.11, 'judge_errors': 0, 'no_graph': 2}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2695.92it/s]
+=== released:graphrag_kg: {'essays': 100, 'queries': 1500, 'accuracy': 0.07133, 'micro': 0.07133, 'judge_errors': 0, 'no_graph': 11}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2693.11it/s]
+=== released:openie_kg: {'essays': 100, 'queries': 1500, 'accuracy': 0.06467, 'micro': 0.06467, 'judge_errors': 0, 'no_graph': 2}
+{
+ "judge": "gemma-4-E4B (llama-server, dspy ChainOfThought, temperature 0)",
+ "retrieval": "kg-gen 0.4.0 KGGen.retrieve, all-MiniLM-L6-v2, k=8, depth=2",
+ "essays": 100,
+ "systems": {
+  "mine": {
+   "essays": 100,
+   "queries": 1500,
+   "accuracy": 0.854,
+   "micro": 0.854,
+   "judge_errors": 0,
+   "no_graph": 0
+  },
+  "kggen": {
+   "essays": 100,
+   "queries": 1500,
+   "accuracy": 0.75933,
+   "micro": 0.75933,
+   "judge_errors": 0,
+   "no_graph": 0
+  },
+  "released:kggen": {
+   "essays": 100,
+   "queries": 1500,
+   "accuracy": 0.11,
+   "micro": 0.11,
+   "judge_errors": 0,
+   "no_graph": 2
+  },
+  "released:graphrag_kg": {
+   "essays": 100,
+   "queries": 1500,
+   "accuracy": 0.07133,
+   "micro": 0.07133,
+   "judge_errors": 0,
+   "no_graph": 11
+  },
+  "released:openie_kg": {
+   "essays": 100,
+   "queries": 1500,
+   "accuracy": 0.06467,
+   "micro": 0.06467,
+   "judge_errors": 0,
+   "no_graph": 2
+  }
+ },
+ "released_judge:kggen": {
+  "essays": 0,
+  "accuracy": 0.0
+ },
+ "released_judge:graphrag": {
+  "essays": 0,
+  "accuracy": 0.0
+ },
+ "released_judge:openie": {
+  "essays": 0,
+  "accuracy": 0.0
+ }
+}

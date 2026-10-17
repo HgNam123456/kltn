@@ -14,6 +14,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
@@ -37,9 +38,59 @@ def accuracy(per_essay: dict[int, list[int]]) -> dict:
 
 
 def released_accuracy(values) -> dict:
-    """Cột kggen_accuracy / graphrag_accuracy / openie_accuracy của dataset ("53.33%") -> trung bình theo bài."""
-    accs = [float(v.rstrip("%")) / 100 for v in values if isinstance(v, str) and v.strip()]
+    """Cột kggen_accuracy / graphrag_accuracy / openie_accuracy của dataset (0.5333 hoặc "53.33%") -> trung bình theo bài."""
+    accs = []
+    for v in values:
+        if isinstance(v, str) and v.strip():
+            accs.append(float(v.strip().rstrip("%")) / 100)
+        elif isinstance(v, (int, float)) and v == v:          # bỏ None, NaN
+            accs.append(float(v))
     return {"essays": len(accs), "accuracy": round(sum(accs) / len(accs), 5) if accs else 0.0}
+
+
+def _norm(s) -> str:
+    return re.sub(r"\W+", " ", str(s).lower()).strip()
+
+
+def realign(rows: list[dict], kg_col: str, resp_col: str) -> tuple[dict[int, dict], dict]:
+    """Dataset phát hành lệch hàng: ở ~80% hàng, cột KG + cột responses là của bài ở hàng TRƯỚC (KG hàng i chấm bằng
+    fact của bài i-1). Gán mỗi KG về bài có generated_queries trùng nhiều nhất với các correct_answer trong responses
+    cùng hàng (>= nửa số câu); hàng không có responses thì theo tỉ lệ từ trong tên thực thể của KG có mặt trong bài.
+    Trả (id bài -> Graph dict, thống kê cách gán)."""
+    queries = [{_norm(q) for q in r["generated_queries"]} for r in rows]
+    words = [set(_norm(r["essay_content"]).split()) for r in rows]
+    best: dict[int, tuple[float, dict]] = {}
+    how = {"by_answers": 0, "by_words": 0, "dropped": 0}
+    for r in rows:
+        g = r[kg_col]
+        if g is None:
+            continue
+        answers = {_norm(a["correct_answer"]) for a in (r[resp_col] if r[resp_col] is not None else [])
+                   if a.get("correct_answer")}
+        j, score, kind = None, 0.0, None
+        if answers:
+            j = max(range(len(rows)), key=lambda k: len(answers & queries[k]))
+            score, kind = len(answers & queries[j]), "by_answers"
+            if score < max(1, len(answers) // 2):
+                j = None
+        if j is None:
+            kw = {w for e in g["entities"] for w in _norm(e).split()}
+            if kw:
+                j = max(range(len(rows)), key=lambda k: len(kw & words[k]))
+                score, kind = len(kw & words[j]) / len(kw), "by_words"
+                if score == 0:
+                    j = None
+        if j is None:
+            how["dropped"] += 1
+            continue
+        target = int(rows[j]["id"])
+        if target in best:                       # hai KG về cùng một bài: giữ KG khớp tốt hơn
+            how["dropped"] += 1
+            if best[target][0] >= score:
+                continue
+        best[target] = (score, g)
+        how[kind] += 1
+    return {k: g for k, (_, g) in best.items()}, how
 
 
 def make_judge(base_url: str, api_key: str):
@@ -107,7 +158,8 @@ def main() -> None:
     ap.add_argument("--out", type=Path, required=True)
     args = ap.parse_args()
 
-    rows = [r for r in pd.read_parquet(args.data).to_dict("records") if r["essay_content"]]
+    all_rows = pd.read_parquet(args.data).to_dict("records")
+    rows = [r for r in all_rows if r["essay_content"]]
     queries = {int(r["id"]): [str(q) for q in r["generated_queries"]] for r in rows}
     judge = make_judge(os.environ.get("KGU_LLM_BASE_URL", "http://127.0.0.1:8080/v1"),
                        os.environ.get("KGU_LLM_API_KEY", "none"))
@@ -115,14 +167,17 @@ def main() -> None:
     for spec in args.kg:
         name, path = spec.split("=", 1)
         systems[name] = {int(d["id"]): d["graph"] for d in map(json.loads, Path(path).read_text(encoding="utf8").splitlines())}
+    realigned = {}
     for col in args.released:
-        systems[f"released:{col}"] = {int(r["id"]): ({k: [list(x) if not isinstance(x, str) else x for x in v]
-                                                      for k, v in r[col].items()} if r[col] is not None else None)
-                                      for r in rows}
+        src = [{**r, col: ({k: [list(map(str, x)) if not isinstance(x, str) else x for x in v]
+                            for k, v in r[col].items()} if r[col] is not None else None)} for r in all_rows]
+        resp = {"kggen": "kggen_responses"}.get(col, col.replace("_kg", "") + "_responses")
+        systems[f"released:{col}"], realigned[col] = realign(src, col, resp)
+        print(f"realign {col}: {realigned[col]}", flush=True)
 
     summary = {"judge": "gemma-4-E4B (llama-server, dspy ChainOfThought, temperature 0)",
                "retrieval": f"kg-gen 0.4.0 KGGen.retrieve, {RETRIEVAL_MODEL}, k=8, depth=2",
-               "essays": len(queries), "systems": {}}
+               "essays": len(queries), "realign": realigned, "systems": {}}
     for col in ("kggen", "graphrag", "openie"):
         if f"{col}_accuracy" in rows[0]:
             summary[f"released_judge:{col}"] = released_accuracy([r[f"{col}_accuracy"] for r in rows])

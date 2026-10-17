@@ -1,0 +1,105 @@
+[{"stream_name":"stdout","time":0.78798485,"data":"$ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader\n"}
+,{"stream_name":"stdout","time":0.831839128,"data":"$ git clone -q --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git /kaggle/working/kltn\n"}
+,{"stream_name":"stdout","time":1.98344939,"data":"$ git -C /kaggle/working/kltn rev-parse HEAD\n"}
+,{"stream_name":"stdout","time":1.988309062,"data":"$ pip install -q dateparser 'openai\u003e=1' kg-gen==0.4.0\n"}
+,{"stream_name":"stdout","time":6.006838619,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.0/41.0 kB 1.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.003704399,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 322.4/322.4 kB 12.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.044747734,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 35.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.073155873,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.3/226.3 kB 10.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.101223943,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 756.0/756.0 kB 34.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.234363296,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.5/14.5 MB 98.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.276519007,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.5/45.5 kB 2.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.298984074,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.5/99.5 kB 6.3 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.319874853,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.0/52.0 kB 2.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.393733701,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 105.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":7.418348223,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 472.1/472.1 kB 26.1 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":15.76904758,"data":"$ chmod +x /kaggle/working/llama-bin/llama-server\n"}
+,{"stream_name":"stderr","time":15.794829284,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":23.821546588,"data":"$ /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\n"}
+,{"stream_name":"stdout","time":43.86755625,"data":"$ timeout 2h python -u /kaggle/working/kltn/scripts/kggen_mine.py --data /kaggle/working/mine/data/train-00000-of-00001.parquet --out /kaggle/working/out/kggen.jsonl --workers 4 2\u003e\u00261 | tee /kaggle/working/out/logs/kggen.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":934.894782711,"data":"kggen: xong 100 bài → /kaggle/working/out/kggen.jsonl\n"}
+,{"stream_name":"stdout","time":939.831564971,"data":"=== kggen: ok=True 896.0s, tổng 16 phút\n"}
+,{"stream_name":"stdout","time":939.831601486,"data":"$ timeout 5h python -u /kaggle/working/kltn/scripts/score_mine.py --data /kaggle/working/mine/data/train-00000-of-00001.parquet --kg mine=/kaggle/working/out/mine.jsonl --kg kggen=/kaggle/working/out/kggen.jsonl --released kggen graphrag_kg openie_kg --workers 4 --out /kaggle/working/out/scores.json 2\u003e\u00261 | tee /kaggle/working/out/logs/score.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":952.314270504,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":953.585067187,"data":"\rLoading weights:   0%|          | 0/103 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00\u003c00:00, 2438.89it/s]\n"}
+,{"stream_name":"stdout","time":2305.914875034,"data":"=== mine: {'essays': 100, 'queries': 1500, 'accuracy': 0.854, 'micro': 0.854, 'judge_errors': 0, 'no_graph': 0}\n"}
+,{"stream_name":"stdout","time":2306.231367884,"data":"\rLoading weights:   0%|          | 0/103 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00\u003c00:00, 2660.75it/s]\n"}
+,{"stream_name":"stdout","time":3575.026616096,"data":"=== kggen: {'essays': 100, 'queries': 1500, 'accuracy': 0.75933, 'micro': 0.75933, 'judge_errors': 0, 'no_graph': 0}\n"}
+,{"stream_name":"stdout","time":3575.752392934,"data":"\rLoading weights:   0%|          | 0/103 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00\u003c00:00, 2668.33it/s]\n"}
+,{"stream_name":"stdout","time":4806.292484598,"data":"=== released:kggen: {'essays': 100, 'queries': 1500, 'accuracy': 0.11, 'micro': 0.11, 'judge_errors': 0, 'no_graph': 2}\n"}
+,{"stream_name":"stdout","time":4806.60892549,"data":"\rLoading weights:   0%|          | 0/103 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00\u003c00:00, 2695.92it/s]\n"}
+,{"stream_name":"stdout","time":5827.663772118,"data":"=== released:graphrag_kg: {'essays': 100, 'queries': 1500, 'accuracy': 0.07133, 'micro': 0.07133, 'judge_errors': 0, 'no_graph': 11}\n"}
+,{"stream_name":"stdout","time":5827.966451342,"data":"\rLoading weights:   0%|          | 0/103 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00\u003c00:00, 2693.11it/s]\n"}
+,{"stream_name":"stdout","time":7646.233498065,"data":"=== released:openie_kg: {'essays': 100, 'queries': 1500, 'accuracy': 0.06467, 'micro': 0.06467, 'judge_errors': 0, 'no_graph': 2}\n"}
+,{"stream_name":"stdout","time":7646.289031553,"data":"{\n"}
+,{"stream_name":"stdout","time":7646.289049847,"data":" \"judge\": \"gemma-4-E4B (llama-server, dspy ChainOfThought, temperature 0)\",\n"}
+,{"stream_name":"stdout","time":7646.289058735,"data":" \"retrieval\": \"kg-gen 0.4.0 KGGen.retrieve, all-MiniLM-L6-v2, k=8, depth=2\",\n"}
+,{"stream_name":"stdout","time":7646.289062004,"data":" \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":7646.289064795,"data":" \"systems\": {\n"}
+,{"stream_name":"stdout","time":7646.289067564,"data":"  \"mine\": {\n"}
+,{"stream_name":"stdout","time":7646.289070419,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":7646.289073197,"data":"   \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":7646.289075868,"data":"   \"accuracy\": 0.854,\n"}
+,{"stream_name":"stdout","time":7646.289079177,"data":"   \"micro\": 0.854,\n"}
+,{"stream_name":"stdout","time":7646.289094527,"data":"   \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":7646.289110164,"data":"   \"no_graph\": 0\n"}
+,{"stream_name":"stdout","time":7646.289114057,"data":"  },\n"}
+,{"stream_name":"stdout","time":7646.28911729,"data":"  \"kggen\": {\n"}
+,{"stream_name":"stdout","time":7646.289120808,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":7646.289124043,"data":"   \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":7646.289127285,"data":"   \"accuracy\": 0.75933,\n"}
+,{"stream_name":"stdout","time":7646.289130679,"data":"   \"micro\": 0.75933,\n"}
+,{"stream_name":"stdout","time":7646.289134004,"data":"   \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":7646.289137266,"data":"   \"no_graph\": 0\n"}
+,{"stream_name":"stdout","time":7646.28914091,"data":"  },\n"}
+,{"stream_name":"stdout","time":7646.289144587,"data":"  \"released:kggen\": {\n"}
+,{"stream_name":"stdout","time":7646.289148477,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":7646.289152204,"data":"   \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":7646.28915507,"data":"   \"accuracy\": 0.11,\n"}
+,{"stream_name":"stdout","time":7646.289158571,"data":"   \"micro\": 0.11,\n"}
+,{"stream_name":"stdout","time":7646.289161499,"data":"   \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":7646.289164732,"data":"   \"no_graph\": 2\n"}
+,{"stream_name":"stdout","time":7646.289167737,"data":"  },\n"}
+,{"stream_name":"stdout","time":7646.289170711,"data":"  \"released:graphrag_kg\": {\n"}
+,{"stream_name":"stdout","time":7646.289173737,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":7646.28917744,"data":"   \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":7646.289181229,"data":"   \"accuracy\": 0.07133,\n"}
+,{"stream_name":"stdout","time":7646.289185253,"data":"   \"micro\": 0.07133,\n"}
+,{"stream_name":"stdout","time":7646.289188342,"data":"   \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":7646.289191388,"data":"   \"no_graph\": 11\n"}
+,{"stream_name":"stdout","time":7646.289194593,"data":"  },\n"}
+,{"stream_name":"stdout","time":7646.289204196,"data":"  \"released:openie_kg\": {\n"}
+,{"stream_name":"stdout","time":7646.289208158,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":7646.289212144,"data":"   \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":7646.289215656,"data":"   \"accuracy\": 0.06467,\n"}
+,{"stream_name":"stdout","time":7646.289219394,"data":"   \"micro\": 0.06467,\n"}
+,{"stream_name":"stdout","time":7646.289223013,"data":"   \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":7646.289226736,"data":"   \"no_graph\": 2\n"}
+,{"stream_name":"stdout","time":7646.28922967,"data":"  }\n"}
+,{"stream_name":"stdout","time":7646.289233254,"data":" },\n"}
+,{"stream_name":"stdout","time":7646.289236621,"data":" \"released_judge:kggen\": {\n"}
+,{"stream_name":"stdout","time":7646.289245617,"data":"  \"essays\": 0,\n"}
+,{"stream_name":"stdout","time":7646.289249199,"data":"  \"accuracy\": 0.0\n"}
+,{"stream_name":"stdout","time":7646.289252708,"data":" },\n"}
+,{"stream_name":"stdout","time":7646.289256127,"data":" \"released_judge:graphrag\": {\n"}
+,{"stream_name":"stdout","time":7646.289259613,"data":"  \"essays\": 0,\n"}
+,{"stream_name":"stdout","time":7646.289263352,"data":"  \"accuracy\": 0.0\n"}
+,{"stream_name":"stdout","time":7646.289267077,"data":" },\n"}
+,{"stream_name":"stdout","time":7646.289270241,"data":" \"released_judge:openie\": {\n"}
+,{"stream_name":"stdout","time":7646.289273641,"data":"  \"essays\": 0,\n"}
+,{"stream_name":"stdout","time":7646.289277186,"data":"  \"accuracy\": 0.0\n"}
+,{"stream_name":"stdout","time":7646.289285679,"data":" }\n"}
+,{"stream_name":"stdout","time":7646.289288954,"data":"}\n"}
+,{"stream_name":"stdout","time":7648.690517816,"data":"=== score: ok=True 6708.9s, tổng 127 phút\n"}
+,{"stream_name":"stderr","time":7648.712436198,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":7648.713036028,"data":"  File \"/kaggle/src/script.py\", line 155, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":7648.713057188,"data":"    \"essays\": len(rs), \"empty\": sum(x == 0 for x in rel), \"errors\": sum(\"error\" in r or r.get(\"errors\") for r in rs),\n"}
+,{"stream_name":"stderr","time":7648.713062001,"data":"                                                                    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":7648.713065989,"data":"TypeError: unsupported operand type(s) for +: 'int' and 'NoneType'\n"}
+,{"stream_name":"stderr","time":7650.560793274,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":7650.560822394,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":7650.81131985,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":7650.811347206,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":7651.638052025,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":7652.147927285,"data":"[NbConvertApp] Writing 313789 bytes to __results__.html\n"}
+]

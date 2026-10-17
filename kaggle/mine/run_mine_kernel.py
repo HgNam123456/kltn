@@ -20,6 +20,10 @@ import urllib.request
 LIMIT = None
 KGGEN_CLUSTER = False
 REUSE_MINE = True
+# Lượt 3: KG của mình (lượt 1) và KGGen (lượt 2) đã có trong repo, điểm của hai bộ này từ lượt 2 đúng → chỉ chấm lại 3 KG
+# phát hành sau khi ghép lại đúng bài (dataset lệch hàng ở ~80% hàng, xem scripts/score_mine.py:realign).
+REUSE_KGGEN = True
+SCORE_BUILT = False
 TIMEOUT = {"mine": "3h", "kggen": "2h", "score": "5h"}
 WORKERS = 4
 KGU_REPO, KGU_BRANCH = "https://github.com/HgNam123456/kltn.git", "feat/core-pipeline"
@@ -133,11 +137,16 @@ if REUSE_MINE and not LIMIT and os.path.exists(reused):
 else:
     timed("mine", f"python -u {KLTN}/scripts/run_mine.py --data {data} --out {OUT}/mine.jsonl --workers {WORKERS} "
                   f"--device {emb_device}")
-timed("kggen", f"python -u {KLTN}/scripts/kggen_mine.py --data {data} --out {OUT}/kggen.jsonl --workers {WORKERS}"
-               + (" --cluster" if KGGEN_CLUSTER else ""))
+reused_kggen = f"{KLTN}/results/kaggle/mine/kggen.jsonl"
+if REUSE_KGGEN and not LIMIT and os.path.exists(reused_kggen):
+    shutil.copy(reused_kggen, f"{OUT}/kggen.jsonl")
+    summary["notes"].append(f"kggen.jsonl dùng lại từ lượt 2 ({reused_kggen})")
+else:
+    timed("kggen", f"python -u {KLTN}/scripts/kggen_mine.py --data {data} --out {OUT}/kggen.jsonl --workers {WORKERS}"
+                   + (" --cluster" if KGGEN_CLUSTER else ""))
 
 # 4. chấm: 2 KG mới + 3 KG phát hành, cùng judge Gemma
-kgs = " ".join(f"--kg {n}={OUT}/{n}.jsonl" for n in ("mine", "kggen") if os.path.exists(f"{OUT}/{n}.jsonl"))
+kgs = " ".join(f"--kg {n}={OUT}/{n}.jsonl" for n in ("mine", "kggen") if SCORE_BUILT and os.path.exists(f"{OUT}/{n}.jsonl"))
 timed("score", f"python -u {KLTN}/scripts/score_mine.py --data {data} {kgs} --released kggen graphrag_kg openie_kg "
                f"--workers {WORKERS} --out {OUT}/scores.json")
 server.kill()
@@ -152,7 +161,7 @@ for n in ("mine", "kggen"):
         rel = [len((r.get("graph") or {}).get("relations", [])) for r in rs]
         ent = [len((r.get("graph") or {}).get("entities", [])) for r in rs]
         summary.setdefault("graphs", {})[n] = {
-            "essays": len(rs), "empty": sum(x == 0 for x in rel), "errors": sum("error" in r or r.get("errors") for r in rs),
+            "essays": len(rs), "empty": sum(x == 0 for x in rel), "errors": sum(bool("error" in r or r.get("errors")) for r in rs),
             "avg_relations": round(sum(rel) / max(len(rs), 1), 1), "avg_entities": round(sum(ent) / max(len(rs), 1), 1)}
 
 summary["total_minutes"] = round((time.time() - T0) / 60, 1)
