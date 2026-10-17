@@ -74,3 +74,12 @@ def test_realign_falls_back_to_entity_words_when_answers_are_missing():
     out, how = score_mine.realign(rows, "kg", "resp")
     assert out[1]["entities"] == ["butterfly", "eggs"] and out[2]["entities"] == ["owl", "night"]
     assert how == {"by_answers": 0, "by_words": 2, "dropped": 0}
+
+
+mine_tables = _script("mine_tables")
+
+
+def test_mine_tables_per_essay_counts_judge_errors_as_zero():
+    recs = [{"id": 1, "evaluation": 1}, {"id": 1, "evaluation": "error: x"}, {"id": 2, "evaluation": 0}]
+    assert dict(mine_tables.per_essay(recs)) == {1: [1, 0], 2: [0]}
+    assert mine_tables.mean_pct([0.5, 1.0]) == 75.0 and mine_tables.mean_pct([]) is None

@@ -1,0 +1,70 @@
+realign kggen: {'by_answers': 96, 'by_words': 2, 'dropped': 5}
+realign graphrag_kg: {'by_answers': 84, 'by_words': 0, 'dropped': 5}
+realign openie_kg: {'by_answers': 95, 'by_words': 2, 'dropped': 4}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2168.79it/s]
+=== released:kggen: {'essays': 100, 'queries': 1500, 'accuracy': 0.68733, 'micro': 0.68733, 'judge_errors': 0, 'no_graph': 5}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2820.98it/s]
+=== released:graphrag_kg: {'essays': 100, 'queries': 1500, 'accuracy': 0.37467, 'micro': 0.37467, 'judge_errors': 0, 'no_graph': 16}
+Loading weights:   0%|          | 0/103 [00:00<?, ?it/s]Loading weights: 100%|██████████| 103/103 [00:00<00:00, 2899.65it/s]
+=== released:openie_kg: {'essays': 100, 'queries': 1500, 'accuracy': 0.44867, 'micro': 0.44867, 'judge_errors': 0, 'no_graph': 5}
+{
+ "judge": "gemma-4-E4B (llama-server, dspy ChainOfThought, temperature 0)",
+ "retrieval": "kg-gen 0.4.0 KGGen.retrieve, all-MiniLM-L6-v2, k=8, depth=2",
+ "essays": 100,
+ "realign": {
+  "kggen": {
+   "by_answers": 96,
+   "by_words": 2,
+   "dropped": 5
+  },
+  "graphrag_kg": {
+   "by_answers": 84,
+   "by_words": 0,
+   "dropped": 5
+  },
+  "openie_kg": {
+   "by_answers": 95,
+   "by_words": 2,
+   "dropped": 4
+  }
+ },
+ "systems": {
+  "released:kggen": {
+   "essays": 100,
+   "queries": 1500,
+   "accuracy": 0.68733,
+   "micro": 0.68733,
+   "judge_errors": 0,
+   "no_graph": 5
+  },
+  "released:graphrag_kg": {
+   "essays": 100,
+   "queries": 1500,
+   "accuracy": 0.37467,
+   "micro": 0.37467,
+   "judge_errors": 0,
+   "no_graph": 16
+  },
+  "released:openie_kg": {
+   "essays": 100,
+   "queries": 1500,
+   "accuracy": 0.44867,
+   "micro": 0.44867,
+   "judge_errors": 0,
+   "no_graph": 5
+  }
+ },
+ "released_judge:kggen": {
+  "essays": 100,
+  "accuracy": 0.65133
+ },
+ "released_judge:graphrag": {
+  "essays": 89,
+  "accuracy": 0.4794
+ },
+ "released_judge:openie": {
+  "essays": 98,
+  "accuracy": 0.29252
+ }
+}

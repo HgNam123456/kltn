@@ -1,0 +1,195 @@
+[{"stream_name":"stdout","time":0.876735065,"data":"$ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader\n"}
+,{"stream_name":"stdout","time":0.919662521,"data":"$ git clone -q --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git /kaggle/working/kltn\n"}
+,{"stream_name":"stdout","time":2.609538586,"data":"$ git -C /kaggle/working/kltn rev-parse HEAD\n"}
+,{"stream_name":"stdout","time":2.614751317,"data":"$ pip install -q dateparser 'openai\u003e=1' kg-gen==0.4.0\n"}
+,{"stream_name":"stdout","time":7.296291211,"data":"     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 41.0/41.0 kB 1.8 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.338279344,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 322.4/322.4 kB 10.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.382786848,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.0/1.0 MB 31.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.416164132,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 226.3/226.3 kB 9.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.451276336,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 756.0/756.0 kB 30.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.583030545,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 14.5/14.5 MB 101.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.633595628,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 45.5/45.5 kB 2.2 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.662228035,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 99.5/99.5 kB 5.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.689784009,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 52.0/52.0 kB 2.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.780324131,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.5/5.5 MB 99.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":8.8108346,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 472.1/472.1 kB 24.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stderr","time":14.335490197,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":16.448285823,"data":"$ chmod +x /kaggle/working/llama-bin/llama-server\n"}
+,{"stream_name":"stdout","time":25.011216213,"data":"$ /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\n"}
+,{"stream_name":"stdout","time":43.068241176,"data":"$ timeout 5h python -u /kaggle/working/kltn/scripts/score_mine.py --data /kaggle/working/mine/data/train-00000-of-00001.parquet  --released kggen graphrag_kg openie_kg --workers 4 --out /kaggle/working/out/scores.json 2\u003e\u00261 | tee /kaggle/working/out/logs/score.log; test ${PIPESTATUS[0]} -eq 0\n"}
+,{"stream_name":"stdout","time":48.41359586,"data":"realign kggen: {'by_answers': 96, 'by_words': 2, 'dropped': 5}\n"}
+,{"stream_name":"stdout","time":48.470327843,"data":"realign graphrag_kg: {'by_answers': 84, 'by_words': 0, 'dropped': 5}\n"}
+,{"stream_name":"stdout","time":48.672847228,"data":"realign openie_kg: {'by_answers': 95, 'by_words': 2, 'dropped': 4}\n"}
+,{"stream_name":"stdout","time":87.057310678,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":89.218975561,"data":"\rLoading weights:   0%|          | 0/103 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00\u003c00:00, 2168.79it/s]\n"}
+,{"stream_name":"stdout","time":1493.13382361,"data":"=== released:kggen: {'essays': 100, 'queries': 1500, 'accuracy': 0.68733, 'micro': 0.68733, 'judge_errors': 0, 'no_graph': 5}\n"}
+,{"stream_name":"stdout","time":1494.101771612,"data":"\rLoading weights:   0%|          | 0/103 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00\u003c00:00, 2820.98it/s]\n"}
+,{"stream_name":"stdout","time":2617.187104197,"data":"=== released:graphrag_kg: {'essays': 100, 'queries': 1500, 'accuracy': 0.37467, 'micro': 0.37467, 'judge_errors': 0, 'no_graph': 16}\n"}
+,{"stream_name":"stdout","time":2618.104933968,"data":"\rLoading weights:   0%|          | 0/103 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 103/103 [00:00\u003c00:00, 2899.65it/s]\n"}
+,{"stream_name":"stdout","time":4734.140561183,"data":"=== released:openie_kg: {'essays': 100, 'queries': 1500, 'accuracy': 0.44867, 'micro': 0.44867, 'judge_errors': 0, 'no_graph': 5}\n"}
+,{"stream_name":"stdout","time":4734.198493292,"data":"{\n"}
+,{"stream_name":"stdout","time":4734.198536387,"data":" \"judge\": \"gemma-4-E4B (llama-server, dspy ChainOfThought, temperature 0)\",\n"}
+,{"stream_name":"stdout","time":4734.198555295,"data":" \"retrieval\": \"kg-gen 0.4.0 KGGen.retrieve, all-MiniLM-L6-v2, k=8, depth=2\",\n"}
+,{"stream_name":"stdout","time":4734.198561276,"data":" \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4734.19856616,"data":" \"realign\": {\n"}
+,{"stream_name":"stdout","time":4734.198570921,"data":"  \"kggen\": {\n"}
+,{"stream_name":"stdout","time":4734.198575642,"data":"   \"by_answers\": 96,\n"}
+,{"stream_name":"stdout","time":4734.198580417,"data":"   \"by_words\": 2,\n"}
+,{"stream_name":"stdout","time":4734.198591226,"data":"   \"dropped\": 5\n"}
+,{"stream_name":"stdout","time":4734.198595368,"data":"  },\n"}
+,{"stream_name":"stdout","time":4734.198599155,"data":"  \"graphrag_kg\": {\n"}
+,{"stream_name":"stdout","time":4734.198622913,"data":"   \"by_answers\": 84,\n"}
+,{"stream_name":"stdout","time":4734.198628837,"data":"   \"by_words\": 0,\n"}
+,{"stream_name":"stdout","time":4734.198634263,"data":"   \"dropped\": 5\n"}
+,{"stream_name":"stdout","time":4734.198639684,"data":"  },\n"}
+,{"stream_name":"stdout","time":4734.198644796,"data":"  \"openie_kg\": {\n"}
+,{"stream_name":"stdout","time":4734.198649547,"data":"   \"by_answers\": 95,\n"}
+,{"stream_name":"stdout","time":4734.198654246,"data":"   \"by_words\": 2,\n"}
+,{"stream_name":"stdout","time":4734.198658893,"data":"   \"dropped\": 4\n"}
+,{"stream_name":"stdout","time":4734.198663522,"data":"  }\n"}
+,{"stream_name":"stdout","time":4734.198668111,"data":" },\n"}
+,{"stream_name":"stdout","time":4734.198672886,"data":" \"systems\": {\n"}
+,{"stream_name":"stdout","time":4734.198677724,"data":"  \"released:kggen\": {\n"}
+,{"stream_name":"stdout","time":4734.198698876,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4734.198702052,"data":"   \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":4734.198704591,"data":"   \"accuracy\": 0.68733,\n"}
+,{"stream_name":"stdout","time":4734.198731635,"data":"   \"micro\": 0.68733,\n"}
+,{"stream_name":"stdout","time":4734.198736043,"data":"   \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":4734.19874038,"data":"   \"no_graph\": 5\n"}
+,{"stream_name":"stdout","time":4734.198744603,"data":"  },\n"}
+,{"stream_name":"stdout","time":4734.198748727,"data":"  \"released:graphrag_kg\": {\n"}
+,{"stream_name":"stdout","time":4734.198752901,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4734.198756415,"data":"   \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":4734.198759927,"data":"   \"accuracy\": 0.37467,\n"}
+,{"stream_name":"stdout","time":4734.198763354,"data":"   \"micro\": 0.37467,\n"}
+,{"stream_name":"stdout","time":4734.198766892,"data":"   \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":4734.198770334,"data":"   \"no_graph\": 16\n"}
+,{"stream_name":"stdout","time":4734.198773868,"data":"  },\n"}
+,{"stream_name":"stdout","time":4734.19877719,"data":"  \"released:openie_kg\": {\n"}
+,{"stream_name":"stdout","time":4734.198780698,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4734.198784175,"data":"   \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":4734.19878769,"data":"   \"accuracy\": 0.44867,\n"}
+,{"stream_name":"stdout","time":4734.198791198,"data":"   \"micro\": 0.44867,\n"}
+,{"stream_name":"stdout","time":4734.198794664,"data":"   \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":4734.198798196,"data":"   \"no_graph\": 5\n"}
+,{"stream_name":"stdout","time":4734.198801646,"data":"  }\n"}
+,{"stream_name":"stdout","time":4734.198805044,"data":" },\n"}
+,{"stream_name":"stdout","time":4734.19881367,"data":" \"released_judge:kggen\": {\n"}
+,{"stream_name":"stdout","time":4734.198817752,"data":"  \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4734.198832904,"data":"  \"accuracy\": 0.65133\n"}
+,{"stream_name":"stdout","time":4734.198837254,"data":" },\n"}
+,{"stream_name":"stdout","time":4734.198841194,"data":" \"released_judge:graphrag\": {\n"}
+,{"stream_name":"stdout","time":4734.198845684,"data":"  \"essays\": 89,\n"}
+,{"stream_name":"stdout","time":4734.198849286,"data":"  \"accuracy\": 0.4794\n"}
+,{"stream_name":"stdout","time":4734.19885286,"data":" },\n"}
+,{"stream_name":"stdout","time":4734.198856205,"data":" \"released_judge:openie\": {\n"}
+,{"stream_name":"stdout","time":4734.198860357,"data":"  \"essays\": 98,\n"}
+,{"stream_name":"stdout","time":4734.198880824,"data":"  \"accuracy\": 0.29252\n"}
+,{"stream_name":"stdout","time":4734.198884892,"data":" }\n"}
+,{"stream_name":"stdout","time":4734.198888318,"data":"}\n"}
+,{"stream_name":"stdout","time":4739.825841978,"data":"=== score: ok=True 4696.8s, tổng 79 phút\n"}
+,{"stream_name":"stdout","time":4739.847887757,"data":"{\n"}
+,{"stream_name":"stdout","time":4739.847914002,"data":" \"limit\": null,\n"}
+,{"stream_name":"stdout","time":4739.847928455,"data":" \"kggen_cluster\": false,\n"}
+,{"stream_name":"stdout","time":4739.84793114,"data":" \"runs\": {\n"}
+,{"stream_name":"stdout","time":4739.847933593,"data":"  \"score\": {\n"}
+,{"stream_name":"stdout","time":4739.84793592,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4739.847938241,"data":"   \"seconds\": 4696.8\n"}
+,{"stream_name":"stdout","time":4739.84794054,"data":"  }\n"}
+,{"stream_name":"stdout","time":4739.847953067,"data":" },\n"}
+,{"stream_name":"stdout","time":4739.847955414,"data":" \"notes\": [\n"}
+,{"stream_name":"stdout","time":4739.84795763,"data":"  \"mine.jsonl dùng lại từ lượt 1 (/kaggle/working/kltn/results/kaggle/mine/mine.jsonl, commit b7d1e65)\",\n"}
+,{"stream_name":"stdout","time":4739.847960704,"data":"  \"kggen.jsonl dùng lại từ lượt 2 (/kaggle/working/kltn/results/kaggle/mine/kggen.jsonl)\"\n"}
+,{"stream_name":"stdout","time":4739.847963216,"data":" ],\n"}
+,{"stream_name":"stdout","time":4739.847965302,"data":" \"gpus\": [\n"}
+,{"stream_name":"stdout","time":4739.847967467,"data":"  \"Tesla T4, 15360 MiB\",\n"}
+,{"stream_name":"stdout","time":4739.847969669,"data":"  \"Tesla T4, 15360 MiB\"\n"}
+,{"stream_name":"stdout","time":4739.847972031,"data":" ],\n"}
+,{"stream_name":"stdout","time":4739.847974219,"data":" \"kltn_commit\": \"b7d1e653f5d3a800cb3b994e07852a35f591a82c\",\n"}
+,{"stream_name":"stdout","time":4739.847976674,"data":" \"server_flags\": \" --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\",\n"}
+,{"stream_name":"stdout","time":4739.847980669,"data":" \"scores\": {\n"}
+,{"stream_name":"stdout","time":4739.847982884,"data":"  \"judge\": \"gemma-4-E4B (llama-server, dspy ChainOfThought, temperature 0)\",\n"}
+,{"stream_name":"stdout","time":4739.847985578,"data":"  \"retrieval\": \"kg-gen 0.4.0 KGGen.retrieve, all-MiniLM-L6-v2, k=8, depth=2\",\n"}
+,{"stream_name":"stdout","time":4739.847987912,"data":"  \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4739.847990096,"data":"  \"realign\": {\n"}
+,{"stream_name":"stdout","time":4739.847992324,"data":"   \"kggen\": {\n"}
+,{"stream_name":"stdout","time":4739.847994518,"data":"    \"by_answers\": 96,\n"}
+,{"stream_name":"stdout","time":4739.847996762,"data":"    \"by_words\": 2,\n"}
+,{"stream_name":"stdout","time":4739.847998965,"data":"    \"dropped\": 5\n"}
+,{"stream_name":"stdout","time":4739.84800117,"data":"   },\n"}
+,{"stream_name":"stdout","time":4739.8480033,"data":"   \"graphrag_kg\": {\n"}
+,{"stream_name":"stdout","time":4739.848005525,"data":"    \"by_answers\": 84,\n"}
+,{"stream_name":"stdout","time":4739.848007724,"data":"    \"by_words\": 0,\n"}
+,{"stream_name":"stdout","time":4739.848009921,"data":"    \"dropped\": 5\n"}
+,{"stream_name":"stdout","time":4739.848012084,"data":"   },\n"}
+,{"stream_name":"stdout","time":4739.848014189,"data":"   \"openie_kg\": {\n"}
+,{"stream_name":"stdout","time":4739.848016364,"data":"    \"by_answers\": 95,\n"}
+,{"stream_name":"stdout","time":4739.848018532,"data":"    \"by_words\": 2,\n"}
+,{"stream_name":"stdout","time":4739.848020692,"data":"    \"dropped\": 4\n"}
+,{"stream_name":"stdout","time":4739.848022832,"data":"   }\n"}
+,{"stream_name":"stdout","time":4739.848024982,"data":"  },\n"}
+,{"stream_name":"stdout","time":4739.848027088,"data":"  \"systems\": {\n"}
+,{"stream_name":"stdout","time":4739.84802925,"data":"   \"released:kggen\": {\n"}
+,{"stream_name":"stdout","time":4739.848031425,"data":"    \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4739.848033606,"data":"    \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":4739.848035819,"data":"    \"accuracy\": 0.68733,\n"}
+,{"stream_name":"stdout","time":4739.848038057,"data":"    \"micro\": 0.68733,\n"}
+,{"stream_name":"stdout","time":4739.848040262,"data":"    \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":4739.848042462,"data":"    \"no_graph\": 5\n"}
+,{"stream_name":"stdout","time":4739.848044615,"data":"   },\n"}
+,{"stream_name":"stdout","time":4739.848049324,"data":"   \"released:graphrag_kg\": {\n"}
+,{"stream_name":"stdout","time":4739.848051902,"data":"    \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4739.848054095,"data":"    \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":4739.848056282,"data":"    \"accuracy\": 0.37467,\n"}
+,{"stream_name":"stdout","time":4739.848058478,"data":"    \"micro\": 0.37467,\n"}
+,{"stream_name":"stdout","time":4739.848060675,"data":"    \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":4739.848062857,"data":"    \"no_graph\": 16\n"}
+,{"stream_name":"stdout","time":4739.848065024,"data":"   },\n"}
+,{"stream_name":"stdout","time":4739.848067129,"data":"   \"released:openie_kg\": {\n"}
+,{"stream_name":"stdout","time":4739.848069408,"data":"    \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4739.84807157,"data":"    \"queries\": 1500,\n"}
+,{"stream_name":"stdout","time":4739.848073745,"data":"    \"accuracy\": 0.44867,\n"}
+,{"stream_name":"stdout","time":4739.848075932,"data":"    \"micro\": 0.44867,\n"}
+,{"stream_name":"stdout","time":4739.848078104,"data":"    \"judge_errors\": 0,\n"}
+,{"stream_name":"stdout","time":4739.848080282,"data":"    \"no_graph\": 5\n"}
+,{"stream_name":"stdout","time":4739.848082452,"data":"   }\n"}
+,{"stream_name":"stdout","time":4739.848084573,"data":"  },\n"}
+,{"stream_name":"stdout","time":4739.848086666,"data":"  \"released_judge:kggen\": {\n"}
+,{"stream_name":"stdout","time":4739.848088893,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4739.84809108,"data":"   \"accuracy\": 0.65133\n"}
+,{"stream_name":"stdout","time":4739.84809331,"data":"  },\n"}
+,{"stream_name":"stdout","time":4739.848095404,"data":"  \"released_judge:graphrag\": {\n"}
+,{"stream_name":"stdout","time":4739.848097615,"data":"   \"essays\": 89,\n"}
+,{"stream_name":"stdout","time":4739.848099782,"data":"   \"accuracy\": 0.4794\n"}
+,{"stream_name":"stdout","time":4739.848102001,"data":"  },\n"}
+,{"stream_name":"stdout","time":4739.848104094,"data":"  \"released_judge:openie\": {\n"}
+,{"stream_name":"stdout","time":4739.848106311,"data":"   \"essays\": 98,\n"}
+,{"stream_name":"stdout","time":4739.848108462,"data":"   \"accuracy\": 0.29252\n"}
+,{"stream_name":"stdout","time":4739.84811066,"data":"  }\n"}
+,{"stream_name":"stdout","time":4739.848112752,"data":" },\n"}
+,{"stream_name":"stdout","time":4739.848118372,"data":" \"graphs\": {\n"}
+,{"stream_name":"stdout","time":4739.848120902,"data":"  \"mine\": {\n"}
+,{"stream_name":"stdout","time":4739.848123087,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4739.848125265,"data":"   \"empty\": 0,\n"}
+,{"stream_name":"stdout","time":4739.84812752,"data":"   \"errors\": 1,\n"}
+,{"stream_name":"stdout","time":4739.848129691,"data":"   \"avg_relations\": 71.6,\n"}
+,{"stream_name":"stdout","time":4739.848132022,"data":"   \"avg_entities\": 84.2\n"}
+,{"stream_name":"stdout","time":4739.848134236,"data":"  },\n"}
+,{"stream_name":"stdout","time":4739.84813641,"data":"  \"kggen\": {\n"}
+,{"stream_name":"stdout","time":4739.84813857,"data":"   \"essays\": 100,\n"}
+,{"stream_name":"stdout","time":4739.848140749,"data":"   \"empty\": 0,\n"}
+,{"stream_name":"stdout","time":4739.848143019,"data":"   \"errors\": 0,\n"}
+,{"stream_name":"stdout","time":4739.848146357,"data":"   \"avg_relations\": 46.9,\n"}
+,{"stream_name":"stdout","time":4739.848148585,"data":"   \"avg_entities\": 37.4\n"}
+,{"stream_name":"stdout","time":4739.84815079,"data":"  }\n"}
+,{"stream_name":"stdout","time":4739.848152999,"data":" },\n"}
+,{"stream_name":"stdout","time":4739.848157119,"data":" \"total_minutes\": 79.0\n"}
+,{"stream_name":"stdout","time":4739.848159595,"data":"}\n"}
+,{"stream_name":"stdout","time":4739.86274028,"data":"DONE\n"}
+,{"stream_name":"stderr","time":4741.938905797,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4741.9389404,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4742.211957837,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4742.211990276,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":4743.012186512,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":4743.542031511,"data":"[NbConvertApp] Writing 315818 bytes to __results__.html\n"}
+]

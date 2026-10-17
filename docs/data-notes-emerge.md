@@ -596,3 +596,41 @@ thực thể được hyperlink. Thử biến thể không hyperlink trên đủ
 liên kết; anchor chỉ có cạnh trong KG con ở 63,4% bài; chỉ 21,8% gold Exists dính tới anchor. → Biến thể không hyperlink
 cần bộ liên kết trên toàn Wikidata; EMERGE tự làm việc tương tự bằng ReLiK (`kg_rag@32`, 13,8 C Exists). Quyết định 17/10:
 không chạy, báo rõ điều kiện (pipeline nằm giữa `kg_rag@32` và oracle về thông tin đầu vào).
+
+## 20. MINE-1 (benchmark của KGGen, 17/10; kernel `kgu-mine` v1–v3)
+
+100 bài luận × 15 fact (HF `josancamon/kg-gen-MINE-evaluation-dataset`, 101 hàng, hàng id 106 bài rỗng). Mỗi bài dựng
+một KG; mỗi fact truy xuất bằng đúng hàm của kg-gen 0.4.0 (`KGGen.retrieve`, all-MiniLM-L6-v2, k=8, sâu 2), judge dspy
+`EvaluateResponse` chép nguyên văn → 1 nếu ngữ cảnh chứa fact; điểm = trung bình theo bài. Judge là Gemma 4 E4B
+(paper dùng judge OpenAI) nên chấm lại cả ba KG phát hành trong dataset để đo lệch.
+
+- Mình: `scripts/run_mine.py` (TemporalKG condense + gộp tên như COVID-NYT v2, mỗi đoạn một lượt `update`). KGGen 0.4.0
+  bằng Gemma (`scripts/kggen_mine.py`) KHÔNG gom cụm: lượt 1 bật gom cụm thì Gemma trả nhãn ngoài danh sách cho phép,
+  vòng thử lại của KGGen chạy ~10 giờ cho 6 bài, kernel bị cắt ở 12 giờ (các lượt KGGen trên COVID-NYT/EMERGE cũng không
+  gom cụm).
+- **Dataset lệch hàng**: ở ~80% hàng, cột KG + `*_responses` + `*_accuracy` là của bài ở hàng trước (KG hàng i chứa thực
+  thể của bài i−1, `correct_answer` trong responses là fact của bài i−1). Chấm thẳng theo hàng thì KG phát hành chỉ được
+  ~10%. `score_mine.realign` gán mỗi KG về bài có `generated_queries` trùng ≥ nửa số `correct_answer` (fallback: từ trong
+  tên thực thể); kggen gán 96 + 2, graphrag 84, openie 95 + 2; bỏ 4–5 (trùng đích, khớp thua).
+
+Kết quả (`results/kaggle/mine/v2` cho mình + KGGen-Gemma, `v3` cho KG phát hành; bảng `v3/tables.json` từ
+`scripts/mine_tables.py`):
+
+| | 100 bài | trên bài có KG KGGen phát hành (95) | judge gốc (dataset, đã ghép) | paper |
+|---|---|---|---|---|
+| Mình (Gemma 4 E4B) | **85,4** | **85,4** | | |
+| KGGen + Gemma 4 E4B, không gom cụm | 75,9 | 76,3 | | |
+| KGGen phát hành | 68,7 | 72,4 | 66,6 | 66,07 |
+| GraphRAG phát hành (84 bài có KG) | 37,5 | 44,6 (trên 84) | 47,5 | 47,80 |
+| OpenIE phát hành (95 bài có KG) | 44,9 | 47,2 (trên 95) | 29,1 | 29,84 |
+
+Trên tập 84 bài của GraphRAG: mình 84,7, KGGen-Gemma 74,2.
+
+- Judge Gemma lệch không đều: KGGen +5,8, GraphRAG −2,9, OpenIE +18,1 so judge gốc; đồng ý từng fact 78 / 85 / 71%.
+  Ngữ cảnh truy xuất của mình (kg-gen 0.4.0) khác `retrieved_context` trong dataset ở gần mọi fact (bản kg-gen khác) → lệch
+  gộp cả truy xuất lẫn judge, không tách được. Thứ tự KGGen > hai hệ còn lại giữ nguyên; GraphRAG/OpenIE đảo chỗ.
+- Metric chỉ đo recall theo ngữ cảnh truy xuất: không phạt cạnh thừa/sai, KG to và tên thực thể dài có lợi. Mình 71,6 quan
+  hệ, 84,2 thực thể/bài, 3,4 từ/thực thể, ngữ cảnh 1.996 ký tự/fact; KGGen-Gemma 46,9 / 37,4 / 1,7 / 1.458; KGGen phát
+  hành 71,6 / 101,4 / 1,3 / 1.366; OpenIE 267 quan hệ, 4.490 ký tự (judge Gemma dễ hơn hẳn trên ngữ cảnh dài này).
+- Chi phí: mình 178 giây/bài, KGGen-Gemma 34 giây/bài (cùng llama-server 4 slot); 1 bài KG mình có lỗi lệnh gọi ở một
+  đoạn (vẫn có KG).

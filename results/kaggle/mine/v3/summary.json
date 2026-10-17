@@ -1,0 +1,97 @@
+{
+ "limit": null,
+ "kggen_cluster": false,
+ "runs": {
+  "score": {
+   "ok": true,
+   "seconds": 4696.8
+  }
+ },
+ "notes": [
+  "mine.jsonl dùng lại từ lượt 1 (/kaggle/working/kltn/results/kaggle/mine/mine.jsonl, commit b7d1e65)",
+  "kggen.jsonl dùng lại từ lượt 2 (/kaggle/working/kltn/results/kaggle/mine/kggen.jsonl)"
+ ],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "b7d1e653f5d3a800cb3b994e07852a35f591a82c",
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "scores": {
+  "judge": "gemma-4-E4B (llama-server, dspy ChainOfThought, temperature 0)",
+  "retrieval": "kg-gen 0.4.0 KGGen.retrieve, all-MiniLM-L6-v2, k=8, depth=2",
+  "essays": 100,
+  "realign": {
+   "kggen": {
+    "by_answers": 96,
+    "by_words": 2,
+    "dropped": 5
+   },
+   "graphrag_kg": {
+    "by_answers": 84,
+    "by_words": 0,
+    "dropped": 5
+   },
+   "openie_kg": {
+    "by_answers": 95,
+    "by_words": 2,
+    "dropped": 4
+   }
+  },
+  "systems": {
+   "released:kggen": {
+    "essays": 100,
+    "queries": 1500,
+    "accuracy": 0.68733,
+    "micro": 0.68733,
+    "judge_errors": 0,
+    "no_graph": 5
+   },
+   "released:graphrag_kg": {
+    "essays": 100,
+    "queries": 1500,
+    "accuracy": 0.37467,
+    "micro": 0.37467,
+    "judge_errors": 0,
+    "no_graph": 16
+   },
+   "released:openie_kg": {
+    "essays": 100,
+    "queries": 1500,
+    "accuracy": 0.44867,
+    "micro": 0.44867,
+    "judge_errors": 0,
+    "no_graph": 5
+   }
+  },
+  "released_judge:kggen": {
+   "essays": 100,
+   "accuracy": 0.65133
+  },
+  "released_judge:graphrag": {
+   "essays": 89,
+   "accuracy": 0.4794
+  },
+  "released_judge:openie": {
+   "essays": 98,
+   "accuracy": 0.29252
+  }
+ },
+ "graphs": {
+  "mine": {
+   "essays": 100,
+   "empty": 0,
+   "errors": 1,
+   "avg_relations": 71.6,
+   "avg_entities": 84.2
+  },
+  "kggen": {
+   "essays": 100,
+   "empty": 0,
+   "errors": 0,
+   "avg_relations": 46.9,
+   "avg_entities": 37.4
+  }
+ },
+ "total_minutes": 79.0
+}
