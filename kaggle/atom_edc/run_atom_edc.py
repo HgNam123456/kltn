@@ -180,8 +180,11 @@ src = src.replace(old, old + (
     "            oie_triples_list = json.load(open(os.environ['EDC_OIE_FROM'], encoding='utf-8'))\n"
     "            assert len(oie_triples_list) == len(input_text_list), (len(oie_triples_list), len(input_text_list))\n"
     "            return oie_triples_list, ['' for _ in input_text_list], ['' for _ in input_text_list]\n"))
+old = 'logger.debug(f"Retrieved candidate relations {canon_candidate_dict}")'
+assert src.count(old) == 1, "vá log EDC không khớp source"   # lỗi gốc: câu không có triple OIE → biến chưa gán
+src = src.replace(old, 'logger.debug(f"Retrieved candidate relations {canon_candidate_dict_list}")')
 open(fw, "w", encoding="utf-8").write(src)
-imp = "from edc.utils.e5_mistral_utils import MistralForSequenceEmbedding"
+imp ="from edc.utils.e5_mistral_utils import MistralForSequenceEmbedding"
 for f in sorted(os.listdir(f"{EDC}/edc")):
     if f.endswith(".py") and imp in (s := open(f"{EDC}/edc/{f}", encoding="utf-8").read()):
         open(f"{EDC}/edc/{f}", "w", encoding="utf-8").write(s.replace(imp, (
