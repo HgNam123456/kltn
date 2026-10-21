@@ -15,6 +15,10 @@ def test_to_triples_drops_time_dedupes_and_counts_timed_quintuples():
     assert triples == [["Herbert", "is_born_in", "Mülhausen"], ["Herbert", "is_diplomat_of", "Germany"],
                        ["Herbert", "dies_in", "Badenweiler"]]
     assert timed == 2
+    with_time, _ = atom_edc.to_triples(quints, with_time=True)
+    assert with_time == [["Herbert", "is_born_in", "Mülhausen"], ["Herbert", "is_born_in (start time)", "1904-12-15"],
+                         ["Herbert", "is_diplomat_of", "Germany"], ["Herbert", "is_diplomat_of (end time)", "1991-08-10"],
+                         ["Herbert", "dies_in", "Badenweiler"]]
 
 
 def test_factoid_list_skips_blank_and_failed_outputs():

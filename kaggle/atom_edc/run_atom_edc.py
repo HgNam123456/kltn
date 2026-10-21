@@ -6,14 +6,17 @@ kgu-home-benchmarks và kgu-edc-rebel-wikinre. Hai hệ được chấm:
 - atom_edc: triple thô của ATOM thay cho bước OIE của EDC, rồi Schema Definition + Schema Canonicalization của EDC theo
   target schema (không refinement), embedder e5-mistral-7b-instruct fp16 trên GPU thứ hai — đúng phần sau OIE của EDC
   ở kgu-edc-rebel-wikinre / kgu-home-benchmarks, nên so với dòng EDC ở đó chỉ khác bước trích.
+- atom_time_edc: như atom_edc nhưng thêm một triple ngày cho mỗi t_start/t_end của ATOM (scripts/atom_edc.py, file
+  .time.json), vì ATOM không đặt ngày làm đuôi triple mà gold của EDC có quan hệ ngày; chỉ chạy khi số triple thêm vào
+  ≥ TIME_MIN_SHARE số triple (Wiki-NRE gần như không có ngày).
 Vá EDC như các kernel trước (tên model chứa "gpt" + OPENAI_BASE_URL; embedder fp16; import e5_mistral_utils bọc
 try/except; free_model của nhánh OpenAI bọc điều kiện) và thêm: EDC.oie đọc triple có sẵn từ $EDC_OIE_FROM.
 Chấm evaluate/evaluation_script.py của EDC qua scripts/edc_eval_fast.py.
 
 Kernel gọi file này qua stub (kaggle/atom_edc/<tên>/kernel.py) đặt ATOM_EDC_DATASETS (vd. "webnlg" hoặc
 "rebel,wiki-nre") và ATOM_EDC_LIMIT (số câu mỗi bộ, rỗng = đủ).
-Đầu ra /kaggle/working/out/: <bộ>/atom/oie_kg.txt(+.json, .factoids.json, .stats.json), <bộ>/atom_edc/{canon_kg.txt,
-schema_definition.txt, result_at_each_stage.json}, <bộ>/<hệ>_eval.txt, summary.json, logs/*.log, server.log.
+Đầu ra /kaggle/working/out/: <bộ>/atom/oie_kg.txt(+.json, .factoids.json, .stats.json), <bộ>/atom_edc/ và <bộ>/atom_time_edc/
+{canon_kg.txt, schema_definition.txt, result_at_each_stage.json}, <bộ>/<hệ>_eval.txt, summary.json, logs/*.log, server.log.
 """
 import ast
 import json
@@ -28,6 +31,7 @@ DATASETS = [d for d in os.environ.get("ATOM_EDC_DATASETS", "webnlg,rebel,wiki-nr
 LIMIT = int(os.environ["ATOM_EDC_LIMIT"]) if os.environ.get("ATOM_EDC_LIMIT") else None
 EDC_TIMEOUT_H = 4                     # mỗi bộ; EDC gọi LLM tuần tự, lỗi API thì thử lại vô hạn
 ATOM_TIMEOUT_H = 5
+TIME_MIN_SHARE = 0.02
 WORKERS = 4
 KGU_REPO, KGU_BRANCH = "https://github.com/HgNam123456/kltn.git", "feat/core-pipeline"
 EDC_REPO, EDC_COMMIT = "https://github.com/clear-nus/edc.git", "02aad17e2fc1e9845c84746b384e7fd3160edc1a"
@@ -184,23 +188,29 @@ for f in sorted(os.listdir(f"{EDC}/edc")):
             f"try:\n    {imp}\nexcept Exception:  # chỉ dùng cho refinement có adapter\n"
             "    MistralForSequenceEmbedding = None")))
 llm = "gpt-gemma-4-e4b"      # chứa "gpt" → nhánh OpenAI của EDC; llama-server bỏ qua tên model
-for ds in DATASETS:
-    oie_json = f"{OUT}/{ds}/atom/oie_kg.txt.json"
+CANON = [("atom_edc", "oie_kg.txt.json"), ("atom_time_edc", "oie_kg.txt.time.json")]
+for ds, (system, oie_file) in ((ds, c) for ds in DATASETS for c in CANON):
+    oie_json = f"{OUT}/{ds}/atom/{oie_file}"
     if not os.path.exists(oie_json):
         continue
-    edc_out = f"{WORK}/edc_run_{ds}"
+    stats = summary["runs"].get(f"atom_{ds}", {}).get("stats", {})
+    if system == "atom_time_edc" and stats.get("time_triples", 0) < TIME_MIN_SHARE * max(stats.get("triples", 0), 1):
+        summary["notes"].append(f"{ds}: bỏ atom_time_edc, triple ngày thêm vào {stats.get('time_triples')} "
+                                f"/ {stats.get('triples')} triple")
+        continue
+    edc_out = f"{WORK}/edc_run_{ds}_{system}"
     edc_env = {**env, "OPENAI_KEY": "none", "OPENAI_BASE_URL": f"{SERVER}/v1", "PYTHONPATH": EDC,
                "EDC_EMB_DEVICE": "cuda:1" if two_gpu else "cuda:0", "EDC_OIE_FROM": oie_json}
-    if timed(f"atom_edc_{ds}", f"timeout {EDC_TIMEOUT_H}h python -u run.py --oie_llm {llm} --sd_llm {llm} "
+    if timed(f"{system}_{ds}", f"timeout {EDC_TIMEOUT_H}h python -u run.py --oie_llm {llm} --sd_llm {llm} "
                                f"--sc_llm {llm} --sc_embedder {emb} "
                                f"--oie_few_shot_example_file_path ./few_shot_examples/{ds}/oie_few_shot_examples.txt "
                                f"--sd_few_shot_example_file_path ./few_shot_examples/{ds}/sd_few_shot_examples.txt "
                                f"--input_text_file_path {DATA[ds]['input']} --target_schema_path ./schemas/{ds}_schema.csv "
                                f"--output_dir {edc_out} --logging_verbose", DATA[ds]["n"], cwd=EDC, env=edc_env):
-        os.makedirs(f"{OUT}/{ds}/atom_edc", exist_ok=True)
+        os.makedirs(f"{OUT}/{ds}/{system}", exist_ok=True)
         for name in ("schema_definition.txt", "canon_kg.txt", "result_at_each_stage.json"):
             if os.path.exists(f"{edc_out}/iter0/{name}"):
-                shutil.copy(f"{edc_out}/iter0/{name}", f"{OUT}/{ds}/atom_edc/{name}")
+                shutil.copy(f"{edc_out}/iter0/{name}", f"{OUT}/{ds}/{system}/{name}")
 server.kill()
 
 
@@ -232,7 +242,7 @@ def n_parseable(path: str) -> dict:
 
 for ds in DATASETS:
     summary[ds] = {}
-    for system, cand in (("atom", f"{OUT}/{ds}/atom/oie_kg.txt"), ("atom_edc", f"{OUT}/{ds}/atom_edc/canon_kg.txt")):
+    for system, cand in (("atom", f"{OUT}/{ds}/atom/oie_kg.txt"), *((s, f"{OUT}/{ds}/{s}/canon_kg.txt") for s, _ in CANON)):
         if not os.path.exists(cand):
             continue
         t0 = time.time()
@@ -251,6 +261,6 @@ summary["total_minutes"] = round((time.time() - T0) / 60, 1)
 json.dump(summary, open(f"{OUT}/summary.json", "w"), indent=1, ensure_ascii=False)
 print(json.dumps(summary, indent=1, ensure_ascii=False), flush=True)
 
-for d in (KLTN, EDC, venv_atom, f"{WORK}/models", f"{WORK}/llama-bin", *(f"{WORK}/edc_run_{ds}" for ds in DATASETS)):
+for d in (KLTN, EDC, venv_atom, f"{WORK}/models", f"{WORK}/llama-bin", *(f"{WORK}/edc_run_{ds}_{s}" for ds in DATASETS for s, _ in CANON)):
     shutil.rmtree(d, ignore_errors=True)       # không đưa repo/model/venv vào output
 print("DONE", flush=True)

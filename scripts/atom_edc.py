@@ -3,10 +3,13 @@ trong repo clear-nus/edc: một câu mỗi dòng), Gemma 4 qua llama-server. Hai
 scripts/atom_covid.py --mode atom: AtomicFact trên từng câu, rồi RelationshipsExtractor trên từng factoid với
 system_query = Prompt.temporal_system_query + Prompt.EXAMPLES (prompt và ví dụ của ATOM, không dùng few-shot của bộ).
 Câu của EDC không có ngày quan sát → obs_timestamp = OBS.
-5-tuple → triple (head, relation, tail), bỏ t_start/t_end vì benchmark EDC chỉ chấm triple; ngày mà ATOM đặt vào
-t_start/t_end (vd. năm sinh) vì thế mất — đếm ở stats. Bỏ triple trùng hệt trong một câu (hai 5-tuple chỉ khác thời gian).
+5-tuple → triple (head, relation, tail), bỏ t_start/t_end vì benchmark EDC chỉ chấm triple; bỏ triple trùng hệt trong
+một câu (hai 5-tuple chỉ khác thời gian). ATOM đặt ngày vào t_start/t_end chứ không làm đuôi triple, trong khi gold của
+EDC có quan hệ ngày (REBEL 27,9% gold: date of birth/death, publication date…; WebNLG 9,2%; Wiki-NRE 0) → biến thể
+<out>.time.json thêm (head, "<quan hệ> (start time)"/"(end time)", ngày) cho mỗi mốc, để bước canonicalize của EDC có
+thể đưa về quan hệ ngày của schema.
 Đầu ra: <out> (định dạng canon_kg.txt của EDC, chấm thô), <out>.json (list triple mỗi câu, nạp vào Schema Definition +
-Canonicalization của EDC thay cho OIE của EDC), <out>.factoids.json, <out>.stats.json.
+Canonicalization của EDC thay cho OIE của EDC), <out>.time.json, <out>.factoids.json, <out>.stats.json.
 
 Dùng: KGU_LLM_BASE_URL=http://127.0.0.1:8080/v1 python scripts/atom_edc.py --input edc/datasets/webnlg.txt \
           --out out/webnlg/atom/oie_kg.txt [--limit N] [--chunk 32]
@@ -30,14 +33,24 @@ def _script(name: str):
     return m
 
 
-def to_triples(quintuples: list[tuple]) -> tuple[list[list[str]], int]:
-    """5-tuple → triple, bỏ trùng giữ thứ tự; trả (triple, số 5-tuple có thời gian)."""
+def to_triples(quintuples: list[tuple], with_time: bool = False) -> tuple[list[list[str]], int]:
+    """5-tuple → triple, bỏ trùng giữ thứ tự; with_time: thêm một triple ngày cho mỗi t_start/t_end.
+    Trả (triple, số 5-tuple có thời gian)."""
     seen, out, timed = set(), [], 0
+
+    def add(triple):
+        if triple not in seen:
+            seen.add(triple)
+            out.append(list(triple))
+
     for h, r, t, ts, te in quintuples:
         timed += bool(ts or te)
-        if (h, r, t) not in seen:
-            seen.add((h, r, t))
-            out.append([h, r, t])
+        add((h, r, t))
+        if with_time:
+            for d in ts:
+                add((h, f"{r} (start time)", d))
+            for d in te:
+                add((h, f"{r} (end time)", d))
     return out, timed
 
 
@@ -61,6 +74,7 @@ def main() -> None:
     system_query = Prompt.temporal_system_query(obs_timestamp=OBS) + Prompt.EXAMPLES.value
     factoids: list[list[str]] = []
     triples: list[list[list[str]]] = []
+    timed_triples: list[list[list[str]]] = []
     stats = {"sentences": len(texts), "factoid_errors": 0, "tuple_errors": 0, "quintuples": 0, "timed": 0}
     t0 = time.time()
     for i in range(0, len(texts), args.chunk):
@@ -86,6 +100,7 @@ def main() -> None:
             quints = atom.flatten(rel_outs[k:k + len(fs)])
             k += len(fs)
             ts, timed = to_triples(quints)
+            timed_triples.append(to_triples(quints, with_time=True)[0])
             stats["quintuples"] += len(quints)
             stats["timed"] += timed
             factoids.append(fs)
@@ -93,10 +108,12 @@ def main() -> None:
         print(f"atom {min(i + args.chunk, len(texts))}/{len(texts)} ({round(time.time() - t0)}s)", flush=True)
     stats["factoids"] = sum(map(len, factoids))
     stats["triples"] = sum(map(len, triples))
+    stats["time_triples"] = sum(map(len, timed_triples)) - stats["triples"]
     stats["seconds"] = round(time.time() - t0, 1)
     args.out.parent.mkdir(parents=True, exist_ok=True)
     args.out.write_text("\n".join(str(t) for t in triples) + "\n", encoding="utf8")
     Path(f"{args.out}.json").write_text(json.dumps(triples, ensure_ascii=False), encoding="utf8")
+    Path(f"{args.out}.time.json").write_text(json.dumps(timed_triples, ensure_ascii=False), encoding="utf8")
     Path(f"{args.out}.factoids.json").write_text(json.dumps(factoids, ensure_ascii=False), encoding="utf8")
     Path(f"{args.out}.stats.json").write_text(json.dumps(stats, indent=1), encoding="utf8")
     print(json.dumps(stats), flush=True)
