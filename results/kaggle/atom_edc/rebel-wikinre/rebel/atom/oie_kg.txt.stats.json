@@ -1,0 +1,11 @@
+{
+ "sentences": 1000,
+ "factoid_errors": 0,
+ "tuple_errors": 0,
+ "quintuples": 4245,
+ "timed": 1522,
+ "factoids": 3355,
+ "triples": 4216,
+ "time_triples": 1777,
+ "seconds": 5720.2
+}

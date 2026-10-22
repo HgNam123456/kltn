@@ -1,0 +1,868 @@
+[2026-10-21 15:33:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🔍 Detected LLM Provider: OpenAI
+[2026-10-21 15:33:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📊 Rate Limiting Config: 40 requests/batch, 8000 tokens/batch
+[2026-10-21 15:33:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:33:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:33:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:34:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:34:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 95 prompts into 9 batches for OpenAI API
+[2026-10-21 15:34:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 95 contexts in 9 batches for OpenAI API
+[2026-10-21 15:34:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/9 with 11 requests (OpenAI)
+[2026-10-21 15:34:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:34:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/9 with 11 requests (OpenAI)
+[2026-10-21 15:34:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:34:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/9 with 11 requests (OpenAI)
+[2026-10-21 15:35:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:35:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/9 with 11 requests (OpenAI)
+[2026-10-21 15:35:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:35:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/9 with 11 requests (OpenAI)
+[2026-10-21 15:35:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:35:37] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/9 with 11 requests (OpenAI)
+[2026-10-21 15:35:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:35:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/9 with 11 requests (OpenAI)
+[2026-10-21 15:36:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:36:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/9 with 11 requests (OpenAI)
+[2026-10-21 15:36:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:36:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/9 with 7 requests (OpenAI)
+[2026-10-21 15:36:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 95 requests for OpenAI
+atom 32/1165 (155s)
+[2026-10-21 15:36:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:36:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:36:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:36:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:36:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 84 prompts into 8 batches for OpenAI API
+[2026-10-21 15:36:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 84 contexts in 8 batches for OpenAI API
+[2026-10-21 15:36:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 15:37:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:37:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 15:37:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:37:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 15:37:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:37:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 15:37:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:37:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 10 requests (OpenAI)
+[2026-10-21 15:38:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:38:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 15:38:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:38:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 15:38:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:38:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 8 requests (OpenAI)
+[2026-10-21 15:38:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 84 requests for OpenAI
+atom 64/1165 (296s)
+[2026-10-21 15:38:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:38:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:38:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:39:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:39:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 105 prompts into 10 batches for OpenAI API
+[2026-10-21 15:39:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 105 contexts in 10 batches for OpenAI API
+[2026-10-21 15:39:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/10 with 11 requests (OpenAI)
+[2026-10-21 15:39:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:39:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/10 with 11 requests (OpenAI)
+[2026-10-21 15:39:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:39:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/10 with 11 requests (OpenAI)
+[2026-10-21 15:39:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:39:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/10 with 11 requests (OpenAI)
+[2026-10-21 15:40:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:40:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/10 with 10 requests (OpenAI)
+[2026-10-21 15:40:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:40:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/10 with 10 requests (OpenAI)
+[2026-10-21 15:40:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:40:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/10 with 11 requests (OpenAI)
+[2026-10-21 15:40:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:41:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/10 with 10 requests (OpenAI)
+[2026-10-21 15:41:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:41:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/10 with 11 requests (OpenAI)
+[2026-10-21 15:41:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:41:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 10/10 with 9 requests (OpenAI)
+[2026-10-21 15:41:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 105 requests for OpenAI
+atom 96/1165 (466s)
+[2026-10-21 15:41:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:41:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:41:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:42:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:42:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 91 prompts into 9 batches for OpenAI API
+[2026-10-21 15:42:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 91 contexts in 9 batches for OpenAI API
+[2026-10-21 15:42:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/9 with 10 requests (OpenAI)
+[2026-10-21 15:42:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:42:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/9 with 11 requests (OpenAI)
+[2026-10-21 15:42:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:42:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/9 with 11 requests (OpenAI)
+[2026-10-21 15:42:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:42:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/9 with 11 requests (OpenAI)
+[2026-10-21 15:43:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:43:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/9 with 11 requests (OpenAI)
+[2026-10-21 15:43:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:43:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/9 with 11 requests (OpenAI)
+[2026-10-21 15:43:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:43:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/9 with 11 requests (OpenAI)
+[2026-10-21 15:43:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:43:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/9 with 11 requests (OpenAI)
+[2026-10-21 15:44:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:44:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/9 with 4 requests (OpenAI)
+[2026-10-21 15:44:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 91 requests for OpenAI
+atom 128/1165 (615s)
+[2026-10-21 15:44:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:44:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:44:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:44:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:44:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 92 prompts into 9 batches for OpenAI API
+[2026-10-21 15:44:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 92 contexts in 9 batches for OpenAI API
+[2026-10-21 15:44:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/9 with 10 requests (OpenAI)
+[2026-10-21 15:44:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:44:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/9 with 10 requests (OpenAI)
+[2026-10-21 15:44:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:44:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/9 with 11 requests (OpenAI)
+[2026-10-21 15:45:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:45:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/9 with 11 requests (OpenAI)
+[2026-10-21 15:45:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:45:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/9 with 10 requests (OpenAI)
+[2026-10-21 15:45:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:45:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/9 with 10 requests (OpenAI)
+[2026-10-21 15:45:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:45:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/9 with 11 requests (OpenAI)
+[2026-10-21 15:46:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:46:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/9 with 11 requests (OpenAI)
+[2026-10-21 15:46:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:46:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/9 with 8 requests (OpenAI)
+[2026-10-21 15:46:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 92 requests for OpenAI
+atom 160/1165 (762s)
+[2026-10-21 15:46:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:46:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:46:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:46:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:46:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 90 prompts into 9 batches for OpenAI API
+[2026-10-21 15:46:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 90 contexts in 9 batches for OpenAI API
+[2026-10-21 15:46:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/9 with 11 requests (OpenAI)
+[2026-10-21 15:47:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:47:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/9 with 11 requests (OpenAI)
+[2026-10-21 15:47:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:47:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/9 with 11 requests (OpenAI)
+[2026-10-21 15:47:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:47:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/9 with 11 requests (OpenAI)
+[2026-10-21 15:48:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:48:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/9 with 11 requests (OpenAI)
+[2026-10-21 15:48:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:48:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/9 with 11 requests (OpenAI)
+[2026-10-21 15:48:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:48:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/9 with 11 requests (OpenAI)
+[2026-10-21 15:48:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:48:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/9 with 11 requests (OpenAI)
+[2026-10-21 15:49:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:49:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/9 with 2 requests (OpenAI)
+[2026-10-21 15:49:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 90 requests for OpenAI
+atom 192/1165 (912s)
+[2026-10-21 15:49:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:49:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:49:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:49:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:49:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 83 prompts into 8 batches for OpenAI API
+[2026-10-21 15:49:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 83 contexts in 8 batches for OpenAI API
+[2026-10-21 15:49:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 15:49:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:49:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 15:49:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:49:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 10 requests (OpenAI)
+[2026-10-21 15:50:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:50:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 10 requests (OpenAI)
+[2026-10-21 15:50:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:50:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 10 requests (OpenAI)
+[2026-10-21 15:50:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:50:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 15:50:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:50:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 15:51:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 9 requests (OpenAI)
+[2026-10-21 15:51:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 83 requests for OpenAI
+atom 224/1165 (1046s)
+[2026-10-21 15:51:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:51:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:51:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:51:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:51:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 82 prompts into 8 batches for OpenAI API
+[2026-10-21 15:51:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 82 contexts in 8 batches for OpenAI API
+[2026-10-21 15:51:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 15:51:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:51:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 10 requests (OpenAI)
+[2026-10-21 15:52:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:52:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 15:52:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:52:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 15:52:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:52:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 10 requests (OpenAI)
+[2026-10-21 15:52:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:52:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 15:53:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:53:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 15:53:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:53:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 7 requests (OpenAI)
+[2026-10-21 15:53:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 82 requests for OpenAI
+atom 256/1165 (1181s)
+[2026-10-21 15:53:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:53:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:53:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:53:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:53:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 79 prompts into 8 batches for OpenAI API
+[2026-10-21 15:53:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 79 contexts in 8 batches for OpenAI API
+[2026-10-21 15:53:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 10 requests (OpenAI)
+[2026-10-21 15:54:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:54:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 15:54:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:54:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 15:54:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:54:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 15:54:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:54:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 15:55:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:55:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 15:55:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:55:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 15:55:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:55:47] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 3 requests (OpenAI)
+[2026-10-21 15:55:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 79 requests for OpenAI
+atom 288/1165 (1314s)
+[2026-10-21 15:55:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:55:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:55:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:56:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:56:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 79 prompts into 8 batches for OpenAI API
+[2026-10-21 15:56:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 79 contexts in 8 batches for OpenAI API
+[2026-10-21 15:56:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 10 requests (OpenAI)
+[2026-10-21 15:56:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:56:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 15:56:37] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:56:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 15:56:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:56:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 15:57:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:57:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 15:57:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:57:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 15:57:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:57:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 15:57:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:57:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 3 requests (OpenAI)
+[2026-10-21 15:58:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 79 requests for OpenAI
+atom 320/1165 (1443s)
+[2026-10-21 15:58:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 15:58:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 15:58:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 15:58:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 15:58:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 89 prompts into 9 batches for OpenAI API
+[2026-10-21 15:58:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 89 contexts in 9 batches for OpenAI API
+[2026-10-21 15:58:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/9 with 11 requests (OpenAI)
+[2026-10-21 15:58:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:58:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/9 with 11 requests (OpenAI)
+[2026-10-21 15:58:47] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:58:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/9 with 11 requests (OpenAI)
+[2026-10-21 15:59:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:59:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/9 with 11 requests (OpenAI)
+[2026-10-21 15:59:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:59:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/9 with 11 requests (OpenAI)
+[2026-10-21 15:59:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:59:37] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/9 with 11 requests (OpenAI)
+[2026-10-21 15:59:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 15:59:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/9 with 11 requests (OpenAI)
+[2026-10-21 16:00:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:00:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/9 with 11 requests (OpenAI)
+[2026-10-21 16:00:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:00:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/9 with 1 requests (OpenAI)
+[2026-10-21 16:00:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 89 requests for OpenAI
+atom 352/1165 (1591s)
+[2026-10-21 16:00:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:00:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:00:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:00:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:00:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 79 prompts into 8 batches for OpenAI API
+[2026-10-21 16:00:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 79 contexts in 8 batches for OpenAI API
+[2026-10-21 16:00:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:01:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:01:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:01:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:01:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:01:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:01:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:01:47] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:01:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:02:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:02:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:02:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:02:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:02:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:02:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 2 requests (OpenAI)
+[2026-10-21 16:02:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 79 requests for OpenAI
+atom 384/1165 (1721s)
+[2026-10-21 16:02:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:02:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:02:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:02:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:02:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 79 prompts into 8 batches for OpenAI API
+[2026-10-21 16:02:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 79 contexts in 8 batches for OpenAI API
+[2026-10-21 16:02:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:03:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:03:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:03:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:03:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 10 requests (OpenAI)
+[2026-10-21 16:03:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:03:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:03:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:03:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:04:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:04:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 10 requests (OpenAI)
+[2026-10-21 16:04:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:04:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:04:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:04:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 4 requests (OpenAI)
+[2026-10-21 16:04:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 79 requests for OpenAI
+atom 416/1165 (1851s)
+[2026-10-21 16:04:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:04:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:04:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:05:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:05:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 70 prompts into 7 batches for OpenAI API
+[2026-10-21 16:05:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 70 contexts in 7 batches for OpenAI API
+[2026-10-21 16:05:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/7 with 10 requests (OpenAI)
+[2026-10-21 16:05:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:05:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/7 with 11 requests (OpenAI)
+[2026-10-21 16:05:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:05:37] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/7 with 10 requests (OpenAI)
+[2026-10-21 16:05:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:05:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/7 with 11 requests (OpenAI)
+[2026-10-21 16:06:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:06:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/7 with 11 requests (OpenAI)
+[2026-10-21 16:06:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:06:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/7 with 11 requests (OpenAI)
+[2026-10-21 16:06:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:06:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/7 with 6 requests (OpenAI)
+[2026-10-21 16:06:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 70 requests for OpenAI
+atom 448/1165 (1973s)
+[2026-10-21 16:06:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:06:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:06:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:07:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:07:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 76 prompts into 7 batches for OpenAI API
+[2026-10-21 16:07:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 76 contexts in 7 batches for OpenAI API
+[2026-10-21 16:07:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/7 with 11 requests (OpenAI)
+[2026-10-21 16:07:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:07:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/7 with 11 requests (OpenAI)
+[2026-10-21 16:07:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:07:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/7 with 11 requests (OpenAI)
+[2026-10-21 16:07:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:07:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/7 with 11 requests (OpenAI)
+[2026-10-21 16:08:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:08:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/7 with 11 requests (OpenAI)
+[2026-10-21 16:08:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:08:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/7 with 11 requests (OpenAI)
+[2026-10-21 16:08:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:08:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/7 with 10 requests (OpenAI)
+[2026-10-21 16:08:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 76 requests for OpenAI
+atom 480/1165 (2096s)
+[2026-10-21 16:08:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:08:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:08:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:09:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:09:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 78 prompts into 8 batches for OpenAI API
+[2026-10-21 16:09:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 78 contexts in 8 batches for OpenAI API
+[2026-10-21 16:09:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:09:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:09:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:09:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:09:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:09:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:09:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:10:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:10:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 10 requests (OpenAI)
+[2026-10-21 16:10:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:10:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:10:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:10:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:11:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:11:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 2 requests (OpenAI)
+[2026-10-21 16:11:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 78 requests for OpenAI
+atom 512/1165 (2228s)
+[2026-10-21 16:11:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:11:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:11:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:11:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:11:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 86 prompts into 8 batches for OpenAI API
+[2026-10-21 16:11:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 86 contexts in 8 batches for OpenAI API
+[2026-10-21 16:11:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:11:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:11:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:11:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:11:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 10 requests (OpenAI)
+[2026-10-21 16:12:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:12:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:12:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:12:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:12:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:12:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:12:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:12:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:13:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:13:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 10 requests (OpenAI)
+[2026-10-21 16:13:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 86 requests for OpenAI
+atom 544/1165 (2368s)
+[2026-10-21 16:13:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:13:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:13:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:13:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:13:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 97 prompts into 9 batches for OpenAI API
+[2026-10-21 16:13:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 97 contexts in 9 batches for OpenAI API
+[2026-10-21 16:13:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/9 with 11 requests (OpenAI)
+[2026-10-21 16:13:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:13:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/9 with 11 requests (OpenAI)
+[2026-10-21 16:14:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:14:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/9 with 10 requests (OpenAI)
+[2026-10-21 16:14:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:14:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/9 with 11 requests (OpenAI)
+[2026-10-21 16:14:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:14:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/9 with 11 requests (OpenAI)
+[2026-10-21 16:15:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:15:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/9 with 11 requests (OpenAI)
+[2026-10-21 16:15:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:15:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/9 with 11 requests (OpenAI)
+[2026-10-21 16:15:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:15:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/9 with 11 requests (OpenAI)
+[2026-10-21 16:15:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:15:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/9 with 10 requests (OpenAI)
+[2026-10-21 16:16:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 97 requests for OpenAI
+atom 576/1165 (2526s)
+[2026-10-21 16:16:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:16:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:16:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:16:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:16:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 69 prompts into 7 batches for OpenAI API
+[2026-10-21 16:16:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 69 contexts in 7 batches for OpenAI API
+[2026-10-21 16:16:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/7 with 11 requests (OpenAI)
+[2026-10-21 16:16:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:16:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/7 with 11 requests (OpenAI)
+[2026-10-21 16:16:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:16:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/7 with 11 requests (OpenAI)
+[2026-10-21 16:17:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:17:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/7 with 11 requests (OpenAI)
+[2026-10-21 16:17:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:17:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/7 with 11 requests (OpenAI)
+[2026-10-21 16:17:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:17:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/7 with 11 requests (OpenAI)
+[2026-10-21 16:17:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:18:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/7 with 3 requests (OpenAI)
+[2026-10-21 16:18:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 69 requests for OpenAI
+atom 608/1165 (2646s)
+[2026-10-21 16:18:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:18:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:18:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:18:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:18:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 83 prompts into 8 batches for OpenAI API
+[2026-10-21 16:18:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 83 contexts in 8 batches for OpenAI API
+[2026-10-21 16:18:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:18:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:18:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:18:47] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:18:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:19:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:19:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:19:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:19:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:19:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:19:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:19:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:19:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:20:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:20:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 6 requests (OpenAI)
+[2026-10-21 16:20:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 83 requests for OpenAI
+atom 640/1165 (2779s)
+[2026-10-21 16:20:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:20:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:20:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:20:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:20:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 73 prompts into 7 batches for OpenAI API
+[2026-10-21 16:20:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 73 contexts in 7 batches for OpenAI API
+[2026-10-21 16:20:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/7 with 10 requests (OpenAI)
+[2026-10-21 16:20:47] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:20:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/7 with 10 requests (OpenAI)
+[2026-10-21 16:21:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:21:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/7 with 10 requests (OpenAI)
+[2026-10-21 16:21:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:21:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/7 with 11 requests (OpenAI)
+[2026-10-21 16:21:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:21:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/7 with 10 requests (OpenAI)
+[2026-10-21 16:21:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:21:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/7 with 11 requests (OpenAI)
+[2026-10-21 16:22:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:22:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/7 with 11 requests (OpenAI)
+[2026-10-21 16:22:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 73 requests for OpenAI
+atom 672/1165 (2902s)
+[2026-10-21 16:22:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:22:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:22:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:22:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:22:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 102 prompts into 10 batches for OpenAI API
+[2026-10-21 16:22:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 102 contexts in 10 batches for OpenAI API
+[2026-10-21 16:22:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/10 with 11 requests (OpenAI)
+[2026-10-21 16:22:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:22:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/10 with 10 requests (OpenAI)
+[2026-10-21 16:23:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:23:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/10 with 11 requests (OpenAI)
+[2026-10-21 16:23:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:23:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/10 with 11 requests (OpenAI)
+[2026-10-21 16:23:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:23:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/10 with 11 requests (OpenAI)
+[2026-10-21 16:23:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:24:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/10 with 11 requests (OpenAI)
+[2026-10-21 16:24:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:24:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/10 with 10 requests (OpenAI)
+[2026-10-21 16:24:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:24:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/10 with 11 requests (OpenAI)
+[2026-10-21 16:24:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:24:47] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/10 with 11 requests (OpenAI)
+[2026-10-21 16:25:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:25:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 10/10 with 5 requests (OpenAI)
+[2026-10-21 16:25:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 102 requests for OpenAI
+atom 704/1165 (3071s)
+[2026-10-21 16:25:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:25:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:25:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:25:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:25:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 67 prompts into 7 batches for OpenAI API
+[2026-10-21 16:25:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 67 contexts in 7 batches for OpenAI API
+[2026-10-21 16:25:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/7 with 11 requests (OpenAI)
+[2026-10-21 16:25:37] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:25:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/7 with 11 requests (OpenAI)
+[2026-10-21 16:25:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:25:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/7 with 11 requests (OpenAI)
+[2026-10-21 16:26:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:26:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/7 with 11 requests (OpenAI)
+[2026-10-21 16:26:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:26:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/7 with 11 requests (OpenAI)
+[2026-10-21 16:26:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:26:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/7 with 11 requests (OpenAI)
+[2026-10-21 16:26:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:27:01] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/7 with 1 requests (OpenAI)
+[2026-10-21 16:27:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 67 requests for OpenAI
+atom 736/1165 (3184s)
+[2026-10-21 16:27:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:27:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:27:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:27:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:27:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 84 prompts into 8 batches for OpenAI API
+[2026-10-21 16:27:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 84 contexts in 8 batches for OpenAI API
+[2026-10-21 16:27:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:27:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:27:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 10 requests (OpenAI)
+[2026-10-21 16:27:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:27:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:28:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:28:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:28:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:28:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:28:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:28:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:28:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:28:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:29:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:29:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 8 requests (OpenAI)
+[2026-10-21 16:29:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 84 requests for OpenAI
+atom 768/1165 (3319s)
+[2026-10-21 16:29:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:29:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:29:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:29:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:29:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 77 prompts into 8 batches for OpenAI API
+[2026-10-21 16:29:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 77 contexts in 8 batches for OpenAI API
+[2026-10-21 16:29:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:29:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:29:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 10 requests (OpenAI)
+[2026-10-21 16:30:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:30:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:30:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:30:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:30:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:30:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:30:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:30:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:31:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:31:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:31:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:31:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 1 requests (OpenAI)
+[2026-10-21 16:31:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 77 requests for OpenAI
+atom 800/1165 (3446s)
+[2026-10-21 16:31:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:31:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:31:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:31:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:31:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 78 prompts into 8 batches for OpenAI API
+[2026-10-21 16:31:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 78 contexts in 8 batches for OpenAI API
+[2026-10-21 16:31:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 10 requests (OpenAI)
+[2026-10-21 16:31:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:31:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:32:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:32:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:32:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:32:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:32:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:32:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:32:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:32:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:33:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:33:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:33:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:33:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 2 requests (OpenAI)
+[2026-10-21 16:33:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 78 requests for OpenAI
+atom 832/1165 (3576s)
+[2026-10-21 16:33:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:33:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:33:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:33:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:33:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 85 prompts into 8 batches for OpenAI API
+[2026-10-21 16:33:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 85 contexts in 8 batches for OpenAI API
+[2026-10-21 16:33:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 10 requests (OpenAI)
+[2026-10-21 16:34:03] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:34:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 10 requests (OpenAI)
+[2026-10-21 16:34:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:34:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:34:34] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:34:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 10 requests (OpenAI)
+[2026-10-21 16:34:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:34:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:35:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:35:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:35:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:35:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:35:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:35:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 11 requests (OpenAI)
+[2026-10-21 16:35:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 85 requests for OpenAI
+atom 864/1165 (3714s)
+[2026-10-21 16:35:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:35:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:35:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:36:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:36:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 100 prompts into 10 batches for OpenAI API
+[2026-10-21 16:36:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 100 contexts in 10 batches for OpenAI API
+[2026-10-21 16:36:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/10 with 11 requests (OpenAI)
+[2026-10-21 16:36:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:36:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/10 with 11 requests (OpenAI)
+[2026-10-21 16:36:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:36:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/10 with 11 requests (OpenAI)
+[2026-10-21 16:36:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:36:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/10 with 11 requests (OpenAI)
+[2026-10-21 16:37:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:37:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/10 with 11 requests (OpenAI)
+[2026-10-21 16:37:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:37:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/10 with 11 requests (OpenAI)
+[2026-10-21 16:37:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:37:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/10 with 11 requests (OpenAI)
+[2026-10-21 16:38:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:38:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/10 with 11 requests (OpenAI)
+[2026-10-21 16:38:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:38:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/10 with 11 requests (OpenAI)
+[2026-10-21 16:38:31] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:38:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 10/10 with 1 requests (OpenAI)
+[2026-10-21 16:38:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 100 requests for OpenAI
+atom 896/1165 (3877s)
+[2026-10-21 16:38:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:38:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:38:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:38:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:38:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 105 prompts into 10 batches for OpenAI API
+[2026-10-21 16:38:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 105 contexts in 10 batches for OpenAI API
+[2026-10-21 16:38:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/10 with 11 requests (OpenAI)
+[2026-10-21 16:39:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:39:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/10 with 11 requests (OpenAI)
+[2026-10-21 16:39:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:39:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/10 with 10 requests (OpenAI)
+[2026-10-21 16:39:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:39:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/10 with 11 requests (OpenAI)
+[2026-10-21 16:39:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:39:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/10 with 11 requests (OpenAI)
+[2026-10-21 16:40:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:40:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/10 with 11 requests (OpenAI)
+[2026-10-21 16:40:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:40:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/10 with 11 requests (OpenAI)
+[2026-10-21 16:40:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:40:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/10 with 10 requests (OpenAI)
+[2026-10-21 16:40:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:40:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/10 with 11 requests (OpenAI)
+[2026-10-21 16:41:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:41:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 10/10 with 8 requests (OpenAI)
+[2026-10-21 16:41:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 105 requests for OpenAI
+atom 928/1165 (4045s)
+[2026-10-21 16:41:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:41:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:41:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:41:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:41:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 88 prompts into 8 batches for OpenAI API
+[2026-10-21 16:41:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 88 contexts in 8 batches for OpenAI API
+[2026-10-21 16:41:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:41:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:41:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:42:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:42:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:42:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:42:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:42:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:42:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:42:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:43:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:43:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:43:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:43:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:43:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 11 requests (OpenAI)
+[2026-10-21 16:43:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 88 requests for OpenAI
+atom 960/1165 (4187s)
+[2026-10-21 16:43:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:43:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:43:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:44:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:44:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 95 prompts into 9 batches for OpenAI API
+[2026-10-21 16:44:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 95 contexts in 9 batches for OpenAI API
+[2026-10-21 16:44:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/9 with 11 requests (OpenAI)
+[2026-10-21 16:44:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:44:18] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/9 with 11 requests (OpenAI)
+[2026-10-21 16:44:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:44:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/9 with 11 requests (OpenAI)
+[2026-10-21 16:44:49] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:44:51] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/9 with 10 requests (OpenAI)
+[2026-10-21 16:45:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:45:06] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/9 with 10 requests (OpenAI)
+[2026-10-21 16:45:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:45:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/9 with 11 requests (OpenAI)
+[2026-10-21 16:45:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:45:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/9 with 11 requests (OpenAI)
+[2026-10-21 16:45:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:45:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/9 with 11 requests (OpenAI)
+[2026-10-21 16:46:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:46:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/9 with 9 requests (OpenAI)
+[2026-10-21 16:46:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 95 requests for OpenAI
+atom 992/1165 (4343s)
+[2026-10-21 16:46:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:46:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:46:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:46:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:46:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 84 prompts into 8 batches for OpenAI API
+[2026-10-21 16:46:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 84 contexts in 8 batches for OpenAI API
+[2026-10-21 16:46:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:46:52] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:46:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:47:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:47:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:47:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:47:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:47:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:47:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:47:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:47:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:48:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:48:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:48:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:48:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 7 requests (OpenAI)
+[2026-10-21 16:48:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 84 requests for OpenAI
+atom 1024/1165 (4482s)
+[2026-10-21 16:48:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:48:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:48:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:48:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:48:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 81 prompts into 8 batches for OpenAI API
+[2026-10-21 16:48:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 81 contexts in 8 batches for OpenAI API
+[2026-10-21 16:48:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:49:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:49:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 10 requests (OpenAI)
+[2026-10-21 16:49:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:49:29] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:49:42] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:49:44] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 11 requests (OpenAI)
+[2026-10-21 16:49:57] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:49:59] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:50:13] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:50:15] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:50:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:50:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:50:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:50:47] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 5 requests (OpenAI)
+[2026-10-21 16:50:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 81 requests for OpenAI
+atom 1056/1165 (4617s)
+[2026-10-21 16:50:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:50:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:50:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 102 prompts into 10 batches for OpenAI API
+[2026-10-21 16:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 102 contexts in 10 batches for OpenAI API
+[2026-10-21 16:51:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/10 with 11 requests (OpenAI)
+[2026-10-21 16:51:26] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:51:28] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/10 with 11 requests (OpenAI)
+[2026-10-21 16:51:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:51:45] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/10 with 11 requests (OpenAI)
+[2026-10-21 16:51:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:52:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/10 with 11 requests (OpenAI)
+[2026-10-21 16:52:14] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:52:16] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/10 with 11 requests (OpenAI)
+[2026-10-21 16:52:30] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:52:32] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/10 with 11 requests (OpenAI)
+[2026-10-21 16:52:46] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:52:48] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/10 with 11 requests (OpenAI)
+[2026-10-21 16:53:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:53:04] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/10 with 11 requests (OpenAI)
+[2026-10-21 16:53:17] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:53:19] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 9/10 with 11 requests (OpenAI)
+[2026-10-21 16:53:33] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:53:35] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 10/10 with 3 requests (OpenAI)
+[2026-10-21 16:53:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 102 requests for OpenAI
+atom 1088/1165 (4780s)
+[2026-10-21 16:53:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:53:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:53:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:53:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:53:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 82 prompts into 8 batches for OpenAI API
+[2026-10-21 16:53:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 82 contexts in 8 batches for OpenAI API
+[2026-10-21 16:53:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:54:07] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:54:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:54:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:54:24] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:54:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:54:40] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 10 requests (OpenAI)
+[2026-10-21 16:54:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:54:55] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:55:09] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:55:11] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:55:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:55:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:55:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:55:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 6 requests (OpenAI)
+[2026-10-21 16:55:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 82 requests for OpenAI
+atom 1120/1165 (4912s)
+[2026-10-21 16:55:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 32 prompts into 1 batches for OpenAI API
+[2026-10-21 16:55:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 32 contexts in 1 batches for OpenAI API
+[2026-10-21 16:55:50] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 32 requests (OpenAI)
+[2026-10-21 16:56:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 32 requests for OpenAI
+[2026-10-21 16:56:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 77 prompts into 8 batches for OpenAI API
+[2026-10-21 16:56:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 77 contexts in 8 batches for OpenAI API
+[2026-10-21 16:56:05] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/8 with 11 requests (OpenAI)
+[2026-10-21 16:56:20] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:56:22] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/8 with 11 requests (OpenAI)
+[2026-10-21 16:56:36] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:56:38] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/8 with 11 requests (OpenAI)
+[2026-10-21 16:56:54] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:56:56] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 4/8 with 10 requests (OpenAI)
+[2026-10-21 16:57:10] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:57:12] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 5/8 with 11 requests (OpenAI)
+[2026-10-21 16:57:25] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:57:27] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 6/8 with 11 requests (OpenAI)
+[2026-10-21 16:57:41] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:57:43] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 7/8 with 11 requests (OpenAI)
+[2026-10-21 16:57:58] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:58:00] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 8/8 with 1 requests (OpenAI)
+[2026-10-21 16:58:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 77 requests for OpenAI
+atom 1152/1165 (5044s)
+[2026-10-21 16:58:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 13 prompts into 1 batches for OpenAI API
+[2026-10-21 16:58:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 13 contexts in 1 batches for OpenAI API
+[2026-10-21 16:58:02] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/1 with 13 requests (OpenAI)
+[2026-10-21 16:58:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 13 requests for OpenAI
+[2026-10-21 16:58:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📦 Split 33 prompts into 3 batches for OpenAI API
+[2026-10-21 16:58:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 🚀 Processing 33 contexts in 3 batches for OpenAI API
+[2026-10-21 16:58:08] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 1/3 with 11 requests (OpenAI)
+[2026-10-21 16:58:21] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:58:23] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 2/3 with 11 requests (OpenAI)
+[2026-10-21 16:58:37] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 😴 Sleeping 2.0s between batches for OpenAI
+[2026-10-21 16:58:39] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] 📋 Processing batch 3/3 with 11 requests (OpenAI)
+[2026-10-21 16:58:53] [    INFO] [itext2kg.llm_output_parsing.langchain_output_parser] ✅ Successfully processed all 33 requests for OpenAI
+atom 1165/1165 (5095s)
+{"sentences": 1165, "factoid_errors": 0, "tuple_errors": 0, "quintuples": 3352, "timed": 562, "factoids": 3099, "triples": 3334, "time_triples": 681, "seconds": 5095.3}

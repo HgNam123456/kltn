@@ -1,0 +1,114 @@
+{
+ "limit": null,
+ "datasets": [
+  "webnlg"
+ ],
+ "runs": {
+  "atom_webnlg": {
+   "ok": true,
+   "seconds": 5105.3,
+   "sec_per_item": 4.38,
+   "stats": {
+    "sentences": 1165,
+    "factoid_errors": 0,
+    "tuple_errors": 0,
+    "quintuples": 3352,
+    "timed": 562,
+    "factoids": 3099,
+    "triples": 3334,
+    "time_triples": 681,
+    "seconds": 5095.3
+   }
+  },
+  "atom_edc_webnlg": {
+   "ok": true,
+   "seconds": 2014.7,
+   "sec_per_item": 1.73
+  },
+  "atom_time_edc_webnlg": {
+   "ok": true,
+   "seconds": 2338.3,
+   "sec_per_item": 2.01
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "96b7840a6e549f372870fb2d22373ffd313e6722",
+ "n": {
+  "webnlg": 1165
+ },
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "edc_embedder": "intfloat/e5-mistral-7b-instruct",
+ "webnlg": {
+  "atom": {
+   "Partial": {
+    "P": 0.4587,
+    "R": 0.4885,
+    "F1": 0.4688
+   },
+   "Strict": {
+    "P": 0.3365,
+    "R": 0.352,
+    "F1": 0.3422
+   },
+   "Exact": {
+    "P": 0.4041,
+    "R": 0.4217,
+    "F1": 0.4103
+   },
+   "lines": 1165,
+   "scored": 1165,
+   "empty": 91,
+   "avg_triples": 2.86,
+   "score_minutes": 0.5
+  },
+  "atom_edc": {
+   "Partial": {
+    "P": 0.5618,
+    "R": 0.5807,
+    "F1": 0.568
+   },
+   "Strict": {
+    "P": 0.4745,
+    "R": 0.4855,
+    "F1": 0.4784
+   },
+   "Exact": {
+    "P": 0.5305,
+    "R": 0.5423,
+    "F1": 0.5344
+   },
+   "lines": 1165,
+   "scored": 1165,
+   "empty": 106,
+   "avg_triples": 2.7,
+   "score_minutes": 0.4
+  },
+  "atom_time_edc": {
+   "Partial": {
+    "P": 0.5513,
+    "R": 0.5652,
+    "F1": 0.555
+   },
+   "Strict": {
+    "P": 0.4701,
+    "R": 0.4775,
+    "F1": 0.4721
+   },
+   "Exact": {
+    "P": 0.5219,
+    "R": 0.5297,
+    "F1": 0.5236
+   },
+   "lines": 1165,
+   "scored": 1165,
+   "empty": 103,
+   "avg_triples": 3.25,
+   "score_minutes": 0.5
+  }
+ },
+ "total_minutes": 159.9
+}

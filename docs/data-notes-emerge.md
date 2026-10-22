@@ -643,3 +643,38 @@ Trên tập 84 bài của GraphRAG: mình 84,7, KGGen-Gemma 74,2.
   hành 71,6 / 101,4 / 1,3 / 1.366; OpenIE 267 quan hệ, 4.490 ký tự (judge Gemma dễ hơn hẳn trên ngữ cảnh dài này).
 - Chi phí: mình 178 giây/bài, KGGen-Gemma 34 giây/bài (cùng llama-server 4 slot); 1 bài KG mình có lỗi lệnh gọi ở một
   đoạn (vẫn có KG).
+
+## 21. ATOM trên ba benchmark của EDC (21–22/10; kernel `kgu-atom-edc-webnlg` v2, `kgu-atom-edc-rebel-wikinre` v1 @96b7840)
+
+Câu hỏi: bước tách câu thành atomic fact (ATOM; CoDe-KG EMNLP 2025 cũng làm) có giúp trên benchmark trích theo schema
+không. ATOM = itext2kg 1.1.0, prompt + ví dụ của ATOM (không dùng few-shot của bộ như EDC và mình), Gemma 4 E4B;
+`scripts/atom_edc.py`, runner `kaggle/atom_edc/run_atom_edc.py`. Ba cách chấm (script EDC qua `edc_eval_fast.py`):
+- **atom**: 5-tuple → triple (bỏ thời gian), quan hệ tự do → chỉ tham khảo.
+- **atom_edc**: triple của ATOM thay bước OIE của EDC, rồi Schema Definition + Canonicalization của EDC (e5-mistral, không
+  refinement) — so với dòng EDC chỉ khác bước trích. Vá thêm EDC: `EDC.oie` đọc `$EDC_OIE_FROM`; dòng log debug của
+  canonicalization đọc biến vòng lặp chưa gán khi câu không có triple OIE (lỗi gốc, làm WebNLG dừng ở lượt thử 10 câu).
+- **atom_time_edc**: thêm (head, "<rel> (start/end time)", ngày) cho mỗi mốc, vì ATOM đặt ngày vào t_start/t_end mà gold có
+  quan hệ ngày (REBEL 27,9% gold, WebNLG 9,2%, Wiki-NRE 0).
+
+Partial P/R/F1 (Strict F1, Exact F1); mình và EDC từ §17 (cùng Gemma, cùng script chấm):
+
+| | WebNLG (1.165) | REBEL (1.000) | Wiki-NRE (1.000) |
+|---|---|---|---|
+| Mình | 73,7/75,8/**74,4** (68,3; 71,1) | 54,9/55,9/**55,3** (50,7; 52,1) | 66,0/66,4/**66,2** (65,1; 65,3) |
+| EDC | 69,8/72,1/70,6 (63,9; 66,8) | 48,8/49,8/49,2 (44,4; 46,2) | 62,0/62,5/62,2 (60,8; 61,3) |
+| ATOM + chuẩn hóa EDC | 56,2/58,1/56,8 (47,8; 53,4) | 38,9/42,6/40,3 (32,6; 36,1) | 40,5/41,0/40,7 (28,5; 39,1) |
+| ATOM + ngày + chuẩn hóa EDC | 55,1/56,5/55,5 (47,2; 52,4) | 34,8/36,0/35,1 (29,8; 32,4) | 39,5/40,0/39,7 (28,0; 38,1) |
+| ATOM thô | 45,9/48,9/46,9 (34,2; 41,0) | 32,6/35,5/33,7 (24,6; 29,4) | 33,3/37,5/34,7 (19,7; 32,3) |
+
+- ATOM + chuẩn hóa EDC thấp hơn EDC 13,8 / 8,9 / 21,5 Partial F1. Câu rỗng sau chuẩn hóa: 106 / 47 / 217 (EDC: 7 / 0 / 4);
+  Wiki-NRE gold thưa (2,86 triple/câu, chỉ quan hệ giữa thực thể được liên kết), ATOM trích nhiều fact khác không thuộc
+  45 quan hệ. Một phần chênh do ATOM không được few-shot của bộ (EDC và mình có: quy ước tên thực thể, độ chi tiết quan hệ).
+- Biến thể ngày: triple ngày được chuẩn hóa đúng quan hệ (REBEL: date of birth 485, date of death 270, inception 148)
+  nhưng ATOM ghi ngày dạng `15-12-1904` (ví dụ trong prompt ATOM) còn gold `15 December 1904` → không khớp, thêm dự đoán
+  sai, F1 giảm (REBEL −5,2).
+- Chi phí: ATOM 3,7 / 4,4 / 3,7 lệnh/câu (1 tách factoid + 1 mỗi factoid; 2,7 / 3,4 / 2,7 factoid/câu), 85 / 96 / 75 phút,
+  cộng chuẩn hóa EDC 34 / 40 / 27 phút; EDC 50 / 61 / 41 phút; mình 20 / 21 / 15 phút (1 lệnh/câu). 0 lỗi lệnh gọi.
+- Kết luận: trên câu đơn lẻ có schema cố định, tách atomic fact kiểu ATOM không giúp mà còn kém trích thẳng có few-shot;
+  phần hơn EDC của mình trên ba bộ này không đến từ tách câu (pipeline ở đây không tách câu). Tách câu chỉ giúp trên đoạn
+  tin dài (COVID-NYT, §19: +6,9 F1 từ v0 lên v1).
+- Kết quả: `results/kaggle/atom_edc/{webnlg,rebel-wikinre}/` (đầu ra từng bước, `summary.json`, log; bỏ `server.log`).
