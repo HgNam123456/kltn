@@ -1,10 +1,11 @@
 """Kernel kgu-knet-baseline: chạy lại baseline 5 của KnowledgeNet (Mesquita et al., EMNLP 2019 — pipeline của chính
 paper: spaCy 2.1 + neuralcoref + BERT TF-Hub + bộ phân loại huấn luyện sẵn, liên kết thực thể Diffbot đã cache trong bản
 phát hành) trên fold 4 bằng `python evaluate.py dev` của họ. Môi trường 2019 (Python 3.7, TensorFlow 1.13.1) dựng bằng
-uv; chạy CPU (TF 1.13 không hỗ trợ CUDA của Kaggle). README của họ: dev span_overlap P 0,718 R 0,691 F1 0,704. Mỗi
+micromamba (uv không còn bản Python 3.7), ghim numpy/protobuf/gast cho TF 1.13; chạy CPU (TF 1.13 không hỗ trợ CUDA của Kaggle). README của họ: dev span_overlap P 0,718 R 0,691 F1 0,704. Mỗi
 bước có timeout; dựng môi trường hỏng thì ghi lỗi và kết thúc (khi đó báo cáo dùng số README).
 Đầu ra /kaggle/working/out/: evaluate.log, summary.json.
 """
+import hashlib
 import json
 import os
 import re
@@ -28,8 +29,7 @@ def step(name: str, cmd: str, timeout_h: float, cwd: str | None = None) -> bool:
     t0 = time.time()
     print(f"$ {cmd}", flush=True)
     try:
-        r = subprocess.run(f"timeout {timeout_h}h bash -c {json.dumps(cmd)}", shell=True, cwd=cwd, text=True,
-                           capture_output=True)
+        r = subprocess.run(["timeout", f"{timeout_h}h", "bash", "-c", cmd], cwd=cwd, text=True, capture_output=True)
         log = r.stdout + r.stderr
         ok = r.returncode == 0
     except Exception as e:
@@ -41,11 +41,24 @@ def step(name: str, cmd: str, timeout_h: float, cwd: str | None = None) -> bool:
     return ok
 
 
+BERT_HUB = "https://tfhub.dev/google/bert_cased_L-12_H-768_A-12/1"
+HUB_DIR = f"/tmp/tfhub/{hashlib.sha1(BERT_HUB.encode('utf8')).hexdigest()}"      # thư mục cache tensorflow_hub 0.5
+PIP = f"{VENV}/bin/python -m pip install -q --no-cache-dir"
+CHECK = (f"{VENV}/bin/python -c \"import spacy, neuralcoref, tensorflow; nlp = spacy.load('en_core_web_lg'); "
+         f"neuralcoref.add_to_pipe(nlp); print('env ok', tensorflow.__version__)\"")
 ok = (step("clone", f"git clone -q --depth 1 {KN_REPO} {KN} && cd {BASE} && wget -q {RELEASE} -O release.zip && "
-                    f"unzip -q -o release.zip && ls -la", 0.5)
-      and step("env", f"pip install -q uv && uv venv -q --python 3.7 {VENV} && "
-                      f"uv pip install -q --python {VENV}/bin/python -r {BASE}/requirements.txt {SPACY_LG}", 1)
-      and step("evaluate", f"cd {BASE} && CUDA_VISIBLE_DEVICES= {VENV}/bin/python evaluate.py dev", 3))
+                    f"unzip -q -o release.zip && ls -la && for d in */; do [ -d $d/models ] || [ -d $d/tmp ] && "
+                    f"cp -rn $d. . ; done; cp {KN}/dataset/train.json {KN}/dataset/evaluator.py {KN}/ && "
+                    f"ls -la {BASE} {BASE}/models {BASE}/tmp", 0.5)       # config: KNOWLEDGE_NET_DIR="../../", models/, tmp/
+      and step("env", f"cd /tmp && curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xj bin/micromamba"
+                      f" && /tmp/bin/micromamba create -y -q -p {VENV} -c conda-forge python=3.7 pip && "
+                      f"{PIP} -r {BASE}/requirements.txt numpy==1.16.6 protobuf==3.20.3 gast==0.2.2 && {PIP} {SPACY_LG} && "
+                      f"({CHECK} || ({PIP} --force-reinstall --no-deps --no-binary neuralcoref neuralcoref==4.0 && {CHECK}))",
+               1.5)
+      and step("bert", f"mkdir -p {HUB_DIR} && curl -sL '{BERT_HUB}?tf-hub-format=compressed' | tar -xz -C {HUB_DIR} && "
+                       f"ls {HUB_DIR}", 0.5)
+      and step("evaluate", f"cd {BASE} && CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub {VENV}/bin/python evaluate.py dev",
+               9))
 if os.path.exists(f"{OUT}/evaluate.log"):
     text = open(f"{OUT}/evaluate.log", encoding="utf-8").read()
     for method in ("span_overlap", "span_exact", "uri"):
@@ -58,5 +71,5 @@ summary["ok"] = bool(ok)
 summary["total_minutes"] = round((time.time() - T0) / 60, 1)
 json.dump(summary, open(f"{OUT}/summary.json", "w"), indent=1)
 print(json.dumps(summary, indent=1), flush=True)
-subprocess.run(f"rm -rf {KN} {VENV}", shell=True)
+subprocess.run(f"rm -rf {KN} {VENV} {BASE}/tmp", shell=True)
 print("DONE", flush=True)
