@@ -1,0 +1,89 @@
+{
+ "steps": {
+  "clone": {
+   "ok": true,
+   "seconds": 5.0
+  },
+  "env": {
+   "ok": true,
+   "seconds": 514.9
+  },
+  "bert": {
+   "ok": true,
+   "seconds": 9.2
+  },
+  "predict_0000": {
+   "ok": true,
+   "seconds": 314.5
+  },
+  "predict_0100": {
+   "ok": true,
+   "seconds": 370.9
+  },
+  "predict_0200": {
+   "ok": true,
+   "seconds": 357.9
+  },
+  "predict_0300": {
+   "ok": true,
+   "seconds": 313.5
+  },
+  "predict_0400": {
+   "ok": false,
+   "seconds": 333.1
+  },
+  "predict_0432": {
+   "ok": true,
+   "seconds": 355.4
+  },
+  "predict_0532": {
+   "ok": true,
+   "seconds": 319.6
+  },
+  "predict_0632": {
+   "ok": true,
+   "seconds": 336.9
+  },
+  "predict_0732": {
+   "ok": true,
+   "seconds": 389.7
+  },
+  "predict_0832": {
+   "ok": true,
+   "seconds": 343.9
+  },
+  "predict_0932": {
+   "ok": true,
+   "seconds": 264.4
+  }
+ },
+ "readme_dev_span_overlap": {
+  "P": 0.718,
+  "R": 0.691,
+  "F1": 0.704
+ },
+ "n_docs": 1022,
+ "failed_docs": [
+  431
+ ],
+ "done_docs": 1021,
+ "rerun": {
+  "span_overlap": {
+   "P": 0.718,
+   "R": 0.691,
+   "F1": 0.704
+  },
+  "span_exact": {
+   "P": 0.62,
+   "R": 0.599,
+   "F1": 0.609
+  },
+  "uri": {
+   "P": 0.557,
+   "R": 0.472,
+   "F1": 0.511
+  }
+ },
+ "ok": true,
+ "total_minutes": 70.5
+}

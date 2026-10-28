@@ -1,0 +1,43 @@
+RESULTS:
+
+ ------ Experiment Recap ------ 
+Fold Evaluated                4              
+Method                        uri            
+
+ ------ Predictions Matrix ------
+Property                      TP             FP             FN             
+--------                      --             --             --             
+EMPLOYEE_OR_MEMBER_OF         49             43             63             
+FOUNDED_BY                    14             5              24             
+POLITICAL_AFFILIATION         31             28             41             
+PLACE_OF_BIRTH                58             46             39             
+PLACE_OF_RESIDENCE            50             65             65             
+CHILD_OF                      7              4              16             
+EDUCATED_AT                   28             7              16             
+NATIONALITY                   48             16             26             
+CEO                           17             15             20             
+SPOUSE                        24             13             29             
+SUBSIDIARY_OF                 2              11             7              
+HEADQUARTERS                  20             24             43             
+#global                       348            277            389            
+
+ ------ Micro Evaluation ------ 
+Property                      Precision      Recall         F1             
+--------                      -----          -----          -----          
+EMPLOYEE_OR_MEMBER_OF         0.533          0.438          0.480          
+FOUNDED_BY                    0.737          0.368          0.491          
+POLITICAL_AFFILIATION         0.525          0.431          0.473          
+PLACE_OF_BIRTH                0.558          0.598          0.577          
+PLACE_OF_RESIDENCE            0.435          0.435          0.435          
+CHILD_OF                      0.636          0.304          0.412          
+EDUCATED_AT                   0.800          0.636          0.709          
+NATIONALITY                   0.750          0.649          0.696          
+CEO                           0.531          0.459          0.493          
+SPOUSE                        0.649          0.453          0.533          
+SUBSIDIARY_OF                 0.154          0.222          0.182          
+HEADQUARTERS                  0.455          0.317          0.374          
+
+ ------ Macro Evaluation ------ 
+Property                      Precision      Recall         F1             
+--------                      -----          -----          -----          
+#global                       0.557          0.472          0.511          

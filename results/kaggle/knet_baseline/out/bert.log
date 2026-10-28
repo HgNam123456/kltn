@@ -1,0 +1,4 @@
+assets
+saved_model.pb
+tfhub_module.pb
+variables

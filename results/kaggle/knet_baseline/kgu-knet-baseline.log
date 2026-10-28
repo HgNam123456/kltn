@@ -1,0 +1,1074 @@
+[{"stream_name":"stdout","time":0.996724732,"data":"$ git clone -q --depth 1 https://github.com/diffbot/knowledge-net.git /kaggle/working/knowledge-net \u0026\u0026 cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 wget -q https://github.com/diffbot/knowledge-net/releases/download/EMNLP2019/knowledge-net-EMNLP2019.zip -O release.zip \u0026\u0026 unzip -q -o release.zip \u0026\u0026 find knowledge-net-EMNLP2019 -maxdepth 5 | head -80 \u0026\u0026 for n in models tmp vocab; do d=$(find knowledge-net-EMNLP2019 -type d -name $n | head -1); [ -n \"$d\" ] \u0026\u0026 cp -rn $d . ; done; cp /kaggle/working/knowledge-net/dataset/train.json /kaggle/working/knowledge-net/dataset/evaluator.py /kaggle/working/knowledge-net/ \u0026\u0026 ls -la /kaggle/working/knowledge-net/baselines/EMNLP2019 /kaggle/working/knowledge-net/baselines/EMNLP2019/models /kaggle/working/knowledge-net/baselines/EMNLP2019/tmp\n"}
+,{"stream_name":"stdout","time":5.985167744,"data":"et-EMNLP2019/baselines/EMNLP2019/requirements.txt\n"}
+,{"stream_name":"stdout","time":5.985198566,"data":"knowledge-net-EMNLP2019/baselines/EMNLP2019/run.py\n"}
+,{"stream_name":"stdout","time":5.985203529,"data":"knowledge-net-EMNLP2019/baselines/EMNLP2019/threshold_search.py\n"}
+,{"stream_name":"stdout","time":5.985207588,"data":"knowledge-net-EMNLP2019/README.md\n"}
+,{"stream_name":"stdout","time":5.985211625,"data":"knowledge-net-EMNLP2019/evaluator.py\n"}
+,{"stream_name":"stdout","time":5.985215469,"data":"knowledge-net-EMNLP2019/test-no-facts.json\n"}
+,{"stream_name":"stdout","time":5.98521936,"data":"knowledge-net-EMNLP2019/train.json\n"}
+,{"stream_name":"stdout","time":5.985223219,"data":"/kaggle/working/knowledge-net/baselines/EMNLP2019:\n"}
+,{"stream_name":"stdout","time":5.98522703,"data":"total 73012\n"}
+,{"stream_name":"stdout","time":5.98523737,"data":"drwxr-xr-x 6 root root     4096 Oct 28 15:17 .\n"}
+,{"stream_name":"stdout","time":5.985241019,"data":"drwxr-xr-x 3 root root     4096 Oct 28 15:17 ..\n"}
+,{"stream_name":"stdout","time":5.985243685,"data":"-rw-r--r-- 1 root root     4704 Oct 28 15:17 bert_wrapper.py\n"}
+,{"stream_name":"stdout","time":5.985246345,"data":"-rw-r--r-- 1 root root      436 Oct 28 15:17 config.py\n"}
+,{"stream_name":"stdout","time":5.985249007,"data":"-rw-r--r-- 1 root root      497 Oct 28 15:17 data.yml\n"}
+,{"stream_name":"stdout","time":5.985251761,"data":"-rw-r--r-- 1 root root     4231 Oct 28 15:17 entitylinker.py\n"}
+,{"stream_name":"stdout","time":5.985254455,"data":"-rw-r--r-- 1 root root     2543 Oct 28 15:17 evaluate.py\n"}
+,{"stream_name":"stdout","time":5.985257192,"data":"lrwxrwxrwx 1 root root       18 Oct 28 15:17 evaluator.py -\u003e ../../evaluator.py\n"}
+,{"stream_name":"stdout","time":5.985260931,"data":"-rw-r--r-- 1 root root    11241 Oct 28 15:17 features.py\n"}
+,{"stream_name":"stdout","time":5.985265391,"data":"-rw-r--r-- 1 root root     3925 Oct 28 15:17 general_inputter.py\n"}
+,{"stream_name":"stdout","time":5.985269446,"data":"-rw-r--r-- 1 root root       59 Oct 28 15:17 .gitignore\n"}
+,{"stream_name":"stdout","time":5.9852721429999995,"data":"-rw-r--r-- 1 root root     2906 Oct 28 15:17 global_features.py\n"}
+,{"stream_name":"stdout","time":5.985274814,"data":"-rw-r--r-- 1 root root     7044 Oct 28 15:17 instance.py\n"}
+,{"stream_name":"stdout","time":5.9852776,"data":"drwxr-xr-x 3 root root     4096 Oct 25  2019 knowledge-net-EMNLP2019\n"}
+,{"stream_name":"stdout","time":5.985280322,"data":"-rw-r--r-- 1 root root       18 Oct 28 15:17 labels.txt\n"}
+,{"stream_name":"stdout","time":5.985283011,"data":"-rw-r--r-- 1 root root      587 Oct 28 15:17 lstm.py\n"}
+,{"stream_name":"stdout","time":5.985285631,"data":"drwxr-xr-x 3 root root     4096 Oct 28 15:17 models\n"}
+,{"stream_name":"stdout","time":5.985299293,"data":"-rw-r--r-- 1 root root    12797 Oct 28 15:17 prepare_data.py\n"}
+,{"stream_name":"stdout","time":5.9853022110000005,"data":"-rw-r--r-- 1 root root     3180 Oct 28 15:17 README.md\n"}
+,{"stream_name":"stdout","time":5.985304888,"data":"-rw-r--r-- 1 root root 74594768 Dec  7  2021 release.zip\n"}
+,{"stream_name":"stdout","time":5.985307597,"data":"-rw-r--r-- 1 root root      203 Oct 28 15:17 requirements.txt\n"}
+,{"stream_name":"stdout","time":5.98531032,"data":"-rw-r--r-- 1 root root     7941 Oct 28 15:17 run.py\n"}
+,{"stream_name":"stdout","time":5.9853129670000005,"data":"-rw-r--r-- 1 root root     7584 Oct 28 15:17 sequence_classifier.py\n"}
+,{"stream_name":"stdout","time":5.985315751,"data":"-rw-r--r-- 1 root root     5602 Oct 28 15:17 threshold_search.py\n"}
+,{"stream_name":"stdout","time":5.985318414,"data":"drwxr-xr-x 2 root root     4096 Oct 28 15:17 tmp\n"}
+,{"stream_name":"stdout","time":5.9853211349999995,"data":"-rw-r--r-- 1 root root     2123 Oct 28 15:17 train.py\n"}
+,{"stream_name":"stdout","time":5.985323811,"data":"-rwxr-xr-x 1 root root      104 Oct 28 15:17 train.sh\n"}
+,{"stream_name":"stdout","time":5.985326444,"data":"-rw-r--r-- 1 root root      883 Oct 28 15:17 uri_features.py\n"}
+,{"stream_name":"stdout","time":5.985330386,"data":"-rw-r--r-- 1 root root     1231 Oct 28 15:17 uri_instance.py\n"}
+,{"stream_name":"stdout","time":5.985333246,"data":"drwxr-xr-x 2 root root     4096 Oct 28 15:17 vocab\n"}
+,{"stream_name":"stdout","time":5.985335883,"data":"-rw-r--r-- 1 root root     1876 Oct 28 15:17 vocab.py\n"}
+,{"stream_name":"stdout","time":5.98533851,"data":"-rw-r--r-- 1 root root     2582 Oct 28 15:17 wikidata.py\n"}
+,{"stream_name":"stdout","time":5.985341213,"data":"\n"}
+,{"stream_name":"stdout","time":5.985349467,"data":"/kaggle/working/knowledge-net/baselines/EMNLP2019/models:\n"}
+,{"stream_name":"stdout","time":5.98535231,"data":"total 12\n"}
+,{"stream_name":"stdout","time":5.985354934,"data":"drwxr-xr-x 3 root root 4096 Oct 28 15:17 .\n"}
+,{"stream_name":"stdout","time":5.985357595,"data":"drwxr-xr-x 6 root root 4096 Oct 28 15:17 ..\n"}
+,{"stream_name":"stdout","time":5.985360318,"data":"drwxr-xr-x 3 root root 4096 Oct 28 15:17 all\n"}
+,{"stream_name":"stdout","time":5.985362996,"data":"\n"}
+,{"stream_name":"stdout","time":5.985365531,"data":"/kaggle/working/knowledge-net/baselines/EMNLP2019/tmp:\n"}
+,{"stream_name":"stdout","time":5.985368222,"data":"total 188856\n"}
+,{"stream_name":"stdout","time":5.985370898,"data":"drwxr-xr-x 2 root root     4096 Oct 28 15:17 .\n"}
+,{"stream_name":"stdout","time":5.985373642,"data":"drwxr-xr-x 6 root root     4096 Oct 28 15:17 ..\n"}
+,{"stream_name":"stdout","time":5.985376339,"data":"-rw-r--r-- 1 root root 97779712 Oct 28 15:17 el.db\n"}
+,{"stream_name":"stdout","time":5.985379045,"data":"-rw-r--r-- 1 root root 95597568 Oct 28 15:17 properties_subject.db\n"}
+,{"stream_name":"stdout","time":5.985382106,"data":"cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead\n"}
+,{"stream_name":"stdout","time":5.985384887,"data":"cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead\n"}
+,{"stream_name":"stdout","time":5.985387671,"data":"cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead\n"}
+,{"stream_name":"stdout","time":5.985390456,"data":"\n"}
+,{"stream_name":"stdout","time":5.987812237,"data":"$ cd /tmp \u0026\u0026 curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xj bin/micromamba \u0026\u0026 /tmp/bin/micromamba create -y -q -p /kaggle/working/venv37 -c conda-forge python=3.7 pip \u0026\u0026 /kaggle/working/venv37/bin/python -m pip install --no-cache-dir --prefer-binary --no-build-isolation 'setuptools\u003c58' wheel 'cython\u003c3' numpy==1.16.6 \u0026\u0026 /kaggle/working/venv37/bin/python -m pip install --no-cache-dir --prefer-binary --no-build-isolation -r /kaggle/working/knowledge-net/baselines/EMNLP2019/requirements.txt numpy==1.16.6 protobuf==3.20.3 gast==0.2.2 \u0026\u0026 /kaggle/working/venv37/bin/python -m pip install --no-cache-dir --prefer-binary --no-build-isolation https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-2.1.0/en_core_web_lg-2.1.0.tar.gz \u0026\u0026 (/kaggle/working/venv37/bin/python -c \"import spacy, neuralcoref, tensorflow; nlp = spacy.load('en_core_web_lg'); neuralcoref.add_to_pipe(nlp); print('env ok', tensorflow.__version__)\" || (/kaggle/working/venv37/bin/python -m pip install --no-cache-dir --prefer-binary --no-build-isolation --force-reinstall --no-deps --no-binary neuralcoref neuralcoref==4.0 \u0026\u0026 /kaggle/working/venv37/bin/python -c \"import spacy, neuralcoref, tensorflow; nlp = spacy.load('en_core_web_lg'); neuralcoref.add_to_pipe(nlp); print('env ok', tensorflow.__version__)\"))\n"}
+,{"stream_name":"stdout","time":520.857967746,"data":": wasabi\u003c1.1.0,\u003e=0.2.0 in /kaggle/working/venv37/lib/python3.7/site-packages (from spacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (0.10.1)\n"}
+,{"stream_name":"stdout","time":520.85818561,"data":"Requirement already satisfied: srsly\u003c1.1.0,\u003e=0.0.5 in /kaggle/working/venv37/lib/python3.7/site-packages (from spacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (1.0.7)\n"}
+,{"stream_name":"stdout","time":520.858193099,"data":"Requirement already satisfied: chardet\u003c3.1.0,\u003e=3.0.2 in /kaggle/working/venv37/lib/python3.7/site-packages (from requests\u003c3.0.0,\u003e=2.13.0-\u003espacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (3.0.4)\n"}
+,{"stream_name":"stdout","time":520.858199547,"data":"Requirement already satisfied: idna\u003c2.9,\u003e=2.5 in /kaggle/working/venv37/lib/python3.7/site-packages (from requests\u003c3.0.0,\u003e=2.13.0-\u003espacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (2.8)\n"}
+,{"stream_name":"stdout","time":520.858205288,"data":"Requirement already satisfied: urllib3\u003c1.25,\u003e=1.21.1 in /kaggle/working/venv37/lib/python3.7/site-packages (from requests\u003c3.0.0,\u003e=2.13.0-\u003espacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (1.24.3)\n"}
+,{"stream_name":"stdout","time":520.858209929,"data":"Requirement already satisfied: certifi\u003e=2017.4.17 in /kaggle/working/venv37/lib/python3.7/site-packages (from requests\u003c3.0.0,\u003e=2.13.0-\u003espacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (2026.10.23)\n"}
+,{"stream_name":"stdout","time":520.858214443,"data":"Requirement already satisfied: tqdm\u003c5.0.0,\u003e=4.10.0 in /kaggle/working/venv37/lib/python3.7/site-packages (from thinc\u003c7.1.0,\u003e=7.0.2-\u003espacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (4.68.2)\n"}
+,{"stream_name":"stdout","time":520.858218842,"data":"Requirement already satisfied: importlib_metadata in /kaggle/working/venv37/lib/python3.7/site-packages (from tqdm\u003c5.0.0,\u003e=4.10.0-\u003ethinc\u003c7.1.0,\u003e=7.0.2-\u003espacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (4.13.0)\n"}
+,{"stream_name":"stdout","time":520.858223439,"data":"Requirement already satisfied: zipp\u003e=0.5 in /kaggle/working/venv37/lib/python3.7/site-packages (from importlib_metadata-\u003etqdm\u003c5.0.0,\u003e=4.10.0-\u003ethinc\u003c7.1.0,\u003e=7.0.2-\u003espacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (3.15.0)\n"}
+,{"stream_name":"stdout","time":520.858228095,"data":"Requirement already satisfied: typing-extensions\u003e=3.6.4 in /kaggle/working/venv37/lib/python3.7/site-packages (from importlib_metadata-\u003etqdm\u003c5.0.0,\u003e=4.10.0-\u003ethinc\u003c7.1.0,\u003e=7.0.2-\u003espacy\u003e=2.1.0-\u003een-core-web-lg==2.1.0) (4.7.1)\n"}
+,{"stream_name":"stdout","time":520.858244432,"data":"Building wheels for collected packages: en-core-web-lg\n"}
+,{"stream_name":"stdout","time":520.858247956,"data":"  Building wheel for en-core-web-lg (setup.py): started\n"}
+,{"stream_name":"stdout","time":520.85825102,"data":"  Building wheel for en-core-web-lg (setup.py): finished with status 'done'\n"}
+,{"stream_name":"stdout","time":520.85825694,"data":"  Created wheel for en-core-web-lg: filename=en_core_web_lg-2.1.0-py3-none-any.whl size=828255073 sha256=a017038a0d984352d6fb6df40bec437e19f8a35c23d420a7ff6592bc9980bc67\n"}
+,{"stream_name":"stdout","time":520.858260428,"data":"  Stored in directory: /tmp/pip-ephem-wheel-cache-asjd9g_9/wheels/83/c8/3b/6640ce3755cb98381fbf391ba5fc279eac813321c316d8c7ee\n"}
+,{"stream_name":"stdout","time":520.858263638,"data":"Successfully built en-core-web-lg\n"}
+,{"stream_name":"stdout","time":520.858266618,"data":"Installing collected packages: en-core-web-lg\n"}
+,{"stream_name":"stdout","time":520.858269722,"data":"Successfully installed en-core-web-lg-2.1.0\n"}
+,{"stream_name":"stdout","time":520.858272801,"data":"env ok 1.13.1\n"}
+,{"stream_name":"stdout","time":520.858275774,"data":"\n"}
+,{"stream_name":"stdout","time":520.858278752,"data":"  0%|          | 0/40155833 [00:00\u003c?, ?B/s]\n"}
+,{"stream_name":"stdout","time":520.858281826,"data":"  1%|          | 348160/40155833 [00:00\u003c00:11, 3382545.54B/s]\n"}
+,{"stream_name":"stdout","time":520.858285111,"data":"  8%|▊         | 3348480/40155833 [00:00\u003c00:01, 18851640.78B/s]\n"}
+,{"stream_name":"stdout","time":520.858295796,"data":" 23%|██▎       | 9294848/40155833 [00:00\u003c00:00, 37270500.25B/s]\n"}
+,{"stream_name":"stdout","time":520.858299088,"data":" 37%|███▋      | 15002624/40155833 [00:00\u003c00:00, 45056695.40B/s]\n"}
+,{"stream_name":"stdout","time":520.858302243,"data":" 52%|█████▏    | 20973568/40155833 [00:00\u003c00:00, 50323500.99B/s]\n"}
+,{"stream_name":"stdout","time":520.858305512,"data":" 67%|██████▋   | 26998784/40155833 [00:00\u003c00:00, 53692147.86B/s]\n"}
+,{"stream_name":"stdout","time":520.858308691,"data":" 84%|████████▍ | 33910784/40155833 [00:00\u003c00:00, 58728011.44B/s]\n"}
+,{"stream_name":"stdout","time":520.858311908,"data":"100%|██████████| 40155833/40155833 [00:00\u003c00:00, 50541306.69B/s]\n"}
+,{"stream_name":"stdout","time":520.858315178,"data":"\n"}
+,{"stream_name":"stdout","time":520.858921807,"data":"$ mkdir -p /tmp/tfhub/ecd2596ce849110246602e3d4d81e2d9719cb027 \u0026\u0026 curl -sL 'https://tfhub.dev/google/bert_cased_L-12_H-768_A-12/1?tf-hub-format=compressed' | tar -xz -C /tmp/tfhub/ecd2596ce849110246602e3d4d81e2d9719cb027 \u0026\u0026 ls /tmp/tfhub/ecd2596ce849110246602e3d4d81e2d9719cb027\n"}
+,{"stream_name":"stdout","time":530.077652007,"data":"assets\n"}
+,{"stream_name":"stdout","time":530.077690142,"data":"saved_model.pb\n"}
+,{"stream_name":"stdout","time":530.077701062,"data":"tfhub_module.pb\n"}
+,{"stream_name":"stdout","time":530.077705337,"data":"variables\n"}
+,{"stream_name":"stdout","time":530.077709391,"data":"\n"}
+,{"stream_name":"stdout","time":530.3168394,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 0 100 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":844.780657859,"data":"3\n"}
+,{"stream_name":"stdout","time":844.78074267,"data":"DOC 33 29595\n"}
+,{"stream_name":"stdout","time":844.780749811,"data":"DOC 34 25626\n"}
+,{"stream_name":"stdout","time":844.780755045,"data":"DOC 35 30049\n"}
+,{"stream_name":"stdout","time":844.78077031,"data":"DOC 36 7117\n"}
+,{"stream_name":"stdout","time":844.780774844,"data":"DOC 37 8293\n"}
+,{"stream_name":"stdout","time":844.780779238,"data":"DOC 38 16686\n"}
+,{"stream_name":"stdout","time":844.780783496,"data":"DOC 39 12987\n"}
+,{"stream_name":"stdout","time":844.780787722,"data":"DOC 40 21648\n"}
+,{"stream_name":"stdout","time":844.780791522,"data":"DOC 41 21401\n"}
+,{"stream_name":"stdout","time":844.780794939,"data":"DOC 42 1478\n"}
+,{"stream_name":"stdout","time":844.780798922,"data":"DOC 43 2353\n"}
+,{"stream_name":"stdout","time":844.780803039,"data":"DOC 44 1494\n"}
+,{"stream_name":"stdout","time":844.780806904,"data":"DOC 45 5307\n"}
+,{"stream_name":"stdout","time":844.780810794,"data":"DOC 46 18170\n"}
+,{"stream_name":"stdout","time":844.780814949,"data":"DOC 47 28690\n"}
+,{"stream_name":"stdout","time":844.780818401,"data":"DOC 48 1651\n"}
+,{"stream_name":"stdout","time":844.78082238,"data":"DOC 49 13607\n"}
+,{"stream_name":"stdout","time":844.78082629,"data":"DOC 50 7213\n"}
+,{"stream_name":"stdout","time":844.780830425,"data":"DOC 51 25994\n"}
+,{"stream_name":"stdout","time":844.780834655,"data":"DOC 52 7914\n"}
+,{"stream_name":"stdout","time":844.780839248,"data":"DOC 53 28154\n"}
+,{"stream_name":"stdout","time":844.780844059,"data":"DOC 54 29332\n"}
+,{"stream_name":"stdout","time":844.780848154,"data":"DOC 55 13672\n"}
+,{"stream_name":"stdout","time":844.780851957,"data":"DOC 56 8858\n"}
+,{"stream_name":"stdout","time":844.780855767,"data":"DOC 57 11043\n"}
+,{"stream_name":"stdout","time":844.780859547,"data":"DOC 58 3211\n"}
+,{"stream_name":"stdout","time":844.780863054,"data":"DOC 59 29072\n"}
+,{"stream_name":"stdout","time":844.780866519,"data":"DOC 60 1435\n"}
+,{"stream_name":"stdout","time":844.780869977,"data":"DOC 61 23149\n"}
+,{"stream_name":"stdout","time":844.780873425,"data":"DOC 62 9456\n"}
+,{"stream_name":"stdout","time":844.780877314,"data":"DOC 63 1750\n"}
+,{"stream_name":"stdout","time":844.780880748,"data":"DOC 64 5315\n"}
+,{"stream_name":"stdout","time":844.7808843,"data":"DOC 65 28700\n"}
+,{"stream_name":"stdout","time":844.780888338,"data":"DOC 66 9268\n"}
+,{"stream_name":"stdout","time":844.780892787,"data":"DOC 67 16715\n"}
+,{"stream_name":"stdout","time":844.780896737,"data":"DOC 68 30286\n"}
+,{"stream_name":"stdout","time":844.780900498,"data":"DOC 69 16789\n"}
+,{"stream_name":"stdout","time":844.780904173,"data":"DOC 70 7960\n"}
+,{"stream_name":"stdout","time":844.780909062,"data":"DOC 71 9808\n"}
+,{"stream_name":"stdout","time":844.780912749,"data":"DOC 72 19657\n"}
+,{"stream_name":"stdout","time":844.780916219,"data":"DOC 73 16215\n"}
+,{"stream_name":"stdout","time":844.780919864,"data":"DOC 74 16321\n"}
+,{"stream_name":"stdout","time":844.780923568,"data":"DOC 75 4552\n"}
+,{"stream_name":"stdout","time":844.780927634,"data":"DOC 76 8029\n"}
+,{"stream_name":"stdout","time":844.780931865,"data":"DOC 77 18862\n"}
+,{"stream_name":"stdout","time":844.780936185,"data":"DOC 78 20384\n"}
+,{"stream_name":"stdout","time":844.780940431,"data":"DOC 79 19752\n"}
+,{"stream_name":"stdout","time":844.780967817,"data":"DOC 80 993\n"}
+,{"stream_name":"stdout","time":844.780973546,"data":"DOC 81 16285\n"}
+,{"stream_name":"stdout","time":844.780977919,"data":"DOC 82 27293\n"}
+,{"stream_name":"stdout","time":844.780981808,"data":"DOC 83 26356\n"}
+,{"stream_name":"stdout","time":844.780985277,"data":"DOC 84 28698\n"}
+,{"stream_name":"stdout","time":844.780989499,"data":"DOC 85 10120\n"}
+,{"stream_name":"stdout","time":844.781000382,"data":"DOC 86 5036\n"}
+,{"stream_name":"stdout","time":844.781004763,"data":"DOC 87 29089\n"}
+,{"stream_name":"stdout","time":844.781008457,"data":"DOC 88 4930\n"}
+,{"stream_name":"stdout","time":844.781012067,"data":"DOC 89 30024\n"}
+,{"stream_name":"stdout","time":844.781015548,"data":"DOC 90 18317\n"}
+,{"stream_name":"stdout","time":844.781024388,"data":"DOC 91 1480\n"}
+,{"stream_name":"stdout","time":844.781029805,"data":"DOC 92 748\n"}
+,{"stream_name":"stdout","time":844.78103432,"data":"DOC 93 30404\n"}
+,{"stream_name":"stdout","time":844.781038347,"data":"DOC 94 5095\n"}
+,{"stream_name":"stdout","time":844.781042446,"data":"DOC 95 28906\n"}
+,{"stream_name":"stdout","time":844.781046322,"data":"DOC 96 5294\n"}
+,{"stream_name":"stdout","time":844.781049718,"data":"DOC 97 12702\n"}
+,{"stream_name":"stdout","time":844.781053341,"data":"DOC 98 1573\n"}
+,{"stream_name":"stdout","time":844.781057047,"data":"DOC 99 5208\n"}
+,{"stream_name":"stdout","time":844.781060934,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":844.781067457,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":844.781071605,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":844.78107604,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":844.781080189,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":844.781084092,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":844.7810883,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":844.781093466,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":844.781097263,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":844.781105438,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":844.781110267,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":844.781114238,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":844.781119366,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":844.781123887,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":844.781127949,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":844.781133057,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":844.78114318,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":844.781147365,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":844.781151172,"data":"\n"}
+,{"stream_name":"stdout","time":844.783891493,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 100 200 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":1215.709615023,"data":" 138 29587\n"}
+,{"stream_name":"stdout","time":1215.709736393,"data":"DOC 139 21238\n"}
+,{"stream_name":"stdout","time":1215.709752262,"data":"DOC 140 8009\n"}
+,{"stream_name":"stdout","time":1215.709757563,"data":"DOC 141 22407\n"}
+,{"stream_name":"stdout","time":1215.709770376,"data":"DOC 142 28353\n"}
+,{"stream_name":"stdout","time":1215.70977553,"data":"DOC 143 24395\n"}
+,{"stream_name":"stdout","time":1215.709780496,"data":"DOC 144 21223\n"}
+,{"stream_name":"stdout","time":1215.709794313,"data":"DOC 145 15021\n"}
+,{"stream_name":"stdout","time":1215.709812359,"data":"DOC 146 12306\n"}
+,{"stream_name":"stdout","time":1215.709817232,"data":"DOC 147 16304\n"}
+,{"stream_name":"stdout","time":1215.709822077,"data":"DOC 148 14839\n"}
+,{"stream_name":"stdout","time":1215.709826834,"data":"DOC 149 4969\n"}
+,{"stream_name":"stdout","time":1215.709831981,"data":"DOC 150 28385\n"}
+,{"stream_name":"stdout","time":1215.709837483,"data":"DOC 151 8691\n"}
+,{"stream_name":"stdout","time":1215.709842874,"data":"DOC 152 87\n"}
+,{"stream_name":"stdout","time":1215.709848327,"data":"DOC 153 13684\n"}
+,{"stream_name":"stdout","time":1215.709853388,"data":"DOC 154 5073\n"}
+,{"stream_name":"stdout","time":1215.709858597,"data":"DOC 155 13590\n"}
+,{"stream_name":"stdout","time":1215.709863645,"data":"DOC 156 13859\n"}
+,{"stream_name":"stdout","time":1215.709878758,"data":"DOC 157 13654\n"}
+,{"stream_name":"stdout","time":1215.70988444,"data":"DOC 158 29154\n"}
+,{"stream_name":"stdout","time":1215.709890028,"data":"DOC 159 9057\n"}
+,{"stream_name":"stdout","time":1215.70989579,"data":"DOC 160 29693\n"}
+,{"stream_name":"stdout","time":1215.709901421,"data":"DOC 161 17002\n"}
+,{"stream_name":"stdout","time":1215.709906855,"data":"DOC 162 25160\n"}
+,{"stream_name":"stdout","time":1215.709911837,"data":"DOC 163 8923\n"}
+,{"stream_name":"stdout","time":1215.70991736,"data":"DOC 164 28989\n"}
+,{"stream_name":"stdout","time":1215.709923212,"data":"DOC 165 7778\n"}
+,{"stream_name":"stdout","time":1215.709951678,"data":"DOC 166 2285\n"}
+,{"stream_name":"stdout","time":1215.709957025,"data":"DOC 167 693\n"}
+,{"stream_name":"stdout","time":1215.709962029,"data":"DOC 168 7042\n"}
+,{"stream_name":"stdout","time":1215.709967168,"data":"DOC 169 12946\n"}
+,{"stream_name":"stdout","time":1215.709971852,"data":"DOC 170 11890\n"}
+,{"stream_name":"stdout","time":1215.709976596,"data":"DOC 171 5066\n"}
+,{"stream_name":"stdout","time":1215.709981397,"data":"DOC 172 10512\n"}
+,{"stream_name":"stdout","time":1215.709986228,"data":"DOC 173 4150\n"}
+,{"stream_name":"stdout","time":1215.709991118,"data":"DOC 174 25119\n"}
+,{"stream_name":"stdout","time":1215.709996013,"data":"DOC 175 4875\n"}
+,{"stream_name":"stdout","time":1215.710011459,"data":"DOC 176 1387\n"}
+,{"stream_name":"stdout","time":1215.710045703,"data":"DOC 177 22909\n"}
+,{"stream_name":"stdout","time":1215.710050789,"data":"DOC 178 21767\n"}
+,{"stream_name":"stdout","time":1215.710055423,"data":"DOC 179 28838\n"}
+,{"stream_name":"stdout","time":1215.710109735,"data":"DOC 180 16250\n"}
+,{"stream_name":"stdout","time":1215.710114227,"data":"DOC 181 27343\n"}
+,{"stream_name":"stdout","time":1215.710118,"data":"DOC 182 974\n"}
+,{"stream_name":"stdout","time":1215.710122033,"data":"DOC 183 22902\n"}
+,{"stream_name":"stdout","time":1215.710126087,"data":"DOC 184 29922\n"}
+,{"stream_name":"stdout","time":1215.710129881,"data":"DOC 185 10877\n"}
+,{"stream_name":"stdout","time":1215.710142945,"data":"DOC 186 30554\n"}
+,{"stream_name":"stdout","time":1215.710147097,"data":"DOC 187 1662\n"}
+,{"stream_name":"stdout","time":1215.710151601,"data":"DOC 188 20397\n"}
+,{"stream_name":"stdout","time":1215.710155464,"data":"DOC 189 15060\n"}
+,{"stream_name":"stdout","time":1215.710167589,"data":"DOC 190 8015\n"}
+,{"stream_name":"stdout","time":1215.710171848,"data":"DOC 191 29909\n"}
+,{"stream_name":"stdout","time":1215.710175646,"data":"DOC 192 16226\n"}
+,{"stream_name":"stdout","time":1215.710179528,"data":"DOC 193 16217\n"}
+,{"stream_name":"stdout","time":1215.71018308,"data":"DOC 194 11541\n"}
+,{"stream_name":"stdout","time":1215.710187017,"data":"DOC 195 21566\n"}
+,{"stream_name":"stdout","time":1215.710199992,"data":"DOC 196 13025\n"}
+,{"stream_name":"stdout","time":1215.710203683,"data":"DOC 197 16534\n"}
+,{"stream_name":"stdout","time":1215.710220504,"data":"DOC 198 21728\n"}
+,{"stream_name":"stdout","time":1215.710224797,"data":"DOC 199 1780\n"}
+,{"stream_name":"stdout","time":1215.71024182,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1215.710248574,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1215.710252686,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":1215.710266623,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1215.710271678,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1215.710275452,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":1215.710279569,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1215.710292632,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1215.710297005,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":1215.710313974,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1215.710318823,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1215.710323123,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":1215.710333626,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1215.710339077,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1215.710343183,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":1215.710346694,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1215.710360307,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1215.7103645,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":1215.710368257,"data":"\n"}
+,{"stream_name":"stdout","time":1215.719799763,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 200 300 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":1573.669689019,"data":"\n"}
+,{"stream_name":"stdout","time":1573.669750027,"data":"DOC 238 18759\n"}
+,{"stream_name":"stdout","time":1573.669755587,"data":"DOC 239 17669\n"}
+,{"stream_name":"stdout","time":1573.669759228,"data":"DOC 240 22065\n"}
+,{"stream_name":"stdout","time":1573.669762687,"data":"DOC 241 8653\n"}
+,{"stream_name":"stdout","time":1573.669766118,"data":"DOC 242 1214\n"}
+,{"stream_name":"stdout","time":1573.669769468,"data":"DOC 243 13070\n"}
+,{"stream_name":"stdout","time":1573.66977284,"data":"DOC 244 30065\n"}
+,{"stream_name":"stdout","time":1573.669776153,"data":"DOC 245 385\n"}
+,{"stream_name":"stdout","time":1573.669779456,"data":"DOC 246 22334\n"}
+,{"stream_name":"stdout","time":1573.669782727,"data":"DOC 247 30295\n"}
+,{"stream_name":"stdout","time":1573.669785999,"data":"DOC 248 1486\n"}
+,{"stream_name":"stdout","time":1573.669789281,"data":"DOC 249 26863\n"}
+,{"stream_name":"stdout","time":1573.669792557,"data":"DOC 250 28415\n"}
+,{"stream_name":"stdout","time":1573.669795839,"data":"DOC 251 30350\n"}
+,{"stream_name":"stdout","time":1573.669799189,"data":"DOC 252 1091\n"}
+,{"stream_name":"stdout","time":1573.669802504,"data":"DOC 253 26288\n"}
+,{"stream_name":"stdout","time":1573.669805798,"data":"DOC 254 1138\n"}
+,{"stream_name":"stdout","time":1573.669809073,"data":"DOC 255 546\n"}
+,{"stream_name":"stdout","time":1573.669812498,"data":"DOC 256 27523\n"}
+,{"stream_name":"stdout","time":1573.669815779,"data":"DOC 257 29591\n"}
+,{"stream_name":"stdout","time":1573.669819061,"data":"DOC 258 7756\n"}
+,{"stream_name":"stdout","time":1573.669822333,"data":"DOC 259 1487\n"}
+,{"stream_name":"stdout","time":1573.669825607,"data":"DOC 260 26507\n"}
+,{"stream_name":"stdout","time":1573.669828879,"data":"DOC 261 7203\n"}
+,{"stream_name":"stdout","time":1573.669832162,"data":"DOC 262 7694\n"}
+,{"stream_name":"stdout","time":1573.669835541,"data":"DOC 263 29198\n"}
+,{"stream_name":"stdout","time":1573.669838824,"data":"DOC 264 25991\n"}
+,{"stream_name":"stdout","time":1573.669843293,"data":"DOC 265 30394\n"}
+,{"stream_name":"stdout","time":1573.669847227,"data":"DOC 266 26913\n"}
+,{"stream_name":"stdout","time":1573.669861254,"data":"DOC 267 9957\n"}
+,{"stream_name":"stdout","time":1573.669864115,"data":"DOC 268 28116\n"}
+,{"stream_name":"stdout","time":1573.669866773,"data":"DOC 269 29343\n"}
+,{"stream_name":"stdout","time":1573.669869453,"data":"DOC 270 15665\n"}
+,{"stream_name":"stdout","time":1573.669872003,"data":"DOC 271 30143\n"}
+,{"stream_name":"stdout","time":1573.669874692,"data":"DOC 272 29049\n"}
+,{"stream_name":"stdout","time":1573.669877296,"data":"DOC 273 3054\n"}
+,{"stream_name":"stdout","time":1573.669879988,"data":"DOC 274 28876\n"}
+,{"stream_name":"stdout","time":1573.66988254,"data":"DOC 275 5309\n"}
+,{"stream_name":"stdout","time":1573.669885159,"data":"DOC 276 29545\n"}
+,{"stream_name":"stdout","time":1573.669887813,"data":"DOC 277 8607\n"}
+,{"stream_name":"stdout","time":1573.669890435,"data":"DOC 278 28412\n"}
+,{"stream_name":"stdout","time":1573.669893001,"data":"DOC 279 22335\n"}
+,{"stream_name":"stdout","time":1573.669895688,"data":"DOC 280 20659\n"}
+,{"stream_name":"stdout","time":1573.669898247,"data":"DOC 281 5170\n"}
+,{"stream_name":"stdout","time":1573.669900886,"data":"DOC 282 4959\n"}
+,{"stream_name":"stdout","time":1573.669904618,"data":"DOC 283 7788\n"}
+,{"stream_name":"stdout","time":1573.669907237,"data":"DOC 284 30239\n"}
+,{"stream_name":"stdout","time":1573.669909801,"data":"DOC 285 8102\n"}
+,{"stream_name":"stdout","time":1573.669912394,"data":"DOC 286 29239\n"}
+,{"stream_name":"stdout","time":1573.669914956,"data":"DOC 287 24787\n"}
+,{"stream_name":"stdout","time":1573.669917611,"data":"DOC 288 4912\n"}
+,{"stream_name":"stdout","time":1573.669920193,"data":"DOC 289 29625\n"}
+,{"stream_name":"stdout","time":1573.669922781,"data":"DOC 290 29664\n"}
+,{"stream_name":"stdout","time":1573.669925336,"data":"DOC 291 1003\n"}
+,{"stream_name":"stdout","time":1573.669965881,"data":"DOC 292 29506\n"}
+,{"stream_name":"stdout","time":1573.669971564,"data":"DOC 293 1654\n"}
+,{"stream_name":"stdout","time":1573.669975588,"data":"DOC 294 5270\n"}
+,{"stream_name":"stdout","time":1573.669983172,"data":"DOC 295 4747\n"}
+,{"stream_name":"stdout","time":1573.669986627,"data":"DOC 296 24416\n"}
+,{"stream_name":"stdout","time":1573.669989234,"data":"DOC 297 1553\n"}
+,{"stream_name":"stdout","time":1573.669991781,"data":"DOC 298 19460\n"}
+,{"stream_name":"stdout","time":1573.66999437,"data":"DOC 299 29010\n"}
+,{"stream_name":"stdout","time":1573.669997088,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1573.670005856,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1573.670008646,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":1573.670011384,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1573.670014639,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1573.670017386,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":1573.670020542,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1573.670043238,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1573.670054513,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":1573.670062407,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1573.670067087,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1573.670071413,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":1573.670076749,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1573.670081571,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1573.67008558,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":1573.670089924,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1573.670095301,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1573.670099499,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":1573.670103533,"data":"\n"}
+,{"stream_name":"stdout","time":1573.678635593,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 300 400 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":1887.150593945,"data":"995\n"}
+,{"stream_name":"stdout","time":1887.150654142,"data":"DOC 338 5200\n"}
+,{"stream_name":"stdout","time":1887.150665231,"data":"DOC 339 4992\n"}
+,{"stream_name":"stdout","time":1887.150668864,"data":"DOC 340 29698\n"}
+,{"stream_name":"stdout","time":1887.150672383,"data":"DOC 341 229\n"}
+,{"stream_name":"stdout","time":1887.150675752,"data":"DOC 342 16981\n"}
+,{"stream_name":"stdout","time":1887.150679049,"data":"DOC 343 20210\n"}
+,{"stream_name":"stdout","time":1887.15068237,"data":"DOC 344 27982\n"}
+,{"stream_name":"stdout","time":1887.150685631,"data":"DOC 345 5019\n"}
+,{"stream_name":"stdout","time":1887.150688859,"data":"DOC 346 7195\n"}
+,{"stream_name":"stdout","time":1887.150692169,"data":"DOC 347 14049\n"}
+,{"stream_name":"stdout","time":1887.150695402,"data":"DOC 348 27250\n"}
+,{"stream_name":"stdout","time":1887.150703075,"data":"DOC 349 644\n"}
+,{"stream_name":"stdout","time":1887.150707368,"data":"DOC 350 15523\n"}
+,{"stream_name":"stdout","time":1887.150710676,"data":"DOC 351 22378\n"}
+,{"stream_name":"stdout","time":1887.15071394,"data":"DOC 352 7099\n"}
+,{"stream_name":"stdout","time":1887.150717383,"data":"DOC 353 18380\n"}
+,{"stream_name":"stdout","time":1887.150720741,"data":"DOC 354 15664\n"}
+,{"stream_name":"stdout","time":1887.150724089,"data":"DOC 355 4259\n"}
+,{"stream_name":"stdout","time":1887.150727367,"data":"DOC 356 20694\n"}
+,{"stream_name":"stdout","time":1887.150743782,"data":"DOC 357 29573\n"}
+,{"stream_name":"stdout","time":1887.150746724,"data":"DOC 358 18162\n"}
+,{"stream_name":"stdout","time":1887.150749699,"data":"DOC 359 11913\n"}
+,{"stream_name":"stdout","time":1887.150752477,"data":"DOC 360 21344\n"}
+,{"stream_name":"stdout","time":1887.150755144,"data":"DOC 361 9228\n"}
+,{"stream_name":"stdout","time":1887.150757697,"data":"DOC 362 29847\n"}
+,{"stream_name":"stdout","time":1887.150760411,"data":"DOC 363 21895\n"}
+,{"stream_name":"stdout","time":1887.150763031,"data":"DOC 364 65\n"}
+,{"stream_name":"stdout","time":1887.150765685,"data":"DOC 365 21492\n"}
+,{"stream_name":"stdout","time":1887.150768323,"data":"DOC 366 12593\n"}
+,{"stream_name":"stdout","time":1887.150770923,"data":"DOC 367 23383\n"}
+,{"stream_name":"stdout","time":1887.150773499,"data":"DOC 368 7615\n"}
+,{"stream_name":"stdout","time":1887.15077613,"data":"DOC 369 30231\n"}
+,{"stream_name":"stdout","time":1887.15077869,"data":"DOC 370 19243\n"}
+,{"stream_name":"stdout","time":1887.150781287,"data":"DOC 371 187\n"}
+,{"stream_name":"stdout","time":1887.150783831,"data":"DOC 372 29677\n"}
+,{"stream_name":"stdout","time":1887.150786419,"data":"DOC 373 1501\n"}
+,{"stream_name":"stdout","time":1887.150790211,"data":"DOC 374 30247\n"}
+,{"stream_name":"stdout","time":1887.150792905,"data":"DOC 375 30663\n"}
+,{"stream_name":"stdout","time":1887.150813452,"data":"DOC 376 28330\n"}
+,{"stream_name":"stdout","time":1887.150818235,"data":"DOC 377 13900\n"}
+,{"stream_name":"stdout","time":1887.150822331,"data":"DOC 378 22503\n"}
+,{"stream_name":"stdout","time":1887.150826881,"data":"DOC 379 8276\n"}
+,{"stream_name":"stdout","time":1887.150831434,"data":"DOC 380 8364\n"}
+,{"stream_name":"stdout","time":1887.150835554,"data":"DOC 381 35\n"}
+,{"stream_name":"stdout","time":1887.150839725,"data":"DOC 382 8261\n"}
+,{"stream_name":"stdout","time":1887.150845021,"data":"DOC 383 23348\n"}
+,{"stream_name":"stdout","time":1887.150849494,"data":"DOC 384 19380\n"}
+,{"stream_name":"stdout","time":1887.150853803,"data":"DOC 385 17190\n"}
+,{"stream_name":"stdout","time":1887.150857871,"data":"DOC 386 27811\n"}
+,{"stream_name":"stdout","time":1887.15086193,"data":"DOC 387 27818\n"}
+,{"stream_name":"stdout","time":1887.150865979,"data":"DOC 388 1056\n"}
+,{"stream_name":"stdout","time":1887.150869965,"data":"DOC 389 4932\n"}
+,{"stream_name":"stdout","time":1887.15087426,"data":"DOC 390 30289\n"}
+,{"stream_name":"stdout","time":1887.150878671,"data":"DOC 391 1515\n"}
+,{"stream_name":"stdout","time":1887.150882495,"data":"DOC 392 7992\n"}
+,{"stream_name":"stdout","time":1887.150886234,"data":"DOC 393 10701\n"}
+,{"stream_name":"stdout","time":1887.150890007,"data":"DOC 394 27681\n"}
+,{"stream_name":"stdout","time":1887.150893862,"data":"DOC 395 12351\n"}
+,{"stream_name":"stdout","time":1887.150897786,"data":"DOC 396 1447\n"}
+,{"stream_name":"stdout","time":1887.150901573,"data":"DOC 397 7158\n"}
+,{"stream_name":"stdout","time":1887.150905411,"data":"DOC 398 28357\n"}
+,{"stream_name":"stdout","time":1887.150909204,"data":"DOC 399 16450\n"}
+,{"stream_name":"stdout","time":1887.150913127,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1887.150919285,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1887.15092309,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":1887.150932821,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1887.150940129,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1887.150962764,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":1887.15096689,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1887.150971473,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1887.150975472,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":1887.150983219,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1887.150987851,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1887.15099173,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":1887.150996303,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1887.15100285,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1887.151010354,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":1887.151013318,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":1887.151016496,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":1887.15101926,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":1887.151021987,"data":"\n"}
+,{"stream_name":"stdout","time":1887.163062897,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 400 500 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":2220.292800854,"data":"DOC 400 8193\n"}
+,{"stream_name":"stdout","time":2220.29680953,"data":"DOC 401 5301\n"}
+,{"stream_name":"stdout","time":2220.296838119,"data":"DOC 402 645\n"}
+,{"stream_name":"stdout","time":2220.296842462,"data":"DOC 403 17894\n"}
+,{"stream_name":"stdout","time":2220.296846022,"data":"DOC 404 26866\n"}
+,{"stream_name":"stdout","time":2220.296849346,"data":"DOC 405 22307\n"}
+,{"stream_name":"stdout","time":2220.296852676,"data":"DOC 406 7072\n"}
+,{"stream_name":"stdout","time":2220.296856181,"data":"DOC 407 8067\n"}
+,{"stream_name":"stdout","time":2220.296859511,"data":"DOC 408 21615\n"}
+,{"stream_name":"stdout","time":2220.296862741,"data":"DOC 409 28614\n"}
+,{"stream_name":"stdout","time":2220.296877334,"data":"DOC 410 19824\n"}
+,{"stream_name":"stdout","time":2220.296880286,"data":"DOC 411 30068\n"}
+,{"stream_name":"stdout","time":2220.29688324,"data":"DOC 412 9728\n"}
+,{"stream_name":"stdout","time":2220.296885933,"data":"DOC 413 2103\n"}
+,{"stream_name":"stdout","time":2220.296888507,"data":"DOC 414 16692\n"}
+,{"stream_name":"stdout","time":2220.296891139,"data":"DOC 415 1507\n"}
+,{"stream_name":"stdout","time":2220.296893713,"data":"DOC 416 19694\n"}
+,{"stream_name":"stdout","time":2220.296896349,"data":"DOC 417 7032\n"}
+,{"stream_name":"stdout","time":2220.296898919,"data":"DOC 418 7985\n"}
+,{"stream_name":"stdout","time":2220.296901555,"data":"DOC 419 23570\n"}
+,{"stream_name":"stdout","time":2220.296904116,"data":"DOC 420 5194\n"}
+,{"stream_name":"stdout","time":2220.296906694,"data":"DOC 421 29633\n"}
+,{"stream_name":"stdout","time":2220.296909329,"data":"DOC 422 28135\n"}
+,{"stream_name":"stdout","time":2220.296912042,"data":"DOC 423 29101\n"}
+,{"stream_name":"stdout","time":2220.296914609,"data":"DOC 424 26138\n"}
+,{"stream_name":"stdout","time":2220.296917167,"data":"DOC 425 19295\n"}
+,{"stream_name":"stdout","time":2220.296919733,"data":"DOC 426 7082\n"}
+,{"stream_name":"stdout","time":2220.296922395,"data":"DOC 427 21111\n"}
+,{"stream_name":"stdout","time":2220.296924955,"data":"DOC 428 1751\n"}
+,{"stream_name":"stdout","time":2220.296963414,"data":"DOC 429 25087\n"}
+,{"stream_name":"stdout","time":2220.296967735,"data":"DOC 430 16044\n"}
+,{"stream_name":"stdout","time":2220.296971527,"data":"DOC 431 28709\n"}
+,{"stream_name":"stdout","time":2220.296975766,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2220.296982771,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2220.296986645,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":2220.29699054,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2220.29699487,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2220.296998663,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":2220.297030296,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2220.297033471,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2220.297036167,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":2220.297039269,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2220.297042265,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2220.297045077,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":2220.297058745,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2220.297062144,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2220.297064778,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":2220.297067525,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2220.297070583,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2220.297073324,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":2220.297076031,"data":"\n"}
+,{"stream_name":"stdout","time":2220.331637733,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 432 532 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":2575.708588917,"data":"70 1078\n"}
+,{"stream_name":"stdout","time":2575.708649431,"data":"DOC 471 30081\n"}
+,{"stream_name":"stdout","time":2575.708656557,"data":"DOC 472 7631\n"}
+,{"stream_name":"stdout","time":2575.708661779,"data":"DOC 473 13669\n"}
+,{"stream_name":"stdout","time":2575.708671161,"data":"DOC 474 28497\n"}
+,{"stream_name":"stdout","time":2575.708674669,"data":"DOC 475 5117\n"}
+,{"stream_name":"stdout","time":2575.708677973,"data":"DOC 476 29751\n"}
+,{"stream_name":"stdout","time":2575.708681307,"data":"DOC 477 23847\n"}
+,{"stream_name":"stdout","time":2575.708684561,"data":"DOC 478 10219\n"}
+,{"stream_name":"stdout","time":2575.708687785,"data":"DOC 479 28629\n"}
+,{"stream_name":"stdout","time":2575.708691026,"data":"DOC 480 11676\n"}
+,{"stream_name":"stdout","time":2575.708694631,"data":"DOC 481 657\n"}
+,{"stream_name":"stdout","time":2575.708698403,"data":"DOC 482 16732\n"}
+,{"stream_name":"stdout","time":2575.708716209,"data":"DOC 483 18611\n"}
+,{"stream_name":"stdout","time":2575.708723276,"data":"DOC 484 28417\n"}
+,{"stream_name":"stdout","time":2575.708729016,"data":"DOC 485 25685\n"}
+,{"stream_name":"stdout","time":2575.708735316,"data":"DOC 486 13662\n"}
+,{"stream_name":"stdout","time":2575.708740731,"data":"DOC 487 8251\n"}
+,{"stream_name":"stdout","time":2575.708745432,"data":"DOC 488 13034\n"}
+,{"stream_name":"stdout","time":2575.708750255,"data":"DOC 489 7156\n"}
+,{"stream_name":"stdout","time":2575.708754941,"data":"DOC 490 14196\n"}
+,{"stream_name":"stdout","time":2575.708760568,"data":"DOC 491 21008\n"}
+,{"stream_name":"stdout","time":2575.708765471,"data":"DOC 492 15659\n"}
+,{"stream_name":"stdout","time":2575.708770282,"data":"DOC 493 8228\n"}
+,{"stream_name":"stdout","time":2575.708775888,"data":"DOC 494 5124\n"}
+,{"stream_name":"stdout","time":2575.70878126,"data":"DOC 495 16071\n"}
+,{"stream_name":"stdout","time":2575.708786214,"data":"DOC 496 18841\n"}
+,{"stream_name":"stdout","time":2575.708791618,"data":"DOC 497 7160\n"}
+,{"stream_name":"stdout","time":2575.708796901,"data":"DOC 498 16013\n"}
+,{"stream_name":"stdout","time":2575.708802623,"data":"DOC 499 8016\n"}
+,{"stream_name":"stdout","time":2575.70880816,"data":"DOC 500 12065\n"}
+,{"stream_name":"stdout","time":2575.708825408,"data":"DOC 501 14982\n"}
+,{"stream_name":"stdout","time":2575.70882981,"data":"DOC 502 29249\n"}
+,{"stream_name":"stdout","time":2575.708833725,"data":"DOC 503 19024\n"}
+,{"stream_name":"stdout","time":2575.708838323,"data":"DOC 504 12699\n"}
+,{"stream_name":"stdout","time":2575.708842318,"data":"DOC 505 19107\n"}
+,{"stream_name":"stdout","time":2575.708846776,"data":"DOC 506 11462\n"}
+,{"stream_name":"stdout","time":2575.708851228,"data":"DOC 507 13020\n"}
+,{"stream_name":"stdout","time":2575.708854853,"data":"DOC 508 24021\n"}
+,{"stream_name":"stdout","time":2575.708858514,"data":"DOC 509 4955\n"}
+,{"stream_name":"stdout","time":2575.708862223,"data":"DOC 510 17260\n"}
+,{"stream_name":"stdout","time":2575.708866037,"data":"DOC 511 19913\n"}
+,{"stream_name":"stdout","time":2575.708869834,"data":"DOC 512 13067\n"}
+,{"stream_name":"stdout","time":2575.708873632,"data":"DOC 513 7628\n"}
+,{"stream_name":"stdout","time":2575.708877457,"data":"DOC 514 29504\n"}
+,{"stream_name":"stdout","time":2575.708881191,"data":"DOC 515 13639\n"}
+,{"stream_name":"stdout","time":2575.708884979,"data":"DOC 516 21318\n"}
+,{"stream_name":"stdout","time":2575.7088887,"data":"DOC 517 30046\n"}
+,{"stream_name":"stdout","time":2575.708892549,"data":"DOC 518 18655\n"}
+,{"stream_name":"stdout","time":2575.7088963,"data":"DOC 519 17121\n"}
+,{"stream_name":"stdout","time":2575.708905668,"data":"DOC 520 19901\n"}
+,{"stream_name":"stdout","time":2575.70890855,"data":"DOC 521 22871\n"}
+,{"stream_name":"stdout","time":2575.708911087,"data":"DOC 522 29734\n"}
+,{"stream_name":"stdout","time":2575.708913653,"data":"DOC 523 2342\n"}
+,{"stream_name":"stdout","time":2575.708916194,"data":"DOC 524 5\n"}
+,{"stream_name":"stdout","time":2575.708918754,"data":"DOC 525 10389\n"}
+,{"stream_name":"stdout","time":2575.708921359,"data":"DOC 526 23002\n"}
+,{"stream_name":"stdout","time":2575.708924448,"data":"DOC 527 23257\n"}
+,{"stream_name":"stdout","time":2575.708965876,"data":"DOC 528 1554\n"}
+,{"stream_name":"stdout","time":2575.708971685,"data":"DOC 529 12882\n"}
+,{"stream_name":"stdout","time":2575.708975552,"data":"DOC 530 1506\n"}
+,{"stream_name":"stdout","time":2575.708979498,"data":"DOC 531 5327\n"}
+,{"stream_name":"stdout","time":2575.708983663,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2575.708990472,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2575.70899448,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":2575.708998491,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2575.709003152,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2575.709007024,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":2575.709010944,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2575.709015383,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2575.70901912,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":2575.70903668,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2575.709040411,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2575.709043044,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":2575.709046043,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2575.709049176,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2575.709051922,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":2575.709054647,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2575.709057723,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2575.709060408,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":2575.709063085,"data":"\n"}
+,{"stream_name":"stdout","time":2575.721584523,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 532 632 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":2895.350138705,"data":"\n"}
+,{"stream_name":"stdout","time":2895.35021858,"data":"DOC 570 19352\n"}
+,{"stream_name":"stdout","time":2895.350225779,"data":"DOC 571 24413\n"}
+,{"stream_name":"stdout","time":2895.35023112,"data":"DOC 572 20341\n"}
+,{"stream_name":"stdout","time":2895.350235702,"data":"DOC 573 12910\n"}
+,{"stream_name":"stdout","time":2895.3502404,"data":"DOC 574 29056\n"}
+,{"stream_name":"stdout","time":2895.350245058,"data":"DOC 575 18086\n"}
+,{"stream_name":"stdout","time":2895.350250217,"data":"DOC 576 1556\n"}
+,{"stream_name":"stdout","time":2895.350255031,"data":"DOC 577 8028\n"}
+,{"stream_name":"stdout","time":2895.350259968,"data":"DOC 578 23607\n"}
+,{"stream_name":"stdout","time":2895.350264679,"data":"DOC 579 8127\n"}
+,{"stream_name":"stdout","time":2895.350270692,"data":"DOC 580 21075\n"}
+,{"stream_name":"stdout","time":2895.35027574,"data":"DOC 581 22759\n"}
+,{"stream_name":"stdout","time":2895.350281192,"data":"DOC 582 3857\n"}
+,{"stream_name":"stdout","time":2895.35028684,"data":"DOC 583 13593\n"}
+,{"stream_name":"stdout","time":2895.350292028,"data":"DOC 584 12956\n"}
+,{"stream_name":"stdout","time":2895.350297046,"data":"DOC 585 8073\n"}
+,{"stream_name":"stdout","time":2895.350301737,"data":"DOC 586 29556\n"}
+,{"stream_name":"stdout","time":2895.350306781,"data":"DOC 587 4975\n"}
+,{"stream_name":"stdout","time":2895.350311515,"data":"DOC 588 3558\n"}
+,{"stream_name":"stdout","time":2895.350316561,"data":"DOC 589 30270\n"}
+,{"stream_name":"stdout","time":2895.350321625,"data":"DOC 590 13685\n"}
+,{"stream_name":"stdout","time":2895.350339327,"data":"DOC 591 7993\n"}
+,{"stream_name":"stdout","time":2895.350343278,"data":"DOC 592 7212\n"}
+,{"stream_name":"stdout","time":2895.350347173,"data":"DOC 593 29086\n"}
+,{"stream_name":"stdout","time":2895.350351165,"data":"DOC 594 20716\n"}
+,{"stream_name":"stdout","time":2895.350355095,"data":"DOC 595 13554\n"}
+,{"stream_name":"stdout","time":2895.350359088,"data":"DOC 596 20571\n"}
+,{"stream_name":"stdout","time":2895.350362841,"data":"DOC 597 22847\n"}
+,{"stream_name":"stdout","time":2895.350366726,"data":"DOC 598 17912\n"}
+,{"stream_name":"stdout","time":2895.350370611,"data":"DOC 599 5254\n"}
+,{"stream_name":"stdout","time":2895.350374483,"data":"DOC 600 28461\n"}
+,{"stream_name":"stdout","time":2895.350378252,"data":"DOC 601 30017\n"}
+,{"stream_name":"stdout","time":2895.350383091,"data":"DOC 602 16255\n"}
+,{"stream_name":"stdout","time":2895.350387037,"data":"DOC 603 4981\n"}
+,{"stream_name":"stdout","time":2895.350391018,"data":"DOC 604 15078\n"}
+,{"stream_name":"stdout","time":2895.350394888,"data":"DOC 605 458\n"}
+,{"stream_name":"stdout","time":2895.350398849,"data":"DOC 606 1602\n"}
+,{"stream_name":"stdout","time":2895.350402686,"data":"DOC 607 1805\n"}
+,{"stream_name":"stdout","time":2895.350406823,"data":"DOC 608 13511\n"}
+,{"stream_name":"stdout","time":2895.350410792,"data":"DOC 609 28987\n"}
+,{"stream_name":"stdout","time":2895.350414518,"data":"DOC 610 3308\n"}
+,{"stream_name":"stdout","time":2895.350418418,"data":"DOC 611 5296\n"}
+,{"stream_name":"stdout","time":2895.350422433,"data":"DOC 612 5015\n"}
+,{"stream_name":"stdout","time":2895.350426374,"data":"DOC 613 29163\n"}
+,{"stream_name":"stdout","time":2895.350430178,"data":"DOC 614 13581\n"}
+,{"stream_name":"stdout","time":2895.35043385,"data":"DOC 615 18388\n"}
+,{"stream_name":"stdout","time":2895.350437673,"data":"DOC 616 5143\n"}
+,{"stream_name":"stdout","time":2895.350441468,"data":"DOC 617 5193\n"}
+,{"stream_name":"stdout","time":2895.350445237,"data":"DOC 618 11316\n"}
+,{"stream_name":"stdout","time":2895.350449214,"data":"DOC 619 11059\n"}
+,{"stream_name":"stdout","time":2895.350453178,"data":"DOC 620 7871\n"}
+,{"stream_name":"stdout","time":2895.3504571,"data":"DOC 621 4929\n"}
+,{"stream_name":"stdout","time":2895.350461185,"data":"DOC 622 1028\n"}
+,{"stream_name":"stdout","time":2895.350465221,"data":"DOC 623 3321\n"}
+,{"stream_name":"stdout","time":2895.350469808,"data":"DOC 624 19316\n"}
+,{"stream_name":"stdout","time":2895.350473448,"data":"DOC 625 7979\n"}
+,{"stream_name":"stdout","time":2895.35047745,"data":"DOC 626 15676\n"}
+,{"stream_name":"stdout","time":2895.350481408,"data":"DOC 627 11554\n"}
+,{"stream_name":"stdout","time":2895.350485842,"data":"DOC 628 29285\n"}
+,{"stream_name":"stdout","time":2895.350490062,"data":"DOC 629 20331\n"}
+,{"stream_name":"stdout","time":2895.350493905,"data":"DOC 630 683\n"}
+,{"stream_name":"stdout","time":2895.350497907,"data":"DOC 631 13663\n"}
+,{"stream_name":"stdout","time":2895.350502031,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2895.35050855,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2895.350512251,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":2895.350516354,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2895.350535883,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2895.350540842,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":2895.350545297,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2895.350549681,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2895.350553645,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":2895.350559643,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2895.350563917,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2895.350567678,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":2895.350571914,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2895.350575914,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2895.350580028,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":2895.350584004,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":2895.350587964,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":2895.350591933,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":2895.350598431,"data":"\n"}
+,{"stream_name":"stdout","time":2895.366554646,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 632 732 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":3232.223450196,"data":"\n"}
+,{"stream_name":"stdout","time":3232.223499068,"data":"DOC 670 7175\n"}
+,{"stream_name":"stdout","time":3232.223506162,"data":"DOC 671 28939\n"}
+,{"stream_name":"stdout","time":3232.223511402,"data":"DOC 672 30296\n"}
+,{"stream_name":"stdout","time":3232.223516162,"data":"DOC 673 1672\n"}
+,{"stream_name":"stdout","time":3232.223521197,"data":"DOC 674 30162\n"}
+,{"stream_name":"stdout","time":3232.223526282,"data":"DOC 675 20263\n"}
+,{"stream_name":"stdout","time":3232.223531559,"data":"DOC 676 30102\n"}
+,{"stream_name":"stdout","time":3232.223536704,"data":"DOC 677 4391\n"}
+,{"stream_name":"stdout","time":3232.223541601,"data":"DOC 678 28860\n"}
+,{"stream_name":"stdout","time":3232.223546842,"data":"DOC 679 18905\n"}
+,{"stream_name":"stdout","time":3232.223551723,"data":"DOC 680 17538\n"}
+,{"stream_name":"stdout","time":3232.223556696,"data":"DOC 681 5093\n"}
+,{"stream_name":"stdout","time":3232.223574306,"data":"DOC 682 12929\n"}
+,{"stream_name":"stdout","time":3232.223578355,"data":"DOC 683 7124\n"}
+,{"stream_name":"stdout","time":3232.223582516,"data":"DOC 684 16659\n"}
+,{"stream_name":"stdout","time":3232.223586289,"data":"DOC 685 13028\n"}
+,{"stream_name":"stdout","time":3232.223590424,"data":"DOC 686 28202\n"}
+,{"stream_name":"stdout","time":3232.22360643,"data":"DOC 687 12892\n"}
+,{"stream_name":"stdout","time":3232.223610555,"data":"DOC 688 7154\n"}
+,{"stream_name":"stdout","time":3232.223614562,"data":"DOC 689 7844\n"}
+,{"stream_name":"stdout","time":3232.223618421,"data":"DOC 690 25976\n"}
+,{"stream_name":"stdout","time":3232.223622256,"data":"DOC 691 7947\n"}
+,{"stream_name":"stdout","time":3232.223626121,"data":"DOC 692 11723\n"}
+,{"stream_name":"stdout","time":3232.223630202,"data":"DOC 693 1049\n"}
+,{"stream_name":"stdout","time":3232.223634034,"data":"DOC 694 8306\n"}
+,{"stream_name":"stdout","time":3232.223637882,"data":"DOC 695 23125\n"}
+,{"stream_name":"stdout","time":3232.223641805,"data":"DOC 696 29766\n"}
+,{"stream_name":"stdout","time":3232.223645425,"data":"DOC 697 29500\n"}
+,{"stream_name":"stdout","time":3232.223649663,"data":"DOC 698 7103\n"}
+,{"stream_name":"stdout","time":3232.223653634,"data":"DOC 699 7148\n"}
+,{"stream_name":"stdout","time":3232.223657448,"data":"DOC 700 29951\n"}
+,{"stream_name":"stdout","time":3232.223661616,"data":"DOC 701 4896\n"}
+,{"stream_name":"stdout","time":3232.223665981,"data":"DOC 702 15684\n"}
+,{"stream_name":"stdout","time":3232.223669556,"data":"DOC 703 398\n"}
+,{"stream_name":"stdout","time":3232.223673634,"data":"DOC 704 27154\n"}
+,{"stream_name":"stdout","time":3232.22367734,"data":"DOC 705 9503\n"}
+,{"stream_name":"stdout","time":3232.223680829,"data":"DOC 706 27329\n"}
+,{"stream_name":"stdout","time":3232.223684671,"data":"DOC 707 9868\n"}
+,{"stream_name":"stdout","time":3232.223688685,"data":"DOC 708 16717\n"}
+,{"stream_name":"stdout","time":3232.223692379,"data":"DOC 709 7589\n"}
+,{"stream_name":"stdout","time":3232.223696269,"data":"DOC 710 4994\n"}
+,{"stream_name":"stdout","time":3232.223700183,"data":"DOC 711 13856\n"}
+,{"stream_name":"stdout","time":3232.223703984,"data":"DOC 712 27794\n"}
+,{"stream_name":"stdout","time":3232.22370767,"data":"DOC 713 18508\n"}
+,{"stream_name":"stdout","time":3232.223711665,"data":"DOC 714 27553\n"}
+,{"stream_name":"stdout","time":3232.223715408,"data":"DOC 715 15111\n"}
+,{"stream_name":"stdout","time":3232.223719326,"data":"DOC 716 22453\n"}
+,{"stream_name":"stdout","time":3232.223723002,"data":"DOC 717 7208\n"}
+,{"stream_name":"stdout","time":3232.223726928,"data":"DOC 718 8196\n"}
+,{"stream_name":"stdout","time":3232.223730582,"data":"DOC 719 30059\n"}
+,{"stream_name":"stdout","time":3232.2237344,"data":"DOC 720 2862\n"}
+,{"stream_name":"stdout","time":3232.223738014,"data":"DOC 721 647\n"}
+,{"stream_name":"stdout","time":3232.223742103,"data":"DOC 722 20096\n"}
+,{"stream_name":"stdout","time":3232.223748716,"data":"DOC 723 24714\n"}
+,{"stream_name":"stdout","time":3232.22375322,"data":"DOC 724 29174\n"}
+,{"stream_name":"stdout","time":3232.223757528,"data":"DOC 725 21055\n"}
+,{"stream_name":"stdout","time":3232.223762043,"data":"DOC 726 13614\n"}
+,{"stream_name":"stdout","time":3232.223765542,"data":"DOC 727 29153\n"}
+,{"stream_name":"stdout","time":3232.223769565,"data":"DOC 728 15660\n"}
+,{"stream_name":"stdout","time":3232.223773751,"data":"DOC 729 15713\n"}
+,{"stream_name":"stdout","time":3232.223777958,"data":"DOC 730 7837\n"}
+,{"stream_name":"stdout","time":3232.223788291,"data":"DOC 731 250\n"}
+,{"stream_name":"stdout","time":3232.223793514,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3232.223800218,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3232.22380493,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":3232.223809329,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3232.223813813,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3232.223817818,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":3232.22382181,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3232.223826467,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3232.223830625,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":3232.223837611,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3232.223841859,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3232.223845703,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":3232.223850414,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3232.223854564,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3232.223858614,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":3232.223862867,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3232.223867475,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3232.223872039,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":3232.223876865,"data":"\n"}
+,{"stream_name":"stdout","time":3232.241211028,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 732 832 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":3621.918262638,"data":" 770 4881\n"}
+,{"stream_name":"stdout","time":3621.918371953,"data":"DOC 771 29946\n"}
+,{"stream_name":"stdout","time":3621.918380282,"data":"DOC 772 10404\n"}
+,{"stream_name":"stdout","time":3621.918396789,"data":"DOC 773 16786\n"}
+,{"stream_name":"stdout","time":3621.918400487,"data":"DOC 774 27598\n"}
+,{"stream_name":"stdout","time":3621.918403568,"data":"DOC 775 1446\n"}
+,{"stream_name":"stdout","time":3621.918406581,"data":"DOC 776 7710\n"}
+,{"stream_name":"stdout","time":3621.918409553,"data":"DOC 777 28826\n"}
+,{"stream_name":"stdout","time":3621.918412599,"data":"DOC 778 15701\n"}
+,{"stream_name":"stdout","time":3621.91841557,"data":"DOC 779 11386\n"}
+,{"stream_name":"stdout","time":3621.918418529,"data":"DOC 780 16194\n"}
+,{"stream_name":"stdout","time":3621.918421764,"data":"DOC 781 30077\n"}
+,{"stream_name":"stdout","time":3621.918424758,"data":"DOC 782 21163\n"}
+,{"stream_name":"stdout","time":3621.918427707,"data":"DOC 783 8278\n"}
+,{"stream_name":"stdout","time":3621.918430741,"data":"DOC 784 7039\n"}
+,{"stream_name":"stdout","time":3621.918433694,"data":"DOC 785 2685\n"}
+,{"stream_name":"stdout","time":3621.918436753,"data":"DOC 786 29158\n"}
+,{"stream_name":"stdout","time":3621.918440371,"data":"DOC 787 12469\n"}
+,{"stream_name":"stdout","time":3621.918460875,"data":"DOC 788 12870\n"}
+,{"stream_name":"stdout","time":3621.918464456,"data":"DOC 789 27974\n"}
+,{"stream_name":"stdout","time":3621.91846741,"data":"DOC 790 28779\n"}
+,{"stream_name":"stdout","time":3621.918470298,"data":"DOC 791 16424\n"}
+,{"stream_name":"stdout","time":3621.918473103,"data":"DOC 792 28032\n"}
+,{"stream_name":"stdout","time":3621.918476001,"data":"DOC 793 14738\n"}
+,{"stream_name":"stdout","time":3621.918478984,"data":"DOC 794 2280\n"}
+,{"stream_name":"stdout","time":3621.918481841,"data":"DOC 795 30255\n"}
+,{"stream_name":"stdout","time":3621.918484729,"data":"DOC 796 14929\n"}
+,{"stream_name":"stdout","time":3621.918487605,"data":"DOC 797 9977\n"}
+,{"stream_name":"stdout","time":3621.9184905,"data":"DOC 798 19974\n"}
+,{"stream_name":"stdout","time":3621.918493304,"data":"DOC 799 12298\n"}
+,{"stream_name":"stdout","time":3621.918496193,"data":"DOC 800 28197\n"}
+,{"stream_name":"stdout","time":3621.918499001,"data":"DOC 801 289\n"}
+,{"stream_name":"stdout","time":3621.918501841,"data":"DOC 802 15361\n"}
+,{"stream_name":"stdout","time":3621.918504651,"data":"DOC 803 19583\n"}
+,{"stream_name":"stdout","time":3621.918507455,"data":"DOC 804 13632\n"}
+,{"stream_name":"stdout","time":3621.918510267,"data":"DOC 805 5331\n"}
+,{"stream_name":"stdout","time":3621.918513076,"data":"DOC 806 17833\n"}
+,{"stream_name":"stdout","time":3621.918515885,"data":"DOC 807 10421\n"}
+,{"stream_name":"stdout","time":3621.91851869,"data":"DOC 808 17029\n"}
+,{"stream_name":"stdout","time":3621.918521503,"data":"DOC 809 5232\n"}
+,{"stream_name":"stdout","time":3621.918524469,"data":"DOC 810 196\n"}
+,{"stream_name":"stdout","time":3621.918527332,"data":"DOC 811 20043\n"}
+,{"stream_name":"stdout","time":3621.91853024,"data":"DOC 812 27446\n"}
+,{"stream_name":"stdout","time":3621.918533055,"data":"DOC 813 13274\n"}
+,{"stream_name":"stdout","time":3621.918535861,"data":"DOC 814 5063\n"}
+,{"stream_name":"stdout","time":3621.918538673,"data":"DOC 815 16221\n"}
+,{"stream_name":"stdout","time":3621.918541483,"data":"DOC 816 2395\n"}
+,{"stream_name":"stdout","time":3621.918544322,"data":"DOC 817 5026\n"}
+,{"stream_name":"stdout","time":3621.91854715,"data":"DOC 818 5060\n"}
+,{"stream_name":"stdout","time":3621.918549964,"data":"DOC 819 29360\n"}
+,{"stream_name":"stdout","time":3621.918552777,"data":"DOC 820 29018\n"}
+,{"stream_name":"stdout","time":3621.918555581,"data":"DOC 821 26012\n"}
+,{"stream_name":"stdout","time":3621.918562955,"data":"DOC 822 4944\n"}
+,{"stream_name":"stdout","time":3621.918566161,"data":"DOC 823 14511\n"}
+,{"stream_name":"stdout","time":3621.918568999,"data":"DOC 824 29028\n"}
+,{"stream_name":"stdout","time":3621.918571835,"data":"DOC 825 29137\n"}
+,{"stream_name":"stdout","time":3621.918574658,"data":"DOC 826 7106\n"}
+,{"stream_name":"stdout","time":3621.918577481,"data":"DOC 827 7682\n"}
+,{"stream_name":"stdout","time":3621.918580418,"data":"DOC 828 8496\n"}
+,{"stream_name":"stdout","time":3621.918583626,"data":"DOC 829 23589\n"}
+,{"stream_name":"stdout","time":3621.918586446,"data":"DOC 830 29728\n"}
+,{"stream_name":"stdout","time":3621.918589281,"data":"DOC 831 8117\n"}
+,{"stream_name":"stdout","time":3621.918592277,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3621.918597466,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3621.918600487,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":3621.918603634,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3621.918606964,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3621.918609872,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":3621.918612973,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3621.918616202,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3621.918619135,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":3621.918624446,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3621.918627816,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3621.918630712,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":3621.918634061,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3621.918637375,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3621.918640261,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":3621.918643253,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3621.918646589,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3621.918653033,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":3621.91865641,"data":"\n"}
+,{"stream_name":"stdout","time":3621.940113609,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 832 932 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":3965.870344898,"data":"OC 870 17747\n"}
+,{"stream_name":"stdout","time":3965.870387712,"data":"DOC 871 4967\n"}
+,{"stream_name":"stdout","time":3965.870394033,"data":"DOC 872 1797\n"}
+,{"stream_name":"stdout","time":3965.870399583,"data":"DOC 873 13833\n"}
+,{"stream_name":"stdout","time":3965.870404986,"data":"DOC 874 18288\n"}
+,{"stream_name":"stdout","time":3965.870409606,"data":"DOC 875 18074\n"}
+,{"stream_name":"stdout","time":3965.8704144,"data":"DOC 876 2158\n"}
+,{"stream_name":"stdout","time":3965.870420077,"data":"DOC 877 25237\n"}
+,{"stream_name":"stdout","time":3965.870425461,"data":"DOC 878 13734\n"}
+,{"stream_name":"stdout","time":3965.87043064,"data":"DOC 879 5320\n"}
+,{"stream_name":"stdout","time":3965.870435506,"data":"DOC 880 30019\n"}
+,{"stream_name":"stdout","time":3965.870440764,"data":"DOC 881 27969\n"}
+,{"stream_name":"stdout","time":3965.870446334,"data":"DOC 882 9044\n"}
+,{"stream_name":"stdout","time":3965.870451135,"data":"DOC 883 15634\n"}
+,{"stream_name":"stdout","time":3965.87045612,"data":"DOC 884 8116\n"}
+,{"stream_name":"stdout","time":3965.870460908,"data":"DOC 885 21877\n"}
+,{"stream_name":"stdout","time":3965.870465729,"data":"DOC 886 7813\n"}
+,{"stream_name":"stdout","time":3965.870470511,"data":"DOC 887 13634\n"}
+,{"stream_name":"stdout","time":3965.870477076,"data":"DOC 888 20586\n"}
+,{"stream_name":"stdout","time":3965.870492808,"data":"DOC 889 20060\n"}
+,{"stream_name":"stdout","time":3965.870496371,"data":"DOC 890 13588\n"}
+,{"stream_name":"stdout","time":3965.87049966,"data":"DOC 891 12798\n"}
+,{"stream_name":"stdout","time":3965.870502983,"data":"DOC 892 12191\n"}
+,{"stream_name":"stdout","time":3965.870506334,"data":"DOC 893 28861\n"}
+,{"stream_name":"stdout","time":3965.870509615,"data":"DOC 894 26959\n"}
+,{"stream_name":"stdout","time":3965.870513104,"data":"DOC 895 814\n"}
+,{"stream_name":"stdout","time":3965.870516621,"data":"DOC 896 52\n"}
+,{"stream_name":"stdout","time":3965.870519896,"data":"DOC 897 30061\n"}
+,{"stream_name":"stdout","time":3965.870523232,"data":"DOC 898 11012\n"}
+,{"stream_name":"stdout","time":3965.870526671,"data":"DOC 899 17275\n"}
+,{"stream_name":"stdout","time":3965.870530093,"data":"DOC 900 7858\n"}
+,{"stream_name":"stdout","time":3965.870533348,"data":"DOC 901 5336\n"}
+,{"stream_name":"stdout","time":3965.870536606,"data":"DOC 902 26123\n"}
+,{"stream_name":"stdout","time":3965.87053993,"data":"DOC 903 13781\n"}
+,{"stream_name":"stdout","time":3965.870543186,"data":"DOC 904 26774\n"}
+,{"stream_name":"stdout","time":3965.870546437,"data":"DOC 905 14002\n"}
+,{"stream_name":"stdout","time":3965.870553045,"data":"DOC 906 9620\n"}
+,{"stream_name":"stdout","time":3965.870556422,"data":"DOC 907 27517\n"}
+,{"stream_name":"stdout","time":3965.870559833,"data":"DOC 908 2136\n"}
+,{"stream_name":"stdout","time":3965.870563611,"data":"DOC 909 1652\n"}
+,{"stream_name":"stdout","time":3965.870566865,"data":"DOC 910 20183\n"}
+,{"stream_name":"stdout","time":3965.870570108,"data":"DOC 911 22605\n"}
+,{"stream_name":"stdout","time":3965.870573351,"data":"DOC 912 1666\n"}
+,{"stream_name":"stdout","time":3965.870585611,"data":"DOC 913 30041\n"}
+,{"stream_name":"stdout","time":3965.870588393,"data":"DOC 914 23372\n"}
+,{"stream_name":"stdout","time":3965.870590917,"data":"DOC 915 24450\n"}
+,{"stream_name":"stdout","time":3965.870593476,"data":"DOC 916 29603\n"}
+,{"stream_name":"stdout","time":3965.870596055,"data":"DOC 917 4887\n"}
+,{"stream_name":"stdout","time":3965.870598648,"data":"DOC 918 27831\n"}
+,{"stream_name":"stdout","time":3965.8706012,"data":"DOC 919 28043\n"}
+,{"stream_name":"stdout","time":3965.87060375,"data":"DOC 920 8144\n"}
+,{"stream_name":"stdout","time":3965.870606371,"data":"DOC 921 19630\n"}
+,{"stream_name":"stdout","time":3965.870609,"data":"DOC 922 7152\n"}
+,{"stream_name":"stdout","time":3965.870611567,"data":"DOC 923 10989\n"}
+,{"stream_name":"stdout","time":3965.870614125,"data":"DOC 924 7085\n"}
+,{"stream_name":"stdout","time":3965.870616697,"data":"DOC 925 26678\n"}
+,{"stream_name":"stdout","time":3965.870619251,"data":"DOC 926 29776\n"}
+,{"stream_name":"stdout","time":3965.870621897,"data":"DOC 927 8007\n"}
+,{"stream_name":"stdout","time":3965.870624458,"data":"DOC 928 24469\n"}
+,{"stream_name":"stdout","time":3965.870627026,"data":"DOC 929 7662\n"}
+,{"stream_name":"stdout","time":3965.870629678,"data":"DOC 930 13096\n"}
+,{"stream_name":"stdout","time":3965.870632235,"data":"DOC 931 5183\n"}
+,{"stream_name":"stdout","time":3965.870634967,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3965.87063956,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3965.870642271,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":3965.870645025,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3965.870648186,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3965.870650805,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":3965.870653509,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3965.870656522,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3965.870659133,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":3965.870663296,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3965.870666388,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3965.87066901,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":3965.870672031,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3965.87067767,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3965.870680395,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":3965.870683083,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":3965.870686134,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":3965.870688833,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":3965.870691819,"data":"\n"}
+,{"stream_name":"stdout","time":3965.892236,"data":"$ cd /kaggle/working/knowledge-net/baselines/EMNLP2019 \u0026\u0026 CUDA_VISIBLE_DEVICES= TFHUB_CACHE_DIR=/tmp/tfhub /kaggle/working/venv37/bin/python kn_predict.py 932 1022 /kaggle/working/out/predictions.jsonl\n"}
+,{"stream_name":"stdout","time":4230.337297579,"data":" 4316\n"}
+,{"stream_name":"stdout","time":4230.337481227,"data":"DOC 962 1450\n"}
+,{"stream_name":"stdout","time":4230.337495629,"data":"DOC 963 30605\n"}
+,{"stream_name":"stdout","time":4230.337504567,"data":"DOC 964 28703\n"}
+,{"stream_name":"stdout","time":4230.337512067,"data":"DOC 965 29412\n"}
+,{"stream_name":"stdout","time":4230.337519597,"data":"DOC 966 4922\n"}
+,{"stream_name":"stdout","time":4230.33752682,"data":"DOC 967 16196\n"}
+,{"stream_name":"stdout","time":4230.337534005,"data":"DOC 968 4266\n"}
+,{"stream_name":"stdout","time":4230.337543135,"data":"DOC 969 12989\n"}
+,{"stream_name":"stdout","time":4230.337550599,"data":"DOC 970 4996\n"}
+,{"stream_name":"stdout","time":4230.337558096,"data":"DOC 971 15290\n"}
+,{"stream_name":"stdout","time":4230.337588109,"data":"DOC 972 1423\n"}
+,{"stream_name":"stdout","time":4230.337596649,"data":"DOC 973 26778\n"}
+,{"stream_name":"stdout","time":4230.337605332,"data":"DOC 974 15931\n"}
+,{"stream_name":"stdout","time":4230.337613018,"data":"DOC 975 14794\n"}
+,{"stream_name":"stdout","time":4230.337620365,"data":"DOC 976 24418\n"}
+,{"stream_name":"stdout","time":4230.337627671,"data":"DOC 977 5246\n"}
+,{"stream_name":"stdout","time":4230.337635717,"data":"DOC 978 28251\n"}
+,{"stream_name":"stdout","time":4230.337643315,"data":"DOC 979 30307\n"}
+,{"stream_name":"stdout","time":4230.337658242,"data":"DOC 980 20089\n"}
+,{"stream_name":"stdout","time":4230.337670581,"data":"DOC 981 29673\n"}
+,{"stream_name":"stdout","time":4230.337678374,"data":"DOC 982 7570\n"}
+,{"stream_name":"stdout","time":4230.337686323,"data":"DOC 983 10146\n"}
+,{"stream_name":"stdout","time":4230.337700604,"data":"DOC 984 28435\n"}
+,{"stream_name":"stdout","time":4230.337708102,"data":"DOC 985 29055\n"}
+,{"stream_name":"stdout","time":4230.337715415,"data":"DOC 986 19935\n"}
+,{"stream_name":"stdout","time":4230.337722764,"data":"DOC 987 29627\n"}
+,{"stream_name":"stdout","time":4230.337730039,"data":"DOC 988 27836\n"}
+,{"stream_name":"stdout","time":4230.337737244,"data":"DOC 989 4528\n"}
+,{"stream_name":"stdout","time":4230.337744838,"data":"DOC 990 29795\n"}
+,{"stream_name":"stdout","time":4230.337759478,"data":"DOC 991 5342\n"}
+,{"stream_name":"stdout","time":4230.33777017,"data":"DOC 992 19999\n"}
+,{"stream_name":"stdout","time":4230.337774991,"data":"DOC 993 20338\n"}
+,{"stream_name":"stdout","time":4230.337779379,"data":"DOC 994 7841\n"}
+,{"stream_name":"stdout","time":4230.337795889,"data":"DOC 995 29164\n"}
+,{"stream_name":"stdout","time":4230.337799773,"data":"DOC 996 22177\n"}
+,{"stream_name":"stdout","time":4230.337803001,"data":"DOC 997 4926\n"}
+,{"stream_name":"stdout","time":4230.337808462,"data":"DOC 998 26060\n"}
+,{"stream_name":"stdout","time":4230.337813802,"data":"DOC 999 66\n"}
+,{"stream_name":"stdout","time":4230.337819634,"data":"DOC 1000 25726\n"}
+,{"stream_name":"stdout","time":4230.337823677,"data":"DOC 1001 16553\n"}
+,{"stream_name":"stdout","time":4230.337827128,"data":"DOC 1002 4814\n"}
+,{"stream_name":"stdout","time":4230.337830365,"data":"DOC 1003 1552\n"}
+,{"stream_name":"stdout","time":4230.337833526,"data":"DOC 1004 5046\n"}
+,{"stream_name":"stdout","time":4230.337836687,"data":"DOC 1005 5266\n"}
+,{"stream_name":"stdout","time":4230.337840003,"data":"DOC 1006 14546\n"}
+,{"stream_name":"stdout","time":4230.337843334,"data":"DOC 1007 17482\n"}
+,{"stream_name":"stdout","time":4230.337846565,"data":"DOC 1008 28036\n"}
+,{"stream_name":"stdout","time":4230.337849738,"data":"DOC 1009 26591\n"}
+,{"stream_name":"stdout","time":4230.337852976,"data":"DOC 1010 5293\n"}
+,{"stream_name":"stdout","time":4230.33785614,"data":"DOC 1011 10804\n"}
+,{"stream_name":"stdout","time":4230.337859313,"data":"DOC 1012 24842\n"}
+,{"stream_name":"stdout","time":4230.33786246,"data":"DOC 1013 1557\n"}
+,{"stream_name":"stdout","time":4230.33786571,"data":"DOC 1014 8180\n"}
+,{"stream_name":"stdout","time":4230.337868889,"data":"DOC 1015 7987\n"}
+,{"stream_name":"stdout","time":4230.337872077,"data":"DOC 1016 23933\n"}
+,{"stream_name":"stdout","time":4230.337875253,"data":"DOC 1017 8106\n"}
+,{"stream_name":"stdout","time":4230.337878499,"data":"DOC 1018 13601\n"}
+,{"stream_name":"stdout","time":4230.337881712,"data":"DOC 1019 9173\n"}
+,{"stream_name":"stdout","time":4230.33788491,"data":"DOC 1020 990\n"}
+,{"stream_name":"stdout","time":4230.337888076,"data":"DOC 1021 22704\n"}
+,{"stream_name":"stdout","time":4230.337891723,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":4230.337897679,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":4230.337900997,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":4230.337904362,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":4230.337908055,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":4230.337911294,"data":"Colocations handled automatically by placer.\n"}
+,{"stream_name":"stdout","time":4230.337914689,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":4230.337918341,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":4230.337921567,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":4230.337967873,"data":"WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":4230.337983427,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":4230.337989407,"data":"This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.\n"}
+,{"stream_name":"stdout","time":4230.337995728,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":4230.338002085,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":4230.338007641,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":4230.338013242,"data":"WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.\n"}
+,{"stream_name":"stdout","time":4230.338022122,"data":"Instructions for updating:\n"}
+,{"stream_name":"stdout","time":4230.338032481,"data":"Use standard file APIs to check for files with this prefix.\n"}
+,{"stream_name":"stdout","time":4230.338036188,"data":"\n"}
+,{"stream_name":"stdout","time":4232.348299002,"data":"{\n"}
+,{"stream_name":"stdout","time":4232.348333994,"data":" \"steps\": {\n"}
+,{"stream_name":"stdout","time":4232.348339381,"data":"  \"clone\": {\n"}
+,{"stream_name":"stdout","time":4232.348343477,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348347552,"data":"   \"seconds\": 5.0\n"}
+,{"stream_name":"stdout","time":4232.348351606,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348355494,"data":"  \"env\": {\n"}
+,{"stream_name":"stdout","time":4232.348359676,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348365539,"data":"   \"seconds\": 514.9\n"}
+,{"stream_name":"stdout","time":4232.348373907,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348376638,"data":"  \"bert\": {\n"}
+,{"stream_name":"stdout","time":4232.348379872,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348398642,"data":"   \"seconds\": 9.2\n"}
+,{"stream_name":"stdout","time":4232.34840381,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348408118,"data":"  \"predict_0000\": {\n"}
+,{"stream_name":"stdout","time":4232.348412363,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348417307,"data":"   \"seconds\": 314.5\n"}
+,{"stream_name":"stdout","time":4232.34842181,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348425609,"data":"  \"predict_0100\": {\n"}
+,{"stream_name":"stdout","time":4232.348429479,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348433329,"data":"   \"seconds\": 370.9\n"}
+,{"stream_name":"stdout","time":4232.348437173,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348440881,"data":"  \"predict_0200\": {\n"}
+,{"stream_name":"stdout","time":4232.348444777,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348448583,"data":"   \"seconds\": 357.9\n"}
+,{"stream_name":"stdout","time":4232.348452444,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348456106,"data":"  \"predict_0300\": {\n"}
+,{"stream_name":"stdout","time":4232.34845994,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348476047,"data":"   \"seconds\": 313.5\n"}
+,{"stream_name":"stdout","time":4232.348486396,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348504372,"data":"  \"predict_0400\": {\n"}
+,{"stream_name":"stdout","time":4232.348509297,"data":"   \"ok\": false,\n"}
+,{"stream_name":"stdout","time":4232.348513879,"data":"   \"seconds\": 333.1\n"}
+,{"stream_name":"stdout","time":4232.348518834,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348523115,"data":"  \"predict_0432\": {\n"}
+,{"stream_name":"stdout","time":4232.348527489,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348531351,"data":"   \"seconds\": 355.4\n"}
+,{"stream_name":"stdout","time":4232.34853519,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348538897,"data":"  \"predict_0532\": {\n"}
+,{"stream_name":"stdout","time":4232.348542723,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.3485534,"data":"   \"seconds\": 319.6\n"}
+,{"stream_name":"stdout","time":4232.348557456,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348561149,"data":"  \"predict_0632\": {\n"}
+,{"stream_name":"stdout","time":4232.348565086,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348569003,"data":"   \"seconds\": 336.9\n"}
+,{"stream_name":"stdout","time":4232.348572794,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348576483,"data":"  \"predict_0732\": {\n"}
+,{"stream_name":"stdout","time":4232.348580588,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348590723,"data":"   \"seconds\": 389.7\n"}
+,{"stream_name":"stdout","time":4232.348608395,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348612786,"data":"  \"predict_0832\": {\n"}
+,{"stream_name":"stdout","time":4232.348617597,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348621737,"data":"   \"seconds\": 343.9\n"}
+,{"stream_name":"stdout","time":4232.348626848,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348631122,"data":"  \"predict_0932\": {\n"}
+,{"stream_name":"stdout","time":4232.34863503,"data":"   \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348638917,"data":"   \"seconds\": 264.4\n"}
+,{"stream_name":"stdout","time":4232.348642828,"data":"  }\n"}
+,{"stream_name":"stdout","time":4232.348646554,"data":" },\n"}
+,{"stream_name":"stdout","time":4232.348650254,"data":" \"readme_dev_span_overlap\": {\n"}
+,{"stream_name":"stdout","time":4232.348654272,"data":"  \"P\": 0.718,\n"}
+,{"stream_name":"stdout","time":4232.348658187,"data":"  \"R\": 0.691,\n"}
+,{"stream_name":"stdout","time":4232.348662017,"data":"  \"F1\": 0.704\n"}
+,{"stream_name":"stdout","time":4232.348665903,"data":" },\n"}
+,{"stream_name":"stdout","time":4232.348669614,"data":" \"n_docs\": 1022,\n"}
+,{"stream_name":"stdout","time":4232.348673494,"data":" \"failed_docs\": [\n"}
+,{"stream_name":"stdout","time":4232.348677394,"data":"  431\n"}
+,{"stream_name":"stdout","time":4232.348681147,"data":" ],\n"}
+,{"stream_name":"stdout","time":4232.348686757,"data":" \"done_docs\": 1021,\n"}
+,{"stream_name":"stdout","time":4232.34869493,"data":" \"rerun\": {\n"}
+,{"stream_name":"stdout","time":4232.348712503,"data":"  \"span_overlap\": {\n"}
+,{"stream_name":"stdout","time":4232.348717258,"data":"   \"P\": 0.718,\n"}
+,{"stream_name":"stdout","time":4232.348721853,"data":"   \"R\": 0.691,\n"}
+,{"stream_name":"stdout","time":4232.348726541,"data":"   \"F1\": 0.704\n"}
+,{"stream_name":"stdout","time":4232.348730941,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.348734694,"data":"  \"span_exact\": {\n"}
+,{"stream_name":"stdout","time":4232.348744472,"data":"   \"P\": 0.62,\n"}
+,{"stream_name":"stdout","time":4232.34874897,"data":"   \"R\": 0.599,\n"}
+,{"stream_name":"stdout","time":4232.34875323,"data":"   \"F1\": 0.609\n"}
+,{"stream_name":"stdout","time":4232.348757317,"data":"  },\n"}
+,{"stream_name":"stdout","time":4232.3487613,"data":"  \"uri\": {\n"}
+,{"stream_name":"stdout","time":4232.348765519,"data":"   \"P\": 0.557,\n"}
+,{"stream_name":"stdout","time":4232.348769555,"data":"   \"R\": 0.472,\n"}
+,{"stream_name":"stdout","time":4232.34877371,"data":"   \"F1\": 0.511\n"}
+,{"stream_name":"stdout","time":4232.348777965,"data":"  }\n"}
+,{"stream_name":"stdout","time":4232.348781337,"data":" },\n"}
+,{"stream_name":"stdout","time":4232.348784777,"data":" \"ok\": true,\n"}
+,{"stream_name":"stdout","time":4232.348788216,"data":" \"total_minutes\": 70.5\n"}
+,{"stream_name":"stdout","time":4232.348792963,"data":"}\n"}
+,{"stream_name":"stdout","time":4233.605102788,"data":"DONE\n"}
+,{"stream_name":"stderr","time":4236.450459651,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4236.450503596,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4236.854957345,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4236.854988414,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":4238.660720793,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":4239.898301288,"data":"[NbConvertApp] Writing 310238 bytes to __results__.html\n"}
+]

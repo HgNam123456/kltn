@@ -1,0 +1,118 @@
+DOC 100 8091
+DOC 101 1759
+DOC 102 8775
+DOC 103 4448
+DOC 104 28867
+DOC 105 15394
+DOC 106 1522
+DOC 107 7996
+DOC 108 27169
+DOC 109 2813
+DOC 110 13450
+DOC 111 20012
+DOC 112 8105
+DOC 113 18697
+DOC 114 29797
+DOC 115 16598
+DOC 116 8986
+DOC 117 22374
+DOC 118 8088
+DOC 119 12789
+DOC 120 20382
+DOC 121 25642
+DOC 122 3305
+DOC 123 30435
+DOC 124 18827
+DOC 125 16559
+DOC 126 27347
+DOC 127 29964
+DOC 128 1523
+DOC 129 25017
+DOC 130 12083
+DOC 131 15442
+DOC 132 1608
+DOC 133 27363
+DOC 134 7163
+DOC 135 8354
+DOC 136 29492
+DOC 137 27350
+DOC 138 29587
+DOC 139 21238
+DOC 140 8009
+DOC 141 22407
+DOC 142 28353
+DOC 143 24395
+DOC 144 21223
+DOC 145 15021
+DOC 146 12306
+DOC 147 16304
+DOC 148 14839
+DOC 149 4969
+DOC 150 28385
+DOC 151 8691
+DOC 152 87
+DOC 153 13684
+DOC 154 5073
+DOC 155 13590
+DOC 156 13859
+DOC 157 13654
+DOC 158 29154
+DOC 159 9057
+DOC 160 29693
+DOC 161 17002
+DOC 162 25160
+DOC 163 8923
+DOC 164 28989
+DOC 165 7778
+DOC 166 2285
+DOC 167 693
+DOC 168 7042
+DOC 169 12946
+DOC 170 11890
+DOC 171 5066
+DOC 172 10512
+DOC 173 4150
+DOC 174 25119
+DOC 175 4875
+DOC 176 1387
+DOC 177 22909
+DOC 178 21767
+DOC 179 28838
+DOC 180 16250
+DOC 181 27343
+DOC 182 974
+DOC 183 22902
+DOC 184 29922
+DOC 185 10877
+DOC 186 30554
+DOC 187 1662
+DOC 188 20397
+DOC 189 15060
+DOC 190 8015
+DOC 191 29909
+DOC 192 16226
+DOC 193 16217
+DOC 194 11541
+DOC 195 21566
+DOC 196 13025
+DOC 197 16534
+DOC 198 21728
+DOC 199 1780
+WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/ops/control_flow_ops.py:3632: colocate_with (from tensorflow.python.framework.ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Colocations handled automatically by placer.
+WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.
+WARNING:tensorflow:From /kaggle/working/knowledge-net/baselines/EMNLP2019/run.py:53: load (from tensorflow.python.saved_model.loader_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+This function will only be available through the v1 compatibility library as tf.compat.v1.saved_model.loader.load or tf.compat.v1.saved_model.load. There will be a new function for importing SavedModels in Tensorflow 2.0.
+WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use standard file APIs to check for files with this prefix.
+WARNING:tensorflow:From /kaggle/working/venv37/lib/python3.7/site-packages/tensorflow/python/training/saver.py:1266: checkpoint_exists (from tensorflow.python.training.checkpoint_management) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use standard file APIs to check for files with this prefix.

@@ -1,0 +1,94 @@
+knowledge-net-EMNLP2019
+knowledge-net-EMNLP2019/knowledgenet-emnlp-cameraready.pdf
+knowledge-net-EMNLP2019/baselines
+knowledge-net-EMNLP2019/baselines/EMNLP2019
+knowledge-net-EMNLP2019/baselines/EMNLP2019/vocab.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/train.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/uri_instance.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/lstm.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/general_inputter.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/bert_wrapper.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/.gitignore
+knowledge-net-EMNLP2019/baselines/EMNLP2019/models
+knowledge-net-EMNLP2019/baselines/EMNLP2019/models/all
+knowledge-net-EMNLP2019/baselines/EMNLP2019/models/all/saved_model.pb
+knowledge-net-EMNLP2019/baselines/EMNLP2019/models/all/header.txt
+knowledge-net-EMNLP2019/baselines/EMNLP2019/models/all/variables
+knowledge-net-EMNLP2019/baselines/EMNLP2019/README.md
+knowledge-net-EMNLP2019/baselines/EMNLP2019/instance.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/evaluator.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/vocab
+knowledge-net-EMNLP2019/baselines/EMNLP2019/vocab/types.vocab
+knowledge-net-EMNLP2019/baselines/EMNLP2019/vocab/properties.vocab
+knowledge-net-EMNLP2019/baselines/EMNLP2019/uri_features.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/entitylinker.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/evaluate.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/global_features.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/wikidata.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/labels.txt
+knowledge-net-EMNLP2019/baselines/EMNLP2019/tmp
+knowledge-net-EMNLP2019/baselines/EMNLP2019/tmp/properties_subject.db
+knowledge-net-EMNLP2019/baselines/EMNLP2019/tmp/el.db
+knowledge-net-EMNLP2019/baselines/EMNLP2019/sequence_classifier.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/prepare_data.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/features.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/train.sh
+knowledge-net-EMNLP2019/baselines/EMNLP2019/data.yml
+knowledge-net-EMNLP2019/baselines/EMNLP2019/config.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/requirements.txt
+knowledge-net-EMNLP2019/baselines/EMNLP2019/run.py
+knowledge-net-EMNLP2019/baselines/EMNLP2019/threshold_search.py
+knowledge-net-EMNLP2019/README.md
+knowledge-net-EMNLP2019/evaluator.py
+knowledge-net-EMNLP2019/test-no-facts.json
+knowledge-net-EMNLP2019/train.json
+/kaggle/working/knowledge-net/baselines/EMNLP2019:
+total 73012
+drwxr-xr-x 6 root root     4096 Oct 28 15:17 .
+drwxr-xr-x 3 root root     4096 Oct 28 15:17 ..
+-rw-r--r-- 1 root root     4704 Oct 28 15:17 bert_wrapper.py
+-rw-r--r-- 1 root root      436 Oct 28 15:17 config.py
+-rw-r--r-- 1 root root      497 Oct 28 15:17 data.yml
+-rw-r--r-- 1 root root     4231 Oct 28 15:17 entitylinker.py
+-rw-r--r-- 1 root root     2543 Oct 28 15:17 evaluate.py
+lrwxrwxrwx 1 root root       18 Oct 28 15:17 evaluator.py -> ../../evaluator.py
+-rw-r--r-- 1 root root    11241 Oct 28 15:17 features.py
+-rw-r--r-- 1 root root     3925 Oct 28 15:17 general_inputter.py
+-rw-r--r-- 1 root root       59 Oct 28 15:17 .gitignore
+-rw-r--r-- 1 root root     2906 Oct 28 15:17 global_features.py
+-rw-r--r-- 1 root root     7044 Oct 28 15:17 instance.py
+drwxr-xr-x 3 root root     4096 Oct 25  2019 knowledge-net-EMNLP2019
+-rw-r--r-- 1 root root       18 Oct 28 15:17 labels.txt
+-rw-r--r-- 1 root root      587 Oct 28 15:17 lstm.py
+drwxr-xr-x 3 root root     4096 Oct 28 15:17 models
+-rw-r--r-- 1 root root    12797 Oct 28 15:17 prepare_data.py
+-rw-r--r-- 1 root root     3180 Oct 28 15:17 README.md
+-rw-r--r-- 1 root root 74594768 Dec  7  2021 release.zip
+-rw-r--r-- 1 root root      203 Oct 28 15:17 requirements.txt
+-rw-r--r-- 1 root root     7941 Oct 28 15:17 run.py
+-rw-r--r-- 1 root root     7584 Oct 28 15:17 sequence_classifier.py
+-rw-r--r-- 1 root root     5602 Oct 28 15:17 threshold_search.py
+drwxr-xr-x 2 root root     4096 Oct 28 15:17 tmp
+-rw-r--r-- 1 root root     2123 Oct 28 15:17 train.py
+-rwxr-xr-x 1 root root      104 Oct 28 15:17 train.sh
+-rw-r--r-- 1 root root      883 Oct 28 15:17 uri_features.py
+-rw-r--r-- 1 root root     1231 Oct 28 15:17 uri_instance.py
+drwxr-xr-x 2 root root     4096 Oct 28 15:17 vocab
+-rw-r--r-- 1 root root     1876 Oct 28 15:17 vocab.py
+-rw-r--r-- 1 root root     2582 Oct 28 15:17 wikidata.py
+
+/kaggle/working/knowledge-net/baselines/EMNLP2019/models:
+total 12
+drwxr-xr-x 3 root root 4096 Oct 28 15:17 .
+drwxr-xr-x 6 root root 4096 Oct 28 15:17 ..
+drwxr-xr-x 3 root root 4096 Oct 28 15:17 all
+
+/kaggle/working/knowledge-net/baselines/EMNLP2019/tmp:
+total 188856
+drwxr-xr-x 2 root root     4096 Oct 28 15:17 .
+drwxr-xr-x 6 root root     4096 Oct 28 15:17 ..
+-rw-r--r-- 1 root root 97779712 Oct 28 15:17 el.db
+-rw-r--r-- 1 root root 95597568 Oct 28 15:17 properties_subject.db
+cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
+cp: warning: behavior of -n is non-portable and may change in future; use --update=none instead
