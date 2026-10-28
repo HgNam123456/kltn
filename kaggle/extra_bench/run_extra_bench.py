@@ -16,6 +16,9 @@ EXTRA_DATASET="knet": KnowledgeNet tải từ GitHub trong kernel (CC BY-SA 4.0)
 chấm thêm bằng evaluator.py của tác giả qua scripts/score_knet.py.
 Đầu ra /kaggle/working/out/<bộ>/: <hệ>/canon_kg.txt (+ đầu ra từng bước), <hệ>_eval.txt, scores_exact.json,
 support.json (+ .jsonl), redundancy.json; out/summary.json, logs/, server.log.
+KGU_OUT đổi thư mục gốc đầu ra (mặc định /kaggle/working/out; kaggle/night/run_lane.py chạy nhiều bộ trong một kernel);
+KGU_DEADLINE (epoch giây): giờ chót của cả kernel — mỗi hệ được tối đa 5 giờ nhưng không quá giờ chót trừ 1 giờ dành
+cho judge + chấm; hết giờ thì bỏ hệ còn lại, vẫn chấm phần đã có.
 """
 import ast
 import json
@@ -37,10 +40,13 @@ EDC_REPO, EDC_COMMIT = "https://github.com/clear-nus/edc.git", "02aad17e2fc1e984
 GGUF_REPO, GGUF_FILE = "unsloth/gemma-4-E4B-it-qat-GGUF", "gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf"
 MTP_FILE = "mtp-gemma-4-E4B-it.gguf"
 WORK = "/kaggle/working"
-OUT, LOGS = f"{WORK}/out/{DATASET}", f"{WORK}/out/logs"
+ROOT = os.environ.get("KGU_OUT", f"{WORK}/out")
+OUT, LOGS = f"{ROOT}/{DATASET}", f"{ROOT}/logs"
 KLTN, EDC = f"{WORK}/kltn", f"{WORK}/edc"
 SERVER = "http://127.0.0.1:8080"
 T0 = time.time()
+DEADLINE = float(os.environ.get("KGU_DEADLINE") or T0 + 11 * 3600)
+RESERVE_H = 1.0          # judge + chấm sau khi trích
 
 
 def sh(cmd: str, **kw) -> str:
@@ -134,7 +140,7 @@ def healthy() -> bool:
 server = None
 for cmd in ATTEMPTS:
     print(f"$ {cmd}", flush=True)
-    server = subprocess.Popen(cmd, shell=True, stdout=open(f"{WORK}/out/server.log", "ab"), stderr=subprocess.STDOUT,
+    server = subprocess.Popen(cmd, shell=True, stdout=open(f"{ROOT}/server.log", "ab"), stderr=subprocess.STDOUT,
                               env={**os.environ, "CUDA_VISIBLE_DEVICES": "0"})
     for _ in range(180):
         if healthy() or server.poll() is not None:
@@ -158,8 +164,19 @@ edc_env = {**env, "OPENAI_KEY": "none", "OPENAI_BASE_URL": f"{SERVER}/v1", "PYTH
            "EDC_EMB_DEVICE": "cuda:1" if two_gpu else "cuda:0"}
 
 
-def timed(run: str, cmd: str, **kw) -> bool:
+def budget(cap_h: float, reserve_h: float = RESERVE_H) -> float:
+    """Giờ được phép cho một bước: tối đa cap_h, không vượt giờ chót trừ phần để dành."""
+    return round(min(cap_h, (DEADLINE - time.time()) / 3600 - reserve_h), 2)
+
+
+def timed(run: str, cmd: str, cap_h: float = 5, reserve_h: float = RESERVE_H, **kw) -> bool:
     t0 = time.time()
+    hours = budget(cap_h, reserve_h)
+    if hours < 0.1:
+        print(f"!!! {run}: hết giờ (còn {hours} giờ) → bỏ", flush=True)
+        summary["runs"][run] = {"ok": False, "skipped": "deadline"}
+        return False
+    cmd = f"timeout {hours}h {cmd}"
     try:
         sh(f"{cmd} 2>&1 | tee {LOGS}/{run}.log; test ${{PIPESTATUS[0]}} -eq 0", executable="/bin/bash", **kw)
         ok = True
@@ -176,10 +193,11 @@ def run_edc(system: str, oie_json: str | None) -> None:
     """EDC đầy đủ (oie_json None) hoặc chỉ Schema Definition + Canonicalization trên triple có sẵn."""
     edc_out = f"{WORK}/edc_run_{system}"
     e = {**edc_env, **({"EDC_OIE_FROM": oie_json} if oie_json else {})}
-    if timed(system, f"timeout {EDC_TIMEOUT_H}h python -u run.py --oie_llm {llm} --sd_llm {llm} --sc_llm {llm} "
+    if timed(system, f"python -u run.py --oie_llm {llm} --sd_llm {llm} --sc_llm {llm} "
                      f"--sc_embedder {emb} --oie_few_shot_example_file_path {DATA['oie_fs']} "
                      f"--sd_few_shot_example_file_path {DATA['sd_fs']} --input_text_file_path {DATA['input']} "
-                     f"--target_schema_path {DATA['schema']} --output_dir {edc_out} --logging_verbose", cwd=EDC, env=e):
+                     f"--target_schema_path {DATA['schema']} --output_dir {edc_out} --logging_verbose", EDC_TIMEOUT_H,
+             cwd=EDC, env=e):
         os.makedirs(f"{OUT}/{system}", exist_ok=True)
         for name in ("oie_kg.txt", "schema_definition.txt", "canon_kg.txt", "result_at_each_stage.json"):
             if os.path.exists(f"{edc_out}/iter0/{name}"):
@@ -197,8 +215,8 @@ for system, script, py in (("atom_edc", "atom_edc.py", py_atom), ("kggen_edc", "
     if system in SYSTEMS:
         raw = system.replace("_edc", "")
         os.makedirs(f"{OUT}/{raw}", exist_ok=True)
-        if timed(raw, f"timeout {OIE_TIMEOUT_H}h {py} -u -W ignore {KLTN}/scripts/{script} --input {DATA['input']} "
-                      f"--out {OUT}/{raw}/oie_kg.txt", env=env):
+        if timed(raw, f"{py} -u -W ignore {KLTN}/scripts/{script} --input {DATA['input']} "
+                      f"--out {OUT}/{raw}/oie_kg.txt", OIE_TIMEOUT_H, env=env):
             run_edc(system, f"{OUT}/{raw}/oie_kg.txt.json")
 FINAL = {s: f"{OUT}/{s}/canon_kg.txt" for s in SYSTEMS if os.path.exists(f"{OUT}/{s}/canon_kg.txt")}
 RAW = {r: f"{OUT}/{r}/oie_kg.txt" for r in ("atom", "kggen") if os.path.exists(f"{OUT}/{r}/oie_kg.txt")}
@@ -207,7 +225,7 @@ RAW = {r: f"{OUT}/{r}/oie_kg.txt" for r in ("atom", "kggen") if os.path.exists(f
 if FINAL:
     specs = " ".join(f"--system {DATASET}/{s}=lines:{p}" for s, p in FINAL.items())
     timed("judge", f"python -u {KLTN}/scripts/judge_support.py {specs} --lines-input {DATA['input']} "
-                   f"--out {OUT}/support.json", env=env)
+                   f"--out {OUT}/support.json", 2, 0.3, env=env)
 server.kill()
 
 
@@ -272,7 +290,7 @@ for r in RAW:
         summary["runs"][r]["stats"] = json.load(open(f"{OUT}/{r}/oie_kg.txt.stats.json"))
 
 summary["total_minutes"] = round((time.time() - T0) / 60, 1)
-json.dump(summary, open(f"{WORK}/out/summary.json", "w"), indent=1, ensure_ascii=False)
+json.dump(summary, open(f"{ROOT}/summary.json", "w"), indent=1, ensure_ascii=False)
 print(json.dumps(summary, indent=1, ensure_ascii=False)[:20000], flush=True)
 for d in (KLTN, EDC, KN, f"{WORK}/data", f"{WORK}/models", f"{WORK}/llama-bin", f"{WORK}/venv_atom", f"{WORK}/venv_kggen",
           *(f"{WORK}/edc_run_{s}" for s in SYSTEMS)):
