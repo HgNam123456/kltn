@@ -49,3 +49,8 @@ Giới hạn: Kaggle 2 kernel GPU đồng thời / tài khoản, ~30 giờ GPU /
   (scripts/night_report.py). Dự kiến xong ~05:30. Máy ngủ / tắt giữa chừng → sáng chạy `bash kaggle/night/watch.sh fetch`.
   Baseline KnowledgeNet v1 lỗi (uv không có Python 3.7), v2 lỗi (gói phát hành lồng thư mục) → v3: micromamba + tự tìm
   models/, tmp/. NYT11 (NYT/LDC): .gitignore chặn mọi file có câu gốc trong results/kaggle/night/lane1/out/nyt11/.
+- 28/10 22:05: baseline KnowledgeNet v4 dựng được môi trường nhưng evaluate.py chết lặng lẽ ở văn bản 282/1.022 →
+  v5 dự đoán theo khúc 100 văn bản / tiến trình, bỏ đúng văn bản làm chết tiến trình, chấm bằng dataset/evaluator.py.
+- 28/10 23:13–23:17: B xong (r2 23:13, r3 ~23:15). Tiến trình canh WMI đã chết lặng lẽ trước đó (log trống, không còn
+  tiến trình) → đẩy tay kgu-night-1, kgu-night-2 lúc 23:17. Tạo Task Scheduler cho bước tải sáng bị chặn (quyền) → tải
+  bằng tác vụ nền trong phiên (`watch.sh fetch`); phiên mất thì sáng chạy `bash kaggle/night/watch.sh fetch`.
