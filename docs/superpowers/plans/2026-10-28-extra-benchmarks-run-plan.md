@@ -29,4 +29,9 @@ Giới hạn: Kaggle 2 kernel GPU đồng thời / tài khoản, ~30 giờ GPU /
 | CPU | C (local); KnowledgeNet baseline 5 (kernel CPU) |
 
 ## Nhật ký
-- 28/10 ~21:30: kế hoạch, bắt đầu B.
+- 28/10 20:40: B chạy (kgu-covid-repeat-r2, -r3; commit 1ca5db9). Giờ thật: B xong ~23:20.
+- 28/10 21:00: user chốt ABCD + F, bỏ KARMA, bỏ E (Tem-DocRED), không chạy lại EMERGE, chỉ dùng GPU Kaggle (không chạy
+  tính toán trên máy). Code: D/A/C 244b43d (kgu-extra-nyt11-a/b, kgu-quality), F a38e47c (kgu-extra-knet-a/b; giới hạn
+  trên gold-as-prediction 93,3 span F1), baseline 5 KnowledgeNet: kaggle/knet_baseline (kgu-knet-baseline).
+- Thứ tự khi B xong: làn 1 smoke NYT11 (EXTRA_LIMIT=5, cả 4 hệ) → nyt11-a → knet-a → knet-baseline; làn 2 quality →
+  nyt11-b → knet-b. Sau cùng: gộp bảng P/R/F1 mọi bộ (MINE: P = tỉ lệ được hỗ trợ của judge), notes, Notion.
