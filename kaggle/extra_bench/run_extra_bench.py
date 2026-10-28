@@ -12,6 +12,8 @@ trường của EDC và pipeline của mình.
 
 Stub (kaggle/extra_bench/<tên>/kernel.py) đặt EXTRA_DATASET (tên thư mục dữ liệu trong /kaggle/input, vd. "nyt11"),
 EXTRA_SYSTEMS (tập con của mine,edc,atom_edc,kggen_edc), EXTRA_LIMIT (số văn bản, rỗng = đủ).
+EXTRA_DATASET="knet": KnowledgeNet tải từ GitHub trong kernel (CC BY-SA 4.0), dựng bằng scripts/prep_knet.py (fold 4),
+chấm thêm bằng evaluator.py của tác giả qua scripts/score_knet.py.
 Đầu ra /kaggle/working/out/<bộ>/: <hệ>/canon_kg.txt (+ đầu ra từng bước), <hệ>_eval.txt, scores_exact.json,
 support.json (+ .jsonl), redundancy.json; out/summary.json, logs/, server.log.
 """
@@ -25,6 +27,7 @@ import time
 import urllib.request
 
 DATASET = os.environ.get("EXTRA_DATASET", "nyt11")
+KN_REPO = "https://github.com/diffbot/knowledge-net.git"
 SYSTEMS = [s for s in os.environ.get("EXTRA_SYSTEMS", "mine,edc,atom_edc,kggen_edc").split(",") if s]
 LIMIT = int(os.environ["EXTRA_LIMIT"]) if os.environ.get("EXTRA_LIMIT") else None
 EDC_TIMEOUT_H, OIE_TIMEOUT_H = 5, 5
@@ -46,9 +49,10 @@ def sh(cmd: str, **kw) -> str:
 
 
 def find_data(name: str) -> str | None:
-    for dirpath, dirnames, filenames in os.walk("/kaggle/input"):
-        if os.path.basename(dirpath) == name and "input.txt" in filenames:
-            return dirpath
+    for root in ("/kaggle/input", f"{WORK}/data"):
+        for dirpath, dirnames, filenames in os.walk(root):
+            if os.path.basename(dirpath) == name and "input.txt" in filenames:
+                return dirpath
     return None
 
 
@@ -71,6 +75,10 @@ if not os.path.exists(KLTN):
 summary["kltn_commit"] = sh(f"git -C {KLTN} rev-parse HEAD", capture=True).strip()
 sh("pip install -q dateparser nervaluate==0.1.8 unidecode beautifulsoup4 regex 'openai>=1'")
 sh(f"git clone -q {EDC_REPO} {EDC} && git -C {EDC} checkout -q {EDC_COMMIT} && python {KLTN}/scripts/edc_patch.py {EDC}")
+KN = f"{WORK}/knowledge-net"
+if DATASET == "knet":
+    sh(f"git clone -q --depth 1 {KN_REPO} {KN} && python {KLTN}/scripts/prep_knet.py --kn {KN}/dataset/train.json "
+       f"--fold 4 --out {WORK}/data/knet")
 src_dir = find_data(DATASET)
 assert src_dir, f"không thấy thư mục dữ liệu {DATASET} trong /kaggle/input"
 DATA = {k: f"{src_dir}/{f}" for k, f in (("schema", "schema.csv"), ("oie_fs", "oie_few_shot_examples.txt"),
@@ -249,7 +257,14 @@ for step, cmd in (("exact", f"python {KLTN}/scripts/score_nyt11.py --ref {DATA['
             sh(f"set -o pipefail; {cmd} 2>&1 | tee {LOGS}/{step}.log", executable="/bin/bash", env=env)
         except subprocess.CalledProcessError:
             print(f"!!! {step} lỗi, xem logs/{step}.log", flush=True)
-for name in ("scores_exact", "support", "redundancy"):
+if DATASET == "knet" and FINAL:
+    try:
+        sh(f"set -o pipefail; python {KLTN}/scripts/score_knet.py --kn {KN}/dataset/train.json "
+           f"--evaluator {KN}/dataset/evaluator.py --map {src_dir}/map.json {preds} --workdir {OUT}/knet_eval "
+           f"--out {OUT}/scores_knet.json 2>&1 | tee {LOGS}/knet.log", executable="/bin/bash", env=env)
+    except subprocess.CalledProcessError:
+        print("!!! chấm KnowledgeNet lỗi, xem logs/knet.log", flush=True)
+for name in ("scores_exact", "scores_knet", "support", "redundancy"):
     if os.path.exists(f"{OUT}/{name}.json"):
         summary[name] = json.load(open(f"{OUT}/{name}.json"))
 for r in RAW:
@@ -259,7 +274,7 @@ for r in RAW:
 summary["total_minutes"] = round((time.time() - T0) / 60, 1)
 json.dump(summary, open(f"{WORK}/out/summary.json", "w"), indent=1, ensure_ascii=False)
 print(json.dumps(summary, indent=1, ensure_ascii=False)[:20000], flush=True)
-for d in (KLTN, EDC, f"{WORK}/models", f"{WORK}/llama-bin", f"{WORK}/venv_atom", f"{WORK}/venv_kggen",
+for d in (KLTN, EDC, KN, f"{WORK}/data", f"{WORK}/models", f"{WORK}/llama-bin", f"{WORK}/venv_atom", f"{WORK}/venv_kggen",
           *(f"{WORK}/edc_run_{s}" for s in SYSTEMS)):
     shutil.rmtree(d, ignore_errors=True)       # không đưa repo/model/venv vào output
 print("DONE", flush=True)

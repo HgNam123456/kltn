@@ -1,0 +1,13 @@
+{
+  "id": "ngocnam2005/kgu-extra-knet-b",
+  "title": "kgu-extra-knet-b",
+  "code_file": "kernel.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": ["ngocnam2005/llama-server-cuda"],
+  "competition_sources": [],
+  "kernel_sources": []
+}

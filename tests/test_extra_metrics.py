@@ -51,3 +51,14 @@ def test_lines_loader_pairs_texts_with_prediction_lines(tmp_path):
     (tmp_path / "p.txt").write_text("[['a', 'r', 'b'], ['a', 'r', 'b']]\nnot a list\n", encoding="utf8")
     name, docs = outputs.load(f"x=lines:{tmp_path / 'p.txt'}", outputs.Sources(lines_input=tmp_path / "in.txt"))
     assert name == "x" and docs[0]["triples"] == [["a", "r", "b"]] and docs[1]["triples"] == []
+
+
+knet = _script("score_knet")
+
+
+def test_knet_spans_respect_word_boundaries_and_pick_closest_pair():
+    text = "The house where he lived; he was born in Paris."
+    assert knet.find_spans(text, "he") == [(16, 18), (26, 28)]
+    facts, unmapped = knet.to_facts([["He", "PLACE_OF_BIRTH", "Paris"], ["Bob", "PLACE_OF_BIRTH", "Paris"]],
+                                    {"passageText": text, "passageStart": 100}, {"PLACE_OF_BIRTH": "12"})
+    assert unmapped == 1 and facts[0]["subjectStart"] == 126 and facts[0]["objectStart"] == 141
