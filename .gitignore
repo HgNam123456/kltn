@@ -34,3 +34,9 @@ Thumbs.db
 /kaggle/dataset_kgu/bundle/
 /kaggle/dataset_results/files/
 /kaggle/dataset_llama/bin/
+
+# NYT11-HRL là dữ liệu NYT/LDC: không đưa câu gốc lên repo công khai (EDC result_at_each_stage, log verbose, judge jsonl)
+results/kaggle/night/lane1/out/nyt11/**
+!results/kaggle/night/lane1/out/nyt11/summary.json
+results/kaggle/night/lane1/*.log
+results/kaggle/night/watch.pid

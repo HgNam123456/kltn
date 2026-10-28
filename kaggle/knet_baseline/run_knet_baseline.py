@@ -43,15 +43,17 @@ def step(name: str, cmd: str, timeout_h: float, cwd: str | None = None) -> bool:
 
 BERT_HUB = "https://tfhub.dev/google/bert_cased_L-12_H-768_A-12/1"
 HUB_DIR = f"/tmp/tfhub/{hashlib.sha1(BERT_HUB.encode('utf8')).hexdigest()}"      # thư mục cache tensorflow_hub 0.5
-PIP = f"{VENV}/bin/python -m pip install -q --no-cache-dir"
+PIP = f"{VENV}/bin/python -m pip install --no-cache-dir --prefer-binary --no-build-isolation"     # sdist 2019 cần setuptools cũ
 CHECK = (f"{VENV}/bin/python -c \"import spacy, neuralcoref, tensorflow; nlp = spacy.load('en_core_web_lg'); "
          f"neuralcoref.add_to_pipe(nlp); print('env ok', tensorflow.__version__)\"")
 ok = (step("clone", f"git clone -q --depth 1 {KN_REPO} {KN} && cd {BASE} && wget -q {RELEASE} -O release.zip && "
-                    f"unzip -q -o release.zip && ls -la && for d in */; do [ -d $d/models ] || [ -d $d/tmp ] && "
-                    f"cp -rn $d. . ; done; cp {KN}/dataset/train.json {KN}/dataset/evaluator.py {KN}/ && "
+                    f"unzip -q -o release.zip && find knowledge-net-EMNLP2019 -maxdepth 5 | head -80 && "
+                    f"for n in models tmp vocab; do d=$(find knowledge-net-EMNLP2019 -type d -name $n | head -1); "
+                    f"[ -n \"$d\" ] && cp -rn $d . ; done; cp {KN}/dataset/train.json {KN}/dataset/evaluator.py {KN}/ && "
                     f"ls -la {BASE} {BASE}/models {BASE}/tmp", 0.5)       # config: KNOWLEDGE_NET_DIR="../../", models/, tmp/
       and step("env", f"cd /tmp && curl -Ls https://micro.mamba.pm/api/micromamba/linux-64/latest | tar -xj bin/micromamba"
                       f" && /tmp/bin/micromamba create -y -q -p {VENV} -c conda-forge python=3.7 pip && "
+                      f"{PIP} 'setuptools<58' wheel 'cython<3' numpy==1.16.6 && "
                       f"{PIP} -r {BASE}/requirements.txt numpy==1.16.6 protobuf==3.20.3 gast==0.2.2 && {PIP} {SPACY_LG} && "
                       f"({CHECK} || ({PIP} --force-reinstall --no-deps --no-binary neuralcoref neuralcoref==4.0 && {CHECK}))",
                1.5)

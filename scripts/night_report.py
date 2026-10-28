@@ -228,7 +228,7 @@ def sec_knet(d: Data) -> str:
                      NA, NA, NA, NA, NA])
     out = table(["hệ", "overlap P", "R", "F1", "exact P", "R", "F1", "predicted", "unmapped"], rows)
     out += ("\nGhi chú: ánh xạ văn bản → vị trí ký tự của mình có trần 93,3 F1 span-overlap (dùng chính gold làm dự đoán). "
-            "Hàng README là F1 trên dev của tác giả, không cùng tập fold 4.\n")
+            "Tập \"dev\" của tác giả chính là fold 4 (cùng tập với các hàng trên); hàng README là số họ công bố, không phải mình chạy lại.\n")
     return out
 
 

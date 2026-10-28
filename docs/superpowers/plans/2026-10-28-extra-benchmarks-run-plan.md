@@ -35,3 +35,17 @@ Giới hạn: Kaggle 2 kernel GPU đồng thời / tài khoản, ~30 giờ GPU /
   trên gold-as-prediction 93,3 span F1), baseline 5 KnowledgeNet: kaggle/knet_baseline (kgu-knet-baseline).
 - Thứ tự khi B xong: làn 1 smoke NYT11 (EXTRA_LIMIT=5, cả 4 hệ) → nyt11-a → knet-a → knet-baseline; làn 2 quality →
   nyt11-b → knet-b. Sau cùng: gộp bảng P/R/F1 mọi bộ (MINE: P = tỉ lệ được hỗ trợ của judge), notes, Notion.
+- 28/10 21:30: user muốn chạy hết qua đêm kể cả khi phiên Claude dừng → thay chuỗi push từng kernel bằng 2 kernel làn
+  (kaggle/night, run_lane.py: nhiều việc trong một kernel, mỗi việc clone code mới nhất của nhánh, giờ chót chung 11 h,
+  mỗi hệ tự co thời gian để còn 1 h cho judge + chấm). Bỏ smoke (không ai xem giữa đêm; mỗi hệ/bước chấm đã bọc lỗi riêng).
+  | Kernel | Việc | Ước tính |
+  |---|---|---|
+  | kgu-night-1 | NYT11 (mình, EDC, ATOM+EDC, KGGen+EDC) → KnowledgeNet ATOM+EDC | ~2,5 h + ~3,2 h |
+  | kgu-night-2 | quality (A + C trên COVID-NYT / MINE-1, ~1.900 lượt judge) → KnowledgeNet mình, EDC, KGGen+EDC | ~1,5–2 h + ~4,5 h |
+  | kgu-knet-baseline (CPU) | baseline 5 của paper KnowledgeNet, chạy lại | env ~1 h + evaluate ≤ 9 h |
+  Kaggle không xếp hàng kernel GPU thứ 3 ("Maximum batch GPU session count of 2 reached") → kaggle/night/watch.ps1 chạy
+  tách khỏi phiên (WMI), giữ máy thức, thử push mỗi 2 phút đến khi B nhả GPU (~23:20), rồi đợi mọi kernel xong, tải output
+  về results/kaggle/{covid_repeat/r2,r3, night/lane1,lane2, knet_baseline} và dựng results/kaggle/night/REPORT.md
+  (scripts/night_report.py). Dự kiến xong ~05:30. Máy ngủ / tắt giữa chừng → sáng chạy `bash kaggle/night/watch.sh fetch`.
+  Baseline KnowledgeNet v1 lỗi (uv không có Python 3.7), v2 lỗi (gói phát hành lồng thư mục) → v3: micromamba + tự tìm
+  models/, tmp/. NYT11 (NYT/LDC): .gitignore chặn mọi file có câu gốc trong results/kaggle/night/lane1/out/nyt11/.
