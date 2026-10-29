@@ -1,0 +1,3 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 2686.42it/s]
+knet/atom_edc {'docs': 1435, 'entities': 3184, 'entity_near_pairs': 96, 'entity_near_pairs_per_100': 3.02, 'triples': 2155, 'triple_exact_dups': 4, 'triple_near_pairs': 129, 'triple_near_pairs_per_100': 5.99, 'scope': 'doc'}

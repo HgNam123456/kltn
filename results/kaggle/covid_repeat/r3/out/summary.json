@@ -1,0 +1,423 @@
+{
+ "repeat": "r3",
+ "systems": [
+  "mine_v2",
+  "atom",
+  "atom_direct",
+  "kggen"
+ ],
+ "limit": null,
+ "runs": {
+  "mine_v2": {
+   "ok": true,
+   "seconds": 3590.8
+  },
+  "atom": {
+   "ok": true,
+   "seconds": 2862.6
+  },
+  "atom_direct": {
+   "ok": true,
+   "seconds": 1302.3
+  },
+  "kggen": {
+   "ok": true,
+   "seconds": 970.4
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "1ca5db918b13c80eba36e6a42e46a3543623e4b5",
+ "covid_n": 122,
+ "server_flags": " --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "scores": {
+  "mine_v2.r3": {
+   "MATCH": 0.4054,
+   "HALL": 0.3268,
+   "OM": 0.5946,
+   "MATCH_t": 0.1737,
+   "OM_t": 0.1239,
+   "HALL_t": 0.1078,
+   "P": 0.6486,
+   "R": 0.4054,
+   "F1": 0.499,
+   "P_t": 0.2792,
+   "F1_t": 0.2141,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.4156,
+   "HALL_skip": 0.335,
+   "OM_skip": 0.5844,
+   "MATCH_t_skip": 0.1781,
+   "OM_t_skip": 0.1271,
+   "HALL_t_skip": 0.1105,
+   "P_skip": 0.665,
+   "R_skip": 0.4156,
+   "F1_skip": 0.5115,
+   "P_t_skip": 0.2862,
+   "F1_t_skip": 0.2195,
+   "n_rows_skip": 119.0
+  },
+  "atom.r3": {
+   "MATCH": 0.4384,
+   "HALL": 0.3159,
+   "OM": 0.5616,
+   "MATCH_t": 0.1068,
+   "OM_t": 0.0937,
+   "HALL_t": 0.2379,
+   "P": 0.6841,
+   "R": 0.4384,
+   "F1": 0.5344,
+   "P_t": 0.1713,
+   "F1_t": 0.1316,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.4384,
+   "HALL_skip": 0.3159,
+   "OM_skip": 0.5616,
+   "MATCH_t_skip": 0.1068,
+   "OM_t_skip": 0.0937,
+   "HALL_t_skip": 0.2379,
+   "P_skip": 0.6841,
+   "R_skip": 0.4384,
+   "F1_skip": 0.5344,
+   "P_t_skip": 0.1713,
+   "F1_t_skip": 0.1316,
+   "n_rows_skip": 122.0
+  },
+  "atom_direct.r3": {
+   "MATCH": 0.2546,
+   "HALL": 0.2612,
+   "OM": 0.7454,
+   "MATCH_t": 0.0686,
+   "OM_t": 0.0804,
+   "HALL_t": 0.1056,
+   "P": 0.7306,
+   "R": 0.2546,
+   "F1": 0.3776,
+   "P_t": 0.2146,
+   "F1_t": 0.1039,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.2567,
+   "HALL_skip": 0.2634,
+   "OM_skip": 0.7433,
+   "MATCH_t_skip": 0.0691,
+   "OM_t_skip": 0.0811,
+   "HALL_t_skip": 0.1064,
+   "P_skip": 0.7366,
+   "R_skip": 0.2567,
+   "F1_skip": 0.3807,
+   "P_t_skip": 0.2164,
+   "F1_t_skip": 0.1048,
+   "n_rows_skip": 121.0
+  },
+  "kggen.r3": {
+   "MATCH": 0.3663,
+   "HALL": 0.2733,
+   "OM": 0.6337,
+   "MATCH_t": 0.1985,
+   "OM_t": 0.1678,
+   "HALL_t": 0.0,
+   "P": 0.7267,
+   "R": 0.3663,
+   "F1": 0.4871,
+   "P_t": 0.4127,
+   "F1_t": 0.2681,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.3663,
+   "HALL_skip": 0.2733,
+   "OM_skip": 0.6337,
+   "MATCH_t_skip": 0.1985,
+   "OM_t_skip": 0.1678,
+   "HALL_t_skip": 0.0,
+   "P_skip": 0.7267,
+   "R_skip": 0.3663,
+   "F1_skip": 0.4871,
+   "P_t_skip": 0.4127,
+   "F1_t_skip": 0.2681,
+   "n_rows_skip": 122.0
+  },
+  "mine_v2.r1": {
+   "MATCH": 0.4044,
+   "HALL": 0.3269,
+   "OM": 0.5956,
+   "MATCH_t": 0.1817,
+   "OM_t": 0.1255,
+   "HALL_t": 0.0972,
+   "P": 0.6567,
+   "R": 0.4044,
+   "F1": 0.5006,
+   "P_t": 0.3012,
+   "F1_t": 0.2266,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.4112,
+   "HALL_skip": 0.3323,
+   "OM_skip": 0.5888,
+   "MATCH_t_skip": 0.1847,
+   "OM_t_skip": 0.1276,
+   "HALL_t_skip": 0.0988,
+   "P_skip": 0.6677,
+   "R_skip": 0.4112,
+   "F1_skip": 0.5089,
+   "P_t_skip": 0.3062,
+   "F1_t_skip": 0.2304,
+   "n_rows_skip": 120.0
+  },
+  "atom.r1": {
+   "MATCH": 0.4302,
+   "HALL": 0.3257,
+   "OM": 0.5698,
+   "MATCH_t": 0.1109,
+   "OM_t": 0.0878,
+   "HALL_t": 0.2315,
+   "P": 0.6743,
+   "R": 0.4302,
+   "F1": 0.5253,
+   "P_t": 0.1783,
+   "F1_t": 0.1367,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.4302,
+   "HALL_skip": 0.3257,
+   "OM_skip": 0.5698,
+   "MATCH_t_skip": 0.1109,
+   "OM_t_skip": 0.0878,
+   "HALL_t_skip": 0.2315,
+   "P_skip": 0.6743,
+   "R_skip": 0.4302,
+   "F1_skip": 0.5253,
+   "P_t_skip": 0.1783,
+   "F1_t_skip": 0.1367,
+   "n_rows_skip": 122.0
+  },
+  "atom_direct.r1": {
+   "MATCH": 0.2583,
+   "HALL": 0.2493,
+   "OM": 0.7417,
+   "MATCH_t": 0.0827,
+   "OM_t": 0.0804,
+   "HALL_t": 0.0952,
+   "P": 0.7425,
+   "R": 0.2583,
+   "F1": 0.3833,
+   "P_t": 0.2377,
+   "F1_t": 0.1227,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.2605,
+   "HALL_skip": 0.2514,
+   "OM_skip": 0.7395,
+   "MATCH_t_skip": 0.0834,
+   "OM_t_skip": 0.0811,
+   "HALL_t_skip": 0.096,
+   "P_skip": 0.7486,
+   "R_skip": 0.2605,
+   "F1_skip": 0.3865,
+   "P_t_skip": 0.2397,
+   "F1_t_skip": 0.1237,
+   "n_rows_skip": 121.0
+  },
+  "kggen.r1": {
+   "MATCH": 0.3629,
+   "HALL": 0.2786,
+   "OM": 0.6371,
+   "MATCH_t": 0.1963,
+   "OM_t": 0.1665,
+   "HALL_t": 0.0,
+   "P": 0.7214,
+   "R": 0.3629,
+   "F1": 0.4828,
+   "P_t": 0.4049,
+   "F1_t": 0.2644,
+   "n_rows": 122.0,
+   "MATCH_skip": 0.3629,
+   "HALL_skip": 0.2786,
+   "OM_skip": 0.6371,
+   "MATCH_t_skip": 0.1963,
+   "OM_t_skip": 0.1665,
+   "HALL_t_skip": 0.0,
+   "P_skip": 0.7214,
+   "R_skip": 0.3629,
+   "F1_skip": 0.4828,
+   "P_t_skip": 0.4049,
+   "F1_t_skip": 0.2644,
+   "n_rows_skip": 122.0
+  }
+ },
+ "stability": {
+  "threshold": 0.7,
+  "embedder": "sentence-transformers/all-mpnet-base-v2",
+  "systems": {
+   "mine_v2": {
+    "r1-r3": {
+     "jaccard": {
+      "mean": 0.2832,
+      "std": 0.266,
+      "groups": 120
+     },
+     "jaccard_triple": {
+      "mean": 0.372,
+      "std": 0.2836,
+      "groups": 120
+     },
+     "jaccard_soft": {
+      "mean": 0.8122,
+      "std": 0.1772,
+      "groups": 120
+     }
+    }
+   },
+   "atom": {
+    "r1-r3": {
+     "jaccard": {
+      "mean": 0.5153,
+      "std": 0.2761,
+      "groups": 122
+     },
+     "jaccard_triple": {
+      "mean": 0.5886,
+      "std": 0.2484,
+      "groups": 122
+     },
+     "jaccard_soft": {
+      "mean": 0.8167,
+      "std": 0.189,
+      "groups": 122
+     }
+    }
+   },
+   "atom_direct": {
+    "r1-r3": {
+     "jaccard": {
+      "mean": 0.3818,
+      "std": 0.3179,
+      "groups": 121
+     },
+     "jaccard_triple": {
+      "mean": 0.473,
+      "std": 0.3224,
+      "groups": 121
+     },
+     "jaccard_soft": {
+      "mean": 0.7539,
+      "std": 0.2283,
+      "groups": 121
+     }
+    }
+   },
+   "kggen": {
+    "r1-r3": {
+     "jaccard": {
+      "mean": 0.5529,
+      "std": 0.3073,
+      "groups": 122
+     },
+     "jaccard_triple": {
+      "mean": 0.5529,
+      "std": 0.3073,
+      "groups": 122
+     },
+     "jaccard_soft": {
+      "mean": 0.817,
+      "std": 0.189,
+      "groups": 122
+     }
+    }
+   },
+   "released:gpt41-direct": {
+    "r1-r2": {
+     "jaccard": {
+      "mean": 0.0519,
+      "std": 0.0816,
+      "groups": 122
+     },
+     "jaccard_triple": {
+      "mean": 0.073,
+      "std": 0.0922,
+      "groups": 122
+     },
+     "jaccard_soft": {
+      "mean": 0.447,
+      "std": 0.2372,
+      "groups": 122
+     }
+    },
+    "r1-r3": {
+     "jaccard": {
+      "mean": 0.0514,
+      "std": 0.108,
+      "groups": 122
+     },
+     "jaccard_triple": {
+      "mean": 0.0834,
+      "std": 0.1477,
+      "groups": 122
+     },
+     "jaccard_soft": {
+      "mean": 0.4458,
+      "std": 0.2462,
+      "groups": 122
+     }
+    }
+   },
+   "released:gpt41-atom": {
+    "r1-r2": {
+     "jaccard": {
+      "mean": 0.419,
+      "std": 0.1261,
+      "groups": 122
+     },
+     "jaccard_triple": {
+      "mean": 0.4952,
+      "std": 0.1379,
+      "groups": 122
+     },
+     "jaccard_soft": {
+      "mean": 0.8058,
+      "std": 0.0865,
+      "groups": 122
+     }
+    },
+    "r1-r3": {
+     "jaccard": {
+      "mean": 0.4128,
+      "std": 0.1328,
+      "groups": 122
+     },
+     "jaccard_triple": {
+      "mean": 0.4997,
+      "std": 0.1458,
+      "groups": 122
+     },
+     "jaccard_soft": {
+      "mean": 0.8113,
+      "std": 0.0971,
+      "groups": 122
+     }
+    }
+   }
+  }
+ },
+ "outputs": {
+  "mine_v2": {
+   "rows": 122,
+   "empty": 3,
+   "avg_quintuples": 16.94
+  },
+  "atom": {
+   "rows": 122,
+   "empty": 0,
+   "avg_quintuples": 20.6
+  },
+  "atom_direct": {
+   "rows": 122,
+   "empty": 1,
+   "avg_quintuples": 8.61
+  },
+  "kggen": {
+   "rows": 122,
+   "empty": 0,
+   "avg_quintuples": 14.13
+  }
+ },
+ "total_minutes": 148.1
+}

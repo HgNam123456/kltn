@@ -1,0 +1,2 @@
+ERROR - Some facts in the following passages miss necessary fields: 
+ --> 30233:469:573	property 25 unknown

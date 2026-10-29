@@ -1,0 +1,1671 @@
+{"doc": 0, "triple": ["Asia", "was struck by", "deadly epidemic"], "supported": true}
+{"doc": 0, "triple": ["Chinese researchers", "identified", "new virus"], "supported": true}
+{"doc": 0, "triple": ["dozens of people", "are across", "Asia"], "supported": true}
+{"doc": 0, "triple": ["illness", "has infected", "dozens of people"], "supported": true}
+{"doc": 0, "triple": ["new virus", "is behind", "illness"], "supported": true}
+{"doc": 1, "triple": ["authorities", "acted upon", "China"], "supported": true}
+{"doc": 1, "triple": ["authorities", "limited travel in", "cities"], "supported": true}
+{"doc": 1, "triple": ["authorities", "prompted to limit", "travel"], "supported": true}
+{"doc": 1, "triple": ["disease", "was first found in", "Wuhan"], "supported": true}
+{"doc": 1, "triple": ["disease", "was found in", "China"], "supported": true}
+{"doc": 1, "triple": ["mysterious respiratory virus", "has spread", "China"], "supported": true}
+{"doc": 1, "triple": ["mysterious respiratory virus", "has spread to", "10 other countries"], "supported": true}
+{"doc": 2, "triple": ["U.S. stock futures", "are down sharply", "coronavirus outbreak"], "supported": true}
+{"doc": 3, "triple": ["Observation date", "is", "2020-01-28"], "supported": true}
+{"doc": 3, "triple": ["President Trump", "has lawyers", "President Trump's lawyers"], "supported": true}
+{"doc": 3, "triple": ["Republican-controlled Senate", "is controlled by", "Republican"], "supported": true}
+{"doc": 3, "triple": ["Wuhan coronavirus", "had cases in", "China"], "supported": true}
+{"doc": 3, "triple": ["Wuhan coronavirus", "had deaths in", "China"], "supported": true}
+{"doc": 3, "triple": ["Wuhan coronavirus", "was in", "China"], "supported": true}
+{"doc": 3, "triple": ["Wuhan coronavirus", "was news in", "New York"], "supported": true}
+{"doc": 3, "triple": ["Wuhan coronavirus", "was on radar in", "China"], "supported": true}
+{"doc": 4, "triple": ["World Health Organization", "declared", "global health emergency"], "supported": true}
+{"doc": 4, "triple": ["coronavirus outbreak", "emerged in", "China"], "supported": true}
+{"doc": 4, "triple": ["coronavirus outbreak", "spread beyond", "China"], "supported": true}
+{"doc": 5, "triple": ["Kolmi Hopen", "makes", "medical face mask"], "supported": true}
+{"doc": 5, "triple": ["virus", "affects", "Asia"], "supported": true}
+{"doc": 5, "triple": ["virus", "affects", "China"], "supported": true}
+{"doc": 5, "triple": ["virus", "paralyzed", "cities"], "supported": true}
+{"doc": 6, "triple": ["Art Basel Hong Kong", "featured galleries from", "Asia"], "supported": true}
+{"doc": 6, "triple": ["Art Basel Hong Kong", "is one of", "international art market"], "supported": true}
+{"doc": 6, "triple": ["Art Basel Hong Kong", "was canceled", "coronavirus"], "supported": true}
+{"doc": 6, "triple": ["Art Basel Hong Kong", "was held at", "Hong Kong Convention and Exhibition Center"], "supported": true}
+{"doc": 6, "triple": ["China", "has been crippled by", "coronavirus"], "supported": true}
+{"doc": 6, "triple": ["Japan", "had confirmed cases of", "coronavirus"], "supported": true}
+{"doc": 6, "triple": ["Russia", "is a big oil producer", "oil prices"], "supported": true}
+{"doc": 6, "triple": ["Russia", "is not in perfect harmony with", "Saudi Arabia"], "supported": true}
+{"doc": 6, "triple": ["Russia", "tried to recalibrate production targets to cope with reduced demand from", "China"], "supported": true}
+{"doc": 6, "triple": ["Saudi Arabia", "is a big oil producer", "oil prices"], "supported": true}
+{"doc": 6, "triple": ["Saudi Arabia", "is not in perfect harmony with", "Russia"], "supported": true}
+{"doc": 6, "triple": ["Saudi Arabia", "tried to recalibrate production targets to cope with reduced demand from", "China"], "supported": false}
+{"doc": 6, "triple": ["alliance", "helped prop up", "oil prices"], "supported": true}
+{"doc": 6, "triple": ["alliance", "is between", "Russia"], "supported": true}
+{"doc": 6, "triple": ["alliance", "is between", "Saudi Arabia"], "supported": true}
+{"doc": 6, "triple": ["cruise ship", "arrived at", "Yokohama"], "supported": true}
+{"doc": 7, "triple": ["World Health Organization experts", "might be in", "China"], "supported": true}
+{"doc": 7, "triple": ["coronavirus epidemic", "occurred in", "China"], "supported": true}
+{"doc": 7, "triple": ["coronavirus epidemic", "surpassed milestone on", "2020-02-09"], "supported": true}
+{"doc": 7, "triple": ["death toll of coronavirus epidemic", "exceed", "SARS outbreak"], "supported": true}
+{"doc": 7, "triple": ["death toll of coronavirus epidemic", "is greater than", "SARS outbreak"], "supported": true}
+{"doc": 7, "triple": ["development", "coincided with", "news that World Health Organization experts might soon be in the country to help stanch the crisis"], "supported": true}
+{"doc": 8, "triple": ["China", "has observation date", "2020-02-10"], "supported": true}
+{"doc": 8, "triple": ["people", "return to work after", "Lunar New Year"], "supported": true}
+{"doc": 9, "triple": ["Amos Tversky", "demonstrated", "irrational ways"], "supported": true}
+{"doc": 9, "triple": ["Chinese health officials", "reported death toll of", "1,000"], "supported": true}
+{"doc": 9, "triple": ["Daniel Kahneman", "demonstrated", "irrational ways"], "supported": true}
+{"doc": 9, "triple": ["new coronavirus", "arrived from", "China"], "supported": true}
+{"doc": 9, "triple": ["new coronavirus", "known as", "Asian disease problem"], "supported": true}
+{"doc": 9, "triple": ["woman", "was released from", "San Diego hospital"], "supported": true}
+{"doc": 10, "triple": ["government officials", "imposed measures in", "Wuhan"], "supported": true}
+{"doc": 10, "triple": ["new coronavirus", "spread within", "China"], "supported": false}
+{"doc": 10, "triple": ["new coronavirus", "spread within", "Wuhan"], "supported": true}
+{"doc": 11, "triple": ["Fears about the spread of the coronavirus", "led to the cancellation of", "Mobile World Congress"], "supported": true}
+{"doc": 11, "triple": ["Fears about the spread of the coronavirus", "whacked", "stock futures"], "supported": true}
+{"doc": 11, "triple": ["Tedros Adhanom Ghebreyesus", "is director-general of", "World Health Organization"], "supported": true}
+{"doc": 11, "triple": ["World Health Organization", "declared the situation a", "pandemic"], "supported": true}
+{"doc": 11, "triple": ["World Health Organization", "warned", "Tedros Adhanom Ghebreyesus"], "supported": false}
+{"doc": 11, "triple": ["coronavirus", "has killed", "610,200"], "supported": true}
+{"doc": 11, "triple": ["coronavirus", "has sickened", "14.7 million"], "supported": true}
+{"doc": 11, "triple": ["coronavirus", "has spread to", "177 countries"], "supported": true}
+{"doc": 11, "triple": ["coronavirus", "surfaced in", "Chinese seafood and poultry market"], "supported": true}
+{"doc": 11, "triple": ["coronavirus epidemic", "has sent people scrambling for", "face masks"], "supported": true}
+{"doc": 11, "triple": ["face masks", "are not a proven prophylactic against infection from", "new coronavirus"], "supported": true}
+{"doc": 11, "triple": ["hand washing", "is more important than", "face masks"], "supported": true}
+{"doc": 12, "triple": ["195 Americans", "arrived at", "California military base"], "supported": true}
+{"doc": 12, "triple": ["195 Americans", "were evacuated from", "Wuhan, China"], "supported": true}
+{"doc": 12, "triple": ["195 Americans", "were tested for", "coronavirus"], "supported": true}
+{"doc": 12, "triple": ["Health officials", "swabbed", "195 Americans"], "supported": true}
+{"doc": 12, "triple": ["diplomats", "are included in", "195 Americans"], "supported": true}
+{"doc": 12, "triple": ["tests", "came back", "negative"], "supported": true}
+{"doc": 13, "triple": ["health officials", "said", "man began showing symptoms"], "supported": true}
+{"doc": 13, "triple": ["man", "began showing symptoms during", "vacation in Hawaii"], "supported": true}
+{"doc": 13, "triple": ["married couple", "in", "Japan"], "supported": true}
+{"doc": 13, "triple": ["married couple", "returned from", "Hawaii"], "supported": true}
+{"doc": 13, "triple": ["married couple", "tested positive for", "coronavirus"], "supported": true}
+{"doc": 14, "triple": ["American economy", "standout against", "global backdrop clouded by coronavirus"], "supported": true}
+{"doc": 14, "triple": ["dollar", "climbed to", "highest level in years"], "supported": true}
+{"doc": 14, "triple": ["dollar", "reflect", "American economy"], "supported": true}
+{"doc": 15, "triple": ["14 American citizens", "tested positive for", "coronavirus"], "supported": true}
+{"doc": 15, "triple": ["14 American citizens", "were permitted to return to", "United States"], "supported": true}
+{"doc": 15, "triple": ["President Trump", "is described as", "germophobe"], "supported": true}
+{"doc": 15, "triple": ["President Trump", "was infuriated about", "14 American citizens"], "supported": true}
+{"doc": 15, "triple": ["two senior administration officials", "said", "President Trump"], "supported": true}
+{"doc": 16, "triple": ["Caohe", "is near", "central China"], "supported": true}
+{"doc": 16, "triple": ["Caohe", "is near", "coronavirus outbreak"], "supported": true}
+{"doc": 16, "triple": ["Caohe", "was affected by", "coronavirus outbreak"], "supported": true}
+{"doc": 16, "triple": ["Taoist nunnery", "is located", "550 miles away"], "supported": true}
+{"doc": 16, "triple": ["Taoist nunnery", "made donation to", "Caohe"], "supported": true}
+{"doc": 16, "triple": ["Taoist temple", "contributed", "medical equipment"], "supported": true}
+{"doc": 16, "triple": ["Taoist temple", "is located in", "Caohe"], "supported": true}
+{"doc": 16, "triple": ["medical equipment", "was used to help those sickened by", "virus"], "supported": true}
+{"doc": 17, "triple": ["Wall Street", "was full of", "instant experts in epidemiology"], "supported": true}
+{"doc": 17, "triple": ["global markets", "fell sharply", "coronavirus"], "supported": true}
+{"doc": 17, "triple": ["instant experts in epidemiology", "based prediction on", "widely circulated charts showing that the number of new cases had peaked in China"], "supported": true}
+{"doc": 17, "triple": ["instant experts in epidemiology", "predicted", "it’s over"], "supported": true}
+{"doc": 17, "triple": ["number of new cases", "peaked in", "China"], "supported": true}
+{"doc": 18, "triple": ["Canary Islands", "is largest of", "Canary Islands"], "supported": false}
+{"doc": 18, "triple": ["Tenerife", "is in", "Canary Islands"], "supported": true}
+{"doc": 18, "triple": ["Trump", "is president", "Trump"], "supported": false}
+{"doc": 18, "triple": ["Wall Street", "experienced", "selling"], "supported": true}
+{"doc": 18, "triple": ["coronavirus", "caused nervousness on", "Wall Street"], "supported": true}
+{"doc": 18, "triple": ["coronavirus", "is spreading in", "Tenerife"], "supported": true}
+{"doc": 19, "triple": ["China", "announced ban on", "wild animals"], "supported": false}
+{"doc": 19, "triple": ["China", "announced ban on", "wildlife trade"], "supported": true}
+{"doc": 19, "triple": ["international conservationists", "greet as major step", "China's ban on wildlife trade"], "supported": true}
+{"doc": 20, "triple": ["Federal Reserve", "is seen as responsible for maintaining", "economic growth"], "supported": true}
+{"doc": 20, "triple": ["Hong Kong media tycoon", "was arrested over role in", "pro-democracy protest"], "supported": true}
+{"doc": 20, "triple": ["Hong Kong media tycoon", "was known for opposition to", "China"], "supported": true}
+{"doc": 20, "triple": ["Investors", "are baying for", "rate cut"], "supported": true}
+{"doc": 20, "triple": ["President Trump", "complained that", "interest rates are too high"], "supported": true}
+{"doc": 20, "triple": ["Stock prices", "are going down in", "stock market"], "supported": true}
+{"doc": 20, "triple": ["all eyes", "have turned to", "Federal Reserve"], "supported": true}
+{"doc": 20, "triple": ["arrest", "dealt blow to", "city's independent media"], "supported": true}
+{"doc": 20, "triple": ["development", "has signal about future of", "global economy"], "supported": true}
+{"doc": 20, "triple": ["police", "said", "Hong Kong media tycoon was arrested"], "supported": true}
+{"doc": 20, "triple": ["steep drop in the stock market", "is not the most profound signal about", "global economy"], "supported": true}
+{"doc": 20, "triple": ["what has been happening in the bond markets", "is the most profound signal about", "global economy"], "supported": true}
+{"doc": 21, "triple": ["Carnival festival", "brings", "tourists"], "supported": true}
+{"doc": 21, "triple": ["Nicholas Hulbert", "flew from", "London"], "supported": true}
+{"doc": 21, "triple": ["Nicholas Hulbert", "flew to", "Venice"], "supported": true}
+{"doc": 21, "triple": ["Nicholas Hulbert", "is a", "British film director"], "supported": true}
+{"doc": 21, "triple": ["coronavirus", "has been rattling", "business world"], "supported": true}
+{"doc": 21, "triple": ["coronavirus", "seems poised to disrupt", "American life"], "supported": true}
+{"doc": 21, "triple": ["coronavirus", "sent", "markets"], "supported": true}
+{"doc": 21, "triple": ["coronavirus Covid-19", "had arrived in", "Venice"], "supported": true}
+{"doc": 21, "triple": ["officials in Venice", "canceled", "Carnival festival"], "supported": true}
+{"doc": 21, "triple": ["quarantine", "is associated with", "Venice"], "supported": true}
+{"doc": 22, "triple": ["Ciara Lo", "arrived in", "Bologna, Italy"], "supported": true}
+{"doc": 22, "triple": ["Ciara Lo", "had", "wallet"], "supported": true}
+{"doc": 22, "triple": ["Ciara Lo", "is from", "Hong Kong"], "supported": true}
+{"doc": 22, "triple": ["Ciara Lo", "tried to file", "police report"], "supported": true}
+{"doc": 22, "triple": ["Ciara Lo", "tried to open", "bank account"], "supported": true}
+{"doc": 22, "triple": ["North Korea", "launched", "east coast"], "supported": true}
+{"doc": 22, "triple": ["North Korea", "launched", "two unidentified projectiles"], "supported": true}
+{"doc": 22, "triple": ["South Korean military", "said", "North Korea launched two unidentified projectiles off its east coast this morning"], "supported": true}
+{"doc": 22, "triple": ["employee", "made a remark about", "coronavirus"], "supported": true}
+{"doc": 23, "triple": ["Austin", "is in", "Tex."], "supported": true}
+{"doc": 23, "triple": ["Food and Drug Administration", "gave a briefing at", "White House"], "supported": true}
+{"doc": 23, "triple": ["Food and Drug Administration", "made a promise on", "Monday"], "supported": true}
+{"doc": 23, "triple": ["Food and Drug Administration", "promised capacity for", "one million coronavirus tests"], "supported": true}
+{"doc": 23, "triple": ["South by Southwest", "is located in", "Austin"], "supported": true}
+{"doc": 23, "triple": ["South by Southwest", "is scheduled for", "this month"], "supported": true}
+{"doc": 23, "triple": ["St. Raphael Academy", "had a study trip to", "Italy"], "supported": true}
+{"doc": 23, "triple": ["St. Raphael Academy", "had a study trip to", "two other countries"], "supported": true}
+{"doc": 23, "triple": ["St. Raphael Academy", "is a type of", "private"], "supported": true}
+{"doc": 23, "triple": ["St. Raphael Academy", "is located in", "Rhode Island"], "supported": true}
+{"doc": 23, "triple": ["Trump administration", "claimed capacity for", "nearly a million tests for the coronavirus"], "supported": true}
+{"doc": 23, "triple": ["Trump administration", "is preparing to escalate", "screening"], "supported": true}
+{"doc": 23, "triple": ["Trump administration", "made a statement on", "Monday"], "supported": true}
+{"doc": 23, "triple": ["United States", "had a death toll of", "six"], "supported": true}
+{"doc": 23, "triple": ["United States", "had infections topping", "100"], "supported": true}
+{"doc": 23, "triple": ["thousands of people", "will travel to", "Las Vegas"], "supported": true}
+{"doc": 23, "triple": ["travel advisory", "warned of", "coronavirus"], "supported": true}
+{"doc": 23, "triple": ["travel advisory", "was issued in", "Italy"], "supported": false}
+{"doc": 24, "triple": ["Dartmouth-Hitchcock Medical Center", "is located in", "New Hampshire"], "supported": true}
+{"doc": 24, "triple": ["Geneva International Auto Show", "was called off due to", "coronavirus"], "supported": true}
+{"doc": 24, "triple": ["Geneva International Auto Show", "was called off in", "Switzerland"], "supported": true}
+{"doc": 24, "triple": ["La Fenice", "is located in", "Venice"], "supported": true}
+{"doc": 24, "triple": ["La Fenice", "was forced to cancel performances by", "coronavirus"], "supported": true}
+{"doc": 24, "triple": ["President Trump", "jawboned", "pharmaceutical companies"], "supported": true}
+{"doc": 24, "triple": ["President Trump", "reassured the crowd about", "coronavirus"], "supported": true}
+{"doc": 24, "triple": ["employee", "is from", "Dartmouth-Hitchcock Medical Center"], "supported": true}
+{"doc": 24, "triple": ["employee", "showed signs of", "coronavirus"], "supported": true}
+{"doc": 24, "triple": ["oil prices", "experienced a plunge of", "20 percent"], "supported": true}
+{"doc": 24, "triple": ["oil prices", "is related to", "coronavirus"], "supported": true}
+{"doc": 24, "triple": ["string quartet", "played", "Beethoven"], "supported": true}
+{"doc": 24, "triple": ["string quartet", "streamed the concert online", "Beethoven"], "supported": true}
+{"doc": 24, "triple": ["world’s top oil officials", "are concerned about", "oil prices"], "supported": true}
+{"doc": 25, "triple": ["13th National People’s Congress", "issued a decision regarding", "Wild Animals"], "supported": true}
+{"doc": 25, "triple": ["Armory Show", "settled on", "Pier 90"], "supported": true}
+{"doc": 25, "triple": ["Armory Show", "settled on", "Pier 94"], "supported": true}
+{"doc": 25, "triple": ["Armory Show", "weathered a crisis involving", "Pier 92"], "supported": true}
+{"doc": 25, "triple": ["Pier 92", "was located over", "Hudson River"], "supported": true}
+{"doc": 25, "triple": ["Tom Cotton", "criticized", "Ebola"], "supported": true}
+{"doc": 25, "triple": ["Tom Cotton", "hit", "Obama administration"], "supported": true}
+{"doc": 25, "triple": ["Tom Cotton", "is Republican of", "Arkansas"], "supported": true}
+{"doc": 25, "triple": ["Tom Cotton", "lamented", "coronavirus"], "supported": true}
+{"doc": 25, "triple": ["Wuhan", "is in", "central China"], "supported": true}
+{"doc": 25, "triple": ["Xi Jinping", "fumed at", "top officials"], "supported": true}
+{"doc": 25, "triple": ["Xi Jinping", "is from", "China"], "supported": true}
+{"doc": 25, "triple": ["coronavirus", "caused cancellation of", "Art Basel Hong Kong"], "supported": true}
+{"doc": 25, "triple": ["new coronavirus", "is thought to have originated in", "bats"], "supported": true}
+{"doc": 25, "triple": ["new coronavirus", "linked to", "wet market"], "supported": true}
+{"doc": 25, "triple": ["new coronavirus", "may have been transmitted via", "wild animal"], "supported": true}
+{"doc": 25, "triple": ["wet market", "located in", "Wuhan"], "supported": true}
+{"doc": 26, "triple": ["500th anniversary", "of the death of", "Raphael"], "supported": true}
+{"doc": 26, "triple": ["John C. Williams", "is president of", "Federal Reserve Bank of New York"], "supported": true}
+{"doc": 26, "triple": ["John C. Williams", "made clear on", "Thursday"], "supported": true}
+{"doc": 26, "triple": ["The Economist", "analyzed figures on epidemics since", "1960"], "supported": true}
+{"doc": 26, "triple": ["The Economist", "concluded that", "people die at a higher rate from such disease outbreaks in authoritarian countries than in democratic ones"], "supported": true}
+{"doc": 26, "triple": ["exhibition", "commemorates", "500th anniversary"], "supported": true}
+{"doc": 26, "triple": ["exhibition", "opened at", "Scuderie del Quirinale"], "supported": true}
+{"doc": 27, "triple": ["I", "turned", "24"], "supported": true}
+{"doc": 27, "triple": ["I", "visited", "nail salon"], "supported": true}
+{"doc": 27, "triple": ["President Trump", "returned from", "India"], "supported": true}
+{"doc": 27, "triple": ["government’s top health officials", "acted after", "weeks of conflicting signals from the Trump administration about the coronavirus"], "supported": true}
+{"doc": 27, "triple": ["government’s top health officials", "decided", "to be more blunt about the dangers of the outbreak"], "supported": true}
+{"doc": 27, "triple": ["government’s top health officials", "would inform", "President Trump"], "supported": true}
+{"doc": 27, "triple": ["nail technician", "is", "Asian woman"], "supported": true}
+{"doc": 27, "triple": ["nail technician", "is in her", "50s"], "supported": true}
+{"doc": 28, "triple": ["Charlotte Cowles", "is author of", "newsletter"], "supported": true}
+{"doc": 28, "triple": ["President Trump", "spoke at", "conservative conference"], "supported": true}
+{"doc": 28, "triple": ["Vice President Mike Pence", "spoke at", "conservative conference"], "supported": true}
+{"doc": 28, "triple": ["coronavirus", "has tested positive for", "attendee"], "supported": true}
+{"doc": 28, "triple": ["coronavirus outbreak", "has economic effects", "economic effects"], "supported": true}
+{"doc": 28, "triple": ["newsletter", "dedicates content to", "economic effects"], "supported": true}
+{"doc": 28, "triple": ["newsletter", "includes", "business"], "supported": true}
+{"doc": 28, "triple": ["newsletter", "includes", "tech"], "supported": true}
+{"doc": 29, "triple": ["BNP Paribas Open", "is a type of", "tennis tournaments"], "supported": true}
+{"doc": 29, "triple": ["BNP Paribas Open", "is located in", "Southern California"], "supported": true}
+{"doc": 29, "triple": ["BNP Paribas Open", "is one of the highest-profile sporting events canceled in", "coronavirus"], "supported": true}
+{"doc": 29, "triple": ["BNP Paribas Open", "will not be held because of", "coronavirus"], "supported": true}
+{"doc": 29, "triple": ["Centers for Disease Control and Prevention", "urges Americans to avoid", "cruise ships"], "supported": true}
+{"doc": 29, "triple": ["Elections", "are complicated events involving", "paperwork"], "supported": true}
+{"doc": 29, "triple": ["Elections", "involve", "thorny issues of law"], "supported": true}
+{"doc": 29, "triple": ["State Department", "urges Americans to avoid", "cruise ships"], "supported": false}
+{"doc": 29, "triple": ["Washington State", "is holding", "2020 primary"], "supported": true}
+{"doc": 29, "triple": ["ban on much travel from", "affects", "Europe"], "supported": true}
+{"doc": 29, "triple": ["cruise industry", "began suspending sailings due to", "ban on much travel from Europe"], "supported": false}
+{"doc": 30, "triple": ["Bank of England", "announced", "emergency rate cut"], "supported": true}
+{"doc": 30, "triple": ["European Central Bank", "is expected to unveil", "new stimulus"], "supported": true}
+{"doc": 30, "triple": ["Mike Pence", "spoke about", "governors"], "supported": true}
+{"doc": 30, "triple": ["President Trump", "provided leadership during", "coronavirus outbreak"], "supported": true}
+{"doc": 30, "triple": ["Uber", "announced new policies regarding", "coronavirus"], "supported": true}
+{"doc": 30, "triple": ["Wall Street bank chiefs", "will discuss", "coronavirus"], "supported": true}
+{"doc": 30, "triple": ["Wall Street bank chiefs", "will meet with", "White House"], "supported": true}
+{"doc": 30, "triple": ["Walmart", "announced new policies regarding", "coronavirus"], "supported": true}
+{"doc": 30, "triple": ["governors", "appreciated", "President Trump"], "supported": true}
+{"doc": 31, "triple": ["Christie’s", "hosts", "South Asian modern and contemporary sales"], "supported": true}
+{"doc": 31, "triple": ["Metropolitan Museum of Art", "has Asian art shows", "Asian art"], "supported": true}
+{"doc": 31, "triple": ["Mike Pence", "responded to", "coronavirus"], "supported": true}
+{"doc": 31, "triple": ["Mike Pence", "stated there was no recommendation for", "Americans to avoid travel"], "supported": true}
+{"doc": 31, "triple": ["Mike Pence", "travel with", "his children"], "supported": true}
+{"doc": 31, "triple": ["Mike Pence", "travel with", "his grandchildren"], "supported": true}
+{"doc": 31, "triple": ["Mike Pence", "was asked about", "Disney World"], "supported": true}
+{"doc": 31, "triple": ["Nancy Pelosi", "is associated with", "Congress"], "supported": true}
+{"doc": 31, "triple": ["Nancy Pelosi", "made a declaration about", "Congress"], "supported": true}
+{"doc": 31, "triple": ["Sotheby’s", "hosts", "South Asian modern and contemporary sales"], "supported": true}
+{"doc": 31, "triple": ["South Asian modern and contemporary sales", "are exceptions to", "cluster of major auctions"], "supported": true}
+{"doc": 31, "triple": ["United States", "announced support for", "businesses"], "supported": true}
+{"doc": 31, "triple": ["United States", "took actions on", "travel"], "supported": true}
+{"doc": 31, "triple": ["cluster of major auctions", "is part of", "Asia Week New York"], "supported": true}
+{"doc": 31, "triple": ["cluster of major auctions", "was postponed to", "end of June"], "supported": true}
+{"doc": 31, "triple": ["coronavirus", "affected", "Metropolitan Museum of Art"], "supported": true}
+{"doc": 31, "triple": ["coronavirus", "is causing", "economic downturn"], "supported": true}
+{"doc": 31, "triple": ["coronavirus", "is spreading", "United States"], "supported": true}
+{"doc": 31, "triple": ["coronavirus", "knocked out sales of", "Asian art"], "supported": true}
+{"doc": 31, "triple": ["stock market", "experienced", "drop"], "supported": true}
+{"doc": 32, "triple": ["American people", "are receiving update from", "coronavirus"], "supported": true}
+{"doc": 32, "triple": ["Los Angeles Unified School District", "is", "second largest district in the nation"], "supported": true}
+{"doc": 32, "triple": ["Los Angeles Unified School District", "is closing", "public schools"], "supported": true}
+{"doc": 32, "triple": ["Los Angeles Unified School District", "serves", "students"], "supported": true}
+{"doc": 32, "triple": ["Ohio", "announced closures for", "kids"], "supported": true}
+{"doc": 32, "triple": ["The Times", "is drawing on", "journalists around the world"], "supported": true}
+{"doc": 32, "triple": ["The Times", "made official", "employees to begin working from home"], "supported": true}
+{"doc": 32, "triple": ["The Times", "produces reporting on", "health crisis"], "supported": true}
+{"doc": 32, "triple": ["The Times", "wanted", "employees to begin working from home"], "supported": true}
+{"doc": 32, "triple": ["U.S. Centers for Disease Control and Prevention", "conferred about", "coronavirus"], "supported": true}
+{"doc": 32, "triple": ["U.S. Centers for Disease Control and Prevention", "conferred with", "universities"], "supported": true}
+{"doc": 32, "triple": ["Washington State", "announced closures for", "kids"], "supported": true}
+{"doc": 32, "triple": ["World Health Organization", "declared", "coronavirus"], "supported": true}
+{"doc": 32, "triple": ["coronavirus", "converged with", "Israel"], "supported": true}
+{"doc": 32, "triple": ["coronavirus", "created a crisis in", "Israel"], "supported": true}
+{"doc": 32, "triple": ["coronavirus", "is a pandemic in", "United States"], "supported": false}
+{"doc": 32, "triple": ["crisis", "could benefit", "Benjamin Netanyahu"], "supported": true}
+{"doc": 32, "triple": ["events", "affect", "United States"], "supported": true}
+{"doc": 32, "triple": ["events", "affect", "economy"], "supported": true}
+{"doc": 32, "triple": ["events", "affect", "entertainment"], "supported": true}
+{"doc": 32, "triple": ["events", "affect", "schools"], "supported": true}
+{"doc": 32, "triple": ["events", "affect", "travel"], "supported": true}
+{"doc": 32, "triple": ["schools", "are closing due to", "coronavirus"], "supported": true}
+{"doc": 32, "triple": ["schools", "remain open in", "United States"], "supported": true}
+{"doc": 32, "triple": ["universities", "conferred about", "coronavirus"], "supported": false}
+{"doc": 33, "triple": ["2020 census", "is being completed by", "federal and local leaders"], "supported": true}
+{"doc": 33, "triple": ["Dr. Kurt Kloss", "is a", "physician"], "supported": true}
+{"doc": 33, "triple": ["Dr. Kurt Kloss", "is based in", "New York"], "supported": true}
+{"doc": 33, "triple": ["New York", "experienced closures of", "cultural institutions"], "supported": true}
+{"doc": 33, "triple": ["Trish Regan", "caused criticism for", "cable network"], "supported": true}
+{"doc": 33, "triple": ["Trish Regan", "is associated with", "The Fox Business"], "supported": true}
+{"doc": 33, "triple": ["Trish Regan", "was removed from", "prime-time slot"], "supported": true}
+{"doc": 33, "triple": ["confirmed caseload", "increased from", "309"], "supported": true}
+{"doc": 33, "triple": ["confirmed caseload", "increased to", "2,170 cases"], "supported": true}
+{"doc": 33, "triple": ["confirmed caseload", "occurred in", "49 states"], "supported": true}
+{"doc": 33, "triple": ["confirmed caseload", "occurred in", "District of Columbia"], "supported": true}
+{"doc": 33, "triple": ["confirmed caseload", "occurred in", "Puerto Rico"], "supported": true}
+{"doc": 33, "triple": ["coronavirus", "is related to", "Covid-19"], "supported": true}
+{"doc": 33, "triple": ["coronavirus", "is spreading across", "United States"], "supported": true}
+{"doc": 33, "triple": ["federal and local leaders", "are scrambling to counter", "coronavirus pandemic"], "supported": true}
+{"doc": 34, "triple": ["2020-03-15", "is observation date of", "sports world"], "supported": true}
+{"doc": 34, "triple": ["Cornell University", "has administrators who emailed", "students"], "supported": true}
+{"doc": 34, "triple": ["David Norton", "is not", "scientist"], "supported": true}
+{"doc": 34, "triple": ["David Norton", "works in", "PAWTUCKET, R.I."], "supported": true}
+{"doc": 34, "triple": ["Houston Astros", "involved in", "cheating scandal"], "supported": true}
+{"doc": 34, "triple": ["Major League Baseball", "has commissioner", "Rob Manfred"], "supported": true}
+{"doc": 34, "triple": ["New York City", "has", "public school system"], "supported": true}
+{"doc": 34, "triple": ["New York City", "is location of", "LOS ANGELES"], "supported": false}
+{"doc": 34, "triple": ["Rob Manfred", "delivered warning to", "30 club owners"], "supported": true}
+{"doc": 34, "triple": ["Saudi Aramco", "is", "oil company"], "supported": true}
+{"doc": 34, "triple": ["Saudi Aramco", "reported profit fell due to", "lower oil prices"], "supported": true}
+{"doc": 34, "triple": ["board members", "are not", "scientist"], "supported": true}
+{"doc": 34, "triple": ["sports world", "ground to a halt due to", "coronavirus outbreak"], "supported": true}
+{"doc": 34, "triple": ["woman", "was in", "Harlem cafe"], "supported": true}
+{"doc": 35, "triple": ["America", "put in place", "sweeping restrictions"], "supported": true}
+{"doc": 35, "triple": ["Bill de Blasio", "urged New Yorkers to", "mostly go about their daily lives"], "supported": true}
+{"doc": 35, "triple": ["China", "is a country", "with largest daily uptick"], "supported": false}
+{"doc": 35, "triple": ["Derek Pando", "began working from his house", "because of the coronavirus"], "supported": true}
+{"doc": 35, "triple": ["Federal Reserve", "moved to slash rates and buy treasuries", "over the weekend"], "supported": true}
+{"doc": 35, "triple": ["France", "is implementing", "countrywide restrictions"], "supported": true}
+{"doc": 35, "triple": ["Germany", "had borders scheduled to close", "this morning"], "supported": true}
+{"doc": 35, "triple": ["Italy", "had largest daily uptick", "of any country"], "supported": false}
+{"doc": 35, "triple": ["Italy", "reported", "368 deaths in a single day"], "supported": true}
+{"doc": 35, "triple": ["Linda Thunstrom", "asked", "what felt like a taboo question"], "supported": true}
+{"doc": 35, "triple": ["Linda Thunstrom", "is an economist at", "University of Wyoming"], "supported": true}
+{"doc": 35, "triple": ["London", "had lights go out on", "Broadway"], "supported": true}
+{"doc": 35, "triple": ["London’s West End", "went dark", "on Monday"], "supported": true}
+{"doc": 35, "triple": ["Spain", "is implementing", "countrywide restrictions"], "supported": true}
+{"doc": 35, "triple": ["The coronavirus", "threatens to set off", "financial contagion"], "supported": true}
+{"doc": 35, "triple": ["a mob of monkeys", "runs around", "a city plaza in Thailand"], "supported": true}
+{"doc": 35, "triple": ["markets around the world", "fell", "on Monday"], "supported": true}
+{"doc": 35, "triple": ["some of his top aides", "were trying to change", "the mayor’s approach to the coronavirus outbreak"], "supported": true}
+{"doc": 36, "triple": ["1918", "saw", "a new respiratory virus invade the human population"], "supported": true}
+{"doc": 36, "triple": ["2009’s H1N1 (swine flu) pandemic", "is less lethal than", "the coronavirus"], "supported": true}
+{"doc": 36, "triple": ["A federal government plan", "warned policymakers", "a pandemic “will last 18 months or longer”"], "supported": true}
+{"doc": 36, "triple": ["Cardi B", "has", "60 million Instagram followers"], "supported": true}
+{"doc": 36, "triple": ["Cardi B", "posted", "a short video"], "supported": true}
+{"doc": 36, "triple": ["Cholera", "gave", "Camus \"The Plague\""], "supported": true}
+{"doc": 36, "triple": ["Deborah Frank Feinen", "drafted", "an emergency powers declaration"], "supported": true}
+{"doc": 36, "triple": ["Deborah Frank Feinen", "is", "mayor of Champaign, Ill."], "supported": true}
+{"doc": 36, "triple": ["European Union", "is expected to approve", "a proposal to shut down nonessential travel into the bloc for at least 30 days"], "supported": true}
+{"doc": 36, "triple": ["Joshua Dirks", "began", "lighting technician on Kiss’s arena tour"], "supported": true}
+{"doc": 36, "triple": ["Joshua Dirks", "ended the day on a bus home to", "Nashville"], "supported": true}
+{"doc": 36, "triple": ["National Rifle Association", "blared", "a “national alert”"], "supported": true}
+{"doc": 36, "triple": ["New York", "had been hit by", "a dangerous respiratory virus"], "supported": true}
+{"doc": 36, "triple": ["Shakespeare", "wrote under", "quarantine"], "supported": true}
+{"doc": 36, "triple": ["The Great Depression", "brought", "The Grapes of Wrath"], "supported": true}
+{"doc": 36, "triple": ["The Spanish Inquisition", "helped inspire", "Don Quixote"], "supported": true}
+{"doc": 36, "triple": ["Today", "is", "St. Patrick’s Day"], "supported": true}
+{"doc": 36, "triple": ["World Health Organization", "said", "Europe may be the epicenter of the coronavirus pandemic"], "supported": true}
+{"doc": 37, "triple": ["Annie Simeone", "planned to marry", "Armando Morales"], "supported": true}
+{"doc": 37, "triple": ["Annie Simeone", "was out of work due to", "new coronavirus pandemic"], "supported": true}
+{"doc": 37, "triple": ["Armando Morales", "planned to marry", "Annie Simeone"], "supported": true}
+{"doc": 37, "triple": ["Armando Morales", "was out of work due to", "new coronavirus pandemic"], "supported": true}
+{"doc": 37, "triple": ["Barnard", "has student", "Ivy League"], "supported": true}
+{"doc": 37, "triple": ["Beijing", "sent tests to", "Philippines"], "supported": true}
+{"doc": 37, "triple": ["Dr. Kurt Kloss", "is physician in", "New York"], "supported": true}
+{"doc": 37, "triple": ["Dr. Kurt Kloss", "reached out to", "Facebook group"], "supported": true}
+{"doc": 37, "triple": ["Hachette Book Group", "will publish", "Woody Allen"], "supported": true}
+{"doc": 37, "triple": ["Hachette employees", "staged walkout in", "Boston"], "supported": true}
+{"doc": 37, "triple": ["Hachette employees", "staged walkout in", "New York"], "supported": true}
+{"doc": 37, "triple": ["Ivy League", "is turning into", "University of Phoenix"], "supported": true}
+{"doc": 37, "triple": ["Jaime Maldonado", "drove", "Nissan"], "supported": true}
+{"doc": 37, "triple": ["Jaime Maldonado", "pulled into lot outside", "San Francisco International Airport"], "supported": true}
+{"doc": 37, "triple": ["Metropolitan Museum of Art", "is located in", "New York"], "supported": true}
+{"doc": 37, "triple": ["Metropolitan Museum of Art", "is one of", "Two of this country’s largest and oldest “encyclopedic” museums"], "supported": true}
+{"doc": 37, "triple": ["Metropolitan Museum of Art", "is shut down by", "coronavirus pandemic"], "supported": true}
+{"doc": 37, "triple": ["Museum of Fine Arts", "is located in", "Boston"], "supported": true}
+{"doc": 37, "triple": ["Museum of Fine Arts", "is one of", "Two of this country’s largest and oldest “encyclopedic” museums"], "supported": true}
+{"doc": 37, "triple": ["Museum of Fine Arts", "is shut down by", "coronavirus pandemic"], "supported": true}
+{"doc": 37, "triple": ["Ronan Farrow", "denounced", "Hachette Book Group"], "supported": true}
+{"doc": 37, "triple": ["Ronan Farrow", "is son of", "Woody Allen"], "supported": true}
+{"doc": 37, "triple": ["Serbia", "pleaded for assistance from", "China"], "supported": true}
+{"doc": 37, "triple": ["Woody Allen", "has memoir", "Apropos of Nothing"], "supported": true}
+{"doc": 37, "triple": ["Xi Jinping", "pledged to send experts to", "Italy"], "supported": true}
+{"doc": 38, "triple": ["A shift manager", "is at", "a McDonald's restaurant in Kansas City, Missouri"], "supported": true}
+{"doc": 38, "triple": ["Andy Levin", "wrote", "a letter on March 13, 2020"], "supported": true}
+{"doc": 38, "triple": ["Antsy children", "shared", "New York"], "supported": true}
+{"doc": 38, "triple": ["Being in a park", "felt", "liberating"], "supported": true}
+{"doc": 38, "triple": ["Being in a park", "felt", "subversive"], "supported": true}
+{"doc": 38, "triple": ["Frazzled mothers", "shared", "New York"], "supported": true}
+{"doc": 38, "triple": ["Hoda Kotb", "was alone at the desk on", "March 19, 2020"], "supported": true}
+{"doc": 38, "triple": ["Hoda Kotb", "was without", "her co-anchor"], "supported": true}
+{"doc": 38, "triple": ["Hoda Kotb", "welcomed viewers to", "NBC's 'Today' show"], "supported": true}
+{"doc": 38, "triple": ["Hoda Kotb", "welcomes viewers every", "weekday morning"], "supported": true}
+{"doc": 38, "triple": ["Karen", "was spiraling to", "a dark place in her mind"], "supported": true}
+{"doc": 38, "triple": ["Levin", "said", "It very clearly allows the president to use the same powers for a public health emergency"], "supported": true}
+{"doc": 38, "triple": ["March 5, 2020", "was before", "socialdistancing"], "supported": true}
+{"doc": 38, "triple": ["McDonald's", "has a value to", "invest in all the people our success rests on"], "supported": true}
+{"doc": 38, "triple": ["Migrants", "are suffering because", "President Trump has an insatiable appetite for imprisoning migrants"], "supported": true}
+{"doc": 38, "triple": ["Representative Andy Levin", "is a", "Democrat from Michigan"], "supported": true}
+{"doc": 38, "triple": ["Restaurant people", "mean", "customers"], "supported": true}
+{"doc": 38, "triple": ["Restaurant people", "speak", "their own language"], "supported": true}
+{"doc": 38, "triple": ["Restaurant people", "talk about", "cocktail programs"], "supported": true}
+{"doc": 38, "triple": ["Restaurant people", "talk about", "covers"], "supported": true}
+{"doc": 38, "triple": ["Restaurant people", "talk about", "sourcing"], "supported": true}
+{"doc": 38, "triple": ["Seniors", "shared", "New York"], "supported": true}
+{"doc": 38, "triple": ["Seniors", "strolling on", "paved paths"], "supported": true}
+{"doc": 38, "triple": ["Someone's son", "is", "12 years old"], "supported": true}
+{"doc": 38, "triple": ["Someone's son", "loves", "basketball"], "supported": true}
+{"doc": 38, "triple": ["Someone's son", "plays in", "middle school league"], "supported": true}
+{"doc": 38, "triple": ["Someone's son's basketball tournament", "was canceled during", "March 9, 2020"], "supported": true}
+{"doc": 38, "triple": ["The Defense Production Act", "was passed during", "the Korean War in 1950"], "supported": true}
+{"doc": 38, "triple": ["The Labor Department", "reported a", "30 percent increase in unemployment claims"], "supported": true}
+{"doc": 38, "triple": ["The Labor Department", "reported on", "March 19, 2020"], "supported": true}
+{"doc": 38, "triple": ["The United States", "arguably has not faced such a threat since", "the 1918 flu"], "supported": true}
+{"doc": 38, "triple": ["The United States", "has not faced in decades", "a pandemic threat like the one posed by the coronavirus in 2020"], "supported": true}
+{"doc": 38, "triple": ["The city", "shut down as a result of", "coronavirus"], "supported": true}
+{"doc": 38, "triple": ["The coronavirus", "has paused", "most of people's lives"], "supported": true}
+{"doc": 38, "triple": ["The family", "watches", "the evening news"], "supported": true}
+{"doc": 38, "triple": ["The image of one of their kids", "was", "jarring"], "supported": true}
+{"doc": 38, "triple": ["The increase", "is one of the largest spikes on record", "the coronavirus pandemic's devastating impact on American workers"], "supported": true}
+{"doc": 38, "triple": ["The judge", "asked the person not to submit any documents on behalf of", "a client"], "supported": true}
+{"doc": 38, "triple": ["The kids", "were running back and forth between", "apartments"], "supported": true}
+{"doc": 38, "triple": ["The law", "lets the president direct manufacturers to make", "supplies necessary for national security"], "supported": true}
+{"doc": 38, "triple": ["The letter", "urged", "Donald Trump to invoke a law called the Defense Production Act in the fight against coronavirus"], "supported": true}
+{"doc": 38, "triple": ["The letter", "was signed by", "56 colleagues"], "supported": true}
+{"doc": 38, "triple": ["The most critical advice", "must come from", "epidemiologists"], "supported": true}
+{"doc": 38, "triple": ["The most critical advice", "must not come from", "atmospheric scientists"], "supported": true}
+{"doc": 38, "triple": ["The new term", "is", "contactless delivery"], "supported": true}
+{"doc": 38, "triple": ["The parent", "is surprised by", "the son's seeming inability to bounce back from the cancellation"], "supported": true}
+{"doc": 38, "triple": ["The parent", "understood", "the son's disappointment"], "supported": true}
+{"doc": 38, "triple": ["The person", "had", "hard conversations"], "supported": true}
+{"doc": 38, "triple": ["The person", "made a personal promise to", "Karen"], "supported": true}
+{"doc": 38, "triple": ["The person", "said to", "Karen"], "supported": true}
+{"doc": 38, "triple": ["The person", "swallowed back", "a lump in their throat"], "supported": true}
+{"doc": 38, "triple": ["The public statement", "was made at least six feet away from", "friend"], "supported": true}
+{"doc": 38, "triple": ["The public statement", "was made at least six feet away from", "stranger"], "supported": true}
+{"doc": 38, "triple": ["The question", "is especially relevant during", "the coronavirus outbreak"], "supported": true}
+{"doc": 38, "triple": ["The request", "was perhaps as", "a health precaution"], "supported": true}
+{"doc": 38, "triple": ["The shift manager", "asks why", "a company that earned $5.3 billion in 2019 can't guarantee paid sick leave for all of its workers"], "supported": true}
+{"doc": 38, "triple": ["The son", "is basically on", "vacation in a nice, safe house"], "supported": true}
+{"doc": 38, "triple": ["The son", "keeps asking if the parent thinks", "the tournament will be reinstated"], "supported": true}
+{"doc": 38, "triple": ["The son", "moans about", "the canceled tournament"], "supported": true}
+{"doc": 38, "triple": ["The son", "sees", "the much harder toll Covid-19 is taking on others"], "supported": true}
+{"doc": 38, "triple": ["There", "are common elements among", "different types of disasters"], "supported": true}
+{"doc": 38, "triple": ["Young families", "shared", "New York"], "supported": true}
+{"doc": 38, "triple": ["a judge", "asked someone to stand at the far end of the courtroom", "immigration court"], "supported": true}
+{"doc": 38, "triple": ["an eerie new term", "has rippled through", "the restaurant business"], "supported": true}
+{"doc": 38, "triple": ["children", "do not seem to be dying from", "Covid-19"], "supported": true}
+{"doc": 38, "triple": ["civilians", "call", "cocktails"], "supported": true}
+{"doc": 38, "triple": ["dozens of migrants", "were being processed for violating", "federal immigration law"], "supported": true}
+{"doc": 38, "triple": ["life for migrants", "looks a lot like", "life before it"], "supported": true}
+{"doc": 38, "triple": ["the person", "cannot make similar promises to", "others"], "supported": true}
+{"doc": 38, "triple": ["the person", "feels good about", "their promise to Karen"], "supported": true}
+{"doc": 38, "triple": ["their kids", "were having", "a pizza party"], "supported": true}
+{"doc": 38, "triple": ["their kids", "were watching", "cartoons"], "supported": true}
+{"doc": 39, "triple": ["Andrew M. Cuomo", "announced closure of", "nonessential businesses"], "supported": true}
+{"doc": 39, "triple": ["Andrew M. Cuomo", "asked residents to stay in", "homes"], "supported": true}
+{"doc": 39, "triple": ["Bellevue Hospital", "was where the narrator swabbed patients for", "coronavirus"], "supported": true}
+{"doc": 39, "triple": ["Cleveland Clinic", "introduced a test for", "coronavirus"], "supported": true}
+{"doc": 39, "triple": ["Emergency Medical Services worker", "contracted", "coronavirus"], "supported": true}
+{"doc": 39, "triple": ["Emergency Medical Services worker", "contracted coronavirus from", "girlfriend"], "supported": true}
+{"doc": 39, "triple": ["New York City Fire Department", "had workers in isolation due to potential exposure to", "coronavirus"], "supported": true}
+{"doc": 39, "triple": ["North Korea", "launched missiles from", "east coast"], "supported": true}
+{"doc": 39, "triple": ["President Trump", "was playing down the threat of", "coronavirus"], "supported": true}
+{"doc": 39, "triple": ["Richard M. Burr", "acted while", "President Trump"], "supported": true}
+{"doc": 39, "triple": ["Richard M. Burr", "sold stock in", "major companies"], "supported": true}
+{"doc": 39, "triple": ["San Jose", "is located in", "Calif."], "supported": true}
+{"doc": 39, "triple": ["Scott Wittman", "was called by", "Susan Dominus"], "supported": true}
+{"doc": 39, "triple": ["South Korean military", "reported launch of missiles by", "North Korea"], "supported": true}
+{"doc": 39, "triple": ["Susan Dominus", "is a reporter at", "The New York Times"], "supported": true}
+{"doc": 39, "triple": ["Susan Dominus", "proposed an alternative to", "Happy Birthday song"], "supported": true}
+{"doc": 39, "triple": ["coronavirus", "is a threat presented by", "President Trump"], "supported": true}
+{"doc": 39, "triple": ["coronavirus pandemic", "canceled", "2020 SXSW Film Festival"], "supported": true}
+{"doc": 39, "triple": ["firefighters in San Jose", "were infected with or in quarantine due to", "coronavirus"], "supported": true}
+{"doc": 40, "triple": ["Defense Production Act", "used to battle", "coronavirus pandemic"], "supported": true}
+{"doc": 40, "triple": ["Iran", "has been devastated by", "epidemic"], "supported": true}
+{"doc": 40, "triple": ["Iran", "is", "longtime American rival"], "supported": true}
+{"doc": 40, "triple": ["President Trump", "getting ready to declare", "coronavirus a “national emergency”"], "supported": true}
+{"doc": 40, "triple": ["President Trump", "invoked", "Defense Production Act"], "supported": true}
+{"doc": 40, "triple": ["President Trump", "issued", "executive order"], "supported": true}
+{"doc": 40, "triple": ["President Trump's advisers", "resisted making aggressive use of", "Defense Production Act"], "supported": true}
+{"doc": 40, "triple": ["debate", "erupted among", "president and his top advisers"], "supported": true}
+{"doc": 40, "triple": ["debate", "was about", "whether the United States should escalate military action against Iran"], "supported": true}
+{"doc": 41, "triple": ["American fashion industry", "went dark", "2020-03-22"], "supported": true}
+{"doc": 41, "triple": ["Covid-19", "was suggested not to matter much if it was a scourge only among", "the old"], "supported": true}
+{"doc": 41, "triple": ["President Trump", "changed phrase to", "Chinese virus"], "supported": true}
+{"doc": 41, "triple": ["President Trump", "referenced", "corona virus"], "supported": true}
+{"doc": 41, "triple": ["President Trump", "took podium at", "White House briefing room"], "supported": true}
+{"doc": 41, "triple": ["President Trump", "used Sharpies to cross out", "corona"], "supported": true}
+{"doc": 41, "triple": ["Younger adults", "are getting", "coronavirus"], "supported": true}
+{"doc": 41, "triple": ["clergy", "say there are ways to overcome", "debilitating panic"], "supported": true}
+{"doc": 41, "triple": ["factories", "closed", "American fashion industry"], "supported": true}
+{"doc": 41, "triple": ["factories", "closed by government decree", "American fashion industry"], "supported": true}
+{"doc": 41, "triple": ["factories", "closed voluntarily", "American fashion industry"], "supported": true}
+{"doc": 41, "triple": ["meditation specialists", "say there are ways to overcome", "debilitating panic"], "supported": true}
+{"doc": 41, "triple": ["news network", "declared", "Younger adults are also getting the coronavirus"], "supported": true}
+{"doc": 41, "triple": ["stores", "closed", "American fashion industry"], "supported": true}
+{"doc": 41, "triple": ["stores", "closed by government decree", "American fashion industry"], "supported": true}
+{"doc": 41, "triple": ["stores", "closed voluntarily", "American fashion industry"], "supported": true}
+{"doc": 41, "triple": ["therapists", "say there are ways to overcome", "debilitating panic"], "supported": true}
+{"doc": 42, "triple": ["Joseph R. Biden Jr.", "is Democratic nominee against", "President Trump"], "supported": true}
+{"doc": 42, "triple": ["Joseph R. Biden Jr.", "was asked a question during", "virtual fund-raiser"], "supported": true}
+{"doc": 42, "triple": ["President Trump", "said on", "Sunday night"], "supported": true}
+{"doc": 42, "triple": ["SoftBank", "is located in", "Tokyo"], "supported": true}
+{"doc": 42, "triple": ["SoftBank", "is operator of", "world’s largest tech fund"], "supported": true}
+{"doc": 42, "triple": ["SoftBank", "said on", "Monday"], "supported": true}
+{"doc": 42, "triple": ["SoftBank", "seeks to vacuum up", "its own shares"], "supported": true}
+{"doc": 42, "triple": ["SoftBank", "will sell", "$41 billion"], "supported": true}
+{"doc": 42, "triple": ["coronavirus", "is intensifying", "campaign"], "supported": true}
+{"doc": 42, "triple": ["doctors", "discovered", "heart disease"], "supported": true}
+{"doc": 42, "triple": ["government", "would reassess", "recommended period for keeping businesses shut"], "supported": true}
+{"doc": 42, "triple": ["government", "would reassess", "recommended period for keeping workers at home"], "supported": true}
+{"doc": 42, "triple": ["job losses", "are caused by", "efforts to contain the spread of the novel coronavirus"], "supported": true}
+{"doc": 42, "triple": ["patient", "had contracted", "coronavirus"], "supported": true}
+{"doc": 42, "triple": ["patient", "had won", "national swimming championships"], "supported": true}
+{"doc": 42, "triple": ["patient", "was in", "Brescia"], "supported": true}
+{"doc": 42, "triple": ["patient", "was killed by", "decision to give his ventilator to a younger coronavirus patient"], "supported": true}
+{"doc": 42, "triple": ["patient", "was waiting for", "kidney transplant"], "supported": true}
+{"doc": 43, "triple": ["Alex", "is the son of", "Alvarez family"], "supported": true}
+{"doc": 43, "triple": ["Alvarez family", "is", "Cuban-American"], "supported": true}
+{"doc": 43, "triple": ["Alvarez family", "lives in", "Los Angeles"], "supported": true}
+{"doc": 43, "triple": ["Betty Ryan", "died from", "cancer"], "supported": true}
+{"doc": 43, "triple": ["Betty Ryan", "died in", "rural Ireland"], "supported": true}
+{"doc": 43, "triple": ["Dr. Elizabeth Mitchell", "treated patients during", "Boston Marathon bombing"], "supported": true}
+{"doc": 43, "triple": ["Dr. Elizabeth Mitchell", "worked at", "Boston Medical Center"], "supported": true}
+{"doc": 43, "triple": ["Justice Department", "asked", "Congress"], "supported": true}
+{"doc": 43, "triple": ["Justice Department", "asked", "federal inmates"], "supported": true}
+{"doc": 43, "triple": ["Justice Department", "asked", "masks"], "supported": true}
+{"doc": 43, "triple": ["Justice Department", "asked", "testing kits"], "supported": true}
+{"doc": 43, "triple": ["Justina Machado", "is the actress for", "Penelope"], "supported": true}
+{"doc": 43, "triple": ["Marcel Ruiz", "is the actor for", "Alex"], "supported": true}
+{"doc": 43, "triple": ["Netflix", "canceled", "ONE DAY AT A TIME"], "supported": true}
+{"doc": 43, "triple": ["New York State Liquor Authority", "gave a lifeline to", "businesses"], "supported": true}
+{"doc": 43, "triple": ["ONE DAY AT A TIME", "has a new home on", "Pop TV"], "supported": true}
+{"doc": 43, "triple": ["ONE DAY AT A TIME", "is a remake of", "Norman Lear"], "supported": true}
+{"doc": 43, "triple": ["ONE DAY AT A TIME", "will also air on", "Logo"], "supported": true}
+{"doc": 43, "triple": ["ONE DAY AT A TIME", "will also air on", "TV Land"], "supported": true}
+{"doc": 43, "triple": ["Penelope", "is the mother of", "Alvarez family"], "supported": false}
+{"doc": 43, "triple": ["Ray Romano", "plays", "census taker"], "supported": true}
+{"doc": 43, "triple": ["San Francisco health start-ups", "began marketing", "coronavirus kits"], "supported": true}
+{"doc": 43, "triple": ["The Voice", "is an", "NBC reality show"], "supported": true}
+{"doc": 43, "triple": ["coronavirus kits", "let people collect", "oral throat swabs"], "supported": true}
+{"doc": 43, "triple": ["coronavirus kits", "let people collect", "saliva samples"], "supported": true}
+{"doc": 43, "triple": ["governors of Connecticut", "limited", "restaurants and bars"], "supported": true}
+{"doc": 43, "triple": ["governors of New Jersey", "limited", "restaurants and bars"], "supported": true}
+{"doc": 43, "triple": ["governors of New York", "limited", "restaurants and bars"], "supported": true}
+{"doc": 43, "triple": ["my 4-year-old son", "walked across", "empty street"], "supported": true}
+{"doc": 43, "triple": ["my 4-year-old son", "walked toward", "neighborhood park"], "supported": true}
+{"doc": 43, "triple": ["specimens", "sent to", "commercial labs"], "supported": true}
+{"doc": 44, "triple": ["Capt. Nilesh Gandhi", "was in", "China"], "supported": true}
+{"doc": 44, "triple": ["Capt. Nilesh Gandhi", "was traveling to", "Singapore"], "supported": true}
+{"doc": 44, "triple": ["Joe Simnett", "is from", "northern England"], "supported": true}
+{"doc": 44, "triple": ["Joe Simnett", "lives in", "Derbyshire"], "supported": true}
+{"doc": 44, "triple": ["Mary Flo Werner", "died of", "cancer"], "supported": true}
+{"doc": 44, "triple": ["Mary Flo Werner", "had", "nine grandchildren"], "supported": true}
+{"doc": 44, "triple": ["Mary Flo Werner", "is associated with", "Janesville, Wis."], "supported": true}
+{"doc": 44, "triple": ["The New York Times", "provides", "climate change stories"], "supported": true}
+{"doc": 44, "triple": ["Zoom", "is related to", "Zoom Video Communications"], "supported": true}
+{"doc": 44, "triple": ["Zoom", "is worth more than", "American"], "supported": true}
+{"doc": 44, "triple": ["Zoom", "is worth more than", "Delta"], "supported": true}
+{"doc": 44, "triple": ["Zoom", "is worth more than", "JetBlue"], "supported": true}
+{"doc": 44, "triple": ["Zoom", "is worth more than", "United"], "supported": true}
+{"doc": 44, "triple": ["nine grandchildren", "attended funeral Mass at", "Catholic church"], "supported": true}
+{"doc": 45, "triple": ["Army", "ordered halt to", "exercises"], "supported": true}
+{"doc": 45, "triple": ["Army", "ordered halt to", "nonessential activities"], "supported": true}
+{"doc": 45, "triple": ["Army", "ordered halt to", "training"], "supported": true}
+{"doc": 45, "triple": ["I", "closed", "Dirt Candy"], "supported": true}
+{"doc": 45, "triple": ["I", "laid off", "employees"], "supported": true}
+{"doc": 45, "triple": ["New York", "became epicenter of", "coronavirus pandemic"], "supported": true}
+{"doc": 45, "triple": ["Ohio", "has attorney general", "attorney general"], "supported": true}
+{"doc": 45, "triple": ["Trump administration", "offered assistance to", "Iran"], "supported": true}
+{"doc": 45, "triple": ["Trump administration", "offered assistance to", "North Korea"], "supported": true}
+{"doc": 45, "triple": ["abortion clinics", "stop performing", "surgical abortions"], "supported": true}
+{"doc": 45, "triple": ["attorney general", "ordered", "abortion clinics"], "supported": true}
+{"doc": 45, "triple": ["attorney general of Texas", "issued directive", "abortion"], "supported": true}
+{"doc": 45, "triple": ["attorney general of Texas", "threatened jail for", "providers"], "supported": true}
+{"doc": 45, "triple": ["infection rate", "within", "American military"], "supported": true}
+{"doc": 45, "triple": ["military officials", "said", "Army ordered halt to training, exercises and nonessential activities"], "supported": true}
+{"doc": 45, "triple": ["more than three million Americans", "filed for", "unemployment benefits"], "supported": true}
+{"doc": 45, "triple": ["nonessential businesses", "have closed", "New York"], "supported": true}
+{"doc": 45, "triple": ["political leaders", "greet", "more than three million Americans filed for unemployment benefits"], "supported": true}
+{"doc": 45, "triple": ["residents", "ordered to stay at home", "as much as possible"], "supported": true}
+{"doc": 45, "triple": ["three million people", "filed for", "unemployment benefits"], "supported": true}
+{"doc": 45, "triple": ["three million people", "sent shudder throughout", "economy"], "supported": true}
+{"doc": 46, "triple": ["$2 trillion stimulus package", "is a measure to help", "American economy"], "supported": true}
+{"doc": 46, "triple": ["American economy", "is sinking under", "coronavirus outbreak"], "supported": true}
+{"doc": 46, "triple": ["Congress", "passed", "$2 trillion stimulus package"], "supported": true}
+{"doc": 46, "triple": ["Donald Trump", "could deflect blame for", "coronavirus pandemic"], "supported": true}
+{"doc": 46, "triple": ["Donald Trump", "could deflect blame onto", "China"], "supported": true}
+{"doc": 46, "triple": ["Donald Trump", "could deflect blame onto", "Obama White House"], "supported": true}
+{"doc": 46, "triple": ["Donald Trump", "had potential paths for", "re-election strategy"], "supported": true}
+{"doc": 46, "triple": ["International Olympic Committee", "allowed", "Tokyo Games"], "supported": true}
+{"doc": 46, "triple": ["London boxing tournament", "was for", "Tokyo Games"], "supported": true}
+{"doc": 46, "triple": ["Seattle", "has", "toilet paper"], "supported": true}
+{"doc": 46, "triple": ["Tom Wolf", "issued orders to prevent spread of", "coronavirus"], "supported": true}
+{"doc": 46, "triple": ["Tom Wolf", "ordered businesses to shutter in", "Pennsylvania"], "supported": true}
+{"doc": 46, "triple": ["coronavirus", "has observation date", "2020-03-27"], "supported": true}
+{"doc": 46, "triple": ["coronavirus pandemic", "is the subject of mobilization against", "world"], "supported": true}
+{"doc": 46, "triple": ["distilleries", "are rolling out", "hand sanitizer"], "supported": true}
+{"doc": 46, "triple": ["medical graduates", "are recruits for treating", "coronavirus"], "supported": true}
+{"doc": 46, "triple": ["medical schools", "are located in", "Massachusetts"], "supported": true}
+{"doc": 46, "triple": ["medical schools", "are located in", "New York"], "supported": true}
+{"doc": 46, "triple": ["medical schools", "intended to offer early graduation to", "fourth-year students"], "supported": true}
+{"doc": 46, "triple": ["new coronavirus cases", "are related to", "coronavirus"], "supported": true}
+{"doc": 46, "triple": ["seven people", "participated in", "London boxing tournament"], "supported": true}
+{"doc": 46, "triple": ["seven people", "tested positive for", "coronavirus"], "supported": true}
+{"doc": 46, "triple": ["two women", "arrived at", "New York City hospital"], "supported": true}
+{"doc": 47, "triple": ["Summer Olympics in Tokyo", "postponed because of", "coronavirus pandemic"], "supported": true}
+{"doc": 47, "triple": ["Summer Olympics in Tokyo", "will likely open on", "July 23, 2021"], "supported": true}
+{"doc": 48, "triple": ["Andrew Cuomo", "is associated with", "Legislature"], "supported": true}
+{"doc": 48, "triple": ["Andrew Cuomo", "led during", "coronavirus pandemic"], "supported": true}
+{"doc": 48, "triple": ["Communist Party leader", "greet[ed] Students", "Students"], "supported": true}
+{"doc": 48, "triple": ["Congress", "must design response to", "Great Depression"], "supported": true}
+{"doc": 48, "triple": ["Jews", "exodus from", "Egypt"], "supported": true}
+{"doc": 48, "triple": ["Passover", "falls in", "April"], "supported": true}
+{"doc": 48, "triple": ["Passover", "is related to", "Jews"], "supported": true}
+{"doc": 48, "triple": ["Students", "returned to", "school"], "supported": true}
+{"doc": 48, "triple": ["Summer Olympics", "will start in", "Tokyo"], "supported": true}
+{"doc": 48, "triple": ["Summer Olympics", "will start on", "July 23, 2021"], "supported": true}
+{"doc": 48, "triple": ["coronavirus pandemic", "is affecting", "America"], "supported": true}
+{"doc": 48, "triple": ["coronavirus pandemic", "is laying bare", "structural deficiencies in America’s social programs"], "supported": true}
+{"doc": 48, "triple": ["garment factories", "are making", "masks"], "supported": true}
+{"doc": 48, "triple": ["large order", "came from", "Twitter follower in Maryland"], "supported": true}
+{"doc": 48, "triple": ["large order", "gave revenue to", "FieldTrip"], "supported": true}
+{"doc": 48, "triple": ["major construction projects", "resumed in", "Xinjiang region"], "supported": true}
+{"doc": 48, "triple": ["oil field workers", "are back on", "job"], "supported": true}
+{"doc": 48, "triple": ["relief package", "was passed by", "Congress"], "supported": true}
+{"doc": 48, "triple": ["spring planting", "is underway in", "Xinjiang region"], "supported": true}
+{"doc": 49, "triple": ["Broadway season", "had", "16 shows left to open"], "supported": true}
+{"doc": 49, "triple": ["Pennsylvania", "closed", "service areas"], "supported": true}
+{"doc": 49, "triple": ["Pennsylvania", "closed", "truck stops"], "supported": true}
+{"doc": 49, "triple": ["Pennsylvania", "threatened to slow", "food"], "supported": true}
+{"doc": 49, "triple": ["Pennsylvania", "was to slow", "virus"], "supported": false}
+{"doc": 49, "triple": ["Port of Houston", "had terminals shut down", "employee"], "supported": true}
+{"doc": 49, "triple": ["Tony Awards", "will not go on as usual", "this year"], "supported": true}
+{"doc": 49, "triple": ["United States", "is pushing", "power-sharing government"], "supported": true}
+{"doc": 49, "triple": ["United States", "is seizing on", "Venezuela's economic pain"], "supported": true}
+{"doc": 49, "triple": ["United States", "is seizing on", "coronavirus threat"], "supported": true}
+{"doc": 49, "triple": ["caregivers", "can be", "paid home health aides"], "supported": true}
+{"doc": 49, "triple": ["caregivers", "can be", "unpaid family members"], "supported": true}
+{"doc": 49, "triple": ["coronavirus", "closed", "theaters"], "supported": true}
+{"doc": 49, "triple": ["employee", "tested positive for", "coronavirus"], "supported": true}
+{"doc": 49, "triple": ["family caregivers", "need to adapt to", "coronavirus epidemic"], "supported": true}
+{"doc": 49, "triple": ["meat packagers", "were at capacity because of", "illness"], "supported": true}
+{"doc": 49, "triple": ["older adults", "depend on", "caregivers"], "supported": true}
+{"doc": 49, "triple": ["older adults", "need assistance in", "cooking"], "supported": true}
+{"doc": 49, "triple": ["older adults", "need assistance in", "finances"], "supported": true}
+{"doc": 49, "triple": ["older adults", "need help with", "personal care"], "supported": true}
+{"doc": 49, "triple": ["personal care", "includes", "bathing"], "supported": true}
+{"doc": 49, "triple": ["personal care", "includes", "dressing"], "supported": true}
+{"doc": 49, "triple": ["personal care", "includes", "eating"], "supported": true}
+{"doc": 49, "triple": ["power-sharing government", "is for", "Caracas"], "supported": true}
+{"doc": 49, "triple": ["power-sharing government", "is until", "presidential elections"], "supported": true}
+{"doc": 49, "triple": ["those they care for", "need to adapt to", "coronavirus epidemic"], "supported": true}
+{"doc": 50, "triple": ["$2.2 trillion coronavirus stimulus package", "includes", "emergency aid for small businesses and hospitals"], "supported": true}
+{"doc": 50, "triple": ["$2.2 trillion coronavirus stimulus package", "includes", "expanded unemployment benefits"], "supported": true}
+{"doc": 50, "triple": ["British Open", "is teetering due to", "novel coronavirus"], "supported": true}
+{"doc": 50, "triple": ["China", "reported", "malaria drug hydroxychloroquine"], "supported": true}
+{"doc": 50, "triple": ["Daniel Lind-Ramos", "had visibility starting with", "Whitney Biennial"], "supported": true}
+{"doc": 50, "triple": ["Daniel Lind-Ramos", "is an artist in", "Puerto Rico"], "supported": true}
+{"doc": 50, "triple": ["DealBook", "is holding a conference call at", "11 a.m. Eastern"], "supported": true}
+{"doc": 50, "triple": ["DealBook", "is holding a conference call on", "April 2"], "supported": true}
+{"doc": 50, "triple": ["DealBook", "will discuss", "Trump administration"], "supported": true}
+{"doc": 50, "triple": ["Dr. Thomas Boyce, M.D.", "developed", "dandelion and the orchid"], "supported": true}
+{"doc": 50, "triple": ["House Intelligence Committee", "criticized", "closing schools in California"], "supported": true}
+{"doc": 50, "triple": ["Jessica Smietana", "is a doctoral student in", "French literature"], "supported": true}
+{"doc": 50, "triple": ["Jessica Smietana", "studies at", "New York University"], "supported": true}
+{"doc": 50, "triple": ["Kelly Loeffler", "is from", "Atlanta"], "supported": true}
+{"doc": 50, "triple": ["Kelly Loeffler", "was picked by", "Georgia"], "supported": true}
+{"doc": 50, "triple": ["Maggie Haberman", "is a correspondent for", "NYT"], "supported": true}
+{"doc": 50, "triple": ["Masters", "is one of the postponed events", "P.G.A. Championship"], "supported": true}
+{"doc": 50, "triple": ["Milenia Ataidio", "came to", "United States"], "supported": true}
+{"doc": 50, "triple": ["Milenia Ataidio", "is au pair for", "Rothfritzes"], "supported": true}
+{"doc": 50, "triple": ["Milenia Ataidio", "is from", "Brazil"], "supported": true}
+{"doc": 50, "triple": ["P.G.A. Championship", "is one of the postponed events", "Masters"], "supported": true}
+{"doc": 50, "triple": ["President Trump", "faced reckoning over", "number of people who could die during the coronavirus pandemic"], "supported": true}
+{"doc": 50, "triple": ["Rahil Briggs, Psy.D.", "mentioned", "dandelion and the orchid"], "supported": true}
+{"doc": 50, "triple": ["Republicans", "supported", "Kelly Loeffler"], "supported": true}
+{"doc": 50, "triple": ["Rothfritzes", "have", "young sons"], "supported": true}
+{"doc": 50, "triple": ["U.S. Senate", "approved", "$2.2 trillion coronavirus stimulus package"], "supported": true}
+{"doc": 50, "triple": ["United Nations", "postponed", "climate talks"], "supported": true}
+{"doc": 50, "triple": ["United Nations", "sponsored", "climate talks"], "supported": true}
+{"doc": 50, "triple": ["United States Open", "is teetering due to", "novel coronavirus"], "supported": true}
+{"doc": 50, "triple": ["federal government", "promised payments to", "American adults"], "supported": true}
+{"doc": 50, "triple": ["malaria drug hydroxychloroquine", "helped speed recovery of patients from", "novel coronavirus"], "supported": true}
+{"doc": 51, "triple": ["60,000 homeless people", "could be infected with", "Covid-19"], "supported": true}
+{"doc": 51, "triple": ["60,000 people", "are homeless in", "Los Angeles County"], "supported": true}
+{"doc": 51, "triple": ["Gavin Newsom", "is from", "California"], "supported": true}
+{"doc": 51, "triple": ["Gavin Newsom", "warned that", "as many as 60,000 homeless people could be infected with Covid-19"], "supported": true}
+{"doc": 51, "triple": ["at least nine confirmed cases of coronavirus", "are among", "unsheltered people in Los Angeles County"], "supported": true}
+{"doc": 51, "triple": ["coronavirus", "has infected", "over a million people around the world"], "supported": true}
+{"doc": 51, "triple": ["tens of thousands of people", "are living on the streets of", "California"], "supported": true}
+{"doc": 52, "triple": ["Dr. Peter Lee", "is from", "Montville, N.J."], "supported": true}
+{"doc": 52, "triple": ["Dr. Peter Lee", "used", "WeChat"], "supported": true}
+{"doc": 52, "triple": ["Joseph R. Biden Jr.", "won", "Democratic nomination"], "supported": true}
+{"doc": 52, "triple": ["captain of the aircraft carrier Theodore Roosevelt", "was fired by", "superiors"], "supported": true}
+{"doc": 52, "triple": ["governors", "complained about", "Trump administration"], "supported": true}
+{"doc": 52, "triple": ["governors", "stated need for", "federal help"], "supported": true}
+{"doc": 52, "triple": ["progressive Democrats", "shifted focus to", "candidates lower on the ballot"], "supported": true}
+{"doc": 52, "triple": ["progressive Democrats", "supported", "other presidential candidates"], "supported": true}
+{"doc": 53, "triple": ["Andrew M. Cuomo", "believes the number of coronavirus cases in", "New York"], "supported": true}
+{"doc": 53, "triple": ["Masters tournament", "is a signature event of", "American sporting calendar"], "supported": true}
+{"doc": 53, "triple": ["Masters tournament", "moved to", "November"], "supported": true}
+{"doc": 53, "triple": ["Masters tournament", "was affected by", "coronavirus"], "supported": true}
+{"doc": 53, "triple": ["Nicaragua", "is an outlier in the battle against", "coronavirus"], "supported": true}
+{"doc": 53, "triple": ["The Masters", "is a ritual of", "spring"], "supported": true}
+{"doc": 53, "triple": ["The Masters", "was scheduled to be played at", "Augusta National Golf Club"], "supported": true}
+{"doc": 53, "triple": ["The Masters", "will now be contested from", "Nov. 12 to 15"], "supported": true}
+{"doc": 53, "triple": ["president", "has not been seen in public in", "Nicaragua"], "supported": true}
+{"doc": 54, "triple": ["$2 trillion economic relief plan", "offers help for", "American small businesses"], "supported": true}
+{"doc": 54, "triple": ["24-year-old woman", "filed a court declaration describing", "what she’s gone through since the governor, Greg Abbott, used the coronavirus crisis as a pretext to essentially ban abortions"], "supported": true}
+{"doc": 54, "triple": ["24-year-old woman", "living in", "Arlington, Texas"], "supported": true}
+{"doc": 54, "triple": ["Ammon Bundy", "once led an armed takeover of", "Oregon wildlife refuge"], "supported": true}
+{"doc": 54, "triple": ["Boris Johnson", "appointed", "Dominic Raab"], "supported": true}
+{"doc": 54, "triple": ["Boris Johnson", "is from", "Britain"], "supported": true}
+{"doc": 54, "triple": ["Bret", "bikied from", "home to the George Washington Bridge"], "supported": true}
+{"doc": 54, "triple": ["Congress", "could move to approve", "$250 billion"], "supported": true}
+{"doc": 54, "triple": ["Dominic Raab", "is", "foreign secretary"], "supported": true}
+{"doc": 54, "triple": ["Dr. Bertha Mayorquin", "is a physician in", "New Jersey"], "supported": true}
+{"doc": 54, "triple": ["Dr. Bertha Mayorquin", "told her soon-to-be ex-husband about", "change in plans"], "supported": true}
+{"doc": 54, "triple": ["Gail Collins", "commented on", "Bret"], "supported": true}
+{"doc": 54, "triple": ["Greg Abbott", "used", "coronavirus crisis"], "supported": true}
+{"doc": 54, "triple": ["Greg Abbott", "used as a pretext to ban", "abortions"], "supported": true}
+{"doc": 54, "triple": ["SANDPOINT, Idaho", "is located near", "Boise"], "supported": true}
+{"doc": 54, "triple": ["Sean Bowie", "was bitten by", "Yves Tumor"], "supported": true}
+{"doc": 54, "triple": ["The Obie Awards", "honors", "New York theater"], "supported": true}
+{"doc": 54, "triple": ["The Obie Awards", "will go virtual this year", "coronavirus pandemic"], "supported": true}
+{"doc": 54, "triple": ["Trisha Brown Dance Company", "began", "sold-out anniversary tour"], "supported": true}
+{"doc": 54, "triple": ["Trisha Brown Dance Company", "flew to", "France"], "supported": true}
+{"doc": 54, "triple": ["Trisha Brown Dance Company", "was founded", "50 years ago"], "supported": true}
+{"doc": 54, "triple": ["Trump administration", "asked for", "additional funds"], "supported": true}
+{"doc": 54, "triple": ["Ultimate Fighting Championship", "plans to hold a pay-per-view event on", "tribal land in Central California"], "supported": true}
+{"doc": 54, "triple": ["YouTube video", "was of", "wedding ceremony held in a Jewish cemetery"], "supported": true}
+{"doc": 54, "triple": ["Yves Tumor", "had a concert in", "Texas"], "supported": true}
+{"doc": 54, "triple": ["Zoya Cherkassky", "came across", "YouTube video"], "supported": true}
+{"doc": 54, "triple": ["Zoya Cherkassky", "was in", "Tel Aviv"], "supported": true}
+{"doc": 54, "triple": ["coronavirus pandemic", "caused", "cancellation of in-person gatherings"], "supported": true}
+{"doc": 54, "triple": ["dancers", "found themselves on", "last American Airlines flight from Paris to New York"], "supported": true}
+{"doc": 54, "triple": ["federal stimulus bills", "include", "$2 trillion economic relief plan"], "supported": true}
+{"doc": 54, "triple": ["plague weddings", "evolved in", "19th century"], "supported": true}
+{"doc": 54, "triple": ["plague weddings", "occurred across", "Eastern Europe"], "supported": true}
+{"doc": 54, "triple": ["plague weddings", "served as a ritual to ward off", "cholera epidemics"], "supported": true}
+{"doc": 54, "triple": ["wedding ceremony held in a Jewish cemetery", "took place during", "coronavirus outbreak"], "supported": true}
+{"doc": 55, "triple": ["12-fight mixed martial arts showcase", "is safer for participants than", "staying at home or going to the grocery store during the coronavirus pandemic"], "supported": true}
+{"doc": 55, "triple": ["Andrew M. Cuomo", "called for medical workers to come to", "New York"], "supported": true}
+{"doc": 55, "triple": ["Bevin Strickland", "was ready to help", "Andrew M. Cuomo"], "supported": true}
+{"doc": 55, "triple": ["Dana White", "insisted that his plans for", "12-fight mixed martial arts showcase"], "supported": true}
+{"doc": 55, "triple": ["Dana White", "is the president of", "Ultimate Fighting Championship"], "supported": true}
+{"doc": 55, "triple": ["Hannah Fairfield", "is a", "Times climate journalist"], "supported": true}
+{"doc": 55, "triple": ["Hannah Fairfield", "will discuss", "climate in the age of the coronavirus"], "supported": true}
+{"doc": 55, "triple": ["John Schwartz", "is a", "Times climate journalist"], "supported": true}
+{"doc": 55, "triple": ["John Schwartz", "will discuss", "climate in the age of the coronavirus"], "supported": true}
+{"doc": 55, "triple": ["Nadja Popovich", "is a", "Times climate journalist"], "supported": true}
+{"doc": 55, "triple": ["Nadja Popovich", "will discuss", "climate in the age of the coronavirus"], "supported": true}
+{"doc": 55, "triple": ["Somini Sengupta", "is a", "Times climate journalist"], "supported": true}
+{"doc": 55, "triple": ["Somini Sengupta", "will discuss", "climate in the age of the coronavirus"], "supported": true}
+{"doc": 55, "triple": ["The Greenhouse", "is a digital event series on", "climate change"], "supported": true}
+{"doc": 55, "triple": ["The New York Times", "is bringing", "The Greenhouse"], "supported": true}
+{"doc": 55, "triple": ["Zoom", "has emerged as", "communication lifeline of the coronavirus pandemic"], "supported": true}
+{"doc": 55, "triple": ["novel coronavirus", "has killed", "tens of thousands"], "supported": true}
+{"doc": 55, "triple": ["novel coronavirus", "has sickened", "more than a million others"], "supported": true}
+{"doc": 56, "triple": ["6.6 million people", "filed new claims for", "unemployment benefits"], "supported": true}
+{"doc": 56, "triple": ["Adam Witt", "was suspected by", "flier"], "supported": true}
+{"doc": 56, "triple": ["Adam Witt", "worked as a nurse at", "Jersey Shore University Medical Center"], "supported": true}
+{"doc": 56, "triple": ["Americans", "should wear", "cloth face coverings"], "supported": true}
+{"doc": 56, "triple": ["Bank of America", "had employees who called", "Soofian Zuberi"], "supported": true}
+{"doc": 56, "triple": ["Centers for Disease Control and Prevention", "announced", "Americans should wear cloth face coverings"], "supported": true}
+{"doc": 56, "triple": ["Everybody", "is suffering", "pervasive stress"], "supported": true}
+{"doc": 56, "triple": ["I", "asked readers of", "Times"], "supported": true}
+{"doc": 56, "triple": ["I", "quoted in", "The Pandemic of Fear and Agony"], "supported": true}
+{"doc": 56, "triple": ["I", "spent the last week overwhelmed by", "responses"], "supported": true}
+{"doc": 56, "triple": ["Jersey Shore University Medical Center", "declared Adam Witt", "persona non grata"], "supported": true}
+{"doc": 56, "triple": ["Jersey Shore University Medical Center", "posted fliers at", "two security stations"], "supported": true}
+{"doc": 56, "triple": ["Most firms", "including those on", "Wall Street"], "supported": true}
+{"doc": 56, "triple": ["Most firms", "were recommending", "people work from home"], "supported": true}
+{"doc": 56, "triple": ["Soofian Zuberi", "is the boss of", "Bank of America employees"], "supported": true}
+{"doc": 56, "triple": ["Stanford University", "published a study on", "viruses and other pathogens will jump from wild animals to humans"], "supported": true}
+{"doc": 56, "triple": ["Times readers", "wrote in about", "how the coronavirus is affecting their mental health"], "supported": true}
+{"doc": 56, "triple": ["a lot of people", "are struggling with", "misery"], "supported": true}
+{"doc": 56, "triple": ["coronavirus", "is tearing across", "the country"], "supported": true}
+{"doc": 56, "triple": ["coronavirus", "ravaged", "New York City"], "supported": true}
+{"doc": 56, "triple": ["economic toll of the coronavirus outbreak in the U.S.", "is mounting faster than", "case counts"], "supported": true}
+{"doc": 56, "triple": ["federal government", "opened", "$349 billion small-business lending program"], "supported": true}
+{"doc": 56, "triple": ["new coronavirus", "is spreading to", "Americans"], "supported": false}
+{"doc": 56, "triple": ["restaurants, gyms and hair salons", "were hit hard by", "coronavirus shutdown"], "supported": true}
+{"doc": 56, "triple": ["start-ups", "sent money to", "restaurants, gyms and hair salons"], "supported": true}
+{"doc": 56, "triple": ["start-ups", "specialize in giving", "loans"], "supported": true}
+{"doc": 56, "triple": ["start-ups", "were eager to accept applications for", "$349 billion small-business lending program"], "supported": true}
+{"doc": 56, "triple": ["total for the three weeks of widespread shutdowns", "is above", "16 million"], "supported": true}
+{"doc": 56, "triple": ["total for the three weeks of widespread shutdowns", "is almost twice the net job losses for", "2007-9 recession"], "supported": true}
+{"doc": 57, "triple": ["Dr. Bonnie Henry", "is associated with", "British Columbia"], "supported": true}
+{"doc": 57, "triple": ["Gannett", "is a type of", "newspaper chain"], "supported": true}
+{"doc": 57, "triple": ["Lou Ann Dagen", "is related to", "Penny Dagen"], "supported": true}
+{"doc": 57, "triple": ["Lou Ann Dagen", "received", "Amazon Echo Show"], "supported": true}
+{"doc": 57, "triple": ["Penny Dagen", "is related to", "Lou Ann Dagen"], "supported": true}
+{"doc": 57, "triple": ["Penny Dagen", "received", "Amazon Echo Show"], "supported": true}
+{"doc": 57, "triple": ["Secretary of State Mike Pompeo", "reaffirmed commitment to replacing", "Nicolás Maduro"], "supported": true}
+{"doc": 57, "triple": ["The Stranger", "is a type of", "news outlet"], "supported": true}
+{"doc": 57, "triple": ["The Stranger", "is located in", "Seattle"], "supported": true}
+{"doc": 57, "triple": ["Trump administration", "applied pressure on", "Nicolás Maduro"], "supported": true}
+{"doc": 57, "triple": ["Trump administration", "confronted", "Nicolás Maduro"], "supported": true}
+{"doc": 57, "triple": ["United States", "has policy towards", "Venezuela"], "supported": true}
+{"doc": 57, "triple": ["United States naval assets", "deployed in", "Caribbean"], "supported": true}
+{"doc": 57, "triple": ["Vox Media", "is a type of", "digital empire"], "supported": true}
+{"doc": 57, "triple": ["coronavirus", "spread across", "United States"], "supported": true}
+{"doc": 58, "triple": ["2019 Audi A8 L sedan", "is located in", "NOVATO, Calif."], "supported": false}
+{"doc": 58, "triple": ["2019 Audi A8 L sedan", "was in", "Midtown Manhattan parking garage"], "supported": true}
+{"doc": 58, "triple": ["2019 Audi A8 L sedan", "was observed on", "2020-04-11"], "supported": true}
+{"doc": 59, "triple": ["Charlotte Cowles", "wrote observation on", "2020-04-12"], "supported": true}
+{"doc": 59, "triple": ["Dr. Nancy Messonnier", "discussed", "coronavirus"], "supported": true}
+{"doc": 59, "triple": ["Dr. Nancy Messonnier", "is expert on", "viral respiratory diseases"], "supported": true}
+{"doc": 59, "triple": ["Dr. Nancy Messonnier", "is from", "Centers for Disease Control and Prevention"], "supported": true}
+{"doc": 59, "triple": ["Easter Sunday", "is a", "strange day"], "supported": true}
+{"doc": 59, "triple": ["Friday the 13th of March", "was in", "Netherlands"], "supported": true}
+{"doc": 59, "triple": ["Israel’s health minister", "was infected with", "coronavirus"], "supported": true}
+{"doc": 59, "triple": ["Molly Choma", "is a", "flight attendant"], "supported": true}
+{"doc": 59, "triple": ["Molly Choma", "works for", "Alaska Airlines"], "supported": true}
+{"doc": 59, "triple": ["Walt Disney World", "closed because of", "coronavirus pandemic"], "supported": true}
+{"doc": 59, "triple": ["Walt Disney World", "is located in", "Florida"], "supported": true}
+{"doc": 59, "triple": ["Walt Disney World", "plans to furlough", "43,000 workers"], "supported": true}
+{"doc": 59, "triple": ["bluebonnets", "popped up in", "Texas"], "supported": false}
+{"doc": 59, "triple": ["coronavirus", "was ravaging", "China"], "supported": true}
+{"doc": 59, "triple": ["coronavirus outbreak", "devastated", "Molly Choma's industry"], "supported": true}
+{"doc": 59, "triple": ["coronavirus pandemic", "is ravaging", "global economy"], "supported": true}
+{"doc": 59, "triple": ["coronavirus pandemic", "is wreaking havoc on", "jobs"], "supported": true}
+{"doc": 59, "triple": ["director of the Mossad", "is a", "high-level official"], "supported": true}
+{"doc": 59, "triple": ["high-level officials", "were quarantined after", "Israel’s health minister"], "supported": true}
+{"doc": 59, "triple": ["tulip growers", "are in", "Netherlands"], "supported": true}
+{"doc": 59, "triple": ["tulip stems", "came up at", "Aalsmeer"], "supported": true}
+{"doc": 60, "triple": ["Federal Reserve Board", "announced", "how it and the Treasury Department intend to leverage just a portion of the $454 billion that Congress gave the department in the Coronavirus Aid, Relief, and Economic Security Act, known as the CARES Act, with the potential of trillions more in lending to come"], "supported": true}
+{"doc": 60, "triple": ["Lisa Harris", "has been a Kroger employee for", "13 years"], "supported": true}
+{"doc": 60, "triple": ["Lisa Harris", "is a cashier at", "Kroger"], "supported": true}
+{"doc": 60, "triple": ["Lisa Harris", "is located in", "Virginia"], "supported": true}
+{"doc": 60, "triple": ["Lisa Harris", "works at", "Kroger"], "supported": true}
+{"doc": 60, "triple": ["Ruth Franklin", "is from", "Brooklyn"], "supported": true}
+{"doc": 60, "triple": ["Walter Isenberg", "has business in", "Denver"], "supported": true}
+{"doc": 60, "triple": ["Walter Isenberg", "is a type of", "business owner"], "supported": true}
+{"doc": 60, "triple": ["Walter Isenberg's hotel and restaurant group", "is located in", "Denver"], "supported": true}
+{"doc": 61, "triple": ["European countries", "are", "Western democracies"], "supported": false}
+{"doc": 61, "triple": ["European countries", "began lifting constraints on", "daily life"], "supported": true}
+{"doc": 61, "triple": ["President Trump", "spoke with", "China"], "supported": false}
+{"doc": 61, "triple": ["President Trump", "spoke with", "Chinese leader"], "supported": true}
+{"doc": 61, "triple": ["President Trump", "spoke with", "Xi Jinping"], "supported": true}
+{"doc": 61, "triple": ["President Trump", "spoke with", "coronavirus pandemic"], "supported": true}
+{"doc": 61, "triple": ["Western democracies", "can avoid reviving", "the spread of the disease"], "supported": true}
+{"doc": 61, "triple": ["Western democracies", "can restart", "economies"], "supported": true}
+{"doc": 61, "triple": ["Western democracies", "can restore", "basic freedoms"], "supported": true}
+{"doc": 61, "triple": ["Xi Jinping", "is", "Chinese leader"], "supported": true}
+{"doc": 61, "triple": ["Xi Jinping", "is leader of", "China"], "supported": false}
+{"doc": 62, "triple": ["10,000-person study", "aimed at understanding infection in", "United States"], "supported": true}
+{"doc": 62, "triple": ["Arizona State University", "is located near", "Phoenix"], "supported": true}
+{"doc": 62, "triple": ["Claire McCarville", "dreamed of going to", "Los Angeles"], "supported": true}
+{"doc": 62, "triple": ["Claire McCarville", "dreamed of going to", "New York"], "supported": true}
+{"doc": 62, "triple": ["Claire McCarville", "said it made sense in light of", "virus"], "supported": true}
+{"doc": 62, "triple": ["Claire McCarville", "sent deposit to", "Arizona State University"], "supported": true}
+{"doc": 62, "triple": ["Claire McCarville", "was accepted to", "selective schools"], "supported": true}
+{"doc": 62, "triple": ["Derek Watkins", "is a", "Times journalist"], "supported": true}
+{"doc": 62, "triple": ["Derek Watkins", "will discuss", "climate change"], "supported": true}
+{"doc": 62, "triple": ["Derek Watkins", "will discuss", "visual journalism"], "supported": true}
+{"doc": 62, "triple": ["I", "shouted at", "mother"], "supported": true}
+{"doc": 62, "triple": ["International Monetary Fund", "warned on", "Tuesday"], "supported": true}
+{"doc": 62, "triple": ["Josh Haner", "is a", "Times journalist"], "supported": true}
+{"doc": 62, "triple": ["Josh Haner", "will discuss", "climate change"], "supported": true}
+{"doc": 62, "triple": ["Josh Haner", "will discuss", "visual journalism"], "supported": true}
+{"doc": 62, "triple": ["Madhvi Aya", "understood", "what was happening to her"], "supported": true}
+{"doc": 62, "triple": ["Madhvi Aya", "was lying in", "hospital bed"], "supported": true}
+{"doc": 62, "triple": ["Major League Baseball employees", "includes", "executives"], "supported": true}
+{"doc": 62, "triple": ["Major League Baseball employees", "includes", "players"], "supported": true}
+{"doc": 62, "triple": ["Major League Baseball employees", "includes", "stadium workers"], "supported": true}
+{"doc": 62, "triple": ["Major League Baseball employees", "participating in", "10,000-person study"], "supported": true}
+{"doc": 62, "triple": ["Notre-Dame", "burned on", "April 15, 2019"], "supported": true}
+{"doc": 62, "triple": ["The Greenhouse", "is a digital event series on", "climate change"], "supported": true}
+{"doc": 62, "triple": ["Together Apart", "is an episode of", "podcast/series"], "supported": false}
+{"doc": 62, "triple": ["coronavirus pandemic", "is described as", "worst downturn since the Great Depression"], "supported": true}
+{"doc": 62, "triple": ["global economy", "is affected by", "coronavirus pandemic"], "supported": true}
+{"doc": 62, "triple": ["global economy", "is expected to contract by", "3 percent"], "supported": true}
+{"doc": 63, "triple": ["Bosch", "is a show on", "Amazon Prime Video"], "supported": true}
+{"doc": 63, "triple": ["Bosch", "is based on", "Michael Connelly’s Harry Bosch novels"], "supported": true}
+{"doc": 63, "triple": ["Happy Science", "delivered", "peculiar end-of-days gospel"], "supported": true}
+{"doc": 63, "triple": ["Happy Science", "showed up in", "Times Square"], "supported": true}
+{"doc": 63, "triple": ["I", "got pulled over by", "police"], "supported": true}
+{"doc": 63, "triple": ["I", "was in", "Provence"], "supported": true}
+{"doc": 63, "triple": ["Michael Che", "co-hosts", "Weekend Update"], "supported": true}
+{"doc": 63, "triple": ["Michael Che", "grew up in", "New York City’s public housing system"], "supported": true}
+{"doc": 63, "triple": ["Michael Che", "has a close connection to", "New York City’s public housing system"], "supported": true}
+{"doc": 63, "triple": ["Michael Che", "organized a comedy show to raise money for", "its residents"], "supported": true}
+{"doc": 63, "triple": ["President Trump", "pushes for", "rapid return to pre-coronavirus economic activity"], "supported": true}
+{"doc": 63, "triple": ["SEOUL", "is in", "South Korea"], "supported": true}
+{"doc": 63, "triple": ["doctors, researchers and public health specialists", "are calling on", "Food and Drug Administration"], "supported": true}
+{"doc": 63, "triple": ["doctors, researchers and public health specialists", "want to eliminate constraints on", "blood donations by gay and bisexual men"], "supported": true}
+{"doc": 63, "triple": ["health officials", "said are necessary to save lives", "strict rules on commerce, work and daily life"], "supported": true}
+{"doc": 63, "triple": ["legislative elections", "happened in", "SEOUL"], "supported": true}
+{"doc": 63, "triple": ["legislative elections", "were the world’s first nationwide vote of the", "coronavirus era"], "supported": true}
+{"doc": 63, "triple": ["people", "cast ballots to choose", "300 new members for the National Assembly"], "supported": true}
+{"doc": 63, "triple": ["police", "pulled over", "I"], "supported": true}
+{"doc": 63, "triple": ["protesters", "urge", "governors"], "supported": true}
+{"doc": 63, "triple": ["protesters", "urge", "relax the strict rules on commerce, work and daily life"], "supported": true}
+{"doc": 63, "triple": ["volunteers", "helped", "overwhelmed health care workers"], "supported": true}
+{"doc": 63, "triple": ["volunteers", "helped", "struggling local restaurant workers"], "supported": true}
+{"doc": 63, "triple": ["volunteers", "sprang to action in", "New York"], "supported": true}
+{"doc": 63, "triple": ["volunteers", "sprang to action in", "San Francisco"], "supported": true}
+{"doc": 64, "triple": ["Canadians", "were shocked by details about", "Montreal’s Résidence Herron nursing home"], "supported": true}
+{"doc": 64, "triple": ["Coroners", "are overwhelmed in", "some parts of the country"], "supported": true}
+{"doc": 64, "triple": ["Covid-19", "is on track to kill more people in", "United States"], "supported": true}
+{"doc": 64, "triple": ["France", "sought clues on how to tame", "coronavirus"], "supported": true}
+{"doc": 64, "triple": ["Free Shakespeare in the Park", "will not take place because of", "coronavirus pandemic"], "supported": true}
+{"doc": 64, "triple": ["LOGUMKLOSTER", "is in", "Denmark"], "supported": true}
+{"doc": 64, "triple": ["Medical staff", "abandoned", "hungry and desperately ill patients"], "supported": true}
+{"doc": 64, "triple": ["Newspaper obituary pages", "are in", "hard-hit areas"], "supported": true}
+{"doc": 64, "triple": ["Ocean Park", "is a", "Hong Kong amusement park"], "supported": true}
+{"doc": 64, "triple": ["Ying Ying and Le Le", "consummated their relationship at", "Ocean Park"], "supported": true}
+{"doc": 64, "triple": ["classrooms", "housed", "rarest people during the pandemic"], "supported": true}
+{"doc": 64, "triple": ["coronavirus", "caused deaths at", "Montreal’s Résidence Herron nursing home"], "supported": true}
+{"doc": 64, "triple": ["digital tracking", "is central to the strategy of", "Asian nations"], "supported": true}
+{"doc": 64, "triple": ["experts", "looked at", "digital tracking"], "supported": true}
+{"doc": 64, "triple": ["funeral homes", "are overwhelmed in", "coronavirus hot spots"], "supported": true}
+{"doc": 64, "triple": ["guide", "was originally published in", "NYT Parenting"], "supported": true}
+{"doc": 64, "triple": ["guide", "was originally published on", "July 19, 2019"], "supported": true}
+{"doc": 64, "triple": ["guide", "was originally published on", "July 29, 2019"], "supported": true}
+{"doc": 64, "triple": ["guide", "was originally published on", "May 6, 2019"], "supported": true}
+{"doc": 64, "triple": ["interior minister", "dismissed digital tracking as alien to", "French culture"], "supported": true}
+{"doc": 64, "triple": ["owner", "has", "long criminal history"], "supported": true}
+{"doc": 64, "triple": ["zoo pandas", "had sex at", "Ocean Park"], "supported": true}
+{"doc": 64, "triple": ["zookeepers", "were trying to get", "Ying Ying and Le Le to mate"], "supported": true}
+{"doc": 65, "triple": ["Federal prosecutors", "charged", "Southern California doctor"], "supported": true}
+{"doc": 65, "triple": ["Felix Germann", "received visit from", "doctor"], "supported": true}
+{"doc": 65, "triple": ["Felix Germann", "received visit from", "policeman"], "supported": true}
+{"doc": 65, "triple": ["Representative Jesús G. Garcia", "located in", "southwest Chicago"], "supported": true}
+{"doc": 65, "triple": ["Southern California doctor", "selling", "coronavirus treatments"], "supported": true}
+{"doc": 65, "triple": ["coronavirus treatments", "promoted by", "President Trump"], "supported": true}
+{"doc": 65, "triple": ["tennis tournament", "cancelled", "Wimbledon"], "supported": true}
+{"doc": 66, "triple": ["$450 billion economic relief package", "is intended to expand", "coronavirus testing"], "supported": true}
+{"doc": 66, "triple": ["$450 billion economic relief package", "is intended to replenish", "small businesses"], "supported": true}
+{"doc": 66, "triple": ["White House", "agreed on", "$450 billion economic relief package"], "supported": true}
+{"doc": 66, "triple": ["White House", "closed in on agreement with", "congressional Democrats"], "supported": true}
+{"doc": 66, "triple": ["ambulance", "was en route to", "hospital"], "supported": true}
+{"doc": 66, "triple": ["congressional Democrats", "agreed on", "$450 billion economic relief package"], "supported": true}
+{"doc": 66, "triple": ["gridlock", "blocked", "ambulance"], "supported": true}
+{"doc": 66, "triple": ["protests", "took place at", "Michigan Capitol"], "supported": true}
+{"doc": 66, "triple": ["reopen America protests", "occurred on", "2020-04-19"], "supported": true}
+{"doc": 66, "triple": ["small citizens", "carried", "semiautomatic rifles"], "supported": true}
+{"doc": 66, "triple": ["small citizens", "flouted", "social distancing guidance"], "supported": true}
+{"doc": 66, "triple": ["small citizens", "organized chants to fire", "infectious disease experts"], "supported": true}
+{"doc": 66, "triple": ["small citizens", "organized chants to lock up", "female Democrat governors"], "supported": true}
+{"doc": 66, "triple": ["small citizens", "waved", "American flags"], "supported": true}
+{"doc": 66, "triple": ["small citizens", "waved", "swastikas"], "supported": true}
+{"doc": 67, "triple": ["Giuseppi Logan", "died from", "coronavirus"], "supported": true}
+{"doc": 67, "triple": ["Henry Grimes", "died from", "coronavirus"], "supported": true}
+{"doc": 67, "triple": ["Trilogy Lacrosse", "had training camps in", "Arizona"], "supported": true}
+{"doc": 67, "triple": ["Trilogy Lacrosse", "had training camps in", "Nevada"], "supported": true}
+{"doc": 67, "triple": ["Trilogy Lacrosse", "had youth tournament at", "MetLife Stadium"], "supported": true}
+{"doc": 67, "triple": ["Trilogy Lacrosse", "had youth tournament in", "New Jersey"], "supported": true}
+{"doc": 68, "triple": ["America", "is afflicted by", "economic inequality"], "supported": true}
+{"doc": 68, "triple": ["America", "should institute", "wealth tax"], "supported": true}
+{"doc": 68, "triple": ["American department stores", "have been dealt blow after blow", "past decade"], "supported": true}
+{"doc": 68, "triple": ["Barneys New York", "filed for bankruptcy", "last year"], "supported": true}
+{"doc": 68, "triple": ["Democratic governor", "issued", "stay-at-home order"], "supported": true}
+{"doc": 68, "triple": ["Democratic leaders", "plan to move", "change the rules of the House of Representatives"], "supported": true}
+{"doc": 68, "triple": ["House of Representatives", "has a history of", "231-year history"], "supported": true}
+{"doc": 68, "triple": ["J.C. Penney", "was upended by", "hedge funds"], "supported": true}
+{"doc": 68, "triple": ["Jay Timmons", "accused protesters of", "putting manufacturing workers’ lives at risk"], "supported": true}
+{"doc": 68, "triple": ["Jay Timmons", "criticized", "protesters"], "supported": true}
+{"doc": 68, "triple": ["Jay Timmons", "had a friend invite him to", "Reopen Virginia rally"], "supported": true}
+{"doc": 68, "triple": ["Macy’s", "has been doing", "closing stores and cutting corporate staff"], "supported": true}
+{"doc": 68, "triple": ["Paycheck Protection Program", "offered", "$349 billion in forgivable loans"], "supported": true}
+{"doc": 68, "triple": ["Paycheck Protection Program", "seemed to offer a lifeline for", "modest enterprises"], "supported": true}
+{"doc": 68, "triple": ["Paycheck Protection Program", "was announced", "last month"], "supported": true}
+{"doc": 68, "triple": ["Paycheck Protection Program", "was passed by", "Congress"], "supported": true}
+{"doc": 68, "triple": ["Reopen Virginia rally", "was a protest against", "stay-at-home order"], "supported": true}
+{"doc": 68, "triple": ["Reopen Virginia rally", "was in", "Richmond"], "supported": true}
+{"doc": 68, "triple": ["Sears", "was upended by", "hedge funds"], "supported": true}
+{"doc": 68, "triple": ["State Supreme Court race", "involved", "mail voting"], "supported": true}
+{"doc": 68, "triple": ["State Supreme Court race", "was in", "Wisconsin"], "supported": true}
+{"doc": 68, "triple": ["World Press Freedom Index", "evaluates", "landscape for journalists in 180 countries and territories"], "supported": true}
+{"doc": 68, "triple": ["authorities in Hong Kong", "have arrested", "pro-democracy figures"], "supported": true}
+{"doc": 68, "triple": ["coronavirus pandemic", "has befallen", "America"], "supported": true}
+{"doc": 68, "triple": ["coronavirus pandemic", "may threaten", "press freedom"], "supported": true}
+{"doc": 68, "triple": ["coronavirus pandemic", "prompted", "museum"], "supported": true}
+{"doc": 68, "triple": ["coronavirus pandemic", "prompted", "universities"], "supported": true}
+{"doc": 68, "triple": ["decline", "is more than", "300 percent in daily trading"], "supported": true}
+{"doc": 68, "triple": ["decline", "raised questions about", "damage the coronavirus is having on the global economy"], "supported": true}
+{"doc": 68, "triple": ["hardships", "fall heavily on", "disadvantaged"], "supported": true}
+{"doc": 68, "triple": ["liberal candidate", "prevailed in", "State Supreme Court race"], "supported": true}
+{"doc": 68, "triple": ["oil", "fell negative for the first time ever", "this week"], "supported": true}
+{"doc": 68, "triple": ["pro-democracy figures", "are in", "civil society"], "supported": true}
+{"doc": 68, "triple": ["pro-democracy figures", "are in", "media"], "supported": true}
+{"doc": 68, "triple": ["pro-democracy figures", "are in", "politics"], "supported": true}
+{"doc": 68, "triple": ["scientists", "are making decisions about", "animals they work with"], "supported": true}
+{"doc": 68, "triple": ["stay-at-home order", "was issued amid", "coronavirus"], "supported": true}
+{"doc": 69, "triple": ["Carrier Strike Group Five", "is in", "Yokosuka"], "supported": true}
+{"doc": 69, "triple": ["Covid-19", "is caused by", "new coronavirus"], "supported": true}
+{"doc": 69, "triple": ["Daymond John", "is a founder of", "Fubu"], "supported": true}
+{"doc": 69, "triple": ["Daymond John", "is a star of", "Shark Tank"], "supported": true}
+{"doc": 69, "triple": ["Florida officials", "arranged a deal for", "N95 masks"], "supported": true}
+{"doc": 69, "triple": ["New York Times", "are here to keep you informed and connected while you’re at home", "New York Times journalists"], "supported": true}
+{"doc": 69, "triple": ["President Trump", "joined criticism of", "Harvard"], "supported": true}
+{"doc": 69, "triple": ["President Trump", "signed", "coronavirus stimulus package"], "supported": true}
+{"doc": 69, "triple": ["Rear Adm. George M. Wikoff", "is commander of", "Carrier Strike Group Five"], "supported": true}
+{"doc": 69, "triple": ["Rear Adm. George M. Wikoff", "ordered sailors from", "U.S.S. Ronald Reagan"], "supported": true}
+{"doc": 69, "triple": ["Rear Adm. George M. Wikoff", "ordered sequestration in", "Yokota and Atsugi"], "supported": true}
+{"doc": 69, "triple": ["Stanford University", "circulated a viral post claiming", "Covid-19"], "supported": true}
+{"doc": 69, "triple": ["U.S. Navy", "is trying to adjust the operational tempo of", "aircraft carriers"], "supported": true}
+{"doc": 69, "triple": ["U.S.S. Ronald Reagan", "has an air wing", "U.S.S. Ronald Reagan"], "supported": true}
+{"doc": 69, "triple": ["Wesley Storey", "has been documenting on Instagram", "home repair tasks"], "supported": true}
+{"doc": 69, "triple": ["Wesley Storey", "is with", "Martin Esqueda"], "supported": true}
+{"doc": 69, "triple": ["tiger", "was in", "central India’s Pench Tiger Reserve"], "supported": true}
+{"doc": 69, "triple": ["wildlife managers", "observed", "tiger"], "supported": true}
+{"doc": 70, "triple": ["Brian Kemp", "allowed reopening of", "businesses"], "supported": true}
+{"doc": 70, "triple": ["Brian Kemp", "is from", "Georgia"], "supported": true}
+{"doc": 70, "triple": ["Muslim world", "will greet", "Ramadan"], "supported": true}
+{"doc": 70, "triple": ["President Trump", "criticized", "Brian Kemp"], "supported": true}
+{"doc": 70, "triple": ["President Trump", "stated move was premature due to", "coronavirus"], "supported": true}
+{"doc": 70, "triple": ["clerics and governments", "are implementing", "lockdown"], "supported": true}
+{"doc": 70, "triple": ["clerics and governments", "are in", "Muslim world"], "supported": true}
+{"doc": 70, "triple": ["imams", "are in", "Pakistan"], "supported": true}
+{"doc": 70, "triple": ["imams", "urged devotees to ignore", "anti-pandemic measures"], "supported": true}
+{"doc": 71, "triple": ["European Union officials", "softened criticism of", "China"], "supported": true}
+{"doc": 71, "triple": ["European Union officials", "were pressured by", "Beijing"], "supported": true}
+{"doc": 71, "triple": ["KFC", "is a", "large restaurant chain"], "supported": true}
+{"doc": 71, "triple": ["New York City health officials", "put up", "Robert Rowe Jr."], "supported": true}
+{"doc": 71, "triple": ["Papa John’s", "is a", "large restaurant chain"], "supported": true}
+{"doc": 71, "triple": ["Robert Rowe Jr.", "needed a place to stay to protect", "father"], "supported": true}
+{"doc": 71, "triple": ["Robert Rowe Jr.", "stayed at", "three-star hotel"], "supported": true}
+{"doc": 71, "triple": ["Robert Rowe Jr.", "tested positive for", "coronavirus"], "supported": true}
+{"doc": 71, "triple": ["Robert Rowe Jr.", "was discharged from", "hospital"], "supported": true}
+{"doc": 71, "triple": ["Wendy’s", "is a", "large restaurant chain"], "supported": true}
+{"doc": 71, "triple": ["report", "documents", "disinformation about the coronavirus pandemic"], "supported": true}
+{"doc": 71, "triple": ["three-star hotel", "is located in", "Midtown Manhattan"], "supported": true}
+{"doc": 71, "triple": ["top executives of KFC", "held an urgent call with", "President Trump"], "supported": true}
+{"doc": 71, "triple": ["top executives of Papa John’s", "held an urgent call with", "President Trump"], "supported": true}
+{"doc": 71, "triple": ["top executives of Wendy’s", "held an urgent call with", "President Trump"], "supported": true}
+{"doc": 72, "triple": ["Graduating seniors", "lost the chance to cross", "virtual commencement stage"], "supported": true}
+{"doc": 72, "triple": ["President Trump", "promoted", "antimalarial drugs"], "supported": true}
+{"doc": 72, "triple": ["President Trump", "used", "White House telecast"], "supported": true}
+{"doc": 72, "triple": ["antimalarial drugs", "are in the fight against", "coronavirus"], "supported": true}
+{"doc": 72, "triple": ["students", "returned to", "parents’ homes"], "supported": true}
+{"doc": 72, "triple": ["students", "were distraught over giving up", "social lives"], "supported": true}
+{"doc": 72, "triple": ["students", "were distraught over losing", "on-campus networking opportunities"], "supported": true}
+{"doc": 72, "triple": ["universities", "shut down because of", "coronavirus pandemic"], "supported": true}
+{"doc": 73, "triple": ["Gov. Andrew M. Cuomo", "saw good news about", "one in five city residents carried antibodies to the new coronavirus"], "supported": true}
+{"doc": 73, "triple": ["New Yorkers", "were surveyed on", "2020-04-26"], "supported": false}
+{"doc": 73, "triple": ["city residents", "were surveyed by", "New Yorkers"], "supported": false}
+{"doc": 73, "triple": ["one in five city residents", "carried antibodies to", "new coronavirus"], "supported": true}
+{"doc": 74, "triple": ["Andrew Cuomo", "is in", "New York"], "supported": true}
+{"doc": 74, "triple": ["Andrew Cuomo", "raised maximum fine for", "breaking social-distancing protocols"], "supported": true}
+{"doc": 74, "triple": ["Mayor Bill de Blasio", "deployed", "Police Department officers"], "supported": true}
+{"doc": 74, "triple": ["Mayor Bill de Blasio", "is in", "New York"], "supported": true}
+{"doc": 74, "triple": ["Philadelphia transit police officers", "acted in", "Philadelphia"], "supported": true}
+{"doc": 74, "triple": ["Philadelphia transit police officers", "forced", "man"], "supported": true}
+{"doc": 74, "triple": ["Police Department officers", "enforce", "social-distancing protocols"], "supported": true}
+{"doc": 74, "triple": ["coronavirus", "can be", "threatening and deadly"], "supported": true}
+{"doc": 74, "triple": ["coronavirus", "emerged in", "China"], "supported": true}
+{"doc": 74, "triple": ["judge", "is in", "Florida"], "supported": true}
+{"doc": 74, "triple": ["judge", "ruled that", "people arrested for breaking quarantine can be held without bail"], "supported": true}
+{"doc": 74, "triple": ["judges", "are in", "Kentucky"], "supported": true}
+{"doc": 74, "triple": ["judges", "are ordering", "people who have tested positive for the coronavirus and have broken quarantine"], "supported": true}
+{"doc": 74, "triple": ["man", "was on", "bus"], "supported": true}
+{"doc": 74, "triple": ["people who have tested positive for the coronavirus and have broken quarantine", "are fitted with", "ankle monitors"], "supported": true}
+{"doc": 74, "triple": ["public health experts", "debated", "coronavirus"], "supported": true}
+{"doc": 75, "triple": ["A chicken processing company", "is based in", "Delaware"], "supported": true}
+{"doc": 75, "triple": ["Amazon", "may have violated", "New York State’s whistle-blower protections"], "supported": true}
+{"doc": 75, "triple": ["Amazon", "may have violated", "federal worker safety laws"], "supported": true}
+{"doc": 75, "triple": ["Bauhaus Brew Labs", "is located in", "Minneapolis"], "supported": true}
+{"doc": 75, "triple": ["Bauhaus Brew Labs", "produced", "Wheat Sweats"], "supported": true}
+{"doc": 75, "triple": ["Education Department", "announced", "Education Secretary Betsy DeVos will not recommend that schools be freed of any of their obligations to educate students with disabilities during the coronavirus pandemic"], "supported": true}
+{"doc": 75, "triple": ["Education Secretary Betsy DeVos", "will not recommend freeing schools from", "obligations to educate students with disabilities"], "supported": true}
+{"doc": 75, "triple": ["Indian government", "eased", "coronavirus restrictions"], "supported": true}
+{"doc": 75, "triple": ["Letitia James", "is office of", "office of the New York attorney general"], "supported": true}
+{"doc": 75, "triple": ["Mike DeWine", "became", "governor"], "supported": true}
+{"doc": 75, "triple": ["Mike DeWine", "is from", "Ohio"], "supported": true}
+{"doc": 75, "triple": ["Minnesota", "moved to prevent spread of", "coronavirus outbreak"], "supported": true}
+{"doc": 75, "triple": ["Ramadan", "is a holy month for", "Muslim"], "supported": true}
+{"doc": 75, "triple": ["Rhode Island", "is experiencing", "coronavirus"], "supported": true}
+{"doc": 75, "triple": ["Uday Shankar Sharma", "is a retail store owner in", "small farming village"], "supported": true}
+{"doc": 76, "triple": ["Dr. Anthony S. Fauci", "is leading public health expert on", "President Trump’s coronavirus task force"], "supported": true}
+{"doc": 76, "triple": ["Mexico", "gets", "pneumonia"], "supported": true}
+{"doc": 76, "triple": ["Mr. Trump", "was concluding a laboratory tour with", "Alex M. Azar II"], "supported": true}
+{"doc": 76, "triple": ["Peace Corps volunteers", "are eligible for", "$2 trillion economic relief plan"], "supported": true}
+{"doc": 76, "triple": ["President Trump", "directed anger toward", "his re-election prospects"], "supported": true}
+{"doc": 76, "triple": ["President Trump’s top health officials", "were stewing in", "a drab room at the Centers for Disease Control and Prevention"], "supported": true}
+{"doc": 76, "triple": ["Prime Minister Boris Johnson", "became father of", "baby boy"], "supported": true}
+{"doc": 76, "triple": ["Prime Minister Boris Johnson", "was", "coronavirus patient"], "supported": true}
+{"doc": 76, "triple": ["United States", "gets", "coronavirus"], "supported": true}
+{"doc": 76, "triple": ["United States", "gets", "flu"], "supported": true}
+{"doc": 76, "triple": ["a friend", "is a", "software engineer"], "supported": true}
+{"doc": 76, "triple": ["governor of North Dakota", "posed a question to", "a friend"], "supported": true}
+{"doc": 76, "triple": ["guidance", "released by", "Department of Labor"], "supported": true}
+{"doc": 76, "triple": ["national service participants", "are eligible for", "$2 trillion economic relief plan"], "supported": true}
+{"doc": 76, "triple": ["software engineer", "created a location-tracking app for", "football fans at North Dakota State University"], "supported": true}
+{"doc": 77, "triple": ["Amazon", "account for", "20 percent of the S&P 500 index"], "supported": false}
+{"doc": 77, "triple": ["Amazon", "reported", "blockbuster first-quarter sales"], "supported": true}
+{"doc": 77, "triple": ["Amazon", "together with", "Apple"], "supported": true}
+{"doc": 77, "triple": ["Amazon", "together with", "Facebook"], "supported": false}
+{"doc": 77, "triple": ["Amazon", "together with", "Google"], "supported": false}
+{"doc": 77, "triple": ["Amazon", "together with", "Microsoft"], "supported": false}
+{"doc": 77, "triple": ["Apple", "together with", "S&P 500 index"], "supported": false}
+{"doc": 77, "triple": ["Facebook", "account for", "20 percent of the S&P 500 index"], "supported": false}
+{"doc": 77, "triple": ["Facebook", "showed", "robust gains"], "supported": true}
+{"doc": 77, "triple": ["Global greenhouse gas emissions", "are on track to plunge nearly 8 percent this year", "2020-04-30"], "supported": true}
+{"doc": 77, "triple": ["Google", "account for", "20 percent of the S&P 500 index"], "supported": false}
+{"doc": 77, "triple": ["Google", "showed", "robust gains"], "supported": true}
+{"doc": 77, "triple": ["International Energy Agency", "said in a new report", "Thursday"], "supported": true}
+{"doc": 77, "triple": ["Microsoft", "account for", "20 percent of the S&P 500 index"], "supported": false}
+{"doc": 77, "triple": ["Microsoft", "showed", "robust gains"], "supported": true}
+{"doc": 77, "triple": ["President Trump", "called", "food sector executives"], "supported": true}
+{"doc": 77, "triple": ["President Trump", "met with", "corporate leaders"], "supported": true}
+{"doc": 77, "triple": ["President Trump", "paraded", "small-business owners"], "supported": true}
+{"doc": 77, "triple": ["President Trump", "showcased", "retail giants"], "supported": true}
+{"doc": 77, "triple": ["Walgreens", "is a type of", "retail giants"], "supported": true}
+{"doc": 77, "triple": ["Walmart", "is a type of", "retail giants"], "supported": true}
+{"doc": 78, "triple": ["George Evageliou", "is founder of", "custom woodworking company"], "supported": true}
+{"doc": 78, "triple": ["George Evageliou", "received loan from", "federal government’s small-business aid program"], "supported": true}
+{"doc": 78, "triple": ["Matthew Kerns", "found on", "Scruff"], "supported": true}
+{"doc": 78, "triple": ["Matthew Kerns", "met for the first time with", "Sean Gottlieb"], "supported": true}
+{"doc": 78, "triple": ["Matthew Kerns", "met in", "St. Louis"], "supported": true}
+{"doc": 78, "triple": ["President Trump", "moved to replace official at", "Department of Health and Human Services"], "supported": true}
+{"doc": 78, "triple": ["Sean Gottlieb", "found on", "Scruff"], "supported": false}
+{"doc": 78, "triple": ["Sean Gottlieb", "met for the first time with", "Matthew Kerns"], "supported": true}
+{"doc": 78, "triple": ["Sean Gottlieb", "met in", "St. Louis"], "supported": false}
+{"doc": 79, "triple": ["29,000 people", "lost their lives because of", "Covid-19"], "supported": true}
+{"doc": 79, "triple": ["Army truck convoys", "carried", "coffins"], "supported": true}
+{"doc": 79, "triple": ["Boris Johnson", "faced", "journalists"], "supported": true}
+{"doc": 79, "triple": ["Boris Johnson", "is", "Prime Minister"], "supported": true}
+{"doc": 79, "triple": ["Brescia", "is affected", "deeply"], "supported": true}
+{"doc": 79, "triple": ["CREMA, Italy", "is in", "Italy"], "supported": true}
+{"doc": 79, "triple": ["Crema", "is affected", "deeply"], "supported": true}
+{"doc": 79, "triple": ["Cremona", "is affected", "deeply"], "supported": true}
+{"doc": 79, "triple": ["Henry Clay", "was nominated for", "president"], "supported": true}
+{"doc": 79, "triple": ["Italy", "imposed", "national quarantine"], "supported": true}
+{"doc": 79, "triple": ["Italy", "is part of", "Europe"], "supported": true}
+{"doc": 79, "triple": ["Italy", "was the first country outside Asia to experience", "coronavirus pandemic on a large scale"], "supported": true}
+{"doc": 79, "triple": ["Italy", "went into", "lockdown"], "supported": true}
+{"doc": 79, "triple": ["J. Crew", "became the first retailer to declare", "Chapter 11 bankruptcy"], "supported": true}
+{"doc": 79, "triple": ["J. Crew", "experienced", "new coronavirus pandemic"], "supported": true}
+{"doc": 79, "triple": ["Lodi", "is affected", "deeply"], "supported": true}
+{"doc": 79, "triple": ["Lombardy", "is", "Italy’s economic powerhouse"], "supported": true}
+{"doc": 79, "triple": ["Lombardy", "registered", "half of the country’s deaths"], "supported": true}
+{"doc": 79, "triple": ["Michelle", "asked", "Boris Johnson"], "supported": true}
+{"doc": 79, "triple": ["Michelle", "is from", "Cornwall"], "supported": true}
+{"doc": 79, "triple": ["NewsGuild", "asked", "government"], "supported": true}
+{"doc": 79, "triple": ["NewsGuild", "is a", "journalists"], "supported": true}
+{"doc": 79, "triple": ["Political conventions", "have been a mainstay of", "American campaigns"], "supported": true}
+{"doc": 79, "triple": ["Political conventions", "may join the list of", "crowded events"], "supported": true}
+{"doc": 79, "triple": ["Republican Party", "gathered in", "Baltimore"], "supported": true}
+{"doc": 79, "triple": ["Times journalists", "are here to keep", "you informed and connected from home"], "supported": true}
+{"doc": 79, "triple": ["coffins", "were carried to", "crematories around the country"], "supported": true}
+{"doc": 79, "triple": ["coronavirus crisis", "affected", "news business"], "supported": true}
+{"doc": 79, "triple": ["death rate in March and April", "rose to more than four times what it was last year", "death rate"], "supported": true}
+{"doc": 80, "triple": ["23 HOURS TO KILL", "is available on", "Netflix"], "supported": true}
+{"doc": 80, "triple": ["Austria", "allows", "play tennis"], "supported": true}
+{"doc": 80, "triple": ["Barack Obama", "announced he will celebrate", "graduating seniors"], "supported": true}
+{"doc": 80, "triple": ["Disney", "reported quarterly profit fell", "more than 90 percent"], "supported": true}
+{"doc": 80, "triple": ["Disney", "was celebrating", "Avengers: Endgame"], "supported": true}
+{"doc": 80, "triple": ["Europe", "is emerging from", "lockdown"], "supported": true}
+{"doc": 80, "triple": ["Germany", "allows", "get a haircut"], "supported": true}
+{"doc": 80, "triple": ["Jerry Seinfeld", "explores", "Pop-Tarts"], "supported": true}
+{"doc": 80, "triple": ["Jerry Seinfeld", "is associated with", "23 HOURS TO KILL"], "supported": true}
+{"doc": 80, "triple": ["LeBron James", "announced he was organizing", "prime-time special for graduates"], "supported": true}
+{"doc": 80, "triple": ["Oprah Winfrey", "announced she would address", "seniors"], "supported": true}
+{"doc": 80, "triple": ["Researchers at two Harvard-affiliated hospitals", "are adapting", "coronavirus vaccine"], "supported": true}
+{"doc": 80, "triple": ["United States", "has", "graduating seniors"], "supported": true}
+{"doc": 81, "triple": ["Fort Myers, Fla.", "has broken heat records", "recently"], "supported": true}
+{"doc": 81, "triple": ["Galveston, Texas", "has broken heat records", "recently"], "supported": true}
+{"doc": 81, "triple": ["Michael T. Osterholm", "heard", "White House coronavirus task force"], "supported": true}
+{"doc": 81, "triple": ["Michael T. Osterholm", "is", "epidemiologist"], "supported": true}
+{"doc": 81, "triple": ["New Yorkers", "experienced", "curbside compost"], "supported": true}
+{"doc": 81, "triple": ["Phoenix", "expected to hit temperature", "105"], "supported": true}
+{"doc": 81, "triple": ["Sacramento", "has broken heat records", "recently"], "supported": true}
+{"doc": 81, "triple": ["Salt Lake City", "has broken heat records", "recently"], "supported": true}
+{"doc": 81, "triple": ["United States", "should tackle", "virus"], "supported": true}
+{"doc": 81, "triple": ["White House coronavirus task force", "is ramping up", "work"], "supported": true}
+{"doc": 81, "triple": ["city", "stopped picking up", "curbside compost"], "supported": true}
+{"doc": 81, "triple": ["federal judge", "ordered", "Democratic primary election"], "supported": true}
+{"doc": 81, "triple": ["federal judge", "ordered", "elections officials"], "supported": true}
+{"doc": 81, "triple": ["federal judge", "ordered", "qualifying candidates"], "supported": true}
+{"doc": 81, "triple": ["presidential primary", "was canceled", "coronavirus"], "supported": true}
+{"doc": 81, "triple": ["residents", "asked to discard", "food scraps"], "supported": true}
+{"doc": 81, "triple": ["residents", "asked to discard", "yard waste"], "supported": true}
+{"doc": 82, "triple": ["Europe's economy", "is", "the deepest recession in its history"], "supported": true}
+{"doc": 82, "triple": ["Europe's economy", "will shrink by", "7.4 percent"], "supported": true}
+{"doc": 82, "triple": ["European Commission", "projected", "Europe's economy"], "supported": true}
+{"doc": 82, "triple": ["Georgia", "acted to help fight", "spread of the coronavirus"], "supported": true}
+{"doc": 82, "triple": ["Georgia", "issued", "driver’s licenses to thousands of teenagers without one"], "supported": true}
+{"doc": 82, "triple": ["Georgia", "waived", "road-test requirement for most drivers"], "supported": true}
+{"doc": 82, "triple": ["Supplemental Nutrition Assistance Program", "is known as", "food stamps"], "supported": true}
+{"doc": 82, "triple": ["Tianna Gaines-Turner", "experienced", "Life was not easy before the coronavirus pandemic began"], "supported": true}
+{"doc": 82, "triple": ["Tianna Gaines-Turner", "had", "fourth child"], "supported": true}
+{"doc": 82, "triple": ["Tianna Gaines-Turner", "returned to job as", "housing stabilization specialist"], "supported": true}
+{"doc": 82, "triple": ["Tianna Gaines-Turner", "was out of work for", "six months"], "supported": true}
+{"doc": 82, "triple": ["city of tomorrow", "is located in", "shabby district along Toronto’s Lake Ontario shoreline"], "supported": true}
+{"doc": 82, "triple": ["corporate sibling of Google", "abandoned plans to create", "sensor-laden, data driven “city of tomorrow”"], "supported": true}
+{"doc": 82, "triple": ["corporate sibling of Google", "cited", "economic turmoil from the coronavirus pandemic"], "supported": true}
+{"doc": 82, "triple": ["family", "lives in", "Northeast Philadelphia"], "supported": true}
+{"doc": 82, "triple": ["family", "relied on", "husband's job"], "supported": true}
+{"doc": 82, "triple": ["family", "relied on", "monthly stipend from the Supplemental Nutrition Assistance Program"], "supported": true}
+{"doc": 82, "triple": ["family", "struggled with", "homelessness"], "supported": true}
+{"doc": 82, "triple": ["family", "struggled with", "hunger"], "supported": true}
+{"doc": 82, "triple": ["housing stabilization specialist", "had", "part-time hours"], "supported": true}
+{"doc": 82, "triple": ["housing stabilization specialist", "received paycheck", "once a month"], "supported": true}
+{"doc": 82, "triple": ["housing stabilization specialist", "works for", "Philadelphia nonprofit"], "supported": true}
+{"doc": 82, "triple": ["husband", "is a", "machine operator"], "supported": true}
+{"doc": 82, "triple": ["husband", "works at", "pill-packing plant"], "supported": true}
+{"doc": 83, "triple": ["Billy Horschel", "began using", "cannabidiol"], "supported": true}
+{"doc": 83, "triple": ["Billy Horschel", "found remedy from", "hemp plant"], "supported": true}
+{"doc": 83, "triple": ["Billy Horschel", "is", "five-time PGA Tour winner"], "supported": true}
+{"doc": 83, "triple": ["Billy Horschel", "missed cut at", "British Open"], "supported": true}
+{"doc": 83, "triple": ["Billy Horschel", "used", "CBD"], "supported": true}
+{"doc": 83, "triple": ["Billy Horschel", "went without", "top-eight finish"], "supported": true}
+{"doc": 83, "triple": ["Food and Drug Administration", "granted approval for", "remdesivir"], "supported": true}
+{"doc": 83, "triple": ["remdesivir", "is", "antiviral drug"], "supported": true}
+{"doc": 83, "triple": ["remdesivir", "shown to be effective against", "coronavirus"], "supported": true}
+{"doc": 83, "triple": ["remdesivir", "treat", "coronavirus"], "supported": true}
+{"doc": 84, "triple": ["Gov. Andrew M. Cuomo", "said", "alarming rise in a phenomenon"], "supported": true}
+{"doc": 84, "triple": ["Mother’s Day", "is hard for", "anyone who has lost their mom"], "supported": true}
+{"doc": 84, "triple": ["Mother’s Day", "must be particularly so because of", "coronavirus"], "supported": true}
+{"doc": 84, "triple": ["alarming rise in a phenomenon", "was first publicly identified", "earlier this week"], "supported": true}
+{"doc": 84, "triple": ["mysterious syndrome", "killed", "three young children"], "supported": true}
+{"doc": 84, "triple": ["mysterious syndrome", "sickened", "73 others"], "supported": true}
+{"doc": 85, "triple": ["Aarav", "is 9-year-old", "Ojala Agarwal"], "supported": true}
+{"doc": 85, "triple": ["Blush Beauty Bar", "is located in", "LOVELAND, Colo."], "supported": true}
+{"doc": 85, "triple": ["Blush Beauty Bar", "reopened for appointments", "2020-05-11"], "supported": true}
+{"doc": 85, "triple": ["Blush Beauty Bar", "was temporarily closed because of", "novel coronavirus"], "supported": true}
+{"doc": 85, "triple": ["Katie Miller", "is", "vice president’s spokeswoman"], "supported": true}
+{"doc": 85, "triple": ["Katie Miller", "tested positive for", "coronavirus"], "supported": true}
+{"doc": 85, "triple": ["N.F.L.", "released schedule of games", "Sept. 10"], "supported": true}
+{"doc": 85, "triple": ["Ojala Agarwal", "is mother of", "Aarav"], "supported": true}
+{"doc": 85, "triple": ["The White House", "ordered", "West Wing employees"], "supported": true}
+{"doc": 85, "triple": ["Times", "is providing information about", "coronavirus"], "supported": true}
+{"doc": 85, "triple": ["West Wing employees", "must wear masks at work", "The White House"], "supported": true}
+{"doc": 85, "triple": ["coronavirus", "is ravaging", "American communities"], "supported": true}
+{"doc": 85, "triple": ["military valet", "tested positive for", "coronavirus"], "supported": true}
+{"doc": 86, "triple": ["Angela Merkel", "explained", "R-naught"], "supported": true}
+{"doc": 86, "triple": ["Angela Merkel", "identified", "1.0"], "supported": true}
+{"doc": 86, "triple": ["California", "easing of", "coronavirus lockdown rules"], "supported": true}
+{"doc": 86, "triple": ["California", "was going to allow", "florists"], "supported": true}
+{"doc": 86, "triple": ["Elizabeth Wardman", "was driving to", "San Francisco’s wholesale flower market"], "supported": true}
+{"doc": 86, "triple": ["R-naught", "is", "reproduction variable"], "supported": true}
+{"doc": 87, "triple": ["Cannes Film Festival", "is a place where", "stars and directors gather"], "supported": true}
+{"doc": 87, "triple": ["Cannes Film Festival", "is affected by", "coronavirus pandemic"], "supported": true}
+{"doc": 87, "triple": ["Garth Greenan", "includes", "life-size cardboard cutouts of Luna"], "supported": true}
+{"doc": 87, "triple": ["Garth Greenan", "includes", "video and photography of these performances"], "supported": true}
+{"doc": 87, "triple": ["Georgia", "action taken to help fight", "coronavirus"], "supported": true}
+{"doc": 87, "triple": ["Georgia", "issued driver’s licenses to", "teenagers"], "supported": true}
+{"doc": 87, "triple": ["Georgia", "waived road-test requirement for", "drivers"], "supported": true}
+{"doc": 87, "triple": ["James Luna", "inaugurated piece", "Take a Picture With a Real Indian"], "supported": true}
+{"doc": 87, "triple": ["James Luna", "is a member of", "Luiseño tribe"], "supported": true}
+{"doc": 87, "triple": ["James Luna", "performed in", "New York"], "supported": true}
+{"doc": 87, "triple": ["James Luna", "performed in", "Washington Metro station"], "supported": true}
+{"doc": 87, "triple": ["James Luna", "performed in", "galleries"], "supported": true}
+{"doc": 87, "triple": ["Jamie Williams", "asked for help from", "Philip Archibald"], "supported": true}
+{"doc": 87, "triple": ["Jamie Williams", "defied", "coronavirus restrictions"], "supported": true}
+{"doc": 87, "triple": ["Jamie Williams", "reopened", "East Texas tattoo studio"], "supported": true}
+{"doc": 87, "triple": ["Philip Archibald", "brought", "AR-15 semiautomatic rifle"], "supported": true}
+{"doc": 87, "triple": ["Philip Archibald", "brought", "Zeus"], "supported": true}
+{"doc": 87, "triple": ["Philip Archibald", "brought", "friends"], "supported": true}
+{"doc": 87, "triple": ["Plandemic", "is a", "documentary"], "supported": true}
+{"doc": 87, "triple": ["Plandemic", "went viral on", "social media"], "supported": true}
+{"doc": 87, "triple": ["United States", "has implications in the fight against", "climate change"], "supported": true}
+{"doc": 87, "triple": ["United States", "is on track to produce more electricity from", "renewable power"], "supported": true}
+{"doc": 87, "triple": ["United States", "is on track to produce more electricity than", "coal"], "supported": true}
+{"doc": 87, "triple": ["United States", "transformation partly driven by", "coronavirus pandemic"], "supported": true}
+{"doc": 87, "triple": ["Willie Mays", "is associated with", "Baseball"], "supported": true}
+{"doc": 87, "triple": ["Willie Mays", "served as", "unofficial clubhouse greeter"], "supported": true}
+{"doc": 87, "triple": ["Willie Mays", "spent time with", "San Francisco Giants"], "supported": true}
+{"doc": 87, "triple": ["Willie Mays", "was at", "Scottsdale, Ariz."], "supported": true}
+{"doc": 87, "triple": ["Wisconsin", "doing something similar to", "Georgia"], "supported": true}
+{"doc": 88, "triple": ["Covid-19", "as deadly as", "seasonal flu"], "supported": true}
+{"doc": 88, "triple": ["Covid-19 infections", "located in", "Santa Clara County, Calif."], "supported": true}
+{"doc": 88, "triple": ["Covid-19 infections", "might be higher than", "official estimates"], "supported": true}
+{"doc": 88, "triple": ["Stanford University researchers", "released", "study"], "supported": true}
+{"doc": 88, "triple": ["civic rules", "are in the", "coronavirus era"], "supported": true}
+{"doc": 88, "triple": ["communities", "are responding to", "civic rules"], "supported": true}
+{"doc": 88, "triple": ["fatality rate for coronavirus", "might be as low as", "0.12 percent"], "supported": true}
+{"doc": 88, "triple": ["teenagers", "described qualities of", "leader"], "supported": true}
+{"doc": 88, "triple": ["teenagers", "provided comments on", "writing prompts"], "supported": true}
+{"doc": 88, "triple": ["teenagers", "told us what they are looking forward to after", "quarantine"], "supported": true}
+{"doc": 89, "triple": ["President Trump", "bet on", "government"], "supported": true}
+{"doc": 89, "triple": ["President Trump", "bet on", "pharmaceutical industry"], "supported": true}
+{"doc": 89, "triple": ["President Trump", "made a promise about", "coronavirus vaccine"], "supported": true}
+{"doc": 89, "triple": ["Renske ten Veen", "is", "21-year-old"], "supported": true}
+{"doc": 89, "triple": ["Renske ten Veen", "is", "Dutch college student"], "supported": true}
+{"doc": 89, "triple": ["Renske ten Veen", "is obsessed with", "Eurovision"], "supported": true}
+{"doc": 89, "triple": ["Sylvia Goldsholl", "contracted", "coronavirus"], "supported": true}
+{"doc": 89, "triple": ["Sylvia Goldsholl", "was in", "New Jersey nursing home"], "supported": true}
+{"doc": 89, "triple": ["coronavirus vaccine", "is intended for", "Americans"], "supported": true}
+{"doc": 90, "triple": ["Kingston", "is in", "New York"], "supported": true}
+{"doc": 90, "triple": ["New York", "is in", "Hudson Valley"], "supported": true}
+{"doc": 90, "triple": ["New York's emergency shutdown orders", "aimed to thwart", "coronavirus"], "supported": true}
+{"doc": 90, "triple": ["United States", "deficit in April was larger than", "all of the 2017 fiscal year"], "supported": true}
+{"doc": 90, "triple": ["United States", "recorded budget deficit amount", "$738 billion"], "supported": true}
+{"doc": 90, "triple": ["United States", "recorded budget deficit in", "April"], "supported": true}
+{"doc": 90, "triple": ["complaint", "came in on", "2020-05-16"], "supported": false}
+{"doc": 90, "triple": ["federal government", "aim of borrowing", "help businesses and workers get through the coronavirus-induced recession"], "supported": true}
+{"doc": 90, "triple": ["federal government", "borrow amount covers period", "April to June"], "supported": true}
+{"doc": 90, "triple": ["federal government", "said it would borrow", "$3 trillion"], "supported": true}
+{"doc": 90, "triple": ["local barbershop", "violated", "New York's emergency shutdown orders"], "supported": true}
+{"doc": 90, "triple": ["local barbershop", "was performing", "haircuts"], "supported": true}
+{"doc": 90, "triple": ["resident", "is from", "Kingston"], "supported": true}
+{"doc": 91, "triple": ["Alexandra E. Petri", "writes about", "dating today"], "supported": true}
+{"doc": 91, "triple": ["Italy", "has", "galleries"], "supported": true}
+{"doc": 91, "triple": ["Italy", "has", "museum"], "supported": true}
+{"doc": 91, "triple": ["Italy", "is one of the hardest hit by", "coronavirus pandemic"], "supported": true}
+{"doc": 91, "triple": ["Pakistan", "had a foreign minister call", "Beijing"], "supported": true}
+{"doc": 91, "triple": ["Pakistan", "needed to restructure", "Chinese loans"], "supported": true}
+{"doc": 91, "triple": ["Times journalists", "are here to keep you informed and connected from", "home"], "supported": true}
+{"doc": 91, "triple": ["United States Golf Association", "conduct", "United States Open"], "supported": true}
+{"doc": 91, "triple": ["United States Golf Association", "determined that", "qualifying rounds"], "supported": true}
+{"doc": 91, "triple": ["United States Open", "was canceled on", "Monday"], "supported": true}
+{"doc": 91, "triple": ["Venice Biennale", "is postponing", "international exhibitions"], "supported": true}
+{"doc": 91, "triple": ["Washington Post", "described people in", "Atlanta"], "supported": true}
+{"doc": 91, "triple": ["architecture biennale", "will open in", "May 2021"], "supported": true}
+{"doc": 91, "triple": ["contemporary art", "has been pushed to", "April 2022"], "supported": true}
+{"doc": 91, "triple": ["coronavirus", "has transformed", "daily life"], "supported": true}
+{"doc": 91, "triple": ["coronavirus", "replaced", "graduation ceremonies"], "supported": true}
+{"doc": 91, "triple": ["coronavirus", "spread around", "globe"], "supported": true}
+{"doc": 91, "triple": ["live events", "are in", "Eastern"], "supported": true}
+{"doc": 91, "triple": ["qualifying rounds", "is held throughout", "America"], "supported": true}
+{"doc": 91, "triple": ["woman", "was getting a pedicure on", "Highway 9"], "supported": true}
+{"doc": 92, "triple": ["America", "has response to", "coronavirus"], "supported": true}
+{"doc": 92, "triple": ["Marc Andreessen", "is", "Silicon Valley investor"], "supported": true}
+{"doc": 92, "triple": ["Marc Andreessen", "placed blame for", "America’s dismal response to the coronavirus"], "supported": true}
+{"doc": 92, "triple": ["Marc Andreessen", "published", "rallying cry"], "supported": true}
+{"doc": 92, "triple": ["coronavirus vaccine", "has shown positive results in", "eight people"], "supported": true}
+{"doc": 92, "triple": ["rallying cry", "ricocheted around", "tech industry"], "supported": true}
+{"doc": 93, "triple": ["Andy Isaacson", "shares photographs from", "Tristan da Cunha"], "supported": true}
+{"doc": 93, "triple": ["Pride", "has historical events in", "New York City"], "supported": true}
+{"doc": 93, "triple": ["Pride", "is about being seen by", "L.G.B.T.Q. community"], "supported": true}
+{"doc": 93, "triple": ["The World Through a Lens", "was launched on", "2020-05-20"], "supported": true}
+{"doc": 94, "triple": ["Jayde Beaumont", "is in", "Australia"], "supported": true}
+{"doc": 94, "triple": ["Jayde Beaumont", "put down", "toddler daughter"], "supported": true}
+{"doc": 94, "triple": ["Jayde Beaumont", "shaved", "her head"], "supported": true}
+{"doc": 94, "triple": ["Uber driver", "felt", "fine"], "supported": true}
+{"doc": 94, "triple": ["Uber driver", "had lost", "sense of smell and taste"], "supported": true}
+{"doc": 94, "triple": ["Uber driver", "kept driving passengers in", "PATERSON, N.J."], "supported": true}
+{"doc": 94, "triple": ["Uber driver", "took a test for", "coronavirus"], "supported": true}
+{"doc": 95, "triple": ["American crude oil", "price fell below zero during", "economy shut down"], "supported": true}
+{"doc": 95, "triple": ["Covid-19", "caused by", "SARS-CoV-2"], "supported": true}
+{"doc": 95, "triple": ["Figawi regatta", "raises money for", "veterans"], "supported": true}
+{"doc": 95, "triple": ["Figawi regatta", "takes place over", "Memorial Day"], "supported": true}
+{"doc": 95, "triple": ["Guidelines from the Centers for Disease Control and Prevention", "are clarifying", "transmission of the coronavirus"], "supported": true}
+{"doc": 95, "triple": ["Malaysia’s Parliament", "convened in", "lower house chamber"], "supported": true}
+{"doc": 95, "triple": ["President Trump", "declared", "meat processing plants"], "supported": true}
+{"doc": 95, "triple": ["President Trump", "said he was taking", "hydroxychloroquine"], "supported": true}
+{"doc": 95, "triple": ["President Trump", "taking drug against", "Covid-19"], "supported": true}
+{"doc": 95, "triple": ["Slaughterhouses", "closed due to", "coronavirus"], "supported": true}
+{"doc": 95, "triple": ["Surprise Lake Camp", "is a type of", "Jewish summer camps"], "supported": true}
+{"doc": 95, "triple": ["Surprise Lake Camp", "will not be opening because of", "coronavirus"], "supported": true}
+{"doc": 95, "triple": ["Wendy’s restaurants", "ran out of", "hamburgers"], "supported": true}
+{"doc": 95, "triple": ["burning of a church", "is being investigated as", "arson"], "supported": true}
+{"doc": 95, "triple": ["burning of a church", "related to", "coronavirus restrictions"], "supported": true}
+{"doc": 95, "triple": ["church", "located in", "northern Mississippi"], "supported": true}
+{"doc": 95, "triple": ["coronavirus", "sickened", "workers"], "supported": true}
+{"doc": 95, "triple": ["coronavirus pandemic", "played havoc with", "energy markets"], "supported": true}
+{"doc": 95, "triple": ["farmers", "had to kill", "pigs"], "supported": true}
+{"doc": 95, "triple": ["meat-processing plants", "shut down as", "coronavirus"], "supported": true}
+{"doc": 95, "triple": ["sailboat race", "from", "Cape Cod"], "supported": true}
+{"doc": 95, "triple": ["sailboat race", "to", "Nantucket"], "supported": true}
+{"doc": 96, "triple": ["40 people", "were members of", "Christ Covenant Church"], "supported": false}
+{"doc": 96, "triple": ["Christ Covenant Church", "had", "500 members"], "supported": true}
+{"doc": 96, "triple": ["Christ Covenant Church", "had", "worshipers"], "supported": true}
+{"doc": 96, "triple": ["Jason Dees", "preached on", "Sunday"], "supported": true}
+{"doc": 96, "triple": ["Martin A. Kits van Heyningen", "co-founded", "KVH Industries"], "supported": true}
+{"doc": 96, "triple": ["Martin A. Kits van Heyningen", "decided to cut salaries", "workers"], "supported": true}
+{"doc": 96, "triple": ["Martin A. Kits van Heyningen", "feared letting down", "the team"], "supported": true}
+{"doc": 97, "triple": ["260 percent", "is double the rate of", "inflation"], "supported": true}
+{"doc": 97, "triple": ["Times journalists", "are here to keep you informed and connected", "from home"], "supported": true}
+{"doc": 97, "triple": ["Universities", "have opened the floodgates to", "wealthy international students"], "supported": true}
+{"doc": 97, "triple": ["Vladimir V. Putin", "re-emerged with a splash on state television", "last month"], "supported": true}
+{"doc": 97, "triple": ["Vladimir V. Putin", "was assailed by critics as an absentee leader at the start of", "coronavirus crisis in Russia"], "supported": true}
+{"doc": 97, "triple": ["average cost of attending a four-year private college", "was over", "$200,000"], "supported": true}
+{"doc": 97, "triple": ["average cost of attending a four-year public college", "was over", "$100,000"], "supported": true}
+{"doc": 97, "triple": ["college", "has become a symbol of", "21st-century symbol of privilege"], "supported": true}
+{"doc": 97, "triple": ["coronavirus", "has transformed", "daily life"], "supported": true}
+{"doc": 97, "triple": ["going to college in America", "was a reliable pathway for", "upward mobility"], "supported": true}
+{"doc": 97, "triple": ["live events", "are", "this week"], "supported": true}
+{"doc": 97, "triple": ["live events", "have times in", "Eastern"], "supported": true}
+{"doc": 97, "triple": ["more students are now admitted from the top 1 percent of the income scale", "at", "the top 80 colleges"], "supported": true}
+{"doc": 97, "triple": ["more students are now admitted from the top 1 percent of the income scale", "than", "the entire bottom 40 percent"], "supported": true}
+{"doc": 97, "triple": ["tuition rates", "soared", "260 percent"], "supported": true}
+{"doc": 98, "triple": ["Americans", "are worried about", "coronavirus"], "supported": true}
+{"doc": 98, "triple": ["Glenn A. Fine", "announced resignation from", "Pentagon job"], "supported": true}
+{"doc": 98, "triple": ["Glenn A. Fine", "announced resignation on", "Monday"], "supported": true}
+{"doc": 98, "triple": ["Glenn A. Fine", "was head of", "watchdog panel"], "supported": true}
+{"doc": 98, "triple": ["Glenn A. Fine", "was ousted by", "President Trump"], "supported": true}
+{"doc": 98, "triple": ["Pogo", "said something about", "litterers"], "supported": true}
+{"doc": 98, "triple": ["Pogo", "said something in", "1971"], "supported": true}
+{"doc": 98, "triple": ["auctions for collector vehicles", "ring up sales of", "$300 million"], "supported": true}
+{"doc": 98, "triple": ["auctions for collector vehicles", "started", "2020"], "supported": true}
+{"doc": 98, "triple": ["auctions for collector vehicles", "took place in", "Amelia Island"], "supported": true}
+{"doc": 98, "triple": ["auctions for collector vehicles", "took place in", "Florida"], "supported": true}
+{"doc": 98, "triple": ["auctions for collector vehicles", "took place in", "Scottsdale, Ariz."], "supported": true}
+{"doc": 98, "triple": ["comic-strip possum", "might have been reading the minds of", "Americans"], "supported": true}
+{"doc": 98, "triple": ["watchdog panel", "was assigned to oversee", "coronavirus pandemic relief"], "supported": true}
+{"doc": 98, "triple": ["watchdog panel", "was assigned to oversee", "trillions of taxpayer dollars"], "supported": true}
+{"doc": 99, "triple": ["Janet Pearce", "rose through ranks to become", "senior producer"], "supported": true}
+{"doc": 99, "triple": ["Janet Pearce", "started as researcher at", "NBC News"], "supported": true}
+{"doc": 99, "triple": ["Janet Pearce", "worked at", "The Brokaw Report"], "supported": true}
+{"doc": 99, "triple": ["Janet Pearce", "worked at", "Today show"], "supported": true}
+{"doc": 99, "triple": ["Mitch Smith", "is one of the reporters who keep track of", "The Times"], "supported": true}
+{"doc": 99, "triple": ["Mr. Khanna", "came to", "New York"], "supported": true}
+{"doc": 99, "triple": ["Mr. Khanna", "has mom in", "Amritsar"], "supported": true}
+{"doc": 99, "triple": ["Mr. Khanna", "started as", "delivery man"], "supported": true}
+{"doc": 99, "triple": ["Mr. Khanna", "started as", "dishwasher"], "supported": true}
+{"doc": 99, "triple": ["Mr. Khanna", "was born in", "India"], "supported": true}
+{"doc": 99, "triple": ["Mr. Khanna", "watched news from", "Manhattan"], "supported": true}
+{"doc": 99, "triple": ["Ms. Pearce", "died in", "2018"], "supported": true}
+{"doc": 99, "triple": ["Ms. Pearce", "told reporter in", "2003"], "supported": true}
+{"doc": 99, "triple": ["The Times", "has database of", "coronavirus-related deaths"], "supported": true}
+{"doc": 99, "triple": ["Vikas Khanna", "created meals that cost nearly $40,000 each", "sumptuous meals"], "supported": true}
+{"doc": 99, "triple": ["Vikas Khanna", "has cooked for", "Obamas"], "supported": true}
+{"doc": 99, "triple": ["Vikas Khanna", "hosted TV shows with", "Gordon Ramsay"], "supported": true}
+{"doc": 99, "triple": ["Vikas Khanna", "provides meals to", "poor Indians"], "supported": true}
+{"doc": 99, "triple": ["Vikas Khanna", "turned focus to", "India"], "supported": true}
+{"doc": 99, "triple": ["Vikas Khanna", "written", "25 culinary books"], "supported": true}
+{"doc": 99, "triple": ["new data from", "is from", "Illinois"], "supported": true}
+{"doc": 100, "triple": ["Gavin Newsom", "is governor of", "California"], "supported": true}
+{"doc": 100, "triple": ["Kevin Cash", "is a", "major league catcher"], "supported": true}
+{"doc": 100, "triple": ["Kevin Cash", "is a manager for", "Tampa Bay Rays"], "supported": false}
+{"doc": 100, "triple": ["Scott Baker", "is from", "Alabama"], "supported": true}
+{"doc": 100, "triple": ["Scott Baker", "shares", "The World Through a Lens"], "supported": true}
+{"doc": 100, "triple": ["Tampa Bay Rays", "began workouts at", "Tropicana Field"], "supported": true}
+{"doc": 100, "triple": ["Viejas Casino and Resort", "is in", "California"], "supported": true}
+{"doc": 100, "triple": ["Viejas Casino and Resort", "is located east of", "San Diego"], "supported": true}
+{"doc": 100, "triple": ["Viejas Casino and Resort", "is located in", "San Diego"], "supported": false}
+{"doc": 101, "triple": ["President Trump", "presses", "Democratic leaders"], "supported": true}
+{"doc": 101, "triple": ["President Trump", "wants to host", "party’s convention"], "supported": true}
+{"doc": 101, "triple": ["Republicans", "planning", "party’s convention"], "supported": true}
+{"doc": 101, "triple": ["Republicans", "traded demands with", "North Carolina’s Democratic governor"], "supported": true}
+{"doc": 101, "triple": ["coronavirus pandemic", "has concerns about", "party’s convention"], "supported": true}
+{"doc": 101, "triple": ["coronavirus pandemic", "is quickening worldwide", "2020-05-29"], "supported": true}
+{"doc": 101, "triple": ["coronavirus shutdown", "created", "class of people"], "supported": true}
+{"doc": 101, "triple": ["new known infections", "reported in", "Gulf States"], "supported": true}
+{"doc": 101, "triple": ["new known infections", "reported in", "Latin America"], "supported": true}
+{"doc": 101, "triple": ["one of Canada’s leading experts", "spoke with", "I"], "supported": true}
+{"doc": 101, "triple": ["party’s convention", "holding event in", "Charlotte"], "supported": true}
+{"doc": 101, "triple": ["party’s convention", "in", "August"], "supported": true}
+{"doc": 101, "triple": ["teenagers", "welcomed evening in", "Milan"], "supported": true}
+{"doc": 101, "triple": ["teenagers", "were in", "Italy"], "supported": false}
+{"doc": 101, "triple": ["teenagers", "were in", "Milan"], "supported": true}
+{"doc": 102, "triple": ["Navajo Nation", "contains", "canyons"], "supported": true}
+{"doc": 102, "triple": ["Navajo Nation", "contains", "desert crags"], "supported": true}
+{"doc": 102, "triple": ["Navajo Nation", "is", "largest reservation in the country"], "supported": true}
+{"doc": 102, "triple": ["dengue epidemic", "left", "180 dead"], "supported": true}
+{"doc": 102, "triple": ["dengue epidemic", "ravaged", "Honduras"], "supported": true}
+{"doc": 102, "triple": ["dengue epidemic", "sickened", "100,000 people"], "supported": true}
+{"doc": 102, "triple": ["mosquito-borne disease", "is", "dengue epidemic"], "supported": true}
+{"doc": 103, "triple": ["Flatbush", "is in", "Brooklyn"], "supported": true}
+{"doc": 103, "triple": ["Public School 315", "is in", "Flatbush"], "supported": true}
+{"doc": 103, "triple": ["coronavirus", "tore through", "city"], "supported": true}
+{"doc": 103, "triple": ["families", "not fluent in", "English"], "supported": true}
+{"doc": 103, "triple": ["parent interpreter committee", "is at", "Public School 315"], "supported": true}
+{"doc": 103, "triple": ["parent interpreter committee", "translated", "school materials"], "supported": true}
+{"doc": 103, "triple": ["school materials", "for", "families"], "supported": true}
+{"doc": 104, "triple": ["Brian Maxwell", "is baking at", "Gulfstream"], "supported": true}
+{"doc": 104, "triple": ["Brian Maxwell", "is from", "Newport Beach, Calif."], "supported": true}
+{"doc": 104, "triple": ["College Board", "said on", "Tuesday"], "supported": true}
+{"doc": 104, "triple": ["College Board", "would postpone", "SAT"], "supported": true}
+{"doc": 104, "triple": ["East Village", "is a", "cooking school"], "supported": true}
+{"doc": 104, "triple": ["Focaccia", "contains", "mortadella"], "supported": true}
+{"doc": 104, "triple": ["Forsythia", "is located at", "9 Stanton Street"], "supported": true}
+{"doc": 104, "triple": ["Forsythia", "is offering takeout from", "East Village"], "supported": true}
+{"doc": 104, "triple": ["Forsythia", "is preparing", "four-course takeout menus"], "supported": true}
+{"doc": 104, "triple": ["George Floyd", "was in", "Minneapolis"], "supported": true}
+{"doc": 104, "triple": ["George Floyd", "was killed by", "police"], "supported": true}
+{"doc": 104, "triple": ["Jacob Siwak", "is the", "executive chef"], "supported": true}
+{"doc": 104, "triple": ["Jacob Siwak", "is the", "owner"], "supported": true}
+{"doc": 104, "triple": ["Jacob Siwak", "was formerly of", "Olmsted"], "supported": true}
+{"doc": 104, "triple": ["Mark Coleman", "is the", "sous chef"], "supported": true}
+{"doc": 104, "triple": ["Mark Coleman", "was formerly of", "Rezdôra"], "supported": true}
+{"doc": 104, "triple": ["President Trump", "threatened to use", "military"], "supported": true}
+{"doc": 104, "triple": ["The menu of Forsythia", "has", "Roman overtones"], "supported": true}
+{"doc": 104, "triple": ["The menu of Forsythia", "is based on", "Italy"], "supported": true}
+{"doc": 105, "triple": ["N.C.A.A.", "is president of", "N.C.A.A."], "supported": false}
+{"doc": 105, "triple": ["Neïl Beloufa", "has a knack for seeing", "the shape of the future earlier than most"], "supported": true}
+{"doc": 105, "triple": ["Neïl Beloufa", "is a", "French-Algerian artist"], "supported": true}
+{"doc": 105, "triple": ["Neïl Beloufa", "turns a gimlet eye to", "fake news"], "supported": true}
+{"doc": 105, "triple": ["Neïl Beloufa", "turns a gimlet eye to", "real bigotry"], "supported": true}
+{"doc": 105, "triple": ["Occidental", "is a", "film"], "supported": true}
+{"doc": 105, "triple": ["Occidental", "is about", "racist policing"], "supported": true}
+{"doc": 105, "triple": ["Occidental", "is about", "urban unrest"], "supported": true}
+{"doc": 105, "triple": ["Occidental", "was made in", "2017"], "supported": true}
+{"doc": 105, "triple": ["criminals", "talk like they learned English from", "reality TV"], "supported": true}
+{"doc": 105, "triple": ["football season", "could be shortened by", "coronavirus pandemic"], "supported": true}
+{"doc": 105, "triple": ["furniture", "can sprout", "Google Maps indicators"], "supported": true}
+{"doc": 105, "triple": ["furniture", "can sprout", "phone chats"], "supported": true}
+{"doc": 105, "triple": ["lovers", "talk like they learned English from", "reality TV"], "supported": true}
+{"doc": 105, "triple": ["president of the N.C.A.A.", "told", "congressional Republicans"], "supported": true}
+{"doc": 105, "triple": ["regular season", "might end by", "Thanksgiving"], "supported": true}
+{"doc": 105, "triple": ["sculptures", "are seen in", "Los Angeles"], "supported": true}
+{"doc": 105, "triple": ["sculptures", "are seen in", "New York"], "supported": true}
+{"doc": 105, "triple": ["sculptures", "are seen in solo shows at", "Hammer Museum"], "supported": true}
+{"doc": 105, "triple": ["sculptures", "are seen in solo shows at", "Museum of Modern Art"], "supported": true}
+{"doc": 105, "triple": ["sculptures", "take as subject and medium", "information stream"], "supported": true}
+{"doc": 105, "triple": ["videos", "are seen in", "Los Angeles"], "supported": true}
+{"doc": 105, "triple": ["videos", "are seen in", "New York"], "supported": true}
+{"doc": 105, "triple": ["videos", "are seen in solo shows at", "Hammer Museum"], "supported": true}
+{"doc": 105, "triple": ["videos", "are seen in solo shows at", "Museum of Modern Art"], "supported": true}
+{"doc": 105, "triple": ["videos", "take as subject and medium", "information stream"], "supported": true}
+{"doc": 106, "triple": ["Lara", "has partner", "Swedish partner"], "supported": true}
+{"doc": 106, "triple": ["Lara", "traveled from", "New York"], "supported": true}
+{"doc": 106, "triple": ["Lara", "traveled to", "London"], "supported": true}
+{"doc": 106, "triple": ["Lara", "traveled to", "Sweden"], "supported": true}
+{"doc": 106, "triple": ["Lara", "writes", "travel experience"], "supported": true}
+{"doc": 106, "triple": ["Observation date", "is", "2020-06-05"], "supported": true}
+{"doc": 106, "triple": ["Swedish partner", "traveled from", "New York"], "supported": false}
+{"doc": 106, "triple": ["Swedish partner", "traveled to", "London"], "supported": false}
+{"doc": 106, "triple": ["Swedish partner", "traveled to", "Sweden"], "supported": false}
+{"doc": 106, "triple": ["big closings", "took place during", "coronavirus outbreak"], "supported": true}
+{"doc": 106, "triple": ["big closings", "took place throughout", "New York"], "supported": true}
+{"doc": 106, "triple": ["countries", "are easing", "coronavirus lockdowns"], "supported": true}
+{"doc": 106, "triple": ["priciest co-op sale", "occurred in", "New York"], "supported": true}
+{"doc": 106, "triple": ["priciest co-op sale", "occurred on", "Upper East Side"], "supported": true}
+{"doc": 106, "triple": ["three flights", "gave preview of", "countries beginning to reopen their borders"], "supported": true}
+{"doc": 106, "triple": ["three flights", "was", "vastly different experience"], "supported": true}
+{"doc": 107, "triple": ["Evian Championship", "was canceled because of", "travel restrictions and governmental quarantine requirements related to the coronavirus pandemic"], "supported": true}
+{"doc": 107, "triple": ["Evian Championship", "was canceled on", "Tuesday"], "supported": true}
+{"doc": 107, "triple": ["Evian Championship", "was scheduled from", "Aug. 6 to 9"], "supported": true}
+{"doc": 107, "triple": ["Evian Championship", "was scheduled in", "France"], "supported": true}
+{"doc": 107, "triple": ["Evian Championship", "will return to", "women’s tour schedule in 2021"], "supported": true}
+{"doc": 107, "triple": ["L.P.G.A. Tour", "issued a statement about", "Evian Championship cancellation"], "supported": true}
+{"doc": 107, "triple": ["Senator Mike Enzi", "is a", "Republican"], "supported": true}
+{"doc": 107, "triple": ["Senator Mike Enzi", "is chairman of", "Senate Budget Committee"], "supported": true}
+{"doc": 107, "triple": ["Senator Mike Enzi", "is from", "Wyoming"], "supported": true}
+{"doc": 107, "triple": ["bipartisan group of 60 members of the U.S. House of Representatives", "raised concerns about", "mounting debt and deficits"], "supported": true}
+{"doc": 107, "triple": ["bipartisan group of 60 members of the U.S. House of Representatives", "sent a letter to", "congressional leadership"], "supported": true}
+{"doc": 107, "triple": ["mounting debt and deficits", "result of", "federal government’s response to the coronavirus pandemic"], "supported": true}
+{"doc": 107, "triple": ["national debt", "is a pressing issue", "bipartisan group of 60 members of the U.S. House of Representatives"], "supported": true}
+{"doc": 108, "triple": ["Abraham Lincoln", "signed", "Emancipation Proclamation"], "supported": true}
+{"doc": 108, "triple": ["Juneteenth", "honors the day in", "1865"], "supported": true}
+{"doc": 108, "triple": ["Juneteenth", "is a holiday on", "June 19"], "supported": true}
+{"doc": 108, "triple": ["New York", "began reopening", "this week"], "supported": true}
+{"doc": 108, "triple": ["New York", "has", "coronavirus cases"], "supported": true}
+{"doc": 108, "triple": ["New York Philharmonic", "announced", "canceling its fall season"], "supported": true}
+{"doc": 108, "triple": ["Nicole Taylor", "leads", "Food section"], "supported": true}
+{"doc": 108, "triple": ["enslaved Africans", "learned freedom two years after", "Abraham Lincoln signed the Emancipation Proclamation"], "supported": true}
+{"doc": 108, "triple": ["enslaved Africans", "learned that they were free from", "Union soldiers"], "supported": true}
+{"doc": 108, "triple": ["enslaved Africans", "were in", "Galveston, Texas"], "supported": true}
+{"doc": 108, "triple": ["protests", "are over", "killing of George Floyd"], "supported": true}
+{"doc": 108, "triple": ["story", "is about", "coronavirus"], "supported": true}
+{"doc": 108, "triple": ["story", "is about", "protests"], "supported": true}
+{"doc": 109, "triple": ["Northwestern Memorial Hospital", "is located in", "Chicago"], "supported": true}
+{"doc": 109, "triple": ["Ohio lawmaker", "is from", "Ohio"], "supported": true}
+{"doc": 109, "triple": ["Ohio lawmaker", "made comment about", "African-Americans"], "supported": true}
+{"doc": 109, "triple": ["Ohio lawmaker", "was fired from job as", "physician"], "supported": true}
+{"doc": 109, "triple": ["Xie Yiyi", "is from", "China"], "supported": true}
+{"doc": 109, "triple": ["Xie Yiyi", "is resident of", "Beijing"], "supported": true}
+{"doc": 109, "triple": ["Xie Yiyi", "lost job", "Xie Yiyi"], "supported": true}
+{"doc": 109, "triple": ["coronavirus", "is spreading in", "Europe"], "supported": true}
+{"doc": 109, "triple": ["coronavirus", "is spreading in", "United States"], "supported": true}
+{"doc": 109, "triple": ["transplant", "is for", "Covid-19"], "supported": true}
+{"doc": 109, "triple": ["young woman", "received transplant at", "Northwestern Memorial Hospital"], "supported": true}
+{"doc": 110, "triple": ["France", "eased", "one of Europe’s toughest coronavirus lockdowns"], "supported": true}
+{"doc": 110, "triple": ["President Trump", "is pushing for", "America to return to life as it was before the coronavirus pandemic"], "supported": true}
+{"doc": 110, "triple": ["President Trump", "is resuming", "indoor campaign rallies"], "supported": true}
+{"doc": 110, "triple": ["President Vladimir V. Putin", "cast the rescheduling of the annual military parade as a sign of", "life returning to normal in his virus-stricken nation"], "supported": true}
+{"doc": 110, "triple": ["President Vladimir V. Putin", "ordered", "Russia’s annual military parade"], "supported": true}
+{"doc": 110, "triple": ["barbershops", "is a type of", "professional encounters"], "supported": false}
+{"doc": 110, "triple": ["beauty", "is a type of", "professional encounters"], "supported": false}
+{"doc": 110, "triple": ["beauty, nail and barbershops", "are potentially high-risk hubs of infection for", "the coronavirus"], "supported": true}
+{"doc": 110, "triple": ["coronavirus", "has killed", "half a million people"], "supported": true}
+{"doc": 110, "triple": ["health officials", "say people should avoid", "crowded places"], "supported": true}
+{"doc": 110, "triple": ["nail", "is a type of", "professional encounters"], "supported": false}
+{"doc": 110, "triple": ["pop-up “corona cycleways”", "were laid in", "Paris"], "supported": true}
+{"doc": 110, "triple": ["street workers", "dropped", "traffic barriers"], "supported": true}
+{"doc": 110, "triple": ["street workers", "fanned out across", "Paris"], "supported": true}
+{"doc": 110, "triple": ["street workers", "painted", "yellow bicycle symbols onto the asphalt"], "supported": true}
+{"doc": 111, "triple": ["America", "has been rocked by", "protests inspired by George Floyd"], "supported": true}
+{"doc": 111, "triple": ["Americans", "are", "out of a job"], "supported": true}
+{"doc": 111, "triple": ["George Floyd", "is associated with", "police brutality"], "supported": true}
+{"doc": 111, "triple": ["George Floyd", "is associated with", "police departments"], "supported": true}
+{"doc": 111, "triple": ["George Floyd", "whose death led to", "millions to cry out for an end to police brutality"], "supported": true}
+{"doc": 111, "triple": ["President Trump", "brushed away warnings from", "his own aides about the looming threat of the coronavirus"], "supported": true}
+{"doc": 111, "triple": ["Senator Martha McSally", "is a", "Republican"], "supported": true}
+{"doc": 111, "triple": ["Senator Martha McSally", "was asked about", "reports that President Trump had brushed away warnings from his own aides about the looming threat of the coronavirus"], "supported": true}
+{"doc": 111, "triple": ["The country", "is reopening", "Father’s Day"], "supported": true}
+{"doc": 111, "triple": ["experts", "said to", "remain cautious and limit indoor gatherings"], "supported": true}
+{"doc": 112, "triple": ["2020 United States Open", "has support from", "men’s tours"], "supported": true}
+{"doc": 112, "triple": ["2020 United States Open", "has support from", "women’s tours"], "supported": true}
+{"doc": 112, "triple": ["United States Tennis Association", "is set to announce", "this week"], "supported": true}
+{"doc": 112, "triple": ["United States Tennis Association", "will announce", "2020 United States Open"], "supported": true}
+{"doc": 112, "triple": ["United States Tennis Association", "will hold", "2020 United States Open"], "supported": true}
+{"doc": 113, "triple": ["Food and Drug Administration", "left stranded", "66 million doses"], "supported": true}
+{"doc": 113, "triple": ["Food and Drug Administration", "revoked emergency waiver for", "malaria drugs"], "supported": true}
+{"doc": 113, "triple": ["coronavirus", "is associated with", "Covid-19 pandemic"], "supported": true}
+{"doc": 113, "triple": ["malaria drugs", "are potential game changers against", "coronavirus"], "supported": true}
+{"doc": 113, "triple": ["malaria drugs", "were promoted by", "President Trump"], "supported": true}
+{"doc": 114, "triple": ["Boris Johnson", "is Prime Minister of", "Britain"], "supported": true}
+{"doc": 114, "triple": ["Boris Johnson", "is from", "Britain"], "supported": false}
+{"doc": 114, "triple": ["Boris Johnson", "unveiled operation in", "London"], "supported": true}
+{"doc": 114, "triple": ["Leslie Coats", "taught", "drama"], "supported": true}
+{"doc": 114, "triple": ["Leslie Coats", "taught at", "high school"], "supported": true}
+{"doc": 114, "triple": ["Student Editorial Contest", "began in", "February"], "supported": true}
+{"doc": 114, "triple": ["coronavirus", "was detected in", "United States"], "supported": true}
+{"doc": 114, "triple": ["coronavirus", "was present in", "Asia"], "supported": true}
+{"doc": 114, "triple": ["coronavirus", "was present in", "Europe"], "supported": true}
+{"doc": 114, "triple": ["students", "submitted", "7,318"], "supported": true}
+{"doc": 115, "triple": ["Patti Hanks", "faced decision regarding", "health insurance"], "supported": true}
+{"doc": 115, "triple": ["President Trump", "was at", "White House"], "supported": true}
+{"doc": 115, "triple": ["Public Theater", "canceled", "Free Shakespeare in the Park festival"], "supported": true}
+{"doc": 115, "triple": ["coronavirus", "tested positive for", "sheriff"], "supported": true}
+{"doc": 115, "triple": ["coronavirus pandemic", "prompted", "Public Theater"], "supported": true}
+{"doc": 115, "triple": ["cutting board", "used for", "imported salmon"], "supported": true}
+{"doc": 115, "triple": ["new coronavirus outbreak", "emerged in", "Beijing"], "supported": true}
+{"doc": 115, "triple": ["sheriff", "was in", "Arizona"], "supported": true}
+{"doc": 115, "triple": ["sheriff", "was scheduled to appear near", "President Trump"], "supported": true}
+{"doc": 115, "triple": ["virus", "found on", "cutting board"], "supported": true}
+{"doc": 116, "triple": ["Donald G. McNeil Jr.", "is worried about", "fall"], "supported": true}
+{"doc": 116, "triple": ["Donald G. McNeil Jr.", "told", "The Daily"], "supported": true}
+{"doc": 116, "triple": ["Major League Baseball", "has", "players"], "supported": true}
+{"doc": 116, "triple": ["Major League Baseball", "has", "team owners"], "supported": true}
+{"doc": 116, "triple": ["Major League Baseball", "is trying to finalize", "2020 season"], "supported": true}
+{"doc": 116, "triple": ["Northern Hemisphere", "enters", "summer"], "supported": true}
+{"doc": 116, "triple": ["PGA Tour", "suspended", "schedule"], "supported": true}
+{"doc": 116, "triple": ["Tommy Fleetwood", "had", "momentum"], "supported": true}
+{"doc": 116, "triple": ["Tommy Fleetwood", "was", "world No. 10"], "supported": true}
+{"doc": 116, "triple": ["Tommy Fleetwood", "was on the wrong side of", "Atlantic"], "supported": true}
+{"doc": 116, "triple": ["Tommy Fleetwood", "was one spot ahead of", "Tiger Woods"], "supported": true}
+{"doc": 116, "triple": ["coronavirus pandemic", "was the backdrop of", "talk"], "supported": true}
+{"doc": 117, "triple": ["Nick Watney", "became", "golfer"], "supported": true}
+{"doc": 117, "triple": ["Nick Watney", "tested positive for", "virus"], "supported": true}
+{"doc": 117, "triple": ["PGA Tour", "expanded", "coronavirus testing"], "supported": true}
+{"doc": 117, "triple": ["ballroom community", "creating", "hand washing tutorials"], "supported": true}
+{"doc": 117, "triple": ["ballroom community", "holding", "kiki battles"], "supported": true}
+{"doc": 117, "triple": ["ballroom community", "voguing in", "hazmat suits"], "supported": true}
+{"doc": 117, "triple": ["coronavirus testing", "of", "caddies"], "supported": true}
+{"doc": 117, "triple": ["coronavirus testing", "of", "officials"], "supported": true}
+{"doc": 117, "triple": ["coronavirus testing", "of", "players"], "supported": true}
+{"doc": 117, "triple": ["dips", "in front of", "police cars"], "supported": true}
+{"doc": 117, "triple": ["hand washing tutorials", "featuring", "chants"], "supported": true}
+{"doc": 117, "triple": ["hand washing tutorials", "featuring", "new coronavirus-inspired beats"], "supported": true}
+{"doc": 117, "triple": ["members", "cat walking with", "protesters"], "supported": true}
+{"doc": 117, "triple": ["members", "dropping into", "dips"], "supported": true}
+{"doc": 117, "triple": ["members", "holding", "Black Lives Matter signs"], "supported": true}
+{"doc": 117, "triple": ["members", "marching on", "asphalt runway"], "supported": true}
+{"doc": 117, "triple": ["members", "voguing at", "impromptu protest balls"], "supported": true}
+{"doc": 118, "triple": ["2020 ESPY AWARDS", "aired on", "ESPN"], "supported": true}
+{"doc": 118, "triple": ["ESPY Awards", "shift focus to honoring", "humanitarian stories from the sports community"], "supported": true}
+{"doc": 118, "triple": ["ESPY Awards", "will go on", "this year"], "supported": true}
+{"doc": 118, "triple": ["Gabrielle Hamilton", "essay is about", "cooking at home during the coronavirus pandemic"], "supported": true}
+{"doc": 118, "triple": ["Gabrielle Hamilton", "has essay in", "The Times"], "supported": true}
+{"doc": 118, "triple": ["Gabrielle Hamilton", "is", "a professional chef"], "supported": true}
+{"doc": 118, "triple": ["Gabrielle Hamilton", "is married to", "a professional chef"], "supported": true}
+{"doc": 118, "triple": ["Megan Rapinoe", "is soccer star", "Megan Rapinoe"], "supported": true}
+{"doc": 118, "triple": ["Megan Rapinoe", "will host", "2020 ESPY AWARDS"], "supported": true}
+{"doc": 118, "triple": ["Russell Wilson", "is quarterback for", "Seattle Seahawks"], "supported": true}
+{"doc": 118, "triple": ["Russell Wilson", "will host", "2020 ESPY AWARDS"], "supported": true}
+{"doc": 118, "triple": ["Sue Bird", "is W.N.B.A. champion", "Sue Bird"], "supported": true}
+{"doc": 118, "triple": ["Sue Bird", "will host", "2020 ESPY Awards"], "supported": true}
+{"doc": 118, "triple": ["coronavirus", "sent unemployment to the highest level since", "Great Depression"], "supported": true}
+{"doc": 118, "triple": ["federal aid", "could cause fall in", "poverty"], "supported": true}
+{"doc": 118, "triple": ["federal aid", "prevented rise in", "poverty"], "supported": true}
+{"doc": 119, "triple": ["2021 Golden Globes", "will take place on", "Feb. 28"], "supported": true}
+{"doc": 119, "triple": ["Oscars", "abandoned", "93rd installment"], "supported": true}
+{"doc": 119, "triple": ["Oscars", "abandoned", "Feb. 28"], "supported": false}
+{"doc": 119, "triple": ["Oscars", "is", "93rd installment"], "supported": true}
+{"doc": 119, "triple": ["Oscars", "is in the wake of", "coronavirus pandemic"], "supported": true}
+{"doc": 120, "triple": ["America", "reported", "alarming wave of coronavirus cases"], "supported": true}
+{"doc": 120, "triple": ["America", "reported", "coronavirus"], "supported": true}
+{"doc": 120, "triple": ["masks and other equipment", "would protect", "officers"], "supported": true}
+{"doc": 120, "triple": ["officers", "went about", "essential jobs"], "supported": true}
+{"doc": 120, "triple": ["police departments", "are across", "country"], "supported": true}
+{"doc": 120, "triple": ["police departments", "raised alarm about", "lack of masks and other equipment"], "supported": true}
+{"doc": 121, "triple": ["Cheyenne River Sioux Tribe", "set up checkpoints along roads into", "its reservation"], "supported": true}
+{"doc": 121, "triple": ["Cheyenne River Sioux Tribe", "took emergency steps in", "South Dakota"], "supported": true}
+{"doc": 121, "triple": ["More than half of all states", "saw increasing new cases of", "coronavirus"], "supported": true}
+{"doc": 121, "triple": ["New York City", "entered phase 2 of reopening", "Phase 2"], "supported": true}
+{"doc": 121, "triple": ["Pakistani airliner", "crashed in", "Karachi"], "supported": true}
+{"doc": 121, "triple": ["Pakistan’s aviation minister", "said", "Wednesday"], "supported": true}
+{"doc": 121, "triple": ["Scientists in Britain", "announced breakthrough against", "coronavirus"], "supported": true}
+{"doc": 121, "triple": ["Scientists in Britain", "reported finding", "first drug to reduce deaths among critically ill Covid-19 patients"], "supported": true}
+{"doc": 121, "triple": ["U.S.", "recorded more than 35,000 new cases", "yesterday"], "supported": true}
+{"doc": 121, "triple": ["Vladimir V. Putin", "celebrated victory over", "Nazi Germany"], "supported": true}
+{"doc": 121, "triple": ["Vladimir V. Putin", "presided over parade in", "Red Square"], "supported": true}
+{"doc": 121, "triple": ["business of listing and showing properties", "has taken on", "pandemic protocols"], "supported": true}
+{"doc": 121, "triple": ["governors across political lines", "moved to delay or reverse", "reopenings"], "supported": true}
+{"doc": 121, "triple": ["organizers in Berlin", "canceled race due to", "coronavirus"], "supported": true}
+{"doc": 121, "triple": ["organizers in New York", "canceled race due to", "coronavirus"], "supported": true}
+{"doc": 121, "triple": ["pandemic protocols", "designed to keep safe", "brokers and their clients"], "supported": true}
+{"doc": 121, "triple": ["parade", "featured", "thousands of soldiers"], "supported": true}
+{"doc": 121, "triple": ["pilots of a Pakistani airliner", "ignored directions from", "air traffic controllers"], "supported": true}
+{"doc": 121, "triple": ["public health crisis", "claimed", "two more of the world’s biggest marathons"], "supported": true}
+{"doc": 121, "triple": ["real estate agents", "returned to work in", "New York City"], "supported": true}

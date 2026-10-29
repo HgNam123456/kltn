@@ -1,0 +1,30 @@
+{
+ "stages": [
+  {
+   "name": "nyt11",
+   "runner": "extra",
+   "env": {
+    "EXTRA_DATASET": "nyt11",
+    "EXTRA_SYSTEMS": "mine,edc,atom_edc,kggen_edc"
+   },
+   "commit": "304140aa3634d59d86a182c25be662fe1e7460df",
+   "returncode": 1,
+   "status": "error",
+   "minutes": 0.1
+  },
+  {
+   "name": "knet_atom",
+   "runner": "extra",
+   "env": {
+    "EXTRA_DATASET": "knet",
+    "EXTRA_SYSTEMS": "atom_edc"
+   },
+   "commit": "304140aa3634d59d86a182c25be662fe1e7460df",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 179.7
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 179.9
+}

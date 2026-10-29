@@ -1,0 +1,27 @@
+{
+ "stages": [
+  {
+   "name": "quality",
+   "runner": "quality",
+   "env": {},
+   "commit": "304140aa3634d59d86a182c25be662fe1e7460df",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 113.2
+  },
+  {
+   "name": "knet_main",
+   "runner": "extra",
+   "env": {
+    "EXTRA_DATASET": "knet",
+    "EXTRA_SYSTEMS": "mine,edc,kggen_edc"
+   },
+   "commit": "e8a87911e82566a824874eff0103778a69854247",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 216.1
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 329.3
+}

@@ -40,3 +40,5 @@ results/kaggle/night/lane1/out/nyt11/**
 !results/kaggle/night/lane1/out/nyt11/summary.json
 results/kaggle/night/lane1/*.log
 results/kaggle/night/watch.pid
+results/kaggle/**/server.log
+results/kaggle/knet_baseline/out/pred_baseline5.json

@@ -1,0 +1,6 @@
+ERROR - Some facts in the following passages miss necessary fields: 
+ --> 30060:13:114	property 15 unknown
+ --> 5235:131:257	property 6 unknown
+ --> 13115:1833:1922	property 3 unknown
+ --> 30233:469:573	property 25 unknown
+ --> 7167:91:193	property 6 unknown

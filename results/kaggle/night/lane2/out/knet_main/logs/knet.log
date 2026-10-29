@@ -1,0 +1,4 @@
+mine {'unmapped': 41, 'predicted': 2768, 'span_overlap': {}, 'span_exact': {}}
+edc {'unmapped': 54, 'predicted': 2556, 'span_overlap': {}, 'span_exact': {}}
+kggen_edc {'unmapped': 62, 'predicted': 2597, 'span_overlap': {}, 'span_exact': {}}
+kggen {'unmapped': 6399, 'predicted': 0, 'span_overlap': {'P': 0.0, 'R': 0.0, 'F1': 0.0, 'TP': 0, 'FP': 0, 'FN': 2708}, 'span_exact': {'P': 0.0, 'R': 0.0, 'F1': 0.0, 'TP': 0, 'FP': 0, 'FN': 2708}}

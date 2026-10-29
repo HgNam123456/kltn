@@ -1,0 +1,4 @@
+mine {'exact': 0.2694, 'nocase': 0.2727}
+edc {'exact': 0.2635, 'nocase': 0.2664}
+kggen_edc {'exact': 0.2738, 'nocase': 0.2784}
+kggen {'exact': 0.0, 'nocase': 0.0}

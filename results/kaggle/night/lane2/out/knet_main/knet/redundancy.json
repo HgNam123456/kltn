@@ -1,0 +1,35 @@
+{
+ "knet/mine": {
+  "docs": 1435,
+  "entities": 4064,
+  "entity_near_pairs": 50,
+  "entity_near_pairs_per_100": 1.23,
+  "triples": 2809,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 174,
+  "triple_near_pairs_per_100": 6.19,
+  "scope": "doc"
+ },
+ "knet/edc": {
+  "docs": 1435,
+  "entities": 3776,
+  "entity_near_pairs": 40,
+  "entity_near_pairs_per_100": 1.06,
+  "triples": 2610,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 160,
+  "triple_near_pairs_per_100": 6.13,
+  "scope": "doc"
+ },
+ "knet/kggen_edc": {
+  "docs": 1435,
+  "entities": 3763,
+  "entity_near_pairs": 48,
+  "entity_near_pairs_per_100": 1.28,
+  "triples": 2658,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 179,
+  "triple_near_pairs_per_100": 6.73,
+  "scope": "doc"
+ }
+}

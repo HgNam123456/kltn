@@ -1,0 +1,123 @@
+{
+ "covid/mine_v2": {
+  "docs": 122,
+  "entities": 2604,
+  "entity_near_pairs": 523,
+  "entity_near_pairs_per_100": 20.08,
+  "triples": 2028,
+  "triple_exact_dups": 2,
+  "triple_near_pairs": 30,
+  "triple_near_pairs_per_100": 1.48,
+  "scope": "global"
+ },
+ "covid/atom": {
+  "docs": 122,
+  "entities": 2523,
+  "entity_near_pairs": 667,
+  "entity_near_pairs_per_100": 26.44,
+  "triples": 2480,
+  "triple_exact_dups": 4,
+  "triple_near_pairs": 76,
+  "triple_near_pairs_per_100": 3.06,
+  "scope": "global"
+ },
+ "covid/atom_direct": {
+  "docs": 122,
+  "entities": 1302,
+  "entity_near_pairs": 187,
+  "entity_near_pairs_per_100": 14.36,
+  "triples": 1050,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 11,
+  "triple_near_pairs_per_100": 1.05,
+  "scope": "global"
+ },
+ "covid/kggen": {
+  "docs": 122,
+  "entities": 1844,
+  "entity_near_pairs": 500,
+  "entity_near_pairs_per_100": 27.11,
+  "triples": 1671,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 44,
+  "triple_near_pairs_per_100": 2.63,
+  "scope": "global"
+ },
+ "covid/released_gpt41_atom": {
+  "docs": 122,
+  "entities": 3662,
+  "entity_near_pairs": 1687,
+  "entity_near_pairs_per_100": 46.07,
+  "triples": 4629,
+  "triple_exact_dups": 8,
+  "triple_near_pairs": 399,
+  "triple_near_pairs_per_100": 8.62,
+  "scope": "global"
+ },
+ "covid/released_gpt41_direct": {
+  "docs": 122,
+  "entities": 1719,
+  "entity_near_pairs": 327,
+  "entity_near_pairs_per_100": 19.02,
+  "triples": 1785,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 59,
+  "triple_near_pairs_per_100": 3.31,
+  "scope": "global"
+ },
+ "mine/mine": {
+  "docs": 100,
+  "entities": 8306,
+  "entity_near_pairs": 1154,
+  "entity_near_pairs_per_100": 13.89,
+  "triples": 7161,
+  "triple_exact_dups": 17,
+  "triple_near_pairs": 881,
+  "triple_near_pairs_per_100": 12.3,
+  "scope": "doc"
+ },
+ "mine/kggen_gemma": {
+  "docs": 100,
+  "entities": 5454,
+  "entity_near_pairs": 502,
+  "entity_near_pairs_per_100": 9.2,
+  "triples": 4687,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 443,
+  "triple_near_pairs_per_100": 9.45,
+  "scope": "doc"
+ },
+ "mine/released_kggen": {
+  "docs": 96,
+  "entities": 7571,
+  "entity_near_pairs": 277,
+  "entity_near_pairs_per_100": 3.66,
+  "triples": 6939,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 274,
+  "triple_near_pairs_per_100": 3.95,
+  "scope": "doc"
+ },
+ "mine/released_graphrag": {
+  "docs": 84,
+  "entities": 1086,
+  "entity_near_pairs": 33,
+  "entity_near_pairs_per_100": 3.04,
+  "triples": 1072,
+  "triple_exact_dups": 0,
+  "triple_near_pairs": 39,
+  "triple_near_pairs_per_100": 3.64,
+  "scope": "doc"
+ },
+ "mine/released_openie": {
+  "docs": 95,
+  "entities": 17766,
+  "entity_near_pairs": 44841,
+  "entity_near_pairs_per_100": 252.4,
+  "triples": 25258,
+  "triple_exact_dups": 104,
+  "triple_near_pairs": 103694,
+  "triple_near_pairs_per_100": 410.54,
+  "scope": "doc"
+ }
+}

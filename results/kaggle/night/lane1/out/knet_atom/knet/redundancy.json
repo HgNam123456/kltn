@@ -1,0 +1,13 @@
+{
+ "knet/atom_edc": {
+  "docs": 1435,
+  "entities": 3184,
+  "entity_near_pairs": 96,
+  "entity_near_pairs_per_100": 3.02,
+  "triples": 2155,
+  "triple_exact_dups": 4,
+  "triple_near_pairs": 129,
+  "triple_near_pairs_per_100": 5.99,
+  "scope": "doc"
+ }
+}

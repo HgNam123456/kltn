@@ -1,0 +1,314 @@
+[
+ {
+  "after_group": 10,
+  "seconds": 14.8,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 103,
+    "clusters": 11,
+    "groups": 6,
+    "calls": 4,
+    "errors": 0,
+    "merged": 3
+   },
+   {
+    "kind": "relation",
+    "names": 50,
+    "clusters": 5,
+    "groups": 1,
+    "calls": 1,
+    "errors": 0,
+    "merged": 1
+   }
+  ]
+ },
+ {
+  "after_group": 20,
+  "seconds": 20.7,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 203,
+    "clusters": 21,
+    "groups": 11,
+    "calls": 7,
+    "errors": 0,
+    "merged": 5
+   },
+   {
+    "kind": "relation",
+    "names": 83,
+    "clusters": 9,
+    "groups": 2,
+    "calls": 1,
+    "errors": 0,
+    "merged": 0
+   }
+  ]
+ },
+ {
+  "after_group": 30,
+  "seconds": 40.8,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 395,
+    "clusters": 40,
+    "groups": 24,
+    "calls": 14,
+    "errors": 0,
+    "merged": 10
+   },
+   {
+    "kind": "relation",
+    "names": 168,
+    "clusters": 17,
+    "groups": 4,
+    "calls": 2,
+    "errors": 0,
+    "merged": 0
+   }
+  ]
+ },
+ {
+  "after_group": 40,
+  "seconds": 78.2,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 746,
+    "clusters": 75,
+    "groups": 37,
+    "calls": 21,
+    "errors": 0,
+    "merged": 18
+   },
+   {
+    "kind": "relation",
+    "names": 360,
+    "clusters": 36,
+    "groups": 15,
+    "calls": 9,
+    "errors": 0,
+    "merged": 4
+   }
+  ]
+ },
+ {
+  "after_group": 50,
+  "seconds": 96.8,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 1020,
+    "clusters": 102,
+    "groups": 48,
+    "calls": 36,
+    "errors": 0,
+    "merged": 15
+   },
+   {
+    "kind": "relation",
+    "names": 501,
+    "clusters": 51,
+    "groups": 16,
+    "calls": 9,
+    "errors": 0,
+    "merged": 2
+   }
+  ]
+ },
+ {
+  "after_group": 60,
+  "seconds": 59.3,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 1202,
+    "clusters": 121,
+    "groups": 34,
+    "calls": 21,
+    "errors": 0,
+    "merged": 11
+   },
+   {
+    "kind": "relation",
+    "names": 574,
+    "clusters": 58,
+    "groups": 13,
+    "calls": 3,
+    "errors": 0,
+    "merged": 0
+   }
+  ]
+ },
+ {
+  "after_group": 70,
+  "seconds": 88.1,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 1533,
+    "clusters": 154,
+    "groups": 48,
+    "calls": 29,
+    "errors": 0,
+    "merged": 15
+   },
+   {
+    "kind": "relation",
+    "names": 745,
+    "clusters": 75,
+    "groups": 23,
+    "calls": 10,
+    "errors": 0,
+    "merged": 3
+   }
+  ]
+ },
+ {
+  "after_group": 80,
+  "seconds": 73.2,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 1734,
+    "clusters": 174,
+    "groups": 44,
+    "calls": 19,
+    "errors": 0,
+    "merged": 5
+   },
+   {
+    "kind": "relation",
+    "names": 826,
+    "clusters": 83,
+    "groups": 29,
+    "calls": 12,
+    "errors": 0,
+    "merged": 0
+   }
+  ]
+ },
+ {
+  "after_group": 90,
+  "seconds": 76.6,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 1934,
+    "clusters": 194,
+    "groups": 43,
+    "calls": 21,
+    "errors": 0,
+    "merged": 8
+   },
+   {
+    "kind": "relation",
+    "names": 912,
+    "clusters": 92,
+    "groups": 28,
+    "calls": 9,
+    "errors": 0,
+    "merged": 2
+   }
+  ]
+ },
+ {
+  "after_group": 100,
+  "seconds": 72.7,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 2146,
+    "clusters": 215,
+    "groups": 47,
+    "calls": 25,
+    "errors": 0,
+    "merged": 11
+   },
+   {
+    "kind": "relation",
+    "names": 1006,
+    "clusters": 101,
+    "groups": 35,
+    "calls": 6,
+    "errors": 0,
+    "merged": 2
+   }
+  ]
+ },
+ {
+  "after_group": 110,
+  "seconds": 80.9,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 2324,
+    "clusters": 233,
+    "groups": 56,
+    "calls": 26,
+    "errors": 0,
+    "merged": 8
+   },
+   {
+    "kind": "relation",
+    "names": 1080,
+    "clusters": 108,
+    "groups": 38,
+    "calls": 9,
+    "errors": 0,
+    "merged": 7
+   }
+  ]
+ },
+ {
+  "after_group": 120,
+  "seconds": 87.9,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 2476,
+    "clusters": 248,
+    "groups": 55,
+    "calls": 24,
+    "errors": 0,
+    "merged": 9
+   },
+   {
+    "kind": "relation",
+    "names": 1152,
+    "clusters": 116,
+    "groups": 45,
+    "calls": 11,
+    "errors": 0,
+    "merged": 2
+   }
+  ]
+ },
+ {
+  "after_group": 122,
+  "seconds": 25.2,
+  "stats": [
+   {
+    "kind": "entity",
+    "names": 2509,
+    "clusters": 251,
+    "groups": 35,
+    "calls": 8,
+    "errors": 0,
+    "merged": 5
+   },
+   {
+    "kind": "relation",
+    "names": 1160,
+    "clusters": 116,
+    "groups": 39,
+    "calls": 1,
+    "errors": 0,
+    "merged": 1
+   }
+  ]
+ }
+]

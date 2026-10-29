@@ -1,0 +1,7 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 2731.31it/s]
+mine/mine {'docs': 100, 'entities': 8306, 'entity_near_pairs': 1154, 'entity_near_pairs_per_100': 13.89, 'triples': 7161, 'triple_exact_dups': 17, 'triple_near_pairs': 881, 'triple_near_pairs_per_100': 12.3, 'scope': 'doc'}
+mine/kggen_gemma {'docs': 100, 'entities': 5454, 'entity_near_pairs': 502, 'entity_near_pairs_per_100': 9.2, 'triples': 4687, 'triple_exact_dups': 0, 'triple_near_pairs': 443, 'triple_near_pairs_per_100': 9.45, 'scope': 'doc'}
+mine/released_kggen {'docs': 96, 'entities': 7571, 'entity_near_pairs': 277, 'entity_near_pairs_per_100': 3.66, 'triples': 6939, 'triple_exact_dups': 0, 'triple_near_pairs': 274, 'triple_near_pairs_per_100': 3.95, 'scope': 'doc'}
+mine/released_graphrag {'docs': 84, 'entities': 1086, 'entity_near_pairs': 33, 'entity_near_pairs_per_100': 3.04, 'triples': 1072, 'triple_exact_dups': 0, 'triple_near_pairs': 39, 'triple_near_pairs_per_100': 3.64, 'scope': 'doc'}
+mine/released_openie {'docs': 95, 'entities': 17766, 'entity_near_pairs': 44841, 'entity_near_pairs_per_100': 252.4, 'triples': 25258, 'triple_exact_dups': 104, 'triple_near_pairs': 103694, 'triple_near_pairs_per_100': 410.54, 'scope': 'doc'}
