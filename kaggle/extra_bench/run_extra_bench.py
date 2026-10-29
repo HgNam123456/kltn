@@ -57,7 +57,7 @@ def sh(cmd: str, **kw) -> str:
 def find_data(name: str) -> str | None:
     for root in ("/kaggle/input", f"{WORK}/data"):
         for dirpath, dirnames, filenames in os.walk(root):
-            if os.path.basename(dirpath) == name and "input.txt" in filenames:
+            if os.path.basename(dirpath) in (name, f"kgu-{name}") and "input.txt" in filenames:   # dataset kgu-nyt11: file ở gốc
                 return dirpath
     return None
 
