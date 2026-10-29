@@ -1,0 +1,264 @@
+% =====================================================================
+% CHƯƠNG 1. MỞ ĐẦU
+% Không cần thêm gói nào ngoài preamble của Format_KLTN/main.tex
+% (dùng \url từ gói url đã có).
+% =====================================================================
+\chapter{Mở đầu}
+\label{chap:intro}
+
+Chương này trình bày bối cảnh và động lực của đề tài,
+phát biểu bài toán nghiên cứu cùng phạm vi giải quyết,
+sau đó nêu mục tiêu và các đóng góp chính của khóa luận.
+Phần cuối chương mô tả bố cục các chương còn lại.
+
+% ---------------------------------------------------------------------
+\section{Bối cảnh và động lực}
+\label{sec:intro-context}
+
+\subsection{Đồ thị tri thức và yêu cầu giữ tri thức luôn mới}
+\label{sec:intro-kg}
+
+Đồ thị tri thức (\textit{knowledge graph}, viết tắt KG) biểu diễn tri thức dưới dạng một tập bộ ba (\textit{triple}) gồm chủ thể, quan hệ và đối tượng,
+trong đó các nút là thực thể và các cạnh có nhãn là quan hệ giữa các thực thể \cite{hogan2021kg}.
+Mỗi bộ ba biểu diễn một sự thật (\textit{fact}), chẳng hạn ``Messi chơi cho Barcelona''.
+Những KG quy mô lớn như Freebase \cite{bollacker2008freebase} và Wikidata \cite{vrandecic2014wikidata}
+đã trở thành hạ tầng cho máy tìm kiếm, hệ hỏi đáp và nhiều ứng dụng trí tuệ nhân tạo khác.
+Trong vài năm gần đây, KG còn được dùng làm nguồn tri thức tường minh cho mô hình ngôn ngữ lớn (\textit{large language model}, LLM)
+trong các hệ sinh văn bản có tăng cường truy xuất (\textit{retrieval-augmented generation}, RAG) \cite{lewis2020rag,edge2024graphrag},
+và làm bộ nhớ dài hạn cho các tác tử dựa trên LLM \cite{rasmussen2025zep,chhikara2025mem0,arigraph2024}.
+Ở mọi vai trò kể trên, giá trị của một KG phụ thuộc trực tiếp vào việc tri thức trong nó có còn đúng tại thời điểm được sử dụng hay không.
+
+Thế giới thực lại thay đổi liên tục:
+cầu thủ chuyển câu lạc bộ, chính khách rời nhiệm sở, doanh nghiệp thay người điều hành.
+Phần lớn các thay đổi này xuất hiện trước tiên trong văn bản như bản tin hay bài viết bách khoa,
+rồi sau một khoảng thời gian mới được phản ánh vào KG.
+Khi phân tích độ trễ giữa Wikipedia và Wikidata, nhóm tác giả ODKE+ ghi nhận rằng một fact xuất hiện trên Wikipedia sớm hơn trung bình khoảng 69 ngày \cite{odke2025};
+trong khoảng thời gian đó, mọi ứng dụng dựa trên KG đều trả lời bằng tri thức đã cũ.
+Cách duy trì thủ công dựa vào cộng đồng biên tập viên, vốn là cơ chế chính của Wikidata \cite{vrandecic2014wikidata},
+khó theo kịp tốc độ thay đổi ấy,
+còn với các KG nội bộ của doanh nghiệp thì nguồn nhân lực biên tập như vậy thường không có.
+
+Bản thân LLM cũng không thay thế được một kho tri thức được cập nhật thường xuyên.
+Tri thức nằm trong tham số của mô hình bị cố định tại thời điểm huấn luyện,
+và các nghiên cứu gần đây khuyến nghị không giao việc theo dõi độ mới của tri thức cho chính LLM \cite{freshness2026}.
+Hướng chỉnh sửa tri thức (\textit{knowledge editing}) học từ các thay đổi thực tế của Wikidata \cite{wikifactdiff2024}
+hoặc trực tiếp từ văn bản phi cấu trúc \cite{akew2024} can thiệp vào tham số của mô hình.
+Khóa luận này quan tâm tới phía còn lại:
+một kho tri thức tường minh, có thể kiểm tra từng fact và truy vết lịch sử thay đổi của nó.
+
+Bài toán cập nhật KG từ văn bản đã được đặt ra từ trước khi LLM trở nên phổ biến.
+Tang và cộng sự đã đề xuất mô hình GUpdater \cite{tang2019gupdate},
+dùng mạng nơ-ron đồ thị để biến đổi một đồ thị con theo nội dung bản tin,
+đồng thời công bố bộ dữ liệu NBAtransactions gồm 4.100 tin chuyển nhượng bóng rổ NBA kèm KG trước và sau mỗi sự kiện.
+Một quan sát quan trọng trên bộ dữ liệu này là chỉ 5,6\% thay đổi được bản tin nói thẳng,
+94,4\% còn lại là hệ quả gián tiếp.
+Chẳng hạn, khi một cầu thủ chuyển đội, quan hệ đồng đội với các cầu thủ ở đội cũ phải chấm dứt
+và quan hệ đồng đội với các cầu thủ ở đội mới phải được thêm vào,
+dù bản tin không hề nhắc tới tên những người này.
+Như vậy, cập nhật KG không chỉ là trích xuất thông tin từ văn bản
+mà còn đòi hỏi lập luận trên cấu trúc của chính KG.
+Tuy nhiên, GUpdater là mô hình có giám sát, gắn với một miền và một tập quan hệ cố định,
+nên khó chuyển sang miền mới khi không có dữ liệu huấn luyện.
+
+\subsection{Mô hình ngôn ngữ lớn và các hệ xây dựng đồ thị tri thức từ văn bản}
+\label{sec:intro-llm}
+
+Sự phát triển của LLM đã thay đổi cách tiếp cận bài toán trích xuất thông tin.
+LLM có khả năng học từ một vài ví dụ đặt trong ngữ cảnh \cite{brown2020gpt3}
+và lập luận qua chuỗi bước trung gian \cite{wei2022cot},
+nhờ đó có thể trích xuất bộ ba ở miền mở mà không cần huấn luyện lại cho từng miền.
+Đáng chú ý, các LLM mở cỡ nhỏ ngày càng mạnh:
+những mô hình như Gemma~4 \cite{gemma4}, sau khi lượng tử hóa xuống 4 bit,
+có thể được phục vụ bằng llama.cpp \cite{llamacpp} trên một GPU phổ thông.
+Điều này mở ra khả năng xây dựng hệ thống chạy tại chỗ, không phụ thuộc API thương mại,
+phù hợp với dữ liệu nhạy cảm và ngân sách hạn chế.
+Kỹ thuật giải mã có ràng buộc (\textit{constrained decoding}) \cite{willard2023outlines}
+còn bảo đảm đầu ra của mô hình luôn tuân theo một lược đồ JSON định trước,
+giúp ghép LLM vào một quy trình xử lý tự động mà không phải sửa lỗi định dạng.
+
+Trên nền tảng đó, nhiều hệ thống xây dựng KG từ văn bản đã ra đời.
+Trước khi có LLM, các mô hình như REBEL \cite{cabot2021rebel} và ReLiK \cite{orlando2024relik}
+được huấn luyện để trích quan hệ theo một tập quan hệ cho trước,
+còn Stanford OpenIE \cite{angeli2015openie} trích bộ ba mở dựa trên phân tích cú pháp.
+Với LLM, EDC \cite{zhang2024edc} chia quá trình thành ba pha:
+trích xuất mở, định nghĩa lược đồ và chuẩn hóa về lược đồ đích.
+KGGen \cite{mo2025kggen} trích thực thể rồi trích quan hệ,
+sau đó gom cụm các tên đồng nghĩa để giảm trùng lặp.
+iText2KG \cite{lairgi2024itext2kg} và hậu bản ATOM \cite{lairgi2025atom} xây KG tăng dần qua từng tài liệu;
+ATOM tách văn bản thành các mệnh đề nguyên tử rồi gắn mốc thời gian cho từng fact.
+CoDe-KG \cite{codekg2025} giải đồng tham chiếu và tách câu phức trước khi trích xuất,
+còn RAKG \cite{rakg2025} và GraphRAG \cite{edge2024graphrag} xây KG để phục vụ truy xuất cho LLM.
+Một số hệ tách bước trích xuất bằng LLM khỏi một tầng kiểm định hoặc phán quyết riêng trước khi ghi vào KG,
+tiêu biểu là KARMA với kiến trúc nhiều tác tử \cite{lu2025karma}, ODKE+ \cite{odke2025} và TRAIL \cite{trail2026}.
+Ngoài ra, một số công trình khác hướng tới duy trì KG động
+hoặc tự động kiểm chứng và cập nhật KG theo nguồn dữ liệu mới \cite{dynamo2025,autovu2025,tong2024}.
+
+\subsection{Khoảng trống: cập nhật chứ không chỉ bổ sung}
+\label{sec:intro-gap}
+
+Điểm chung của phần lớn các hệ kể trên là chúng chủ yếu \emph{thêm} tri thức:
+đầu ra là tập bộ ba mới được hợp nhất vào KG,
+còn thao tác đánh dấu một fact cũ là không còn đúng hiếm khi được hỗ trợ.
+Graphiti, thành phần đồ thị của hệ bộ nhớ Zep \cite{rasmussen2025zep}, là một ngoại lệ đáng chú ý:
+mỗi cạnh mang hai trục thời gian (\textit{bi-temporal})
+và cạnh mâu thuẫn với thông tin mới được đóng hiệu lực thay vì bị xóa.
+Tuy vậy, Graphiti được thiết kế cho bộ nhớ hội thoại của tác tử
+và chưa được đánh giá trên một benchmark cập nhật KG có nhãn.
+
+Benchmark EMERGE \cite{zaporojets2025emerge}, công bố năm 2025,
+là một trong những bộ dữ liệu đầu tiên đo trực tiếp khả năng cập nhật này ở quy mô lớn.
+Cho một ảnh chụp Wikidata tại một thời điểm và một đoạn Wikipedia được viết sau đó,
+hệ thống phải xác định các fact vẫn còn đúng (Exists),
+các fact cần thêm giữa các thực thể đã có (Add) hoặc kèm thực thể mới (Mint+Add),
+các fact suy ra được (Infer) và các fact đã hết hiệu lực (Deprecate).
+Kết quả đi kèm benchmark cho thấy các hệ trích xuất thông tin hiện có hầu như không làm được thao tác Deprecate.
+KGGen không hỗ trợ thao tác này.
+EDC+, phiên bản EDC được chỉnh để đề xuất Deprecate, dù chạy bằng GPT-5.1 cũng chỉ đạt độ đo Completeness 34,8 trên thang 100;
+ngay cả cấu hình được cung cấp sẵn bộ ba vàng làm ngữ cảnh, cũng dùng GPT-5.1, chỉ đạt 37,4.
+
+Từ các phân tích trên, khóa luận nhận thấy bốn yêu cầu chưa được các hệ hiện có đáp ứng đồng thời.
+Thứ nhất, cần một phương pháp sinh được cả thao tác thêm lẫn thao tác vô hiệu hóa,
+đồng thời lưu giữ lịch sử thay vì xóa tri thức cũ.
+Thứ hai, phương pháp cần phát hiện được các thay đổi gián tiếp mà bản tin không nói thẳng,
+như quan hệ đồng đội trong ví dụ NBA.
+Thứ ba, phương pháp cần tổng quát cho nhiều miền,
+nghĩa là khi nạp một miền mới thì không phải viết luật bằng tay.
+Thứ tư, phương pháp cần chạy được với một LLM mở cỡ nhỏ triển khai tại chỗ,
+để chi phí và quyền kiểm soát dữ liệu nằm trong tầm tay của một tổ chức nhỏ.
+Đây là động lực trực tiếp của đề tài
+``Nghiên cứu phương pháp ứng dụng mô hình ngôn ngữ lớn trong bài toán tự động cập nhật cơ sở tri thức từ bản tin''.
+
+% ---------------------------------------------------------------------
+\section{Bài toán nghiên cứu và phạm vi}
+\label{sec:intro-problem}
+
+\subsection{Phát biểu bài toán}
+\label{sec:intro-statement}
+
+Khóa luận nghiên cứu bài toán tự động cập nhật đồ thị tri thức từ bản tin,
+được phát biểu một cách không hình thức như sau.
+
+\begin{itemize}
+  \item \textbf{Đầu vào:} (i) một KG bi-temporal hiện tại,
+  trong đó mỗi bộ ba kèm khoảng hiệu lực gồm thời điểm bắt đầu (\texttt{valid\_from}) và thời điểm kết thúc (\texttt{valid\_until});
+  (ii) một bản tin mới kèm ngày đăng.
+  \item \textbf{Đầu ra:} một tập thao tác cập nhật gồm xác nhận fact còn đúng (Exists hay Keep),
+  thêm fact mới (Add) và vô hiệu hóa fact không còn đúng (Deprecate hay Invalidate),
+  mỗi thao tác kèm mốc thời gian tương ứng.
+  \item \textbf{Nguyên tắc áp dụng:} tập thao tác được áp lên KG mà không xóa dữ liệu;
+  một fact hết hiệu lực chỉ bị đóng \texttt{valid\_until},
+  nhờ đó KG vẫn trả lời được câu hỏi ``tại một thời điểm cho trước, điều gì là đúng''.
+\end{itemize}
+
+Xét một ví dụ giả định.
+KG đang lưu rằng Messi và Pedri cùng chơi cho Barcelona, là đồng đội và là bạn của nhau,
+còn Lautaro chơi cho Inter Milan dưới sự dẫn dắt của huấn luyện viên Inzaghi.
+Một bản tin đăng ngày 01/07/2026 viết:
+``Barcelona star Lionel Messi has left the club and joined Inter Milan on Monday.''
+Hệ thống cần vô hiệu hóa \texttt{plays\_for}(Messi, Barcelona)
+và thêm \texttt{plays\_for}(Messi, Inter Milan) với mốc 29/06/2026;
+đây là hai thay đổi được bản tin nói thẳng.
+Hệ thống còn cần nhận ra các thay đổi gián tiếp:
+quan hệ đồng đội giữa Messi và Pedri kết thúc, trong khi quan hệ bạn bè giữa hai người vẫn giữ nguyên;
+Messi trở thành đồng đội của Lautaro và được Inzaghi huấn luyện.
+Không thay đổi gián tiếp nào trong số này được viết ra trong bản tin.
+
+Ngoài yêu cầu về chất lượng, khóa luận đặt ra hai yêu cầu về tính thực tiễn.
+Một là tính tổng quát:
+phương pháp không dựa vào luật riêng của một miền,
+để có thể dùng cho thể thao, dịch tễ, bách khoa hay miền khác mà không phải viết luật mới.
+Hai là chạy được với LLM mở cỡ nhỏ,
+cụ thể là Gemma~4 E4B lượng tử hóa 4 bit \cite{gemma4}, trên GPU phổ thông như NVIDIA T4.
+Định nghĩa hình thức của bài toán được trình bày ở Mục~\ref{sec:problem}.
+
+\subsection{Phạm vi nghiên cứu}
+\label{sec:intro-scope}
+
+Khóa luận chỉ xét tri thức được văn bản đề cập trực tiếp,
+hoặc suy ra được từ cấu trúc của KG quanh các thực thể được nhắc tới,
+như quan hệ đồng đội trong ví dụ trên.
+Hệ thống không suy đoán sự kiện chưa xảy ra và không bổ sung tri thức nền nằm ngoài văn bản.
+Do đó, thao tác Infer của EMERGE, vốn đòi hỏi suy ra các fact mà văn bản không nêu và cấu trúc lân cận cũng không hàm ý,
+nằm ngoài phạm vi khóa luận.
+Khóa luận cũng không giải quyết việc cấp định danh mới trong KG đích cho thực thể chưa tồn tại (thao tác Mint),
+và không giải quyết bài toán liên kết thực thể (\textit{entity linking}) với Wikidata.
+Các bản tin và bộ dữ liệu thực nghiệm đều bằng tiếng Anh;
+việc áp dụng cho tiếng Việt được để lại làm hướng phát triển.
+
+% ---------------------------------------------------------------------
+\section{Mục tiêu và đóng góp của khóa luận}
+\label{sec:intro-contrib}
+
+Mục tiêu tổng quát của khóa luận là nghiên cứu và xây dựng một phương pháp sử dụng LLM
+để tự động sinh các thao tác cập nhật KG từ bản tin, bao gồm cả thao tác vô hiệu hóa,
+đồng thời đáp ứng yêu cầu tổng quát và chạy được với LLM mở cỡ nhỏ.
+Mục tiêu này được cụ thể hóa thành ba nhiệm vụ:
+thiết kế một quy trình (\textit{pipeline}) cập nhật KG phân rõ vai trò của LLM và của cấu trúc đồ thị;
+cài đặt quy trình này với một LLM mở chạy tại chỗ;
+và đánh giá nó trên các benchmark chuẩn bằng bộ chấm chính thức,
+trong điều kiện so sánh công bằng với các hệ hiện có.
+Các đóng góp chính của khóa luận gồm:
+
+\begin{itemize}
+  \item \textbf{Một pipeline sáu bước cho bài toán cập nhật KG bi-temporal},
+  vận hành theo nguyên tắc ``LLM trích xuất, cấu trúc khoanh vùng, bộ phán quyết định'':
+  rút bản tin thành câu đơn, trích thao tác tường minh với đầu ra JSON ép lược đồ,
+  áp thao tác lên KG bi-temporal, khoanh vùng cấu trúc, phán quyết bằng LLM và định kỳ gộp tên.
+  Khác với các hệ chỉ thêm tri thức, pipeline sinh cả thao tác vô hiệu hóa và không xóa lịch sử.
+
+  \item \textbf{Phương pháp khoanh vùng cấu trúc hai vế không cần luật miền.}
+  Vế cắt tìm các cạnh có thể phải đóng lại quanh một cạnh vừa bị vô hiệu hóa,
+  vế sinh tìm các cạnh có thể phải thêm quanh một cạnh mới.
+  Bước này không gọi LLM, không giới hạn số bước nhảy,
+  và chỉ giữ các ứng viên nối tới ít nhất hai thực thể tham gia sự kiện,
+  nhờ đó loại được các ứng viên chỉ liên quan tới một phía.
+
+  \item \textbf{Một bộ phán LLM gom lô},
+  trong đó một lần gọi mô hình quyết định giữ, vô hiệu hóa hay thêm quan hệ cho cả một lô ứng viên,
+  có phân biệt fact trạng thái (có thể hết hiệu lực) với fact sự kiện lịch sử (đúng mãi mãi).
+
+  \item \textbf{Bước rút câu đơn và gộp tên định kỳ} cho KG tích lũy qua một chuỗi bản tin,
+  giúp LLM nhỏ trích đủ thông tin từ câu phức
+  và giữ cho KG gọn khi cùng một thực thể hay quan hệ xuất hiện dưới nhiều tên.
+
+  \item \textbf{Một đánh giá thực nghiệm rộng}
+  trên tám bộ dữ liệu chuẩn về cập nhật và xây dựng KG từ văn bản cùng bộ NBAtransactions,
+  trong đó mọi hệ so sánh được chạy lại với cùng một LLM mở
+  và được chấm bằng bộ chấm chính thức của từng benchmark khi có.
+  Trên EMERGE, pipeline đạt Completeness 91,3 cho Exists và 63,3 cho Deprecate,
+  vượt cấu hình được cung cấp bộ ba vàng dùng GPT-5.1 (60,4 và 37,4).
+  Trên WebNLG, REBEL và Wiki-NRE, pipeline vượt EDC chạy cùng LLM;
+  trên MINE-1, pipeline đạt 85,4 so với 75,9 của KGGen;
+  trên NBAtransactions, khi thao tác tường minh lấy từ nhãn vàng,
+  bước khoanh vùng và bộ phán đạt F1 0,993 so với 0,987 của GUpdater.
+  Trên COVID-NYT, pipeline còn xếp sau ATOM hai bước.
+\end{itemize}
+
+Toàn bộ mã nguồn, cấu hình chạy và kết quả của khóa luận được công bố tại
+\url{https://github.com/HgNam123456/kltn}.
+
+% ---------------------------------------------------------------------
+\section{Bố cục khóa luận}
+\label{sec:intro-outline}
+
+Phần còn lại của khóa luận được tổ chức thành bốn chương.
+
+Chương~\ref{chap:background} trình bày cơ sở lý thuyết và các nghiên cứu liên quan:
+khái niệm KG và cách biểu diễn thời gian hai trục,
+LLM cùng các kỹ thuật học trong ngữ cảnh và giải mã có ràng buộc,
+các hệ xây dựng KG từ văn bản như EDC, KGGen và ATOM,
+các công trình về cập nhật KG như GUpdater và EMERGE,
+cùng các độ đo đánh giá được sử dụng trong khóa luận.
+
+Chương~\ref{chap:method} trình bày phương pháp đề xuất.
+Chương này định nghĩa hình thức bài toán (Mục~\ref{sec:problem}),
+giới thiệu kiến trúc tổng thể của pipeline (Hình~\ref{fig:pipeline}),
+mô tả chi tiết từng bước qua một ví dụ chạy xuyên suốt,
+và phân tích ưu, nhược điểm của các lựa chọn thiết kế.
+
+Chương~\ref{chap:experiments} trình bày các thực nghiệm đã tiến hành:
+môi trường và công cụ, các bộ dữ liệu, các hệ so sánh, cách tổ chức thực nghiệm,
+kết quả trên từng benchmark cùng phân tích lỗi và các ví dụ điển hình.
+
+Chương~\ref{chap:conclusion} tổng kết các kết quả đạt được,
+nêu các hạn chế còn tồn tại và đề xuất hướng phát triển tiếp theo.
