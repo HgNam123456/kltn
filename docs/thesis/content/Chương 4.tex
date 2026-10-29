@@ -1,758 +1,417 @@
 % ======================================================================
 % CHƯƠNG 4. THỰC NGHIỆM VÀ ĐÁNH GIÁ
 %
-% CẦN THÊM VÀO main.tex (đặt SAU \usepackage{tikz}):
-%   \usepackage{colortbl}            % \rowcolor{gray!15} cho các dòng "số công bố"
-%   (hoặc thay bằng \usepackage[table]{xcolor} đặt TRƯỚC \usepackage{tikz})
-%   \usepackage{pgfplots}
-%   \pgfplotsset{compat=1.18}        % hai biểu đồ cột ở mục 4.8
-% Các gói đã có trong mẫu và được dùng ở đây: tikz, booktabs, array, makecell,
-% amsmath, amssymb, caption, url.
-% Nhãn cố định: chap:experiments, tab:emerge, tab:edc, tab:covid, tab:mine,
-% tab:knet, tab:nba (theo quy ước chung của khóa luận).
+% CẦN TRONG main.tex (bản hiện tại đã có): \usepackage[table]{xcolor} (trước tikz),
+% \usepackage{pgfplots} + \pgfplotsset{compat=1.18}, \usepackage{multirow}; ngoài ra dùng
+% graphicx, booktabs, array, makecell, amsmath, url của mẫu.
+% Nhãn: chap:experiments, sec:exp-metrics, tab:edc = tab:webnlg, tab:rebel, tab:wikinre, fig:edc-f1.
+% Số liệu: results/kaggle/{home_bench,edc_bench,atom_edc}/, làm tròn một lần từ giá trị thô.
 % ======================================================================
-\usetikzlibrary{shapes,arrows.meta,positioning,calc,fit,backgrounds,decorations.pathreplacing}
 
 \chapter{Thực nghiệm và đánh giá}\label{chap:experiments}
 
-Chương~\ref{chap:method} đã trình bày pipeline cập nhật \textit{knowledge graph} (KG) từ bản tin gồm sáu bước: rút câu đơn, trích thao tác tường minh, áp vào KG hai chiều thời gian, khoanh vùng cấu trúc hai vế, bộ phán LLM và gộp tên định kỳ (Hình~\ref{fig:pipeline}). Chương này mô tả các thực nghiệm mà chúng tôi đã tiến hành để kiểm chứng pipeline đó. Chúng tôi trình bày lần lượt câu hỏi nghiên cứu, công cụ và môi trường, dữ liệu, độ đo, các hệ so sánh, kết quả trên từng bộ dữ liệu, ví dụ cụ thể, rồi thảo luận chung và các hạn chế. Mục tiêu trình bày là \textit{tái tạo lại được}: mọi con số trong chương đều gắn với một lượt chạy có cấu hình, mã nguồn và tệp đầu ra lưu trong kho mã của khóa luận\footnote{\url{https://github.com/HgNam123456/kltn}, nhánh \texttt{feat/core-pipeline}; đầu ra các lượt chạy nằm trong thư mục \texttt{results/kaggle/}.}.
+Chương~\ref{chap:method} đã trình bày pipeline cập nhật \textit{knowledge graph} (KG) từ bản tin.
+Chương này mô tả thực nghiệm mà chúng tôi đã tiến hành để kiểm chứng thành phần trích xuất của pipeline trên ba benchmark công khai mà bài báo EDC~\cite{zhang2024edc} sử dụng: WebNLG, REBEL và Wiki-NRE.
+Nội dung gồm: mục tiêu, công cụ và môi trường, dữ liệu, độ đo, các hệ so sánh, kết quả, phân tích, ví dụ cụ thể và hạn chế.
+Mọi con số trong chương gắn với một lượt chạy có cấu hình, mã nguồn và tệp đầu ra được lưu trong kho mã của khóa luận\footnote{\url{https://github.com/HgNam123456/kltn}, nhánh \texttt{feat/core-pipeline}; đầu ra các lượt chạy nằm trong thư mục \texttt{results/kaggle/}.}, để người đọc có thể tái tạo lại.
 
 % ----------------------------------------------------------------------
-\section{Mục tiêu thực nghiệm và câu hỏi nghiên cứu}\label{sec:exp-rq}
+\section{Mục tiêu thực nghiệm}\label{sec:exp-goal}
 
-Bài toán của khóa luận (mục~\ref{sec:problem}) nhận vào một KG hiện tại cùng một bản tin mới và trả ra tập thao tác cập nhật gồm giữ nguyên (\textit{Exists}), thêm (\textit{Add}) và vô hiệu hóa (\textit{Deprecate}). Hiện chưa có một benchmark công khai nào đo trọn vẹn mọi khía cạnh của bài toán này. EMERGE~\cite{zaporojets2025emerge} đo các thao tác cập nhật trên Wikidata, nhưng phần lớn là thay đổi được văn bản nói thẳng. NBAtransactions~\cite{tang2019gupdate} đo các thay đổi gián tiếp, nhưng thao tác tường minh của nó rất đơn giản. Các benchmark trích xuất như WebNLG, REBEL, Wiki-NRE (bản dùng trong~\cite{zhang2024edc}), NYT11-HRL~\cite{takanobu2019hrl} và KnowledgeNet~\cite{mesquita2019knowledgenet} chỉ đo chất lượng trích triple. Hai bộ 2020-COVID-NYT~\cite{lairgi2025atom} và MINE-1~\cite{mo2025kggen} đo KG được dựng dần từ văn bản dài. Vì vậy, chúng tôi tách mục tiêu đánh giá thành năm câu hỏi nghiên cứu; mỗi câu hỏi được trả lời bằng nhóm benchmark phù hợp nhất với nó:
+Trong pipeline ở Chương~\ref{chap:method}, bước trích thao tác tường minh (Mục~\ref{sec:step-extract}) là nơi LLM chuyển văn bản thành triple.
+Các bước phía sau đều làm việc trên đầu ra của bước này, nên chất lượng trích đặt ra trần chất lượng cho cả pipeline.
+Khi bộ dữ liệu cho sẵn một schema (lược đồ quan hệ), bước trích chạy dưới dạng module trích theo schema (Mục~\ref{sec:schema-extract}): mỗi câu chỉ cần một lệnh gọi LLM, tên quan hệ bị ép vào danh sách quan hệ của schema bằng kiểu liệt kê (\textit{enum}) trong JSON schema, và lời nhắc kèm các ví dụ few-shot của bộ dữ liệu.
 
+Thực nghiệm nhằm kiểm chứng module này. Chúng tôi so sánh nó với EDC~\cite{zhang2024edc}, hệ trích ba bước được công bố cùng ba benchmark trên, và với biến thể ATOM+EDC, trong đó bước trích mở của EDC được thay bằng cách tách câu thành các mệnh đề nguyên tử (\textit{atomic fact}, gọi tắt là factoid) của ATOM~\cite{lairgi2025atom}.
+Mọi hệ dùng cùng một LLM, nên chênh lệch giữa các hệ phản ánh thiết kế chứ không phản ánh sức mạnh của mô hình.
+Thực nghiệm trả lời hai câu hỏi:
 \begin{itemize}
-  \item \textbf{RQ1.} Việc cho LLM nhìn thấy KG hiện tại (các cạnh đang nối những thực thể được nhắc trong văn bản) có giúp nhận diện tri thức còn đúng (Exists) và tri thức vừa hết hiệu lực (Deprecate) tốt hơn các hệ chỉ trích xuất từ văn bản hay không? Benchmark: EMERGE.
-  \item \textbf{RQ2.} Module trích theo schema (một lệnh gọi mỗi câu, quan hệ bị ép vào danh sách của schema) so với EDC~\cite{zhang2024edc}, ATOM~\cite{lairgi2025atom} và KGGen~\cite{mo2025kggen} như thế nào khi mọi hệ dùng cùng một LLM? Benchmark: WebNLG, REBEL, Wiki-NRE, NYT11-HRL, KnowledgeNet.
-  \item \textbf{RQ3.} Hai bước rút câu đơn và gộp tên định kỳ có cải thiện chất lượng của KG tích lũy qua nhiều bản tin hay không? Benchmark: 2020-COVID-NYT, MINE-1.
-  \item \textbf{RQ4.} Khoanh vùng cấu trúc hai vế kết hợp bộ phán LLM có xử lý được các cạnh thay đổi gián tiếp, tức là các cạnh mà bản tin không nhắc tới, hay không? Benchmark: NBAtransactions.
-  \item \textbf{RQ5.} Pipeline có ổn định giữa các lượt chạy không, tri thức trích ra có căn cứ trong văn bản nguồn đến mức nào, và chi phí tính toán ra sao? Thực nghiệm: ba lượt chạy lặp trên COVID-NYT, bộ phán ``có căn cứ'' trên bốn benchmark, thống kê thời gian và số lệnh gọi LLM.
+  \item \textbf{CH1 (chất lượng).} Với cùng LLM, module trích theo schema đạt precision, recall và F1 ra sao so với EDC và ATOM+EDC, ở cả ba mức khớp Partial, Strict và Exact?
+  \item \textbf{CH2 (chi phí).} Mỗi hệ cần bao nhiêu lệnh gọi LLM cho một câu và bao nhiêu thời gian cho toàn bộ dữ liệu?
 \end{itemize}
-
-Cách chạy pipeline khác nhau giữa các nhóm benchmark vì mỗi benchmark chỉ đo một phần của bài toán. Trên NBAtransactions, chúng tôi chạy các bước [1]$\rightarrow$[5] của Hình~\ref{fig:pipeline}, trong đó thao tác tường minh được lấy từ dữ liệu vàng. Trên EMERGE, ứng viên Exists/Deprecate là các cạnh của KG-trước nối hai thực thể được nhắc, còn Add được sinh cho các cặp thực thể được nhắc. Trên COVID-NYT và MINE-1, chúng tôi chạy chuỗi [0]$\rightarrow$[1]$\rightarrow$[2]$\rightarrow$[6]. Trên năm benchmark trích theo schema, chỉ module trích được sử dụng. Chi tiết từng chế độ được nêu cùng kết quả ở mục~\ref{sec:exp-results}.
+Chúng tôi chọn ba benchmark của EDC vì ba lý do. Thứ nhất, chúng có schema cố định và script chấm công khai.
+Thứ hai, đây là ``sân nhà'' của EDC: dữ liệu, schema, ví dụ few-shot và script chấm đều do nhóm tác giả EDC chuẩn bị, nên phép so sánh không nghiêng về phía pipeline.
+Thứ ba, bài báo EDC công bố số liệu trên chính ba bộ này, giúp định vị kết quả so với các LLM lớn hơn.
 
 % ----------------------------------------------------------------------
 \section{Công cụ và môi trường thực nghiệm}\label{sec:exp-env}
 
-\subsection{Mô hình ngôn ngữ và máy chủ suy luận}
+\paragraph*{Công cụ chúng tôi đã xây dựng.}
+Chúng tôi đã cài đặt module trích theo schema trong gói \texttt{kgu} của khóa luận (hàm \texttt{extract\_schema} trong \texttt{kgu/extract/text\_kg.py}) và script \texttt{scripts/run\_webnlg.py} chạy module này trên định dạng dữ liệu của EDC: đọc mỗi dòng một câu, ghi mỗi dòng một danh sách triple, đúng định dạng tệp \texttt{canon\_kg.txt} mà script chấm của EDC nhận vào.
+Để chạy biến thể ATOM+EDC, chúng tôi đã viết \texttt{scripts/atom\_edc.py}, chuyển đầu ra của ATOM thành đầu vào cho các bước sau của EDC.
+Để chấm được các câu có nhiều triple, chúng tôi đã viết \texttt{scripts/edc\_eval\_fast.py}, một bản tăng tốc của script chấm EDC (Mục~\ref{sec:exp-metrics}).
+Cuối cùng, chúng tôi đã viết ba \textit{kernel} Kaggle tự động hóa trọn một lượt chạy: \texttt{kaggle/home\_bench} (WebNLG), \texttt{kaggle/edc\_bench} (REBEL, Wiki-NRE) và \texttt{kaggle/atom\_edc} (ATOM+EDC trên cả ba bộ).
 
-Chúng tôi sử dụng duy nhất một mô hình ngôn ngữ cho mọi hệ thống: Gemma~4 E4B bản \textit{instruct}~\cite{gemma4}, ở dạng lượng tử hóa có huấn luyện (\textit{quantization-aware training}, QAT), định dạng GGUF mức Q4\_K\_XL do unsloth phát hành. Lựa chọn này bám sát mục tiêu của khóa luận: pipeline phải chạy được với một LLM mở cỡ nhỏ trên GPU phổ thông, không phụ thuộc API trả phí.
-
-Mô hình được phục vụ bằng \texttt{llama-server} của llama.cpp~\cite{llamacpp}. Máy chủ này cung cấp giao diện tương thích OpenAI (\texttt{/v1/chat/completions}), nên cả pipeline của chúng tôi lẫn mã gốc của các baseline đều gọi được mà không phải viết lại logic. Cấu hình máy chủ được giữ cố định trong mọi lượt chạy: nhiệt độ lấy mẫu bằng 0; bốn khe (\textit{slot}) xử lý song song với gom lô liên tục (\textit{continuous batching}); ngữ cảnh 8.192 token cho mỗi khe (riêng REBEL là 12.288 token vì danh sách 196 quan hệ kèm mô tả làm lời nhắc dài hơn); bật \textit{flash attention}; tắt chế độ suy luận nhiều bước của mô hình; giải mã suy đoán bằng đầu dự đoán nhiều token (\textit{multi-token prediction}, MTP) với tối đa hai token nháp mỗi bước. Khi một yêu cầu kèm JSON schema, \texttt{llama-server} chuyển schema thành văn phạm và ép đầu ra tuân theo văn phạm đó (\textit{constrained decoding}~\cite{willard2023outlines}). Pipeline dùng cơ chế này để buộc đầu ra là JSON hợp lệ và để ép tên quan hệ vào danh sách cho phép (kiểu \texttt{enum}).
-
-\subsection{Phần cứng và quy trình chạy}
-
-Máy tính cá nhân của chúng tôi không có GPU CUDA, nên chỉ được dùng để viết mã, chạy kiểm thử đơn vị, chuẩn bị dữ liệu và xuất tệp. Mọi lượt gọi LLM và mọi bước cần GPU được chạy trên Kaggle với hai GPU NVIDIA T4: GPU thứ nhất dành cho \texttt{llama-server}, GPU thứ hai dành cho các mô hình nhúng (e5-mistral-7b-instruct của EDC; all-mpnet-base-v2 và all-MiniLM-L6-v2 thuộc họ Sentence-BERT~\cite{reimers2019sbert}; bert-base-uncased~\cite{devlin2019bert} cho BERTScore~\cite{zhang2020bertscore}).
-
-Mỗi thực nghiệm là một \textit{kernel} Kaggle có cùng khung tám bước: (1) sao chép mã từ GitHub đúng nhánh \texttt{feat/core-pipeline}; (2) gắn dữ liệu dưới dạng Kaggle dataset; (3) chép tệp thực thi \texttt{llama-server} đã biên dịch sẵn cho kiến trúc T4 (biên dịch một lần, lưu thành dataset để các lượt sau bỏ qua bước này); (4) tải tệp GGUF của mô hình và của đầu MTP từ HuggingFace; (5) khởi động máy chủ, kiểm tra trạng thái và tự khởi động lại nếu máy chủ ngừng trả lời; (6) chạy hệ thống cần đánh giá; (7) chấm điểm; (8) ghi đầu ra, nhật ký và bản tóm tắt. Kết quả được tải về bằng Kaggle CLI và lưu vào kho mã. Với EMERGE, mỗi tiến trình chỉ xử lý 20 bài cho mỗi khoảng thời gian (\textit{delta}) để tránh hết bộ nhớ; các phần sau đó được ghép lại theo đúng thứ tự. Bảng~\ref{tab:env} tóm tắt môi trường thực nghiệm.
+\paragraph*{Môi trường.}
+Bảng~\ref{tab:env} tóm tắt môi trường thực nghiệm.
 
 \begin{table}[htbp]
 \centering
 \caption{Môi trường thực nghiệm}\label{tab:env}
 \small
-\begin{tabular}{>{\raggedright\arraybackslash}p{3.2cm} >{\raggedright\arraybackslash}p{11.4cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{3.0cm} >{\raggedright\arraybackslash}p{11.9cm}}
 \toprule
 \textbf{Thành phần} & \textbf{Cấu hình} \\
 \midrule
-LLM & Gemma 4 E4B \textit{instruct}, GGUF QAT Q4\_K\_XL (unsloth); đầu MTP làm mô hình nháp \\
-Máy chủ suy luận & llama.cpp \texttt{llama-server}, API tương thích OpenAI; nhiệt độ 0; 4 khe song song; 8.192 token mỗi khe (REBEL: 12.288); flash attention; giải mã suy đoán MTP (2 token nháp) \\
-Ràng buộc đầu ra & JSON schema $\rightarrow$ văn phạm (constrained decoding); quan hệ ép bằng \texttt{enum} \\
-Phần cứng & Kaggle, 2 $\times$ NVIDIA T4: GPU0 chạy LLM, GPU1 chạy mô hình nhúng; máy cá nhân không có GPU CUDA \\
-Mô hình nhúng & all-mpnet-base-v2 (chấm EMERGE, COVID-NYT, độ gọn, gộp tên); all-MiniLM-L6-v2 (truy xuất MINE-1); bert-base-uncased (BERTScore); e5-mistral-7b-instruct (bước chuẩn hóa của EDC) \\
-Baseline & EDC @\texttt{02aad17}; mã EMERGE @\texttt{f688910} (EDC+ ICL); itext2kg 1.1.0 (ATOM); kg-gen 0.4.0 (KGGen); itext2kg và kg-gen đặt trong môi trường ảo Python 3.11 riêng \\
-Bộ chấm & mã chấm chính thức của EMERGE; script EDC (nervaluate 0.1.8) kèm \texttt{edc\_eval\_fast.py}; \texttt{evaluator.py} của KnowledgeNet; metric ATOM cài lại (\texttt{kgu/eval/atom\_quality.py}) \\
-Mã nguồn & \url{https://github.com/HgNam123456/kltn}, nhánh \texttt{feat/core-pipeline}; pipeline trong gói \texttt{kgu/}, kernel trong \texttt{kaggle/} \\
+LLM & Gemma 4 E4B \textit{instruct}~\cite{gemma4}, GGUF lượng tử hóa có huấn luyện (QAT) mức Q4\_K\_XL do unsloth phát hành; đầu dự đoán nhiều token (MTP) làm mô hình nháp \\
+Máy chủ suy luận & \texttt{llama-server} của llama.cpp~\cite{llamacpp}, API tương thích OpenAI; nhiệt độ 0; 4 khe song song, gom lô liên tục; 8.192 token mỗi khe (lượt REBEL, Wiki-NRE: 12.288); flash attention; tắt chế độ suy luận nhiều bước; giải mã suy đoán MTP, tối đa 2 token nháp \\
+Ràng buộc đầu ra & JSON schema được chuyển thành văn phạm ràng buộc (\textit{constrained decoding}~\cite{willard2023outlines}); trường quan hệ là \texttt{enum} \\
+Phần cứng & Kaggle, 2 $\times$ NVIDIA T4 (15 GB): GPU0 chạy LLM, GPU1 chạy mô hình nhúng của EDC; máy cá nhân không có GPU CUDA \\
+Mô hình nhúng & \texttt{intfloat/e5-mistral-7b-instruct}, chỉ dùng trong bước chuẩn hóa của EDC \\
+Baseline & EDC: kho mã \texttt{clear-nus/edc} tại commit \texttt{02aad17}; ATOM: thư viện \texttt{itext2kg} 1.1.0, đặt trong môi trường ảo Python 3.11 riêng \\
+Bộ chấm & \texttt{evaluate/evaluation\_script.py} của EDC (thư viện nervaluate 0.1.8), chạy qua \texttt{scripts/edc\_eval\_fast.py} \\
+Mã nguồn & gói \texttt{kgu/}, thư mục \texttt{scripts/} và \texttt{kaggle/} trong kho mã của khóa luận \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\subsection{Nguyên tắc so sánh}\label{sec:exp-principles}
+Máy tính cá nhân của chúng tôi không có GPU CUDA, nên chỉ được dùng để viết mã, chạy kiểm thử đơn vị và xử lý tệp kết quả; mọi lượt gọi LLM và mọi bước cần GPU đều chạy trên Kaggle.
+Mỗi kernel thực hiện cùng một trình tự: (1) sao chép mã khóa luận từ GitHub và mã EDC tại commit \texttt{02aad17}; (2) gắn dữ liệu dưới dạng Kaggle dataset; (3) chép tệp thực thi \texttt{llama-server} đã biên dịch sẵn cho kiến trúc T4; (4) tải tệp GGUF của mô hình và của đầu MTP; (5) khởi động máy chủ, chờ trạng thái sẵn sàng và tự khởi động lại nếu máy chủ ngừng trả lời; (6) chạy lần lượt các hệ; (7) chấm điểm; (8) ghi đầu ra, nhật ký và tệp \texttt{summary.json}.
+Tệp \texttt{summary.json} lưu commit mã đã chạy, cờ khởi động máy chủ, mô hình nhúng, thời gian của từng hệ, số dòng đầu ra và số dòng được chấm.
+Lệnh chạy đầy đủ của từng hệ nằm trong tệp \texttt{run\_*.py} của mỗi kernel; kết quả được tải về bằng Kaggle CLI và lưu trong thư mục \texttt{results/kaggle/}.
 
-Để kết quả so sánh có ý nghĩa, chúng tôi tuân theo ba nguyên tắc trong toàn bộ chương.
-
-\textit{Thứ nhất, mọi hệ dùng cùng một LLM.} Các baseline được chạy lại từ mã gốc với phiên bản được ghim cố định. Chúng tôi chỉ sửa tầng gọi API để trỏ sang \texttt{llama-server} (địa chỉ máy chủ, tên mô hình), cùng một số chỗ vá tối thiểu khi mã gốc gặp lỗi trên đường chạy này (liệt kê ở mục~\ref{sec:exp-systems}). Nhờ vậy, chênh lệch giữa các hệ phản ánh thiết kế pipeline chứ không phản ánh sức mạnh của mô hình.
-
-\textit{Thứ hai, chỉ so sánh trên cùng benchmark và cùng bộ chấm.} Khi benchmark có mã chấm chính thức (EMERGE, bộ EDC, KnowledgeNet), chúng tôi dùng đúng mã đó. Khi không có (COVID-NYT, NYT11-HRL), chúng tôi cài lại theo mô tả của tác giả và, nếu tác giả có phát hành đầu ra, hiệu chỉnh bằng cách chấm lại đầu ra đó để đối chiếu với số công bố.
-
-\textit{Thứ ba, số lấy từ bài báo được tách riêng.} Các dòng số không do chúng tôi chạy lại được tô nền xám và ghi ``(số công bố)''. Những dòng này chỉ dùng để định vị, không dùng để xếp hạng, vì chúng thường dùng LLM khác và đôi khi dùng một mẫu dữ liệu khác.
+\paragraph*{Nguyên tắc so sánh.}
+\textit{Thứ nhất, mọi hệ dùng cùng một LLM.}
+Các baseline được chạy lại từ mã gốc với phiên bản ghim cố định; chúng tôi chỉ sửa tầng gọi API để trỏ sang \texttt{llama-server}, cùng vài chỗ vá tối thiểu liệt kê ở Mục~\ref{sec:exp-systems}.
+\textit{Thứ hai, mọi hệ được chấm bằng cùng một script}, là script chấm gốc của EDC.
+\textit{Thứ ba, số lấy từ bài báo được tách riêng}: các dòng này tô nền xám, chỉ dùng để định vị, không dùng để xếp hạng, vì chúng dùng LLM khác và có thể dùng mẫu dữ liệu khác.
 
 % ----------------------------------------------------------------------
 \section{Dữ liệu thực nghiệm}\label{sec:exp-data}
 
-Chúng tôi sử dụng chín bộ dữ liệu công khai, đều là benchmark đã được cộng đồng sử dụng; nhờ vậy kết quả so sánh được với các công trình gốc. Bảng~\ref{tab:datasets} tổng hợp nhiệm vụ, kích thước phần dữ liệu đã dùng, nguồn và độ đo của từng bộ. Phần dưới bảng nêu những điểm cần lưu ý khi đọc kết quả.
+Chúng tôi dùng đúng bản dữ liệu trong kho mã EDC tại commit \texttt{02aad17}: tệp văn bản (thư mục \texttt{datasets/}), tệp triple vàng (\texttt{evaluate/references/}), schema (\texttt{schemas/}, mỗi quan hệ kèm một câu mô tả) và ví dụ few-shot (\texttt{few\_shot\_examples/}).
+Mỗi dòng của tệp văn bản là một văn bản ngắn, thường là một câu (dưới đây gọi chung là ``câu''); dòng tương ứng của tệp vàng là danh sách triple (chủ ngữ, quan hệ, tân ngữ).
+Bảng~\ref{tab:datasets} tóm tắt ba bộ dữ liệu; số liệu do chúng tôi đếm trực tiếp trên các tệp này.
 
 \begin{table}[htbp]
 \centering
-\caption{Tổng hợp các bộ dữ liệu sử dụng trong thực nghiệm}\label{tab:datasets}
+\caption{Ba bộ dữ liệu trong thực nghiệm (bản trong kho mã EDC tại commit \texttt{02aad17})}\label{tab:datasets}
 \small
-\begin{tabular}{>{\raggedright\arraybackslash}p{2.2cm} >{\raggedright\arraybackslash}p{2.9cm} >{\raggedright\arraybackslash}p{3.6cm} >{\raggedright\arraybackslash}p{2.3cm} >{\raggedright\arraybackslash}p{2.9cm}}
+\begin{tabular}{l >{\raggedright\arraybackslash}p{4.4cm} r r r c}
 \toprule
-\textbf{Bộ dữ liệu} & \textbf{Nhiệm vụ} & \textbf{Kích thước đã dùng} & \textbf{Nguồn} & \textbf{Độ đo} \\
+\textbf{Bộ dữ liệu} & \textbf{Kiểu nhãn quan hệ} & \textbf{Số câu} & \makecell{\textbf{Số}\\\textbf{quan hệ}} & \makecell{\textbf{Triple}\\\textbf{vàng}} & \makecell{\textbf{Triple/câu}\\\textbf{TB (min; max)}} \\
 \midrule
-EMERGE & Cập nhật KG Wikidata từ đoạn Wikipedia (Exists, Add, Mint+Add, Infer, Deprecate) & 3.500 bài test (7 ảnh chụp $\times$ 5 delta $\times$ 100); gold đã xác nhận: Exists 12.783, Add 2.277, Mint+Add 2.264, Infer 4.170, Deprecate 1.628 & \cite{zaporojets2025emerge}, HuggingFace & Completeness, G-BERTScore-R, khớp QID P/R/F1 \\
-\midrule
-WebNLG & Trích triple theo schema & 1.165 câu, 159 quan hệ, 4.001 triple vàng & repo EDC @\texttt{02aad17}~\cite{zhang2024edc} & Partial/Strict/Exact P/R/F1 \\
-REBEL & Trích triple theo schema & 1.000 câu, 196 quan hệ, 4.000 triple vàng & repo EDC~\cite{zhang2024edc,cabot2021rebel} & như trên \\
-Wiki-NRE & Trích triple theo schema & 1.000 câu, 45 quan hệ, 2.861 triple vàng & repo EDC~\cite{zhang2024edc} & như trên \\
-NYT11-HRL & Trích triple theo schema (Freebase) & test: 369 câu, 370 triple vàng, 12 quan hệ & \cite{takanobu2019hrl,hoffmann2011nyt}, LDC & Khớp chính xác P/R/F1; script EDC \\
-KnowledgeNet & Trích fact theo 15 thuộc tính Wikidata, gán nhãn đầy đủ & fold 4 (dev): 1.022 văn bản, 1.435 đoạn, 2.708 fact & \cite{mesquita2019knowledgenet}, GitHub (CC BY-SA) & Text/Link evaluation P/R/F1 \\
-\midrule
-2020-COVID-NYT & Trích 5-tuple có thời gian, KG tích lũy theo ngày & 122 nhóm ngày (01--06/2020), 3.918 5-tuple vàng (34,2\% có mốc thời gian) & \cite{lairgi2025atom}, HuggingFace & MATCH, HALL, P/R/F1 (metric ATOM) \\
-MINE-1 & Dựng KG từ bài luận, đo khả năng truy xuất fact & 100 bài $\times$ 15 fact & \cite{mo2025kggen}, HuggingFace & MINE accuracy \\
-\midrule
-NBA\-transactions & Cập nhật KG có thay đổi gián tiếp & test: 438 tin; trung bình 17,07 cạnh thêm và 18,37 cạnh xóa mỗi tin & \cite{tang2019gupdate} & F1 tái dựng đồ thị, acc thêm, acc xóa \\
+WebNLG & thuộc tính DBpedia, viết liền kiểu camelCase (\textit{activeYearsStartYear}) & 1.165 & 159 & 4.001 & 3,43 (1; 7) \\
+REBEL~\cite{cabot2021rebel} & nhãn thuộc tính Wikidata (\textit{country}, \textit{date of birth}) & 1.000 & 196 & 4.000 & 4,00 (4; 4) \\
+Wiki-NRE & nhãn thuộc tính Wikidata (\textit{located in the administrative territorial entity}) & 1.000 & 45 & 2.861 & 2,86 (2; 4) \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph*{EMERGE.} Mỗi bài gồm một đoạn Wikipedia viết sau ngày chụp KG, các thực thể được nhắc (\textit{mentions}) kèm mã Wikidata (QID) và tập thao tác vàng. Gold được dựng từ lịch sử sửa đổi Wikidata thật~\cite{vrandecic2014wikidata}, sau đó được một LLM thẩm định (Llama-3.1-405B) xác nhận; độ đồng thuận giữa LLM thẩm định và người đạt $\kappa = 0{,}765$. Bài không kèm KG-trước, nên chúng tôi dựng lại KG-trước từ bảy ảnh chụp Wikidata của benchmark, chỉ giữ các cạnh trong phạm vi một bước (1-hop) quanh các thực thể được nhắc (giữ mọi cạnh đi ra, giữ tối đa 500 cạnh đi vào mỗi thực thể). KG thu gọn này giữ được 99,3\% cạnh Exists vàng và 91,2\% cạnh Deprecate vàng. Nếu chỉ lấy cạnh nối trực tiếp hai thực thể được nhắc (ứng viên 0-hop), tỉ lệ giữ lại là 99,4\% và 90,1\%, với trung vị chỉ 2 cạnh mỗi bài. Cần lưu ý rằng \textit{mentions} chính là các siêu liên kết trong đoạn Wikipedia, nên thực nghiệm của chúng tôi thuộc chế độ ``được cung cấp liên kết thực thể''.
+Ba bộ khác nhau ở những điểm ảnh hưởng tới kết quả. WebNLG có số triple mỗi câu dao động mạnh (từ 1 đến 7) và quan hệ viết theo kiểu định danh của DBpedia.
+REBEL có schema lớn nhất (196 quan hệ), và trong mẫu này mỗi câu có đúng 4 triple vàng; Wiki-NRE có schema nhỏ nhất (45 quan hệ), chủ yếu là quan hệ địa lý và hành chính.
+REBEL và Wiki-NRE trong kho mã EDC là mẫu 1.000 câu; chúng tôi không xác định được mẫu này có trùng với mẫu mà bài báo EDC đã dùng hay không.
 
-\paragraph*{WebNLG, REBEL, Wiki-NRE.} Chúng tôi dùng đúng bản dữ liệu, schema (danh sách quan hệ kèm mô tả) và tệp ví dụ few-shot trong kho mã EDC tại commit \texttt{02aad17}, để so sánh trực tiếp với EDC. Cả pipeline của chúng tôi và EDC đều dùng cùng tệp few-shot của từng bộ. Mẫu 1.000 câu của REBEL và Wiki-NRE trong kho mã EDC không chắc trùng với mẫu mà bài báo EDC đã dùng.
-
-\paragraph*{NYT11-HRL.} Bộ dữ liệu do Takanobu và cộng sự~\cite{takanobu2019hrl} xây dựng trên ngữ liệu New York Times~\cite{hoffmann2011nyt}, quan hệ lấy từ Freebase~\cite{bollacker2008freebase}. Văn bản NYT thuộc bản quyền LDC nên không được công khai lại trong kho mã. Gold rất thưa (khoảng một triple mỗi câu). Chúng tôi chuyển dữ liệu về định dạng của bộ EDC và chọn sáu ví dụ few-shot từ tập huấn luyện. Tập huấn luyện được gán nhãn bằng giám sát xa nên các ví dụ này có nhiễu.
-
-\paragraph*{KnowledgeNet.} Đây là bộ duy nhất trong nhóm trích xuất được gán nhãn \textit{đầy đủ}: trên mỗi đoạn, mọi fact thuộc các thuộc tính được gán đều có nhãn. Dữ liệu chia năm fold; fold 1--3 dùng để huấn luyện, fold 4 là tập phát triển, fold 5 là tập kiểm tra có nhãn bị giấu. Theo hướng dẫn của nhóm tác giả, chúng tôi đánh giá trên fold 4 (1.022 văn bản, 1.435 đoạn, 2.708 fact). Một đặc điểm quan trọng là gold đếm theo từng lần nhắc (\textit{mention}): 49,9\% fact có đại từ ở một đầu, 17,6\% là cùng một fact lặp lại với mention khác. Ví dụ few-shot cho các hệ LLM gồm 15 đoạn, mỗi thuộc tính một đoạn ngắn nhất lấy từ fold 1--3.
-
-\paragraph*{2020-COVID-NYT.} Bộ dữ liệu của nhóm ATOM gồm các đoạn tin New York Times về COVID-19, gom theo ngày, kèm 5-tuple vàng $(h, r, t, t_{\text{start}}, t_{\text{end}})$. Bản phát hành trên HuggingFace chỉ có 122 nhóm ngày (tháng 1--6/2020) và 3.918 5-tuple, trong khi bài báo báo cáo trên 274 nhóm. Vì vậy, số của chúng tôi không so trực tiếp được với số công bố; chúng tôi so với đầu ra GPT-4.1 do tác giả phát hành, được chấm lại trên đúng 122 nhóm. Lời nhắc của pipeline được chỉnh trên 20 nhóm đầu tiên (theo thứ tự ngày); các lượt chạy chính thức không sửa thêm lời nhắc.
-
-\paragraph*{MINE-1.} Bộ dữ liệu của KGGen gồm 100 bài luận, mỗi bài kèm 15 fact cần truy xuất được từ KG dựng ra. Bản trên HuggingFace bị lệch hàng ở khoảng 80\% số hàng: KG và câu trả lời của bài $i-1$ nằm ở hàng $i$. Chúng tôi viết hàm ghép lại (\texttt{score\_mine.realign}) dựa trên độ trùng giữa câu hỏi sinh ra và fact đúng, trước khi chấm lại các KG phát hành.
-
-\paragraph*{NBAtransactions.} Bộ dữ liệu của GUpdater gồm 4.100 tin chuyển nhượng NBA giai đoạn 2010--2019, mỗi tin kèm KG-trước và KG-sau; bài báo chia 3.261/417/422 tin cho huấn luyện/kiểm định/kiểm tra, bản chúng tôi tải về có 438 tin kiểm tra. Mỗi tin làm thay đổi trung bình 17,07 cạnh thêm và 18,37 cạnh xóa, nhưng chỉ 5,6\% thay đổi được nói thẳng trong tin; 94,4\% còn lại là hệ quả gián tiếp, chủ yếu là quan hệ đồng đội (\textit{teammate}).
+\paragraph*{Ví dụ few-shot.}
+Mỗi bộ có sáu ví dụ few-shot cho bước trích (tệp \texttt{oie\_few\_shot\_examples.txt}), mỗi ví dụ gồm một câu và danh sách triple của nó; pipeline và EDC dùng chung đúng tệp này.
+Khi kiểm tra, chúng tôi nhận thấy sáu ví dụ chính là sáu câu đầu tiên của tệp đánh giá ở cả ba bộ.
+Chúng tôi giữ nguyên như kho mã EDC để so sánh được với số công bố; vì hai hệ cùng dùng các ví dụ này, ảnh hưởng (6 trên 1.165 hoặc 1.000 câu) là như nhau với cả hai.
+ATOM dùng lời nhắc và ví dụ của riêng nó ở hai bước đầu (Mục~\ref{sec:exp-systems}).
 
 % ----------------------------------------------------------------------
-\section{Phương pháp đánh giá}\label{sec:exp-metrics}
+\section{Độ đo}\label{sec:exp-metrics}
 
-Mục này định nghĩa các độ đo. Trừ khi nói khác, số liệu được báo trên thang 100 (phần trăm); riêng KnowledgeNet và NBAtransactions giữ thang 0--1 với ba chữ số thập phân như bài báo gốc.
-
-\subsection{Độ đo trên EMERGE}
-
-Gọi $\mathcal{D}$ là tập bài. Với mỗi bài $d$ và thao tác $o \in \{\text{Exists}, \text{Add}, \text{Mint+Add}, \text{Deprecate}\}$, ký hiệu $G_{d,o}$ là tập triple vàng đã xác nhận và $P_{d,o}$ là tập triple dự đoán. Mỗi triple được biểu diễn bằng chuỗi nhãn ``head relation tail'' viết thường; $\mathbf{e}(\cdot)$ là vector all-mpnet-base-v2 đã chuẩn hóa. Độ đo \textit{Completeness} (C) là tỉ lệ triple vàng được ``phủ'' bởi ít nhất một dự đoán có độ tương đồng cosine lớn hơn 0,9, gộp vi mô (\textit{micro}) trên toàn tập:
-\begin{equation}
-C_o = \frac{\sum_{d \in \mathcal{D}} \sum_{g \in G_{d,o}} \mathbb{I}\Big[\max_{p \in P_{d,o}} \cos\big(\mathbf{e}(g), \mathbf{e}(p)\big) > 0{,}9\Big]}{\sum_{d \in \mathcal{D}} |G_{d,o}|}.
-\end{equation}
-
-Độ đo \textit{G-BERTScore-R} (G-R) ghép một-một triple vàng với triple dự đoán trong từng bài. Gọi $S_{ij}$ là điểm BERTScore-F1~\cite{zhang2020bertscore} giữa $g_i$ và $p_j$, và $\pi_d^*$ là phép ghép một-một có tổng điểm lớn nhất, tìm bằng thuật toán Hungarian~\cite{kuhn1955hungarian}. Khi đó:
-\begin{equation}
-\text{G-R}_o = \frac{1}{|\mathcal{D}_o|} \sum_{d \in \mathcal{D}_o} \frac{\sum_{(i,j) \in \pi_d^*} S_{ij}}{|G_{d,o}|},
-\end{equation}
-trong đó $\mathcal{D}_o$ là các bài có gold cho thao tác $o$; bài có gold nhưng không có dự đoán được tính 0. G-R được tính trung bình theo bài (\textit{macro}). Cần nhấn mạnh rằng \textbf{cả C lẫn G-R đều là độ đo recall}: dự đoán thừa không bị trừ điểm. C thưởng việc viết đúng dạng nhãn của KG (nhãn quan hệ Wikidata), còn G-R thưởng sự giống nhau về nghĩa. Để bù cho điểm này, chúng tôi báo thêm độ chính xác khớp QID, tức là so khớp chính xác bộ ba mã Wikidata:
-\begin{equation}
-P^{\text{QID}}_o = \frac{|\hat{P}_o \cap \hat{G}_o|}{|\hat{P}_o|}, \qquad
-R^{\text{QID}}_o = \frac{|\hat{P}_o \cap \hat{G}_o|}{|\hat{G}_o|}, \qquad
-F_1 = \frac{2PR}{P+R}.
-\end{equation}
-trong đó $\hat{P}_o$ và $\hat{G}_o$ là tập bộ ba (QID đầu, mã quan hệ, QID cuối) dự đoán và vàng. Mọi số EMERGE trong chương được chấm bằng mã chấm chính thức của benchmark, chạy trên Kaggle. Để kiểm tra cách dùng bộ chấm, chúng tôi đã chấm lại dự đoán do nhóm EMERGE phát hành cho EDC+ ICL và KGGen (GPT-5.1) và thu được đúng các số trong bài báo.
-
-\subsection{Độ đo trên ba benchmark của EDC và NYT11-HRL}
-
-Script chấm của EDC kế thừa cách chấm của WebNLG: mỗi triple được tách thành ba phần tử (chủ ngữ, quan hệ, tân ngữ), mỗi phần tử được coi như một ``thực thể'' có vai trò. Script ghép triple dự đoán với triple vàng trong từng câu, rồi dùng thư viện nervaluate để đếm số phần tử đúng (COR), sai (INC), khớp một phần (PAR), thừa (SPU) và sót (MIS):
+Chúng tôi chấm mọi hệ bằng script của EDC, vốn kế thừa script chấm của cuộc thi WebNLG.
+Trước khi so khớp, mỗi phần tử của triple được chuẩn hóa: tách chữ viết liền kiểu camelCase (\textit{activeYearsStartYear} thành ``active years start year''), thay dấu gạch dưới bằng khoảng trắng, chuyển về chữ thường, tách từ bằng NLTK và bỏ các token chỉ gồm dấu câu.
+Trong mỗi câu, danh sách triple dự đoán và danh sách triple vàng được đệm thêm triple rỗng cho bằng nhau; script chọn cách ghép một-một giữa hai danh sách có tổng điểm lớn nhất.
+Với mỗi cặp đã ghép, ba phần tử chủ ngữ, quan hệ và tân ngữ được coi như ba ``thực thể'' mang nhãn vai trò SUB, PRED, OBJ, và thư viện nervaluate đếm số phần tử đúng (COR), sai (INC), khớp một phần (PAR), sót (MIS) và thừa (SPU).
+Ba mức khớp khác nhau ở điều kiện để một phần tử được tính là đúng:
+\begin{itemize}
+  \item \textbf{Exact}: chuỗi từ của phần tử dự đoán trùng hoàn toàn với phần tử vàng tương ứng, không xét nhãn vai trò;
+  \item \textbf{Strict}: trùng hoàn toàn và đúng nhãn vai trò;
+  \item \textbf{Partial}: chấp nhận cả trường hợp hai chuỗi chỉ trùng nhau một phần; phần tử khớp một phần được nửa điểm.
+\end{itemize}
+Với $\lambda = 0{,}5$ ở mức Partial và $\lambda = 0$ ở hai mức còn lại:
 \begin{equation}
 P = \frac{\mathrm{COR} + \lambda\,\mathrm{PAR}}{\mathrm{COR} + \mathrm{INC} + \mathrm{PAR} + \mathrm{SPU}}, \qquad
 R = \frac{\mathrm{COR} + \lambda\,\mathrm{PAR}}{\mathrm{COR} + \mathrm{INC} + \mathrm{PAR} + \mathrm{MIS}}, \qquad
 F_1 = \frac{2PR}{P + R}.
 \end{equation}
-Ba chế độ khác nhau ở tiêu chí khớp. \textit{Strict} đòi hỏi chuỗi trùng khớp và đúng vai trò. \textit{Exact} đòi hỏi chuỗi trùng khớp, không xét vai trò. \textit{Partial} chấp nhận khớp một phần với trọng số $\lambda = 0{,}5$ (hai chế độ còn lại có $\lambda = 0$).
+Script tính $P$, $R$, $F_1$ cho từng cặp triple đã ghép rồi lấy trung bình trên mọi cặp của toàn bộ dữ liệu.
+Triple vàng bị ghép với triple rỗng có cả ba phần tử bị tính là sót, còn triple dự đoán bị ghép với triple rỗng bị tính là thừa; vì vậy câu mà hệ không trích được gì (\textit{câu rỗng}) vẫn được chấm và kéo điểm xuống.
+Chúng tôi báo đủ $P$, $R$, $F_1$ ở cả ba mức, trên thang 100.
 
-Script gốc tìm cách ghép bằng cách thử mọi hoán vị của $n = \max(|P|, |G|)$ triple, tức độ phức tạp $O(n!)$. Với các câu có trên mười triple, script gần như không kết thúc. Chúng tôi viết \texttt{scripts/edc\_eval\_fast.py}, thay bước duyệt hoán vị bằng thuật toán Hungarian (độ phức tạp $O(n^3)$) để chọn đúng hoán vị mà script gốc chọn; với $n \le 7$, script vẫn duyệt đủ như bản gốc. Khi so toàn văn đầu ra với script gốc trên toàn bộ WebNLG và một mẫu REBEL, Wiki-NRE, hai bản cho kết quả trùng nhau.
+\paragraph*{Tăng tốc script chấm.}
+Script gốc tìm cách ghép bằng cách thử mọi hoán vị của $n = \max(|P|, |G|)$ triple trong câu, với độ phức tạp $O(n!)$: câu có 10 triple cần duyệt khoảng 3,6 triệu hoán vị, câu 12 triple khoảng 479 triệu.
+Khi một hệ trích nhiều triple cho một câu, script gần như không kết thúc.
+Chúng tôi viết \texttt{scripts/edc\_eval\_fast.py}: giữ nguyên toàn bộ script gốc, chỉ thay bước duyệt hoán vị bằng thuật toán Hungarian~\cite{kuhn1955hungarian}, độ phức tạp $O(n^3)$.
+Thuật toán tìm giá trị ghép tối ưu rồi chọn đúng hoán vị mà script gốc sẽ chọn (hoán vị đầu tiên theo thứ tự từ điển trong số các hoán vị đạt tối ưu); với $n \le 7$, script vẫn duyệt đủ như bản gốc.
+Để kiểm tra tương đương, chúng tôi đã chạy cả hai bản trên đầu ra của pipeline và của EDC: toàn bộ 1.165 câu WebNLG và 30 câu đầu của REBEL và Wiki-NRE.
+Trên REBEL và Wiki-NRE, đầu ra của hai bản trùng nhau hoàn toàn; trên WebNLG, hai bản chỉ lệch nhau ở một dòng, tại chữ số thập phân thứ 17 của một giá trị precision, tức sai số làm tròn số thực.
+Trong mọi lượt chạy chính thức, số dòng được chấm bằng đúng số câu (1.165, 1.000 và 1.000); không câu nào bị bỏ khỏi phép chấm.
 
-Với NYT11-HRL, không có script chấm chính thức. Chúng tôi báo hai loại số: khớp chính xác cả ba phần tử sau khi chuẩn hóa chữ hoa và khoảng trắng (P/R/F1 vi mô, script tự viết), và ba chế độ của script EDC như trên.
-
-\subsection{Độ đo trên 2020-COVID-NYT}
-
-Chúng tôi cài lại metric của ATOM. Với nhóm ngày $k$ có tập vàng $G_k$ và tập dự đoán $P_k$, các cặp (dự đoán, vàng) được sắp theo cosine của chuỗi ``h r t'' giảm dần và ghép tham lam một-một, chỉ nhận cặp có cosine lớn hơn 0,7; gọi $M_k$ là tập cặp đã ghép. Khi đó:
-\begin{equation}
-\mathrm{MATCH}_k = \frac{|M_k|}{|G_k|}, \quad
-\mathrm{HALL}_k = \frac{|P_k| - |M_k|}{|P_k|}, \quad
-P = \frac{1}{K}\sum_{k} \big(1 - \mathrm{HALL}_k\big), \quad
-R = \frac{1}{K}\sum_{k} \mathrm{MATCH}_k, \quad
-F_1 = \frac{2PR}{P+R}.
-\end{equation}
-Nhóm có gold mà hệ trả rỗng được tính 0 cho cả $P$ và $R$. Mô hình nhúng text-embedding-3-large của OpenAI trong bài báo gốc được thay bằng all-mpnet-base-v2. Lựa chọn này được kiểm chứng bằng cách chấm lại đầu ra GPT-4.1 do tác giả phát hành: chúng tôi thu được F1 63,3 cho ATOM hai bước và 49,5 cho trích thẳng, gần với số công bố 63,8 và 50,4 (dù bài báo dùng 274 nhóm).
-
-\subsection{Độ đo trên MINE-1}
-
-Với mỗi bài luận $a$ có tập 15 fact $F_a$, hệ thống dựng một KG riêng. Mỗi fact $f$ được dùng làm truy vấn: lấy 8 nút gần nhất theo all-MiniLM-L6-v2, mở rộng thêm hai bước cạnh để tạo ngữ cảnh $c(f)$, rồi một LLM giám khảo $J$ trả lời ngữ cảnh có chứa fact hay không. Chúng tôi dùng đúng hàm truy xuất của kg-gen 0.4.0 và chép nguyên văn lời nhắc giám khảo:
-\begin{equation}
-\mathrm{MINE} = \frac{1}{|\mathcal{A}|}\sum_{a \in \mathcal{A}} \frac{1}{|F_a|}\sum_{f \in F_a} J\big(f, c(f)\big), \qquad J \in \{0, 1\}.
-\end{equation}
-Bài báo dùng giám khảo của OpenAI; chúng tôi dùng Gemma~4 E4B và chấm lại cả ba KG phát hành để đo độ lệch giữa hai giám khảo. MINE là độ đo thuần recall: cạnh thừa hay sai không bị phạt.
-
-\subsection{Độ đo trên KnowledgeNet}
-
-Chúng tôi chấm bằng \texttt{evaluator.py} của nhóm tác giả. Độ đo chính là \textit{Text evaluation} (chế độ \texttt{span\_overlap}): một fact dự đoán đúng khi có fact vàng cùng thuộc tính mà span chủ ngữ và span tân ngữ đều chồng lên span vàng tương ứng. TP và FN đếm theo fact vàng; FP chỉ tính cho các thuộc tính được gán nhãn trên đoạn đó; P/R/F1 lấy vi mô. \textit{Link evaluation} còn đòi hỏi mã Wikidata đúng ở cả hai đầu. Các hệ LLM không liên kết thực thể với Wikidata nên không chấm được độ đo này.
-
-Do bộ chấm làm việc trên vị trí ký tự, chúng tôi viết \texttt{scripts/score\_knet.py} để đổi triple dạng chữ về span. Với mỗi đầu của triple, script tìm mọi lần xuất hiện trong đoạn (không phân biệt hoa thường, có ranh giới từ), rồi chọn cặp (chủ ngữ, tân ngữ) gần nhau nhất; đầu không tìm thấy thì fact bị bỏ. Ánh xạ này có trần: khi đưa chính các fact vàng (dạng chữ) qua ánh xạ, F1 chỉ đạt 0,933. Ngoài ra, fact dự đoán thuộc thuộc tính không được gán nhãn trên đoạn sẽ bị loại trước khi chấm. Lý do là \texttt{evaluator.py} từ chối cả tệp nếu gặp loại fact này, và giao thức của tác giả cũng chỉ phân loại các thuộc tính đã gán nhãn.
-
-\subsection{Độ đo trên NBAtransactions}
-
-Chúng tôi dùng các độ đo của GUpdater~\cite{tang2019gupdate}. Gọi $B$ là KG-trước, $A^*$ là KG-sau vàng và $\hat{A}$ là KG-sau dự đoán. Trên tập vũ trụ $U = B \cup A^* \cup \hat{A}$, mỗi cạnh được phân loại TP, FP, FN theo việc nó có thuộc $A^*$ và $\hat{A}$ hay không; F1 tái dựng đồ thị được tính từ các đại lượng này. Gọi $E^{+} = A^* \setminus B$ là các cạnh cần thêm và $E^{-} = B \setminus A^*$ là các cạnh cần xóa:
-\begin{equation}
-\mathrm{Acc}_{\text{thêm}} = \frac{|E^{+} \cap \hat{A}|}{|E^{+}|}, \qquad
-\mathrm{Acc}_{\text{xóa}} = \frac{|E^{-} \setminus \hat{A}|}{|E^{-}|}.
-\end{equation}
-Các đại lượng được cộng dồn trên toàn tập kiểm tra trước khi chia.
-
-\subsection{Độ đo không cần gold}
-
-\paragraph*{Độ ổn định giữa các lượt.} Trên COVID-NYT, chúng tôi chạy mỗi hệ ba lượt ($r_1, r_2, r_3$) và đo độ trùng giữa lượt 1 với lượt $r$ trong từng nhóm ngày, theo cách của bài báo ATOM. \textit{Jaccard chính xác} so 5-tuple sau khi chuẩn hóa chữ hoa, khoảng trắng, dấu gạch dưới và đọc thời gian thành tập ngày: $J(A,B) = |A \cap B| / |A \cup B|$. \textit{Jaccard mềm} thay phép giao bằng số cặp $m$ ghép được theo cosine lớn hơn 0,7 (cùng cách ghép của bộ chấm): $\tilde{J}(A,B) = m / (|A| + |B| - m)$. Kết quả được lấy trung bình theo nhóm; nhóm mà cả hai lượt đều rỗng bị bỏ qua.
-
-\paragraph*{Độ chính xác theo văn bản nguồn (``có căn cứ'').} Các độ đo C, G-R và MINE chỉ đo recall, còn gold của NYT11-HRL lại thiếu. Vì vậy, chúng tôi bổ sung một giám khảo LLM (Gemma~4 E4B) xét từng triple: triple ``có căn cứ'' khi văn bản nói ra hoặc suy ra trực tiếp được nó (chấp nhận diễn đạt khác, chấp nhận thay đại từ bằng tên); triple sai nghĩa hoặc vô nghĩa thì không. Mỗi lệnh gọi gồm một văn bản và một lô triple đánh số; đầu ra ép theo JSON schema. Tỉ lệ có căn cứ là số triple được chấp nhận chia cho tổng số triple (vi mô). Đây là một ước lượng precision không cần gold.
-
-\paragraph*{Độ gọn của KG.} Chúng tôi đếm số cặp tên thực thể khác nhau (sau chuẩn hóa) có cosine all-mpnet-base-v2 lớn hơn 0,8 trên KG tích lũy, quy về số cặp trên 100 tên. Chỉ số càng thấp thì KG càng ít tên gần trùng, tức càng gọn.
+\paragraph*{Độ đo chi phí.}
+\textit{Số lệnh gọi LLM mỗi câu} được xác định từ thiết kế của từng hệ (Mục~\ref{sec:exp-systems}); riêng ATOM, chúng tôi đếm được chính xác từ số factoid sinh ra.
+\textit{Thời gian chạy} là thời gian thực trên Kaggle, tính từ lúc khởi chạy hệ đến khi hệ ghi xong đầu ra, không gồm bước chấm điểm.
 
 % ----------------------------------------------------------------------
 \section{Các hệ so sánh}\label{sec:exp-systems}
 
-Bảng~\ref{tab:systems} liệt kê các hệ được so sánh. Nhóm thứ nhất gồm các baseline LLM mà chúng tôi chạy lại bằng Gemma~4 E4B. Nhóm thứ hai gồm các hệ có giám sát hoặc dùng LLM khác, mà chúng tôi lấy số công bố hoặc chấm lại đầu ra do tác giả phát hành.
+Bảng~\ref{tab:systems} tóm tắt ba hệ được chạy bằng Gemma~4 E4B.
 
 \begin{table}[htbp]
 \centering
-\caption{Các hệ so sánh, nguồn và benchmark sử dụng}\label{tab:systems}
+\caption{Ba hệ được chạy với cùng LLM Gemma 4 E4B}\label{tab:systems}
 \small
-\begin{tabular}{>{\raggedright\arraybackslash}p{2.4cm} >{\raggedright\arraybackslash}p{2.8cm} >{\raggedright\arraybackslash}p{5.6cm} >{\raggedright\arraybackslash}p{3.1cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.1cm} >{\raggedright\arraybackslash}p{7.8cm} >{\centering\arraybackslash}p{1.8cm} >{\raggedright\arraybackslash}p{2.3cm}}
 \toprule
-\textbf{Hệ} & \textbf{Nguồn, phiên bản} & \textbf{Cách hoạt động} & \textbf{Benchmark} \\
+\textbf{Hệ} & \textbf{Các bước} & \textbf{Lệnh gọi LLM/câu} & \textbf{Ví dụ few-shot} \\
 \midrule
-Pipeline đề xuất & gói \texttt{kgu/} của khóa luận & Sáu bước ở Chương~\ref{chap:method}; chế độ chạy tùy benchmark (mục~\ref{sec:exp-rq}) & Cả chín bộ \\
-\midrule
-EDC~\cite{zhang2024edc} & clear-nus/edc @\texttt{02aad17} & Trích mở (OIE) $\rightarrow$ định nghĩa schema $\rightarrow$ chuẩn hóa về schema (nhúng e5-mistral-7b-instruct + LLM xác minh); không dùng bước tinh chỉnh & WebNLG, REBEL, Wiki-NRE, NYT11, KnowledgeNet \\
-EDC+ ICL & mã EMERGE @\texttt{f688910} & Bản EDC do nhóm EMERGE sửa để đề xuất cả Deprecate, có few-shot, không chuẩn hóa & EMERGE \\
-ATOM~\cite{lairgi2025atom,lairgi2024itext2kg} & itext2kg 1.1.0 & Tách đoạn thành các factoid rồi trích 5-tuple cho từng factoid; biến thể ``trích thẳng'' trích trên cả đoạn & COVID-NYT \\
-ATOM+EDC & itext2kg 1.1.0 + EDC & Triple của ATOM thay bước OIE của EDC, sau đó chuẩn hóa bằng EDC & WebNLG, REBEL, Wiki-NRE, NYT11, KnowledgeNet \\
-KGGen~\cite{mo2025kggen} & kg-gen 0.4.0 & LLM trích thực thể rồi trích quan hệ (DSPy); tắt bước gom cụm & EMERGE, COVID-NYT, MINE-1 \\
-KGGen+EDC & kg-gen 0.4.0 + EDC & Triple của KGGen thay bước OIE của EDC, sau đó chuẩn hóa bằng EDC & NYT11, KnowledgeNet \\
-\midrule
-KG-aware oracle & dự đoán phát hành trong repo EMERGE & GPT-5.1 được cho triple vàng làm ngữ cảnh; chúng tôi chấm lại & EMERGE \\
-GUpdater~\cite{tang2019gupdate} & số công bố & Mạng nơ-ron đồ thị cập nhật KG theo bản tin & NBA \\
-Baseline 5 & diffbot/knowledge-net & spaCy + neuralcoref + BERT + bộ phân lớp, huấn luyện trên fold 1--3, liên kết thực thể bằng Diffbot; chúng tôi chạy lại & KnowledgeNet \\
-KG phát hành & dataset MINE & KG của KGGen (GPT-4o), GraphRAG~\cite{edge2024graphrag}, OpenIE~\cite{angeli2015openie}; chấm lại & MINE-1 \\
+Pipeline đề xuất & Một bước: trích triple, quan hệ ép bằng \texttt{enum} theo schema của bộ & 1 & 6 ví dụ của bộ (tệp OIE của EDC) \\
+EDC~\cite{zhang2024edc} & Trích mở (OIE) $\rightarrow$ định nghĩa schema $\rightarrow$ chuẩn hóa: nhúng định nghĩa quan hệ, lấy 5 quan hệ ứng viên gần nhất trong schema, LLM xác minh; không dùng bước tinh chỉnh & $\geq 2$ & 6 ví dụ của bộ cho OIE; ví dụ của EDC cho định nghĩa \\
+ATOM+EDC & Tách câu thành factoid $\rightarrow$ trích 5-tuple cho từng factoid (ATOM~\cite{lairgi2025atom,lairgi2024itext2kg}) $\rightarrow$ bỏ hai trường thời gian $\rightarrow$ định nghĩa schema và chuẩn hóa của EDC & $> 4$ & của ATOM ở hai bước đầu; của EDC ở bước sau \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\paragraph*{Điều chỉnh khi chạy baseline.} Theo nguyên tắc ở mục~\ref{sec:exp-principles}, chúng tôi chỉ đổi tầng gọi API. Một số chỗ vá tối thiểu vẫn cần thiết. Với EDC, chúng tôi trỏ nhánh OpenAI sang \texttt{llama-server}, bọc lệnh nhập một mô-đun chỉ dùng cho bước tinh chỉnh (thư viện phụ thuộc đã bị gỡ bỏ), và sửa một lỗi gốc trong khối giải phóng mô hình cuối bước chuẩn hóa. Với ATOM, \texttt{llama-server} chỉ dùng JSON schema để ép văn phạm chứ không đưa mô tả trường vào lời nhắc như API của OpenAI; trong khi hướng dẫn chính của ATOM lại nằm trong mô tả trường. Vì vậy, chúng tôi đưa schema kèm mô tả vào lời nhắc; nếu không, Gemma không thấy được hướng dẫn của ATOM. Với KGGen, bước gom cụm bị tắt: Gemma trả nhãn nằm ngoài danh sách cho phép, khiến vòng thử lại của KGGen chạy khoảng 10 giờ chỉ cho vài bài. Với EDC+ ICL, chúng tôi giữ nguyên lời nhắc và cấu hình sinh, chỉ đổi khối cấu hình LLM.
+\paragraph*{Pipeline đề xuất.}
+Lời nhắc gồm một chỉ dẫn ngắn (chỉ trích fact mà văn bản nói ra, chỉ dùng các quan hệ trong danh sách, viết tên như trong ví dụ), danh sách quan hệ của schema kèm mô tả, sáu ví dụ few-shot, rồi đến câu cần trích; phần cố định đặt trước để \texttt{llama-server} dùng lại bộ nhớ đệm KV giữa các câu.
+Đầu ra là JSON gồm danh sách các bộ (\textit{subject}, \textit{relation}, \textit{object}), trong đó trường \textit{relation} là kiểu \texttt{enum} các quan hệ của schema.
+Sau khi nhận đầu ra, chúng tôi chỉ hậu kiểm nhẹ: bỏ triple có trường rỗng, có chủ ngữ trùng tân ngữ, hoặc bị lặp.
+Pipeline gửi bốn yêu cầu song song, bằng số khe của máy chủ.
+Chúng tôi không chỉnh lời nhắc theo kết quả trên tập đánh giá; lượt chạy thử trên 30 câu đầu chỉ dùng để kiểm tra hạ tầng.
 
-\paragraph*{Hệ không chạy.} SAC-KG không công bố mã nguồn nên không thể chạy lại. KARMA~\cite{lu2025karma} chỉ hỗ trợ API của OpenAI và không công bố bộ dữ liệu. Ngoài ra, mã nguồn KARMA gắn chặt với miền y sinh: bước đọc lọc đoạn văn theo mức liên quan tới tri thức y sinh, còn bước giải quyết xung đột chỉ quyết định giữ hay bỏ triple \textit{mới} chứ không vô hiệu hóa triple cũ, nên về thiết kế không sinh được thao tác Deprecate. Vì vậy, chúng tôi không đưa KARMA vào so sánh chính thức. Với NBAtransactions, các hệ GUpdater và IE + R-GCN chỉ có số công bố trên 422 tin kiểm tra.
+\paragraph*{EDC.}
+Bước trích mở sinh triple với quan hệ tự do, và bước định nghĩa schema yêu cầu LLM viết một câu định nghĩa cho từng quan hệ vừa trích (mỗi bước một lệnh gọi cho mỗi câu).
+Ở bước chuẩn hóa, triple có quan hệ đã nằm sẵn trong schema được giữ nguyên; với triple còn lại, định nghĩa quan hệ được nhúng bằng e5-mistral-7b-instruct, năm quan hệ gần nhất trong schema được lấy làm ứng viên, và LLM chọn một ứng viên (một lệnh gọi mỗi triple).
+Nếu LLM không chọn ứng viên nào, triple bị loại.
+Chúng tôi không chạy bước tinh chỉnh (\textit{refinement}) của EDC; bản có tinh chỉnh, ký hiệu EDC+R, chỉ xuất hiện qua số công bố.
+Mã EDC xử lý các câu tuần tự, mỗi thời điểm một yêu cầu.
+
+\paragraph*{ATOM+EDC.}
+Chúng tôi chạy hai bước của ATOM giống như trong script đánh giá của nhóm tác giả: một lệnh gọi tách mỗi câu thành các factoid, rồi một lệnh gọi trích 5-tuple (\textit{head}, \textit{relation}, \textit{tail}, $t_{\text{start}}$, $t_{\text{end}}$) cho mỗi factoid, với lời nhắc và ví dụ của ATOM.
+Vì benchmark chỉ chấm triple, hai trường thời gian bị bỏ; triple ATOM sau đó thay cho đầu ra bước trích mở của EDC và đi qua hai bước định nghĩa schema và chuẩn hóa của EDC.
+Riêng phần ATOM đã cần 4.264, 4.355 và 3.713 lệnh gọi trên WebNLG, REBEL và Wiki-NRE (3,7, 4,4 và 3,7 lệnh mỗi câu), chưa kể các lệnh của EDC; ATOM gửi yêu cầu bất đồng bộ theo lô 32 câu.
+Chúng tôi cũng thử một biến thể đưa mốc thời gian của ATOM thành triple ngày riêng; biến thể này cho Partial F1 thấp hơn trên cả ba bộ (55,5, 35,2 và 39,7), nên các bảng chỉ báo biến thể không thêm triple ngày.
+
+\paragraph*{Điều chỉnh khi chạy baseline.}
+Với EDC, chúng tôi đặt tên mô hình chứa chuỗi ``gpt'' để mã đi vào nhánh gọi API kiểu OpenAI và trỏ địa chỉ sang \texttt{llama-server}; bọc lệnh nhập một mô-đun chỉ dùng cho bước tinh chỉnh; sửa một lỗi gốc trong khối giải phóng mô hình ở cuối bước chuẩn hóa, vốn cố giải phóng một mô hình cục bộ không tồn tại khi LLM được gọi qua API.
+Với ATOM, \texttt{llama-server} chỉ dùng JSON schema để ép văn phạm chứ không đưa mô tả của các trường vào lời nhắc, trong khi hướng dẫn chính của ATOM lại nằm trong mô tả trường; vì vậy chúng tôi chèn schema kèm mô tả vào lời nhắc để Gemma thấy được hướng dẫn này.
+Ngoài các điểm trên, lời nhắc, ví dụ và cấu hình của baseline được giữ nguyên.
 
 % ----------------------------------------------------------------------
 \section{Kết quả thực nghiệm}\label{sec:exp-results}
 
-Mục này trình bày kết quả theo từng benchmark, nhóm theo câu hỏi nghiên cứu. Trong mọi bảng, dòng nền xám là số công bố (không chạy lại); quy tắc in đậm được ghi trong chú thích từng bảng.
-
-\subsection{EMERGE: cập nhật KG khi được nhìn KG (RQ1)}\label{sec:res-emerge}
-
-\paragraph*{Cách chạy.} Với mỗi bài, chúng tôi lấy các cạnh của KG-trước nối hai thực thể được nhắc làm ứng viên. Gemma phán theo lô 12 cạnh bằng hai câu hỏi tuần tự: cạnh này có còn đúng không (Exists), và nếu không thì nó vừa kết thúc theo đoạn văn hay không (Deprecate). Lời nhắc có ngày chụp KG và vài ví dụ few-shot. Với Add, Gemma nhận các cặp thực thể được nhắc cùng danh sách quan hệ cho phép (lấy từ lân cận một bước) và sinh tối đa năm triple. Sau đó, mô-đun KGShape chuẩn hóa cấu trúc mà không gọi LLM: đảo chiều triple nếu đầu kia mới là đầu thường phát ra quan hệ đó, sửa quan hệ nếu giữa hai đầu chỉ có một quan hệ hợp lệ, và thêm chiều nghịch đảo dựa trên 53 cặp quan hệ nghịch đảo rút ra từ KG-trước. Mint+Add (tạo thực thể mới) chưa được cài đặt; Infer nằm ngoài phạm vi vì đó là tri thức văn bản không nói tới. Toàn bộ 3.500 bài được chấm bằng mã chính thức của EMERGE.
+Bảng~\ref{tab:webnlg}, Bảng~\ref{tab:rebel} và Bảng~\ref{tab:wikinre} trình bày kết quả trên từng bộ; mỗi hệ được chạy một lượt trên mỗi bộ, với nhiệt độ 0.
+Nhóm dòng trên là ba hệ chúng tôi đã chạy bằng Gemma~4 E4B; dòng pipeline tô nền xanh nhạt; số in đậm là tốt nhất trong nhóm này.
+Nhóm dòng dưới, tô nền xám, là số công bố trong bài báo EDC~\cite{zhang2024edc}, chỉ gồm F1. Cột cuối ghi thời gian chạy (phút trên Kaggle T4) và, trong ngoặc, số lệnh gọi LLM cho mỗi câu.
 
 \begin{table}[htbp]
 \centering
-\caption{Kết quả trên EMERGE (3.500 bài), mỗi ô ghi Completeness / G-BERTScore-R}\label{tab:emerge}
-\small
-\setlength{\tabcolsep}{4pt}
-\begin{tabular}{l l c c c c}
+\caption{Kết quả trên WebNLG (1.165 câu, 159 quan hệ), thang 100}\label{tab:webnlg}\label{tab:edc}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l ccc ccc ccc c c}
 \toprule
-\textbf{Hệ} & \textbf{Mô hình} & \textbf{Exists} & \textbf{Add} & \textbf{Mint+Add} & \textbf{Deprecate} \\
+\multirow{2}{*}{\textbf{Hệ}} & \multicolumn{3}{c}{\textbf{Partial}} & \multicolumn{3}{c}{\textbf{Strict}} & \multicolumn{3}{c}{\textbf{Exact}} & \multirow{2}{*}{\makecell{\textbf{Câu}\\\textbf{rỗng}}} & \multirow{2}{*}{\makecell{\textbf{Phút}\\\textbf{(lệnh gọi/câu)}}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+ & P & R & F1 & P & R & F1 & P & R & F1 & & \\
 \midrule
-Pipeline đề xuất & Gemma 4 E4B & \textbf{91,3} / \textbf{90,7} & \textbf{39,3} / \textbf{75,2} & 0 / 0 & \textbf{63,3} / \textbf{67,4} \\
-EDC+ ICL & Gemma 4 E4B & 12,5 / 59,2 & 19,9 / 69,8 & \textbf{19,0} / \textbf{68,8} & 6,3 / 11,4 \\
-KGGen & Gemma 4 E4B & 10,2 / 59,1 & 15,5 / 66,7 & 12,9 / 65,7 & không hỗ trợ \\
+\rowcolor{green!10} Pipeline đề xuất (Gemma 4 E4B) & \textbf{73,7} & \textbf{75,8} & \textbf{74,4} & \textbf{67,8} & \textbf{69,2} & \textbf{68,3} & \textbf{70,6} & \textbf{72,0} & \textbf{71,1} & \textbf{0} & \textbf{20 (1)} \\
+EDC (Gemma 4 E4B) & 69,8 & 72,1 & 70,6 & 63,3 & 64,8 & 63,9 & 66,2 & 67,8 & 66,8 & 7 & 50 ($\geq$2) \\
+ATOM+EDC (Gemma 4 E4B) & 56,2 & 58,1 & 56,8 & 47,4 & 48,5 & 47,8 & 53,1 & 54,2 & 53,4 & 106 & 119 ($>$4) \\
 \midrule
-KG-aware oracle$^{\dagger}$ & GPT-5.1 & 60,4 / 50,3 & 46,5 / 42,9 & 43,2 / 47,6 & 37,4 / 35,8 \\
-\rowcolor{gray!15} EDC+ ICL (số công bố) & GPT-5.1 & 25,7 / 66,3 & 40,2 / 77,5 & 35,6 / 77,3 & 34,8 / 53,2 \\
-\rowcolor{gray!15} EDC+ ICL (số công bố) & Mistral-Large & 16,1 / 53,3 & 30,3 / 70,7 & 27,9 / 71,5 & 31,7 / 53,1 \\
-\rowcolor{gray!15} KGGen (số công bố) & GPT-5.1 & 12,8 / 62,7 & 15,2 / 68,1 & 13,3 / 67,0 & không hỗ trợ \\
+\rowcolor{gray!15} EDC, OIE GPT-4 (số công bố) & -- & -- & 78,3 & -- & -- & 73,3 & -- & -- & 75,6 & -- & -- \\
+\rowcolor{gray!15} EDC, OIE Mistral-7B (số công bố) & -- & -- & 72,8 & -- & -- & 67,2 & -- & -- & 69,6 & -- & -- \\
+\rowcolor{gray!15} EDC+R, GPT-4 (số công bố) & -- & -- & 82,0 & -- & -- & 78,6 & -- & -- & 80,0 & -- & -- \\
+\rowcolor{gray!15} REGEN, có giám sát (số công bố) & -- & -- & 76,7 & -- & -- & 72,0 & -- & -- & 72,3 & -- & -- \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 
 \smallskip
-\parbox{\textwidth}{\small In đậm: tốt nhất trong ba hệ cùng chạy bằng Gemma~4 E4B. $^{\dagger}$Oracle được cho triple vàng làm ngữ cảnh; chúng tôi chấm lại dự đoán do nhóm EMERGE phát hành. Dòng xám là số trong bài báo EMERGE (Mistral-Large là bản 2411); chúng tôi đã chấm lại dự đoán phát hành của EDC+ ICL và KGGen (GPT-5.1) và thu được đúng các số này. C và G-R đều là recall.}
-\end{table}
-
-Bảng~\ref{tab:emerge} cho thấy pipeline đề xuất vượt trội ở hai thao tác mà nó được thiết kế để giải quyết. Với Exists, Completeness đạt 91,3, cao hơn EDC+ ICL cùng chạy bằng Gemma 78,8 điểm, cao hơn EDC+ ICL dùng GPT-5.1 (số công bố) 65,6 điểm và cao hơn cả oracle GPT-5.1 30,9 điểm. Với Deprecate, Completeness đạt 63,3, so với 6,3 của EDC+ ICL Gemma, 34,8 của EDC+ ICL GPT-5.1 và 37,4 của oracle. Vì ba hệ đầu bảng dùng cùng một mô hình 4B, phần chênh lệch này đến từ thiết kế pipeline chứ không phải từ mô hình. Có hai nguyên nhân chính. Thứ nhất, ứng viên được lấy thẳng từ KG nên mang đúng nhãn quan hệ Wikidata, trong khi C chỉ coi một triple vàng là được phủ khi chuỗi ``head relation tail'' gần trùng nhãn KG; các hệ trích tự do phải tự viết lại nhãn này, và Gemma thường viết sai dạng. Nhiều cạnh Exists còn là tri thức nền không được viết thành câu chữ trong đoạn văn, nên hệ chỉ đọc văn bản khó phủ được. Thứ hai, Deprecate được biến thành câu hỏi phân loại trên từng cạnh có sẵn, kèm ngày chụp KG. Trong khi đó, EDC+ ICL buộc mô hình tự nghĩ ra hành động DEPRECATE trong lúc trích, và Gemma gần như không làm vậy.
-
-Cần đọc kết quả Exists một cách thận trọng. Tập ứng viên 0-hop đã phủ 99,4\% Exists vàng với trung vị 2 cạnh mỗi bài, nên phần lớn điểm Exists đến từ việc tra KG. Nhiệm vụ chính của bộ phán là \textit{không} vô hiệu nhầm những cạnh còn đúng, đồng thời tách ra được các cạnh vừa hết hiệu lực. Ngoài ra, pipeline dùng \textit{mentions} có sẵn QID, tức là được cung cấp liên kết thực thể; về lượng thông tin đầu vào, nó nằm giữa các hệ tự liên kết thực thể và oracle được cho triple vàng.
-
-Với Add, pipeline đạt C 39,3, xấp xỉ EDC+ ICL GPT-5.1 (40,2, thấp hơn 0,9 điểm) và gấp đôi EDC+ ICL cùng chạy bằng Gemma (19,9), nhưng vẫn thấp hơn oracle (46,5). Mint+Add bằng 0 vì pipeline chưa tạo thực thể mới. Đây là phần việc còn bỏ ngỏ.
-
-\begin{table}[htbp]
-\centering
-\caption{Khớp chính xác QID trên EMERGE (F1)}\label{tab:emerge-qid}
-\small
-\begin{tabular}{l l c c c}
-\toprule
-\textbf{Hệ} & \textbf{Mô hình} & \textbf{Exists} & \textbf{Add} & \textbf{Deprecate} \\
-\midrule
-Pipeline đề xuất & Gemma 4 E4B & \textbf{69,6} & 16,7 & \textbf{44,5} \\
-KG-aware oracle & GPT-5.1 & 49,7 & \textbf{32,5} & 34,0 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Vì C và G-R không phạt dự đoán thừa, chúng tôi báo thêm F1 khớp chính xác QID ở Bảng~\ref{tab:emerge-qid}. Pipeline vẫn dẫn ở Exists (69,6 so với 49,7) và Deprecate (44,5 so với 34,0), nhưng thua rõ ở Add (16,7 so với 32,5). Nguyên nhân là bước Add sinh tối đa năm triple mỗi bài; điều này nâng recall nhưng kéo precision xuống, và chỉ lộ ra khi đo khớp chính xác. Ở Deprecate, phần lớn sai số precision thuộc về trần dữ liệu. Phân tích trên tập phát triển 350 bài (một tập con của tập đánh giá, dùng khi xây dựng bộ phán) cho thấy precision Deprecate khoảng 0,45. Trong đó, 15/145 cạnh Deprecate vàng không hề được đoạn văn nhắc tới, và 26/91 phán thừa thực chất là chiều ngược lại của một cạnh vàng (Wikidata lưu cả hai chiều, gold chỉ chọn một chiều và không theo quy luật cố định). Lỗi thật còn lại chủ yếu là các đoạn văn dùng thì quá khứ cho việc đã kết thúc từ lâu (kiểu ``previously played for''), khiến mô hình phán nhầm là vừa kết thúc. Về tốc độ, pipeline mất 0,96 giây mỗi bài cho Exists/Deprecate (3.234 lệnh gọi theo lô 12 cạnh) và 1,32 giây mỗi bài cho Add trên T4.
-
-\subsection{Ba benchmark của EDC: WebNLG, REBEL, Wiki-NRE (RQ2)}\label{sec:res-edc}
-
-\paragraph*{Cách chạy.} Ở đây chỉ dùng module trích của pipeline: một lệnh gọi cho mỗi câu, quan hệ bị ép bằng \texttt{enum} vào schema của bộ dữ liệu (159, 196 và 45 quan hệ kèm mô tả), dùng chung tệp few-shot OIE của EDC. EDC chạy đủ ba bước với mô hình nhúng e5-mistral-7b-instruct như bài báo, không dùng bước tinh chỉnh. Mọi đầu ra được chấm bằng script EDC qua \texttt{edc\_eval\_fast.py}. Lời nhắc của pipeline không được sửa sau lượt chạy thử (lượt thử chỉ dùng để dò hạ tầng).
-
-\begin{table}[htbp]
-\centering
-\caption{Kết quả trên ba benchmark của EDC (F1 theo ba chế độ chấm; P/R ở chế độ Partial)}\label{tab:edc}
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{l l c c c c c c}
-\toprule
-\textbf{Hệ} & \textbf{Mô hình} & \textbf{P} & \textbf{R} & \textbf{Partial} & \textbf{Strict} & \textbf{Exact} & \textbf{Phút} \\
-\midrule
-\multicolumn{8}{l}{\textit{WebNLG (1.165 câu, 159 quan hệ)}} \\
-Pipeline đề xuất & Gemma 4 E4B & \textbf{73,7} & \textbf{75,8} & \textbf{74,4} & \textbf{68,3} & \textbf{71,1} & \textbf{20} \\
-EDC & Gemma 4 E4B & 69,8 & 72,1 & 70,6 & 63,9 & 66,8 & 50 \\
-ATOM+EDC & Gemma 4 E4B & -- & -- & 56,8 & 47,8 & 53,4 & 119 \\
-\rowcolor{gray!15} EDC (số công bố) & GPT-4 (OIE) & -- & -- & 78,3 & 73,3 & 75,6 & -- \\
-\rowcolor{gray!15} EDC (số công bố) & Mistral-7B (OIE) & -- & -- & 72,8 & 67,2 & 69,6 & -- \\
-\rowcolor{gray!15} EDC+R (số công bố) & GPT-4 & -- & -- & 82,0 & 78,6 & 80,0 & -- \\
-\rowcolor{gray!15} REGEN (số công bố) & có giám sát & -- & -- & 76,7 & 72,0 & 72,3 & -- \\
-\midrule
-\multicolumn{8}{l}{\textit{REBEL (1.000 câu, 196 quan hệ)}} \\
-Pipeline đề xuất & Gemma 4 E4B & \textbf{54,9} & \textbf{55,9} & \textbf{55,3} & \textbf{50,7} & \textbf{52,1} & \textbf{21} \\
-EDC & Gemma 4 E4B & 48,8 & 49,8 & 49,2 & 44,4 & 46,2 & 61 \\
-ATOM+EDC & Gemma 4 E4B & -- & -- & 40,3 & 32,6 & 36,1 & 135 \\
-\rowcolor{gray!15} EDC (số công bố) & GPT-4 (OIE) & -- & -- & 54,6 & 50,0 & 51,4 & -- \\
-\rowcolor{gray!15} EDC (số công bố) & Mistral-7B (OIE) & -- & -- & 51,6 & 45,3 & 48,3 & -- \\
-\rowcolor{gray!15} EDC+R (số công bố) & GPT-4 & -- & -- & 60,1 & 55,9 & 57,4 & -- \\
-\rowcolor{gray!15} GenIE (số công bố) & có giám sát & -- & -- & 38,5 & 35,6 & 36,4 & -- \\
-\midrule
-\multicolumn{8}{l}{\textit{Wiki-NRE (1.000 câu, 45 quan hệ)}} \\
-Pipeline đề xuất & Gemma 4 E4B & \textbf{66,0} & \textbf{66,4} & \textbf{66,2} & \textbf{65,1} & \textbf{65,3} & \textbf{15} \\
-EDC & Gemma 4 E4B & 62,0 & 62,5 & 62,2 & 60,8 & 61,3 & 41 \\
-ATOM+EDC & Gemma 4 E4B & -- & -- & 40,7 & 28,5 & 39,1 & 102 \\
-\rowcolor{gray!15} EDC (số công bố) & GPT-4 (OIE) & -- & -- & 68,3 & 67,7 & 67,8 & -- \\
-\rowcolor{gray!15} EDC (số công bố) & Mistral-7B (OIE) & -- & -- & 64,7 & 63,7 & 63,9 & -- \\
-\rowcolor{gray!15} EDC+R (số công bố) & GPT-4 & -- & -- & 71,3 & 70,9 & 70,9 & -- \\
-\rowcolor{gray!15} GenIE (số công bố) & có giám sát & -- & -- & 48,4 & 46,3 & 47,8 & -- \\
-\bottomrule
-\end{tabular}
-
-\smallskip
-\parbox{\textwidth}{\small In đậm: tốt nhất trong các hệ chạy bằng Gemma~4 E4B (với cột thời gian: nhanh nhất). ``Phút'' là thời gian chạy hệ trên Kaggle T4, chưa tính chấm điểm. Dòng xám lấy từ bài báo EDC~\cite{zhang2024edc}; trong đó chỉ bước OIE đổi LLM, các bước còn lại dùng GPT-3.5, và mẫu REBEL/Wiki-NRE có thể khác mẫu của chúng tôi. EDC+R là EDC có bước tinh chỉnh. ATOM+EDC chỉ có số F1.}
-\end{table}
-
-Bảng~\ref{tab:edc} cho thấy, khi cùng dùng Gemma~4 E4B, module trích của pipeline vượt EDC trên cả ba benchmark của chính EDC: Partial F1 cao hơn 3,8 điểm (WebNLG), 6,1 điểm (REBEL) và 4,0 điểm (Wiki-NRE); Strict F1 cao hơn lần lượt 4,4, 6,3 và 4,3 điểm; Exact F1 cao hơn 4,3, 5,9 và 4,0 điểm. Precision và recall đều tăng, nên mức tăng không đến từ việc đánh đổi giữa hai đại lượng. Pipeline chỉ cần một lệnh gọi mỗi câu, trong khi EDC cần ít nhất hai lệnh gọi cộng thêm các lệnh xác minh quan hệ; nhờ vậy pipeline nhanh hơn khoảng 2,5 đến 3 lần (20 so với 50 phút, 21 so với 61 phút, 15 so với 41 phút). Trên WebNLG, pipeline không để câu nào rỗng, còn EDC để rỗng 7 câu. Khoảng cách lớn nhất nằm ở REBEL, bộ có schema lớn nhất (196 quan hệ). Điều này phù hợp với lập luận thiết kế: chọn quan hệ trong schema ngay lúc trích bằng constrained decoding tránh được lỗi tích lũy của cách trích tự do rồi chuẩn hóa về một schema lớn.
-
-Biến thể ATOM+EDC thấp hơn EDC nhiều (Partial F1 56,8, 40,3 và 40,7), có nhiều câu rỗng sau bước chuẩn hóa (106, 47 và 217 câu) và chạy chậm hơn EDC khoảng 2,2 đến 2,5 lần. Trên câu đơn lẻ với schema cố định, việc tách thành factoid kiểu ATOM không giúp ích: factoid được viết lại bằng từ ngữ của ATOM, bước chuẩn hóa của EDC khó đưa chúng về đúng quan hệ của schema. Một phần chênh lệch cũng vì ATOM dùng ví dụ của riêng nó chứ không dùng few-shot của bộ dữ liệu. Kết quả này còn cho thấy phần hơn EDC của pipeline trên ba bộ này không đến từ việc tách câu, vì ở chế độ trích theo schema pipeline không dùng bước rút câu đơn.
-
-So với số công bố (dòng xám), cần nhớ rằng bài báo EDC chỉ đổi LLM ở bước OIE, còn các bước khác dùng GPT-3.5. Dù vậy, pipeline với mô hình 4B lượng tử hóa đã cao hơn EDC dùng Mistral-7B ở bước OIE trên cả ba bộ, cao hơn EDC dùng GPT-4 trên REBEL (55,3 so với 54,6), nhưng còn thấp hơn EDC dùng GPT-4 trên WebNLG (74,4 so với 78,3) và Wiki-NRE (66,2 so với 68,3). EDC+R (có bước tinh chỉnh, GPT-4) vẫn cao nhất trên cả ba bộ. Bước tinh chỉnh này độc lập với module trích của chúng tôi và có thể ghép thêm trong tương lai.
-
-\subsection{NYT11-HRL: gold thưa (RQ2)}\label{sec:res-nyt11}
-
-\begin{table}[htbp]
-\centering
-\caption{Kết quả trên NYT11-HRL (369 câu, 370 triple vàng), mọi hệ dùng Gemma 4 E4B}\label{tab:nyt11}
-\small
-\begin{tabular}{l c c c c c c c}
-\toprule
-& \multicolumn{3}{c}{\textbf{Khớp chính xác}} & \multicolumn{3}{c}{\textbf{Script EDC (F1)}} & \\
-\cmidrule(lr){2-4} \cmidrule(lr){5-7}
-\textbf{Hệ} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{Partial} & \textbf{Strict} & \textbf{Exact} & \textbf{Có căn cứ} \\
-\midrule
-Pipeline đề xuất & 8,9 & 20,8 & 12,5 & \textbf{31,2} & \textbf{22,1} & \textbf{30,7} & 78,4 \\
-EDC & 11,5 & \textbf{24,1} & \textbf{15,5} & 28,5 & 19,6 & 27,9 & 79,8 \\
-KGGen+EDC & 10,3 & 16,8 & 12,8 & 26,5 & 18,3 & 25,2 & \textbf{82,7} \\
-ATOM+EDC & \textbf{12,1} & 14,9 & 13,3 & 23,5 & 17,1 & 22,2 & 80,7 \\
-\bottomrule
-\end{tabular}
-
-\smallskip
-\parbox{\textwidth}{\small In đậm: tốt nhất trong cột. ``Có căn cứ'': tỉ lệ triple được giám khảo Gemma xác nhận là có trong câu nguồn.}
-\end{table}
-
-Mọi hệ đều có điểm thấp trên NYT11-HRL (Bảng~\ref{tab:nyt11}), và nguyên nhân chủ yếu nằm ở dữ liệu. Gold chỉ có khoảng một triple mỗi câu, trong khi các hệ trích trung bình 2,1 đến 2,3 triple; vì vậy precision khớp chính xác không vượt quá 12,1 dù giám khảo xác nhận 78--83\% triple trích ra là có căn cứ trong câu. Khớp chính xác còn đòi hỏi tên thực thể trùng nguyên văn với gold. Gold dồn vào các quan hệ địa điểm vốn dễ sai chiều: \texttt{/location/location/contains} chiếm 44\% gold nhưng pipeline chỉ thu hồi được 6\%; \texttt{/location/administrative\_division/country} có 95 triple vàng, thu hồi 12\%. Ngược lại, với các quan hệ có chiều rõ ràng như \texttt{/business/person/company} và \texttt{/people/person/nationality}, recall lần lượt đạt 86\% và 78\%. Sáu ví dụ few-shot lấy từ tập huấn luyện được gán nhãn bằng giám sát xa nên chứa nhiễu.
-
-Thứ hạng các hệ cũng không ổn định giữa hai cách chấm. Theo khớp chính xác, EDC dẫn đầu F1 (15,5) và pipeline đứng cuối (12,5); theo script EDC, pipeline dẫn đầu cả ba chế độ (Partial 31,2). Tỉ lệ có căn cứ của pipeline (78,4) cũng thấp nhất trong bốn hệ. Vì chênh lệch nhỏ và đảo chiều theo cách chấm, chúng tôi chỉ coi NYT11-HRL là bằng chứng phụ: benchmark này cho thấy giới hạn của gold thưa nhiều hơn là phân biệt được các hệ.
-
-\subsection{KnowledgeNet: gold đầy đủ theo từng mention (RQ2)}\label{sec:res-knet}
-
-\begin{table}[htbp]
-\centering
-\caption{Kết quả trên KnowledgeNet (Text evaluation, chấm bằng \texttt{evaluator.py} của tác giả)}\label{tab:knet}
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{l l c c c c c}
-\toprule
-\textbf{Hệ} & \textbf{Huấn luyện} & \textbf{P} & \textbf{R} & \textbf{F1} & \textbf{Link F1} & \textbf{\makecell{Có căn\\cứ (\%)}} \\
-\midrule
-\rowcolor{gray!15} Baseline 5 (số công bố, fold 5) & fold 1--3 & 0,68 & 0,70 & 0,69 & 0,50 & -- \\
-Baseline 5 (chạy lại, fold 4) & fold 1--3 & 0,718 & \textbf{0,691} & \textbf{0,704} & \textbf{0,511} & -- \\
-\midrule
-Pipeline đề xuất & 15 few-shot & \textbf{0,778} & 0,430 & 0,554 & -- & \textbf{91,1} \\
-EDC & 15 few-shot & 0,768 & 0,385 & 0,513 & -- & 88,2 \\
-KGGen+EDC & 15 few-shot & 0,696 & 0,329 & 0,447 & -- & 87,0 \\
-ATOM+EDC & 15 few-shot & 0,625 & 0,187 & 0,288 & -- & 80,4 \\
-\bottomrule
-\end{tabular}
-
-\smallskip
-\parbox{\textwidth}{\small In đậm: tốt nhất trong các hệ chạy trên fold 4. Các hệ LLM dùng Gemma~4 E4B và không liên kết Wikidata nên không có Link F1. Baseline 5 chạy lại: TP 1.872, FP 737, FN 836; Link P/R 0,557/0,472; một văn bản (1/1.022) làm sập tiến trình nên bị bỏ. Pipeline: TP 1.164, FP 332, FN 1.544.}
-\end{table}
-
-Trước hết, lượt chạy lại Baseline 5 trên fold 4 cho kết quả khớp với README của nhóm tác giả (F1 0,704). Điều này xác nhận cách chúng tôi dùng bộ chấm là đúng. Trong bốn hệ LLM cùng chạy bằng Gemma (Bảng~\ref{tab:knet}), pipeline đạt F1 cao nhất (0,554, so với 0,513 của EDC, 0,447 của KGGen+EDC và 0,288 của ATOM+EDC) và có tỉ lệ có căn cứ cao nhất (91,1). Precision của pipeline (0,778) còn cao hơn cả Baseline 5 có giám sát (0,718).
-
-Điểm yếu nằm ở recall: 0,430, so với 0,691 của Baseline 5. Vì vậy F1 của pipeline vẫn thấp hơn Baseline 5 khoảng 0,15. Nguyên nhân chính là cách đếm của gold. Gold đếm theo từng mention: 49,9\% fact có đại từ ở một đầu và 17,6\% là cùng một fact lặp lại với mention khác. Trong khi đó, LLM có xu hướng trích mỗi fact một lần bằng tên đầy đủ, và bước ánh xạ chỉ gán mỗi triple vào một cặp mention. Chính bước ánh xạ này có trần 0,933 ngay cả khi đầu vào là gold. Cụ thể, pipeline trích 2.809 triple, định vị được 2.768 triple trong văn bản, nhưng chỉ 1.310 triple thuộc các thuộc tính được gán nhãn trên đoạn tương ứng và được đưa vào chấm. Ngoài ra, Baseline 5 được huấn luyện có giám sát trên ba fold, còn các hệ LLM chỉ có 15 ví dụ few-shot. Cuối cùng, fold 4 là tập phát triển, không phải tập kiểm tra chính thức.
-
-\subsection{2020-COVID-NYT: KG tích lũy theo ngày (RQ3)}\label{sec:res-covid}
-
-\paragraph*{Cách chạy.} Pipeline xử lý 122 nhóm ngày theo thứ tự thời gian với KG tích lũy hai chiều thời gian (\texttt{TemporalKG}). Với mỗi nhóm, pipeline rút câu đơn (bước [0]) rồi trích fact theo câu đã đánh số. LLM thấy các fact đã lưu có liên quan và danh sách quan hệ đang dùng, rồi trả về fact mới (kèm $t_{\text{start}}$, $t_{\text{end}}$) và các fact cũ không còn đúng (bước [1]--[2]). Cứ sau 10 nhóm, bước gộp tên [6] chạy với ngưỡng cosine 0,75. Mỗi hệ được chạy ba lượt độc lập.
-
-\begin{table}[htbp]
-\centering
-\caption{Kết quả trên 2020-COVID-NYT (122 nhóm ngày, metric ATOM)}\label{tab:covid}
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{l c c c c c c c}
-\toprule
-\textbf{Hệ} & \textbf{P} & \textbf{R} & \textbf{\makecell{F1\\(TB $\pm$ đlc)}} & \textbf{\makecell{Có\\căn cứ}} & \textbf{\makecell{Tên gần\\trùng}} & \textbf{\makecell{Lệnh gọi/\\nhóm}} & \textbf{Phút} \\
-\midrule
-\multicolumn{8}{l}{\textit{Gemma 4 E4B (P, R, F1: trung bình ba lượt chạy)}} \\
-Pipeline đề xuất & 65,0 & 40,5 & 49,9 $\pm$ 0,2 & 96,2 & 20,1 & 5,5 & 57 \\
-ATOM 2 bước & 67,6 & \textbf{43,3} & \textbf{52,8} $\pm$ 0,5 & 94,8 & 26,4 & 11 & 49 \\
-ATOM trích thẳng & \textbf{73,9} & 25,6 & 38,1 $\pm$ 0,2 & \textbf{97,7} & \textbf{14,4} & \textbf{1} & 23 \\
-KGGen & 72,7 & 36,5 & 48,5 $\pm$ 0,2 & 97,1 & 27,1 & 2 & \textbf{15} \\
-\midrule
-\multicolumn{8}{l}{\textit{GPT-4.1: đầu ra do tác giả phát hành, chúng tôi chấm lại trên 122 nhóm}} \\
-ATOM 2 bước & 56,3 & 72,3 & 63,3 & 90,5 & 46,1 & -- & -- \\
-ATOM trích thẳng & 65,6 & 39,8 & 49,5 & 95,1 & -- & -- & -- \\
-\midrule
-\multicolumn{8}{l}{\textit{GPT-4.1: số công bố trong bài báo ATOM (274 nhóm)}} \\
-\rowcolor{gray!15} ATOM 2 bước & -- & -- & 63,8 & -- & -- & -- & -- \\
-\rowcolor{gray!15} ATOM trích thẳng & -- & -- & 50,4 & -- & -- & -- & -- \\
-\bottomrule
-\end{tabular}
-
-\smallskip
-\parbox{\textwidth}{\small In đậm: tốt nhất trong nhóm Gemma (với ``Tên gần trùng'', ``Lệnh gọi/nhóm'', ``Phút'': thấp nhất). đlc: độ lệch chuẩn giữa ba lượt. ``Tên gần trùng'': số cặp tên thực thể có cosine lớn hơn 0,8 trên 100 tên của KG tích lũy (thấp là gọn). ``Lệnh gọi/nhóm'' là giá trị xấp xỉ. ``Có căn cứ'', ``Tên gần trùng'', số lệnh gọi và thời gian tính trên lượt 1.}
-\end{table}
-
-Bảng~\ref{tab:covid} cho thấy pipeline đạt F1 49,9, \textbf{thấp hơn ATOM hai bước 2,9 điểm}, nhỉnh hơn KGGen 1,4 điểm và cao hơn ATOM trích thẳng 11,8 điểm. Khoảng cách với ATOM nằm chủ yếu ở recall (40,5 so với 43,3). ATOM tách mỗi đoạn thành các factoid rồi gọi LLM riêng cho từng factoid (khoảng 11 lệnh gọi mỗi nhóm), tức là dùng nhiều lệnh gọi hơn để đổi lấy recall; pipeline dùng khoảng 5,5 lệnh gọi mỗi nhóm, kể cả các lệnh gộp tên. Precision của pipeline (65,0) thấp nhất trong nhóm Gemma. Tuy vậy, tỉ lệ có căn cứ 96,2 cho thấy phần lớn fact không ghép được với gold vẫn được văn bản nói tới; một phần ``precision thấp'' vì thế phản ánh gold chưa liệt kê hết fact. Dòng GPT-4.1 cho thấy mô hình có ảnh hưởng lớn hơn khác biệt giữa các pipeline: cùng thiết kế ATOM, chuyển từ GPT-4.1 sang Gemma làm F1 giảm từ 63,3 xuống 52,8. Đồng thời, số chấm lại (63,3 và 49,5) gần với số công bố trên 274 nhóm (63,8 và 50,4), xác nhận bộ chấm cài lại.
-
-Về RQ3, chúng tôi so sánh trực tiếp trong cùng một lượt chạy trên 122 nhóm. Bản v0 (trích thẳng một lệnh gọi mỗi nhóm, không rút câu đơn, không gộp tên) đạt F1 42,5. Bản đầy đủ v2 (rút câu đơn và gộp tên) đạt 50,1, tăng 7,6 điểm. Phần lớn mức tăng đến từ việc rút câu đơn làm tăng recall; bước gộp tên tác động chủ yếu lên độ gọn của KG. Với 20,1 cặp tên gần trùng trên 100 tên, KG của pipeline gọn hơn ATOM (26,4), KGGen (27,1) và nhất là đầu ra GPT-4.1 của ATOM (46,1). Chỉ ATOM trích thẳng gọn hơn (14,4), nhưng hệ này trích ít fact nhất (recall 25,6). Cần lưu ý rằng benchmark này chỉ đo chất lượng trích; nó không đo việc vô hiệu hóa fact cũ, vốn là mục tiêu chính của pipeline.
-
-\subsection{MINE-1: KG dựng từ bài luận (RQ3)}\label{sec:res-mine}
-
-\paragraph*{Cách chạy.} Mỗi bài luận được xử lý như một chuỗi đoạn văn: mỗi đoạn qua một lượt rút câu đơn và cập nhật KG, cuối bài chạy gộp tên một lần. KGGen chạy bằng Gemma với bước gom cụm bị tắt (mục~\ref{sec:exp-systems}). Ba KG do bộ dữ liệu phát hành được chấm lại bằng cùng giám khảo Gemma.
-
-\begin{table}[htbp]
-\centering
-\caption{Kết quả trên MINE-1 (100 bài luận), giám khảo Gemma 4 E4B}\label{tab:mine}
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{l l c c c c c}
-\toprule
-\textbf{Hệ} & \textbf{Mô hình} & \textbf{\makecell{Có căn\\cứ (P)}} & \textbf{\makecell{MINE\\(R)}} & \textbf{\makecell{Số\\triple}} & \textbf{\makecell{Quan\\hệ/bài}} & \textbf{\makecell{Giây/\\bài}} \\
-\midrule
-Pipeline đề xuất & Gemma 4 E4B & 94,0 & \textbf{85,4} & 7.161 & 71,6 & 178 \\
-KGGen (tắt gom cụm) & Gemma 4 E4B & \textbf{98,6} & 75,9 & 4.687 & 46,9 & \textbf{34} \\
-\midrule
-KGGen phát hành & GPT-4o & 94,7 & 68,7 & 6.939 & 71,6 & -- \\
-GraphRAG phát hành & -- & 86,5 & 37,5 & 1.072 & 12,7 & -- \\
-OpenIE phát hành & -- & 67,6 & 44,9 & 25.258 & 267 & -- \\
-\rowcolor{gray!15} KGGen (số công bố) & GPT-4o & -- & 66,07 & -- & -- & -- \\
-\rowcolor{gray!15} GraphRAG (số công bố) & -- & -- & 47,80 & -- & -- & -- \\
-\rowcolor{gray!15} OpenIE (số công bố) & -- & -- & 29,84 & -- & -- & -- \\
-\bottomrule
-\end{tabular}
-
-\smallskip
-\parbox{\textwidth}{\small In đậm: tốt nhất trong cột. Điểm MINE tính trên đủ 100 bài, bài không có KG tính 0. Chỉ tính trên các bài có KG, các KG phát hành đạt: KGGen 72,4 (95 bài), GraphRAG 44,6 (84 bài), OpenIE 47,2 (95 bài). Bài báo KGGen còn báo cáo 73 với Claude Sonnet 3.5 và 44 với Gemini 2.0 Flash.}
-\end{table}
-
-Pipeline đạt điểm MINE cao nhất (85,4, Bảng~\ref{tab:mine}), hơn KGGen cùng chạy bằng Gemma 9,5 điểm và hơn KG do KGGen phát hành (GPT-4o) 16,7 điểm khi cùng một giám khảo. Tuy nhiên, kết quả này cần được đọc cùng ba lưu ý. Thứ nhất, MINE là độ đo thuần recall nên KG lớn và tên thực thể dài có lợi. KG của pipeline có 7.161 triple (71,6 quan hệ mỗi bài), nhiều hơn KGGen-Gemma (4.687 triple, 46,9 quan hệ mỗi bài). Đổi lại, tỉ lệ có căn cứ của pipeline (94,0) thấp hơn KGGen-Gemma (98,6). Thứ hai, chi phí của pipeline cao hơn khoảng năm lần (178 so với 34 giây mỗi bài) do có thêm bước rút câu, cập nhật theo từng đoạn và gộp tên. Thứ ba, giám khảo Gemma lệch so với giám khảo gốc một cách không đều: so với số chấm bằng giám khảo gốc trong bộ dữ liệu, KGGen được cộng 5,8 điểm, GraphRAG bị trừ 2,9 điểm, còn OpenIE được cộng 18,1 điểm; tỉ lệ đồng ý từng fact giữa hai giám khảo là 78\%, 85\% và 71\%. Vì vậy, chỉ so sánh tương đối dưới cùng một giám khảo là có ý nghĩa: dưới giám khảo Gemma, thứ tự ``pipeline $>$ KGGen'' là rõ ràng, còn số tuyệt đối không so được với bài báo.
-
-\subsection{NBAtransactions: thay đổi gián tiếp (RQ4)}\label{sec:res-nba}
-
-\paragraph*{Cách chạy.} Với mỗi tin, thao tác tường minh (cầu thủ rời đội cũ, gia nhập đội mới) được lấy từ dữ liệu vàng và áp vào KG-trước. Sau đó, bước khoanh vùng hai vế sinh ứng viên và bộ phán Gemma quyết định KEEP, INVALIDATE hay ADD cho từng ứng viên; các ứng viên cùng mẫu cấu trúc được gom vào một lệnh gọi, kèm một bộ lọc cấu trúc với ngưỡng 0,5 (xem Chương~ef{chap:method}). Chúng tôi so sánh với hai cấu hình đối chứng: chỉ áp thao tác tường minh (không có bộ phán) và thay bộ phán bằng oracle (trần trên của bước khoanh vùng).
-
-\begin{table}[htbp]
-\centering
-\caption{Kết quả trên NBAtransactions (438 tin kiểm tra)}\label{tab:nba}
-\small
-\begin{tabular}{l c c c}
-\toprule
-\textbf{Cấu hình} & \textbf{F1} & \textbf{Acc thêm} & \textbf{Acc xóa} \\
-\midrule
-Khoanh vùng hai vế + bộ phán Gemma 4 E4B & \textbf{0,993} & 0,840 & \textbf{0,997} \\
-\rowcolor{gray!15} GUpdater (số công bố) & 0,987 & \textbf{0,893} & 0,899 \\
-\rowcolor{gray!15} IE + R-GCN (số công bố) & 0,943 & 0,468 & 0,245 \\
-Chỉ áp thao tác tường minh, không bộ phán & 0,926 & 0,056 & 0,056 \\
-\midrule
-Thao tác tường minh + bộ phán oracle (trần) & 1,000 & 1,000 & 1,000 \\
-\bottomrule
-\end{tabular}
-
-\smallskip
-\parbox{\textwidth}{\small In đậm: tốt nhất trong cột, không tính dòng trần. Thao tác tường minh lấy từ dữ liệu vàng. IE + R-GCN là baseline trong bài báo GUpdater (trích thông tin rồi cập nhật bằng mạng R-GCN). Số công bố của GUpdater và IE + R-GCN tính trên 422 tin kiểm tra của bài báo.}
-\end{table}
-
-Bảng~\ref{tab:nba} cho thấy vai trò quyết định của hai bước khoanh vùng và bộ phán. Nếu chỉ áp các thao tác được nói thẳng, độ chính xác trên cạnh thêm và cạnh xóa chỉ đạt 0,056, đúng bằng tỉ lệ thay đổi tường minh của bộ dữ liệu; 94,4\% thay đổi còn lại là gián tiếp. Khi thêm bước khoanh vùng và bộ phán Gemma, F1 tăng lên 0,993, cao hơn GUpdater (0,987). Độ chính xác xóa đạt 0,997, cao hơn GUpdater (0,899) khoảng 0,1. Bước khoanh vùng sinh trung bình 70,3 ứng viên ở vế cắt và 31,0 ứng viên ở vế sinh mỗi tin, với độ phủ ứng viên bằng 1,0: mọi cạnh cần đổi đều nằm trong vùng được khoanh. Cấu hình oracle đạt 1,000 trên cả ba độ đo, nên toàn bộ sai số còn lại thuộc về bộ phán, không thuộc về bước khoanh vùng. Cả tập kiểm tra cần 1.428 lệnh gọi LLM.
-
-Ngược lại, độ chính xác thêm (0,840) \textbf{thấp hơn GUpdater} (0,893). Vì độ phủ ứng viên bằng 1,0, các cạnh thêm bị sót đều do bộ phán: phần lớn cạnh cần thêm là quan hệ đồng đội giữa cầu thủ vừa chuyển đến và các thành viên đội mới (vế sinh), và Gemma còn bỏ sót một phần các cặp này. Hạn chế quan trọng nhất là \textbf{thực nghiệm này chưa phải đầu-cuối}: thao tác tường minh được lấy từ gold. Một lần thử chạy đầu-cuối trên 20 tin với mô hình cũ không trích được thao tác nào, nên kết quả bằng 0. Vì vậy, kết quả trả lời RQ4 theo nghĩa hẹp: \textit{nếu} thao tác tường minh đúng, khoanh vùng hai vế cộng bộ phán LLM đủ để lan truyền các thay đổi gián tiếp; còn trường hợp LLM tự trích thao tác trên NBA vẫn là câu hỏi mở. Cũng cần lưu ý rằng tập 438 tin của chúng tôi khác tập 422 tin của bài báo GUpdater.
-
-\subsection{Độ ổn định và độ chính xác theo nguồn (RQ5)}\label{sec:res-stability}
-
-\begin{table}[htbp]
-\centering
-\caption{Độ ổn định giữa các lượt chạy trên COVID-NYT (Jaccard giữa lượt 1 và lượt $r$, trung bình theo nhóm)}\label{tab:stability}
-\small
-\setlength{\tabcolsep}{5pt}
-\begin{tabular}{l c c c c c}
-\toprule
-& \multicolumn{2}{c}{\textbf{Jaccard chính xác}} & \multicolumn{2}{c}{\textbf{Jaccard mềm}} & \\
-\cmidrule(lr){2-3} \cmidrule(lr){4-5}
-\textbf{Hệ (mô hình)} & \textbf{$r_1 \rightarrow r_2$} & \textbf{$r_1 \rightarrow r_3$} & \textbf{$r_1 \rightarrow r_2$} & \textbf{$r_1 \rightarrow r_3$} & \textbf{F1 từng lượt} \\
-\midrule
-Pipeline đề xuất (Gemma) & 0,22 & 0,28 & 0,78 & 0,81 & 50,1 / 49,7 / 49,9 \\
-ATOM 2 bước (Gemma) & 0,53 & 0,52 & \textbf{0,85} & \textbf{0,82} & 52,5 / 52,4 / 53,4 \\
-ATOM trích thẳng (Gemma) & 0,39 & 0,38 & 0,78 & 0,75 & -- \\
-KGGen (Gemma) & \textbf{0,58} & \textbf{0,55} & 0,83 & \textbf{0,82} & -- \\
-ATOM 2 bước (GPT-4.1, phát hành) & 0,42 & 0,41 & 0,81 & 0,81 & -- \\
-\rowcolor{gray!15} ATOM 2 bước (GPT-4.1, số công bố) & 0,552 & 0,534 & -- & -- & -- \\
-\bottomrule
-\end{tabular}
-
-\smallskip
-\parbox{\textwidth}{\small In đậm: cao nhất trong cột (không tính số công bố). Bài báo ATOM không nói rõ cách so 5-tuple nên số công bố không so trực tiếp được với cách tính của chúng tôi.}
+\parbox{\textwidth}{\small Dòng xám lấy từ bài báo EDC~\cite{zhang2024edc}: ở các dòng EDC, LLM ghi tên chỉ dùng cho bước trích mở, các bước sau dùng GPT-3.5; EDC+R là EDC có bước tinh chỉnh. EDC cần ít nhất hai lệnh gọi mỗi câu, cộng một lệnh xác minh cho mỗi triple có quan hệ chưa nằm sẵn trong schema.}
 \end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Phân loại fact của lượt 2 so với lượt 1 trên COVID-NYT (\%)}\label{tab:stability-diff}
-\small
-\begin{tabular}{l c c c}
+\caption{Kết quả trên REBEL (1.000 câu, 196 quan hệ), thang 100}\label{tab:rebel}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l ccc ccc ccc c c}
 \toprule
-\textbf{Loại khác biệt} & \textbf{Pipeline đề xuất} & \textbf{ATOM 2 bước} & \textbf{KGGen} \\
+\multirow{2}{*}{\textbf{Hệ}} & \multicolumn{3}{c}{\textbf{Partial}} & \multicolumn{3}{c}{\textbf{Strict}} & \multicolumn{3}{c}{\textbf{Exact}} & \multirow{2}{*}{\makecell{\textbf{Câu}\\\textbf{rỗng}}} & \multirow{2}{*}{\makecell{\textbf{Phút}\\\textbf{(lệnh gọi/câu)}}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+ & P & R & F1 & P & R & F1 & P & R & F1 & & \\
 \midrule
-Giống hệt & 29 & 62 & 67 \\
-Chỉ khác thời gian & 10 & 8 & 0 \\
-Khác tên một thực thể & 15 & 6 & 7 \\
-Khác tên quan hệ & 16 & 8 & 10 \\
-Khác hẳn (không có fact tương ứng) & 29 & 16 & 17 \\
+\rowcolor{green!10} Pipeline đề xuất (Gemma 4 E4B) & \textbf{54,9} & \textbf{55,9} & \textbf{55,2} & \textbf{50,5} & \textbf{51,1} & \textbf{50,7} & \textbf{51,9} & \textbf{52,5} & \textbf{52,1} & 1 & \textbf{21 (1)} \\
+EDC (Gemma 4 E4B) & 48,8 & 49,8 & 49,2 & 44,2 & 44,8 & 44,4 & 46,0 & 46,6 & 46,2 & \textbf{0} & 61 ($\geq$2) \\
+ATOM+EDC (Gemma 4 E4B) & 38,9 & 42,6 & 40,3 & 31,7 & 34,2 & 32,6 & 35,1 & 37,6 & 36,1 & 47 & 135 ($>$4) \\
+\midrule
+\rowcolor{gray!15} EDC, OIE GPT-4 (số công bố) & -- & -- & 54,6 & -- & -- & 50,0 & -- & -- & 51,4 & -- & -- \\
+\rowcolor{gray!15} EDC, OIE Mistral-7B (số công bố) & -- & -- & 51,6 & -- & -- & 45,3 & -- & -- & 48,3 & -- & -- \\
+\rowcolor{gray!15} EDC+R, GPT-4 (số công bố) & -- & -- & 60,1 & -- & -- & 55,9 & -- & -- & 57,4 & -- & -- \\
+\rowcolor{gray!15} GenIE, có giám sát (số công bố) & -- & -- & 38,5 & -- & -- & 35,6 & -- & -- & 36,4 & -- & -- \\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{tabular}}
 
-Về độ ổn định, kết quả không thuận lợi cho pipeline ở mức câu chữ. Jaccard chính xác giữa các lượt của pipeline chỉ đạt 0,22 và 0,28, thấp nhất trong mọi hệ (Bảng~\ref{tab:stability}). Bảng~\ref{tab:stability-diff} cho thấy chỉ 29\% fact của lượt 2 giống hệt lượt 1, so với 62\% của ATOM và 67\% của KGGen. Tuy nhiên, phần khác biệt chủ yếu nằm ở cách diễn đạt: 15\% chỉ khác tên một thực thể, 16\% chỉ khác tên quan hệ, 10\% chỉ khác mốc thời gian. Khi so mềm theo nghĩa, Jaccard của pipeline tăng lên 0,78 và 0,81, gần với các hệ khác. F1 cũng rất ổn định (độ lệch chuẩn 0,2 điểm). Nguyên nhân của sự bất ổn này là pipeline có hai bước LLM viết lại câu chữ (rút câu đơn và gộp tên): dù nhiệt độ bằng 0, việc gom lô song song và giải mã suy đoán vẫn có thể tạo khác biệt nhỏ giữa các lượt, và mỗi khác biệt ở câu đơn lại được truyền tiếp sang bước trích và bước gộp tên. Như vậy, bất ổn nằm ở câu chữ, không ở nội dung hay điểm số. Dù vậy, đây vẫn là hạn chế thật với một hệ cập nhật KG: tên thực thể dao động giữa các lượt sẽ làm gộp tên khó hơn về lâu dài.
+\smallskip
+\parbox{\textwidth}{\small Ghi chú như Bảng~\ref{tab:webnlg}. Mẫu 1.000 câu trong kho mã EDC có thể không trùng mẫu mà bài báo EDC đã dùng.}
+\end{table}
 
 \begin{table}[htbp]
 \centering
-\caption{Tỉ lệ triple có căn cứ trong văn bản nguồn (\%), giám khảo Gemma 4 E4B}\label{tab:support}
-\small
-\begin{tabular}{l c c c c c}
+\caption{Kết quả trên Wiki-NRE (1.000 câu, 45 quan hệ), thang 100}\label{tab:wikinre}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{l ccc ccc ccc c c}
 \toprule
-\textbf{Benchmark} & \textbf{\makecell{Pipeline\\đề xuất}} & \textbf{EDC} & \textbf{\makecell{ATOM\\(+EDC)}} & \textbf{\makecell{ATOM\\trích thẳng}} & \textbf{\makecell{KGGen\\(+EDC)}} \\
+\multirow{2}{*}{\textbf{Hệ}} & \multicolumn{3}{c}{\textbf{Partial}} & \multicolumn{3}{c}{\textbf{Strict}} & \multicolumn{3}{c}{\textbf{Exact}} & \multirow{2}{*}{\makecell{\textbf{Câu}\\\textbf{rỗng}}} & \multirow{2}{*}{\makecell{\textbf{Phút}\\\textbf{(lệnh gọi/câu)}}} \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-7}\cmidrule(lr){8-10}
+ & P & R & F1 & P & R & F1 & P & R & F1 & & \\
 \midrule
-COVID-NYT & 96,2 & -- & 94,8 & \textbf{97,7} & 97,1 \\
-MINE-1 & 94,0 & -- & -- & -- & \textbf{98,6} \\
-NYT11-HRL & 78,4 & 79,8 & 80,7 & -- & \textbf{82,7} \\
-KnowledgeNet & \textbf{91,1} & 88,2 & 80,4 & -- & 87,0 \\
+\rowcolor{green!10} Pipeline đề xuất (Gemma 4 E4B) & \textbf{66,0} & \textbf{66,4} & \textbf{66,2} & \textbf{65,0} & \textbf{65,3} & \textbf{65,1} & \textbf{65,2} & \textbf{65,5} & \textbf{65,3} & \textbf{0} & \textbf{15 (1)} \\
+EDC (Gemma 4 E4B) & 62,0 & 62,5 & 62,2 & 60,7 & 61,0 & 60,8 & 61,1 & 61,5 & 61,2 & 4 & 41 ($\geq$2) \\
+ATOM+EDC (Gemma 4 E4B) & 40,5 & 41,0 & 40,7 & 28,3 & 28,7 & 28,5 & 39,0 & 39,4 & 39,1 & 217 & 101 ($>$4) \\
+\midrule
+\rowcolor{gray!15} EDC, OIE GPT-4 (số công bố) & -- & -- & 68,3 & -- & -- & 67,7 & -- & -- & 67,8 & -- & -- \\
+\rowcolor{gray!15} EDC, OIE Mistral-7B (số công bố) & -- & -- & 64,7 & -- & -- & 63,7 & -- & -- & 63,9 & -- & -- \\
+\rowcolor{gray!15} EDC+R, GPT-4 (số công bố) & -- & -- & 71,3 & -- & -- & 70,9 & -- & -- & 70,9 & -- & -- \\
+\rowcolor{gray!15} GenIE, có giám sát (số công bố) & -- & -- & 48,4 & -- & -- & 46,3 & -- & -- & 47,8 & -- & -- \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 
 \smallskip
-\parbox{\textwidth}{\small In đậm: cao nhất trong hàng. Trên NYT11-HRL và KnowledgeNet, ATOM và KGGen đi kèm bước chuẩn hóa của EDC. Tham chiếu: đầu ra GPT-4.1 phát hành trên COVID-NYT đạt 90,5 (ATOM) và 95,1 (trích thẳng); KG phát hành trên MINE-1 đạt 94,7 (KGGen), 86,5 (GraphRAG), 67,6 (OpenIE).}
+\parbox{\textwidth}{\small Ghi chú như Bảng~\ref{tab:webnlg} và Bảng~\ref{tab:rebel}.}
 \end{table}
 
-Bảng~\ref{tab:support} cho thấy mọi hệ dùng Gemma đều có tỉ lệ triple có căn cứ trên 90\% ở COVID-NYT và MINE-1, trên 80\% ở KnowledgeNet, và chỉ khoảng 78--83\% ở NYT11-HRL. Pipeline chỉ dẫn đầu ở KnowledgeNet. Ở COVID-NYT và MINE-1, pipeline thấp hơn KGGen 0,9 và 4,6 điểm; ở NYT11-HRL, pipeline thấp nhất. Kết hợp với các bảng trước, có thể thấy pipeline thường trích nhiều fact hơn (recall cao hơn) và trả giá bằng một phần nhỏ precision. Độ đo này có hai giới hạn: giám khảo là cùng mô hình với các hệ được chấm nên có thể thiên vị, và chúng tôi chưa kiểm tay một mẫu phán quyết để ước lượng độ tin cậy của giám khảo.
-
-% ----------------------------------------------------------------------
-\section{Ví dụ cụ thể}\label{sec:exp-examples}
-
-Mục này minh họa cách pipeline xử lý hai loại đầu vào điển hình. Nội dung trong hai khung là \textit{minh họa rút gọn}, được soạn theo đúng định dạng và cách xử lý của pipeline. Đây không phải bản ghi nguyên văn trích từ bộ dữ liệu hay nhật ký chạy.
-
-\subsection{Ví dụ trên EMERGE}
-
-Hình~\ref{fig:ex-emerge} mô tả một bài theo kiểu EMERGE. Đoạn văn viết sau ngày chụp KG nhắc tới năm thực thể đã có QID. Pipeline tra KG-trước, lấy ba cạnh đang nối các thực thể này làm ứng viên, rồi gửi cả lô cho Gemma cùng ngày chụp KG. Cạnh (Arsenal F.C., head coach, Unai Emery) được phán là vừa kết thúc, vì đoạn văn nói câu lạc bộ đã sa thải huấn luyện viên này; cạnh đó trở thành Deprecate. Cạnh (Mikel Arteta, member of sports team, Arsenal F.C.) là một sự kiện lịch sử (Arteta từng là đội trưởng), vẫn đúng, nên là Exists. Ví dụ này minh họa sự phân biệt giữa fact trạng thái và fact sự kiện lịch sử trong lời nhắc của bộ phán. Ở bước Add, Gemma sinh triple theo chiều ``người $\rightarrow$ câu lạc bộ''. KGShape nhận thấy trong KG-trước, quan hệ \textit{head coach} được phát ra từ câu lạc bộ (như cạnh [1]) chứ không từ cá nhân, nên đảo chiều triple mà không cần gọi thêm LLM.
-
-\begin{figure}[htbp]
-\centering
-\fbox{\begin{minipage}{0.94\textwidth}
-\small
-\textbf{Đoạn văn} (viết sau ngày chụp KG):
-\textit{``In November 2019, Arsenal dismissed head coach Unai Emery. On 20 December 2019, the club appointed its former captain Mikel Arteta, who had worked as an assistant coach at Manchester City under Pep Guardiola.''}
-
-\smallskip
-\textbf{Thực thể được nhắc} (có QID): Arsenal F.C., Unai Emery, Mikel Arteta, Manchester City F.C., Pep Guardiola.
-
-\smallskip
-\textbf{Ứng viên lấy từ KG-trước} (cạnh nối hai thực thể được nhắc), gửi cho Gemma trong một lô:\\
-\texttt{[1] (Arsenal F.C., head coach, Unai Emery)}\\
-\texttt{[2] (Mikel Arteta, member of sports team, Arsenal F.C.)}\\
-\texttt{[3] (Manchester City F.C., head coach, Pep Guardiola)}
-
-\smallskip
-\textbf{Phán của Gemma} (câu hỏi 1: còn đúng không?; câu hỏi 2: vừa kết thúc theo đoạn văn không?):\\
-\texttt{[1]} vừa kết thúc $\rightarrow$ \textbf{Deprecate}; \quad
-\texttt{[2]} còn đúng, sự kiện lịch sử $\rightarrow$ \textbf{Exists}; \quad
-\texttt{[3]} còn đúng $\rightarrow$ \textbf{Exists}
-
-\smallskip
-\textbf{Add}: Gemma sinh \texttt{(Mikel Arteta, head coach, Arsenal F.C.)}; KGShape đảo chiều thành \texttt{(Arsenal F.C., head coach, Mikel Arteta)} $\rightarrow$ \textbf{Add}.
-\end{minipage}}
-\caption{Minh họa rút gọn cách pipeline xử lý một bài kiểu EMERGE: ứng viên lấy từ KG-trước, phán theo lô, chuẩn hóa chiều của triple Add.}\label{fig:ex-emerge}
-\end{figure}
-
-Trường hợp pipeline thường làm sai là khi đoạn văn kể lại một sự việc đã kết thúc từ lâu bằng thì quá khứ, chẳng hạn ``he previously played for \ldots''. Mô hình 4B có xu hướng coi đó là thông tin ``vừa kết thúc'' và phán Deprecate, trong khi gold coi cạnh này là Exists. Ở phiên bản bộ phán hiện tại, chúng tôi đã thêm gợi ý về khoảng cách giữa mốc kết thúc và ngày chụp KG, nhưng chưa loại bỏ được hoàn toàn loại lỗi này.
-
-\subsection{Ví dụ trên 2020-COVID-NYT}
-
-Hình~\ref{fig:ex-covid} mô tả cách một đoạn tin đi qua các bước [0], [1] và [6]. Bước rút câu đơn thay đại từ ``It'' bằng tên đầy đủ, giữ nguyên con số 170 và cụm thời gian ``on Thursday''. Bước kiểm sót xác nhận rằng mọi con số và cụm viết hoa của tin gốc đều xuất hiện trong ít nhất một câu, nên không cần lệnh gọi bổ sung. Bước trích quy ``on Thursday'' về ngày cụ thể dựa trên ngày quan sát (2020-01-31 là thứ Sáu, nên ``Thursday'' là 2020-01-30) và ghi lại câu nguồn của từng fact. Sau mười nhóm ngày, bước gộp tên nhóm các tên gần nhau và hỏi LLM theo từng cụm.
-
-\begin{figure}[htbp]
-\centering
-\fbox{\begin{minipage}{0.94\textwidth}
-\small
-\textbf{Đoạn tin} (nhóm ngày 2020-01-31):
-\textit{``The World Health Organization on Thursday declared the coronavirus outbreak a global health emergency, as China reported 170 deaths. It said it was most concerned about the virus spreading to countries with weaker health systems.''}
-
-\smallskip
-\textbf{[0] Rút câu đơn:}\\
-(1) The World Health Organization declared the coronavirus outbreak a global health emergency on Thursday.\\
-(2) China reported 170 deaths from the coronavirus outbreak.\\
-(3) The World Health Organization was concerned about the virus spreading to countries with weaker health systems.
-
-\smallskip
-\textbf{[1] Fact trích ra} (head, relation, tail, $t_{\text{start}}$, $t_{\text{end}}$; câu nguồn):\\
-\texttt{(World Health Organization, declared\_emergency\_over, coronavirus outbreak, 2020-01-30, --)} [1]\\
-\texttt{(China, reported\_deaths, 170, --, --)} [2]\\
-\texttt{(World Health Organization, concerned\_about, virus spread to weaker health systems, --, --)} [3]
-
-\smallskip
-\textbf{[6] Gộp tên} (sau 10 nhóm ngày; mỗi cụm một lệnh gọi, LLM trả \textit{same} có/không kèm lý do):\\
-\{World Health Organization, WHO\} $\rightarrow$ \textbf{có}: viết tắt của cùng tổ chức; giữ ``World Health Organization'', ``WHO'' thành bí danh.\\
-\{coronavirus, coronavirus outbreak\} $\rightarrow$ \textbf{không}: một bên là virus, một bên là sự kiện.\\
-\{is\_located\_in, are\_located\_in\} $\rightarrow$ \textbf{có}; \quad \{causes, caused\_by\} $\rightarrow$ \textbf{không}: ngược chiều.
-\end{minipage}}
-\caption{Minh họa rút gọn đường đi của một đoạn tin COVID-NYT qua các bước rút câu đơn, trích fact có thời gian và gộp tên.}\label{fig:ex-covid}
-\end{figure}
-
-Các cặp bị trả lời ``không'' được ghi nhớ để không hỏi lại ở các lần gộp sau. Khi soát đầu ra thật, chúng tôi cũng thấy các lỗi gộp điển hình: gộp một cá thể vào nhóm (một viên chức với ``các viên chức''), gộp hai khái niệm khác nhau (``SoftBank'' với ``news about SoftBank'', ``new coronavirus'' với ``coronavirus outbreak''), hoặc đánh đồng thể chủ động với bị động của cùng một động từ. Những lỗi này cho thấy bước gộp tên cần thêm ràng buộc về loại thực thể và về chiều của quan hệ.
-
-% ----------------------------------------------------------------------
-\section{Tổng hợp kết quả bằng biểu đồ}\label{sec:exp-charts}
-
-Hai biểu đồ dưới đây tóm tắt hai kết quả chính của chương. Hình~\ref{fig:edc-f1} so sánh Partial F1 trên ba benchmark của EDC giữa pipeline, EDC và ATOM+EDC, cả ba cùng chạy bằng Gemma~4 E4B. Pipeline cao nhất trên cả ba bộ; khoảng cách với EDC lớn nhất ở REBEL; ATOM+EDC thấp hơn rõ rệt, đặc biệt trên Wiki-NRE, nơi gold thưa và chỉ gồm 45 quan hệ.
+Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng Gemma~4 E4B trên ba bộ.
 
 \begin{figure}[htbp]
 \centering
 \begin{tikzpicture}
 \begin{axis}[
   ybar,
-  width=0.95\textwidth,
-  height=7cm,
-  bar width=18pt,
-  ymin=0, ymax=100,
-  ytick={0,20,40,60,80,100},
-  ylabel={Partial F1 (\%)},
+  width=14cm, height=7cm,
+  bar width=16pt,
+  enlarge x limits=0.25,
+  ymin=0, ymax=85,
+  ylabel={Partial F1},
   symbolic x coords={WebNLG,REBEL,Wiki-NRE},
   xtick=data,
-  enlarge x limits=0.25,
   axis x line*=bottom,
   axis y line*=left,
   ymajorgrids=true,
   grid style={gray!25},
+  /pgf/number format/use comma,
   nodes near coords={\pgfmathprintnumber[fixed,fixed zerofill,precision=1,use comma]{\pgfplotspointmeta}},
-  nodes near coords style={font=\small, color=black},
-  legend style={at={(0.5,-0.15)}, anchor=north, legend columns=-1, draw=none, font=\small, /tikz/every even column/.append style={column sep=8pt}},
+  nodes near coords style={font=\footnotesize},
+  legend style={at={(0.5,1.03)}, anchor=south, legend columns=3, draw=none, font=\small},
+  legend cell align=left,
 ]
-\addplot[fill=blue!45, draw=blue!70!black] coordinates {(WebNLG,74.4) (REBEL,55.3) (Wiki-NRE,66.2)};
-\addplot[fill=orange!45, draw=orange!70!black] coordinates {(WebNLG,70.6) (REBEL,49.2) (Wiki-NRE,62.2)};
+\addplot[fill=green!35, draw=green!50!black] coordinates {(WebNLG,74.4) (REBEL,55.2) (Wiki-NRE,66.2)};
+\addplot[fill=orange!40, draw=orange!70!black] coordinates {(WebNLG,70.6) (REBEL,49.2) (Wiki-NRE,62.2)};
 \addplot[fill=gray!35, draw=gray!70!black] coordinates {(WebNLG,56.8) (REBEL,40.3) (Wiki-NRE,40.7)};
 \legend{Pipeline đề xuất, EDC, ATOM+EDC}
 \end{axis}
 \end{tikzpicture}
-\caption{Partial F1 trên WebNLG, REBEL và Wiki-NRE; mọi hệ dùng Gemma 4 E4B và cùng script chấm của EDC (số liệu từ Bảng~\ref{tab:edc}).}\label{fig:edc-f1}
-\end{figure}
-
-Hình~\ref{fig:emerge-c} so sánh Completeness trên ba thao tác Exists, Add và Deprecate của EMERGE giữa pipeline (Gemma), EDC+ ICL chạy bằng Gemma, EDC+ ICL dùng GPT-5.1 (số công bố) và oracle GPT-5.1. Biểu đồ làm rõ hai điều. Một là, ở Exists và Deprecate, pipeline với mô hình 4B vượt cả hai hệ dùng GPT-5.1. Hai là, ở Add, pipeline mới chỉ ngang EDC+ ICL GPT-5.1 và còn thấp hơn oracle; đây là thao tác mà ưu thế ``được nhìn KG'' ít phát huy nhất, vì triple cần thêm chưa có trong KG.
-
-\begin{figure}[htbp]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-  ybar,
-  width=0.95\textwidth,
-  height=7.5cm,
-  bar width=13pt,
-  ymin=0, ymax=110,
-  ytick={0,20,40,60,80,100},
-  ylabel={Completeness (\%)},
-  symbolic x coords={Exists,Add,Deprecate},
-  xtick=data,
-  enlarge x limits=0.22,
-  axis x line*=bottom,
-  axis y line*=left,
-  ymajorgrids=true,
-  grid style={gray!25},
-  nodes near coords={\pgfmathprintnumber[fixed,fixed zerofill,precision=1,use comma]{\pgfplotspointmeta}},
-  nodes near coords style={font=\small, color=black, rotate=90, anchor=west},
-  legend style={at={(0.5,-0.15)}, anchor=north, legend columns=2, draw=none, font=\small, /tikz/every even column/.append style={column sep=10pt}},
-]
-\addplot[fill=blue!45, draw=blue!70!black] coordinates {(Exists,91.3) (Add,39.3) (Deprecate,63.3)};
-\addplot[fill=orange!45, draw=orange!70!black] coordinates {(Exists,12.5) (Add,19.9) (Deprecate,6.3)};
-\addplot[fill=red!20, draw=red!60!black] coordinates {(Exists,25.7) (Add,40.2) (Deprecate,34.8)};
-\addplot[fill=green!35, draw=green!50!black] coordinates {(Exists,60.4) (Add,46.5) (Deprecate,37.4)};
-\legend{Pipeline đề xuất (Gemma 4 E4B), EDC+ ICL (Gemma 4 E4B), EDC+ ICL (GPT-5.1; số công bố), KG-aware oracle (GPT-5.1)}
-\end{axis}
-\end{tikzpicture}
-\caption{Completeness trên EMERGE (3.500 bài) theo ba thao tác Exists, Add, Deprecate (số liệu từ Bảng~\ref{tab:emerge}).}\label{fig:emerge-c}
+\caption{Partial F1 trên WebNLG, REBEL và Wiki-NRE; cả ba hệ dùng Gemma 4 E4B và cùng script chấm của EDC (số liệu từ Bảng~\ref{tab:webnlg}, \ref{tab:rebel} và \ref{tab:wikinre}).}\label{fig:edc-f1}
 \end{figure}
 
 % ----------------------------------------------------------------------
-\section{Thảo luận chung}\label{sec:exp-discussion}
+\section{Phân tích và đánh giá}\label{sec:exp-analysis}
 
-\subsection{Trả lời các câu hỏi nghiên cứu}
+\paragraph*{So với EDC khi cùng LLM (CH1).}
+Module trích theo schema của pipeline vượt EDC trên cả ba bộ và ở cả ba mức khớp, tức 9 trên 9 phép so sánh F1.
+Partial F1 cao hơn 3,8 điểm trên WebNLG (74,4 so với 70,6), 6,0 điểm trên REBEL (55,2 so với 49,2) và 4,0 điểm trên Wiki-NRE (66,2 so với 62,2); ở mức Strict, chênh lệch là 4,4, 6,3 và 4,3 điểm; ở mức Exact là 4,3, 5,9 và 4,1 điểm.
+Precision và recall cùng tăng (Partial P tăng 3,9, 6,1 và 4,0 điểm; Partial R tăng 3,7, 6,1 và 3,9 điểm), nên mức tăng không đến từ việc đánh đổi giữa hai đại lượng. Chênh lệch lớn nhất nằm ở REBEL, bộ có schema lớn nhất (196 quan hệ).
 
-\paragraph*{RQ1: nhìn KG có giúp Exists và Deprecate?} Có, và đây là kết quả rõ nhất của khóa luận. Trên EMERGE, cùng với Gemma~4 E4B, pipeline đạt Completeness 91,3 (Exists) và 63,3 (Deprecate), so với 12,5 và 6,3 của EDC+ ICL; pipeline cũng vượt cả oracle GPT-5.1 trên hai thao tác này, và vẫn hơn oracle khi đo bằng khớp QID chính xác. Lợi thế đến từ việc đổi bài toán ``tự sinh thao tác'' thành bài toán ``phán từng cạnh có sẵn''. Mô hình nhỏ làm tốt bài toán thứ hai hơn hẳn bài toán thứ nhất. Giới hạn của kết luận là pipeline được cung cấp liên kết thực thể, và Add vẫn chỉ ngang hệ dùng GPT-5.1.
+\paragraph*{Nguồn gốc của chênh lệch.}
+Chúng tôi cho rằng có ba nguyên nhân, xuất phát từ khác biệt về thiết kế giữa hai hệ. Thứ nhất, pipeline chọn quan hệ ngay khi đọc câu, với toàn bộ danh sách quan hệ kèm mô tả trước mặt.
+EDC chọn quan hệ ở bước sau, chỉ dựa trên triple mở và câu định nghĩa do chính LLM viết, trong phạm vi năm ứng viên gần nhất theo khoảng cách nhúng; nếu quan hệ đúng không nằm trong năm ứng viên, hoặc triple mở đã sai chiều, bước chuẩn hóa không sửa được (Ví dụ (b) ở Mục~\ref{sec:exp-example}).
+Thứ hai, EDC xếp ba bước LLM nối tiếp, nên sai sót của bước trước truyền sang bước sau; pipeline chỉ có một bước. Thứ ba, ràng buộc \texttt{enum} bảo đảm mọi triple pipeline sinh ra đều mang quan hệ hợp lệ.
+Ở EDC, triple bị loại khi LLM xác minh không chọn được ứng viên nào, và câu trở thành rỗng khi bước trích mở không trả triple hoặc mọi triple của câu bị loại; EDC để rỗng 7 câu WebNLG và 4 câu Wiki-NRE, còn pipeline để rỗng 1 câu REBEL.
 
-\paragraph*{RQ2: module trích theo schema so với EDC, ATOM, KGGen?} Trên các benchmark có schema cố định, chọn quan hệ ngay lúc trích bằng constrained decoding cho kết quả tốt hơn và rẻ hơn cách trích tự do rồi chuẩn hóa. Pipeline vượt EDC trên cả WebNLG, REBEL và Wiki-NRE (Partial F1 cao hơn 3,8 đến 6,1 điểm) với số lệnh gọi ít hơn, và dẫn đầu nhóm LLM trên KnowledgeNet (F1 0,554). Kết quả trên NYT11-HRL không phân định được thứ hạng do gold thưa. Trên KnowledgeNet, hệ có giám sát vẫn cao hơn (0,704) do recall, phần lớn vì cách đếm theo mention của gold.
+Số triple trung bình mỗi câu cũng giải thích một phần chênh lệch về precision.
+Trên REBEL, gold có đúng 4 triple mỗi câu; pipeline trích trung bình 4,41 triple, còn EDC trích 5,49 triple, nên EDC có nhiều triple thừa hơn và precision thấp hơn (48,8 so với 54,9).
+Trên WebNLG, số triple của hai hệ gần với gold (3,33 và 3,41 so với 3,43), nên chênh lệch đến chủ yếu từ việc chọn đúng quan hệ; trên Wiki-NRE, cả hai hệ đều trích nhiều hơn gold (3,60 và 3,77 so với 2,86).
 
-\paragraph*{RQ3: rút câu đơn và gộp tên có giúp KG tích lũy?} Có, nhưng chưa đủ để vượt hệ tốt nhất. Trên COVID-NYT, hai bước này nâng F1 từ 42,5 lên 50,1 trong cùng lượt chạy và cho KG gọn hơn ATOM và KGGen. Tuy vậy, pipeline vẫn thấp hơn ATOM hai bước 2,9 điểm F1 vì ATOM dùng gấp đôi số lệnh gọi để tăng recall. Trên MINE-1, pipeline đạt điểm cao nhất (85,4), nhưng độ đo này thiên về KG lớn. Kỹ thuật tách factoid của ATOM có thể ghép vào bước trích của pipeline để tăng recall; đây là một hướng cải tiến trực tiếp.
+\paragraph*{Chi phí (CH2).}
+Pipeline cần đúng một lệnh gọi LLM cho mỗi câu, tức 1.165, 1.000 và 1.000 lệnh gọi cho ba bộ.
+EDC cần ít nhất hai lệnh gọi mỗi câu (trích mở và định nghĩa schema), cộng một lệnh xác minh cho mỗi triple cần chuẩn hóa, và còn cần một mô hình nhúng 7B chạy trên GPU thứ hai.
+Về thời gian, pipeline mất 20, 21 và 15 phút, so với 50, 61 và 41 phút của EDC, tức chỉ bằng khoảng 34 đến 40\% thời gian của EDC.
+Cần lưu ý rằng thời gian phản ánh cả cách gọi: pipeline gửi bốn yêu cầu song song, còn mã EDC gốc gọi tuần tự từng yêu cầu. Vì vậy, số lệnh gọi mỗi câu là thước đo chi phí không phụ thuộc phần cứng, và trên thước đo này pipeline cũng rẻ hơn EDC ít nhất hai lần.
 
-\paragraph*{RQ4: khoanh vùng hai vế và bộ phán trên cạnh gián tiếp?} Với thao tác tường minh lấy từ gold, khoanh vùng hai vế phủ đủ mọi cạnh cần đổi (độ phủ 1,0) và bộ phán Gemma đưa F1 lên 0,993, cao hơn GUpdater. Độ chính xác xóa đạt 0,997, nhưng độ chính xác thêm (0,840) thấp hơn GUpdater. Kết luận chỉ đúng trong điều kiện thao tác tường minh chính xác; thực nghiệm đầu-cuối chưa được thực hiện.
+\paragraph*{Biến thể ATOM+EDC.}
+ATOM+EDC thấp hơn EDC rõ rệt (Partial F1 56,8, 40,3 và 40,7), có nhiều câu rỗng (106, 47 và 217) và chạy lâu nhất (119, 135 và 101 phút). Đầu ra trung gian của ATOM cho thấy ba nguyên nhân.
+Thứ nhất, phần lớn câu rỗng phát sinh ngay ở bước tách factoid, trước khi tới EDC: bước này không trả factoid nào cho 88 câu WebNLG, 39 câu REBEL và 167 câu Wiki-NRE, thường là các câu định nghĩa ngắn như ``Kurniwadi is a village in Belgaum district in Karnataka, India.''
+Thứ hai, factoid được viết lại bằng câu chữ của ATOM, nên có thể bỏ sót vế câu hoặc đổi chủ ngữ (Ví dụ (a) và (c) ở Mục~\ref{sec:exp-example}).
+Dấu hiệu định lượng là khoảng cách giữa Exact F1 và Strict F1, tức phần điểm mất vì phần tử đúng chuỗi nhưng sai vai trò: khoảng cách này của ATOM+EDC là 5,6, 3,5 và 10,6 điểm trên ba bộ, so với 2,8, 1,4 và 0,2 điểm của pipeline.
+Thứ ba, ATOM đưa mốc thời gian vào trường $t_{\text{start}}$ hay $t_{\text{end}}$ chứ không đặt làm tân ngữ, nên các quan hệ ngày tháng của gold (như \textit{activeYearsStartYear}) bị mất khi chuyển 5-tuple về triple.
+Kết quả này cho thấy việc tách câu thành factoid, vốn hữu ích với đoạn tin dài, không giúp ích khi đầu vào đã là câu ngắn và schema đã cố định.
 
-\paragraph*{RQ5: độ ổn định, độ chính xác theo nguồn và chi phí.} Điểm số của pipeline ổn định giữa các lượt (độ lệch chuẩn F1 0,2), nhưng câu chữ thì không: Jaccard chính xác chỉ 0,22--0,28, thấp nhất trong các hệ. Tỉ lệ triple có căn cứ của pipeline từ 78,4\% đến 96,2\% tùy benchmark, thấp hơn KGGen ở ba trên bốn benchmark và chỉ dẫn đầu ở KnowledgeNet. Chi phí được tổng hợp ở Bảng~\ref{tab:cost}.
+\paragraph*{So với số công bố.}
+Số công bố chỉ dùng để định vị, vì bài báo EDC chỉ đổi LLM ở bước trích mở, các bước sau dùng GPT-3.5, và mẫu REBEL, Wiki-NRE có thể khác.
+Với lưu ý đó, pipeline chạy bằng mô hình 4B lượng tử hóa 4-bit cao hơn EDC dùng Mistral-7B ở bước trích mở trên cả ba bộ: Partial F1 74,4 so với 72,8 (WebNLG), 55,2 so với 51,6 (REBEL), 66,2 so với 64,7 (Wiki-NRE); điều này cũng đúng ở mức Strict và Exact.
+So với EDC dùng GPT-4 ở bước trích mở, pipeline thấp hơn trên WebNLG (74,4 so với 78,3) và Wiki-NRE (66,2 so với 68,3), nhỉnh hơn trên REBEL (55,2 so với 54,6).
+EDC+R với GPT-4 vẫn cao nhất trên cả ba bộ, hơn pipeline từ 4,9 đến 7,6 điểm Partial F1. Hệ có giám sát REGEN cao hơn pipeline trên WebNLG (76,7 so với 74,4), còn GenIE thấp hơn pipeline trên REBEL (38,5) và Wiki-NRE (48,4).
 
-\subsection{Chi phí tính toán}
+\paragraph*{Đánh giá chung.}
+Về chất lượng (CH1), khi cùng dùng một LLM nhỏ, chọn quan hệ ngay lúc trích bằng ràng buộc \texttt{enum} cho F1 cao hơn cách trích tự do rồi chuẩn hóa về schema, nhất quán trên ba bộ và ba mức khớp.
+Về chi phí (CH2), cách làm này cần ít lệnh gọi hơn, không cần mô hình nhúng riêng và chạy nhanh hơn. Điều này ủng hộ lựa chọn thiết kế ở Chương~\ref{chap:method}: dùng JSON ép schema để thay một chuỗi bước LLM bằng một bước có ràng buộc.
+Tồn tại chính là pipeline vẫn thấp hơn các hệ dùng LLM lớn (EDC với GPT-4 trên hai bộ, EDC+R trên cả ba bộ), và vẫn mắc các lỗi sai chiều quan hệ hay nhầm giữa hai quan hệ gần nghĩa (Ví dụ (c) ở Mục~\ref{sec:exp-example}).
+
+% ----------------------------------------------------------------------
+\section{Ví dụ cụ thể}\label{sec:exp-example}
+
+Bảng~\ref{tab:examples} trình bày ba câu WebNLG cùng đầu ra thật của ba hệ, lấy từ các tệp \texttt{canon\_kg.txt} của lượt chạy chính thức.
+Hai ví dụ đầu là trường hợp pipeline giải quyết được, ví dụ thứ ba là trường hợp pipeline giải sai.
 
 \begin{table}[htbp]
 \centering
-\caption{Chi phí tính toán trên Kaggle T4 (llama-server, 4 khe song song)}\label{tab:cost}
+\caption{Ba câu WebNLG và đầu ra thật của ba hệ (Gemma 4 E4B); số thứ tự là dòng trong tệp \texttt{webnlg.txt}}\label{tab:examples}
 \small
-\begin{tabular}{>{\raggedright\arraybackslash}p{2.7cm} >{\raggedright\arraybackslash}p{6.0cm} >{\raggedright\arraybackslash}p{5.6cm}}
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.0cm} >{\raggedright\arraybackslash}p{13.0cm}}
 \toprule
-\textbf{Benchmark} & \textbf{Pipeline đề xuất} & \textbf{Hệ so sánh (Gemma 4 E4B)} \\
+\multicolumn{2}{p{15.4cm}}{\textbf{(a) Câu 187:} \textit{``Akeem Ayers began his NFL career with the Tennessee Titans, however, he no longer plays for them.''}} \\
 \midrule
-EMERGE (3.500 bài) & Exists/Deprecate: 0,96 giây/bài (3.234 lệnh gọi, lô 12 cạnh); Add: 1,32 giây/bài & -- \\
-WebNLG / REBEL / Wiki-NRE & 1 lệnh gọi/câu; 20 / 21 / 15 phút & EDC: từ 2 lệnh gọi/câu trở lên, 50 / 61 / 41 phút; ATOM+EDC: 119 / 135 / 102 phút \\
-COVID-NYT (122 nhóm) & khoảng 5,5 lệnh gọi/nhóm; 57 phút & ATOM: khoảng 11 lệnh/nhóm, 49 phút; ATOM trích thẳng: 1 lệnh/nhóm, 23 phút; KGGen: khoảng 2 lệnh/nhóm, 15 phút \\
-MINE-1 (100 bài) & 178 giây/bài & KGGen: 34 giây/bài \\
-NBAtransactions (438 tin) & 1.428 lệnh gọi (bộ phán, gom theo mẫu cấu trúc) & -- \\
+Gold & (Akeem\_Ayers, debutTeam, Tennessee\_Titans); (Akeem\_Ayers, formerTeam, Tennessee\_Titans) \\
+Pipeline & (Akeem Ayers, debutTeam, Tennessee\_Titans) \textit{[đúng]}; (Akeem Ayers, formerTeam, Tennessee\_Titans) \textit{[đúng]} \\
+EDC & (Akeem\_Ayers, debutTeam, Tennessee\_Titans) \textit{[đúng]}; \textit{[thiếu formerTeam]} \\
+ATOM+EDC & (Akeem Ayers, debutTeam, Tennessee Titans) \textit{[đúng]}; \textit{[thiếu formerTeam]} \\
+\midrule
+\multicolumn{2}{p{15.4cm}}{\textbf{(b) Câu 232:} \textit{``Ciudad Ayala is in the Pacific Standard Time Zone, and City Manager is the leader title for Ciudad Ayala.''}} \\
+\midrule
+Gold & (Ciudad\_Ayala, leaderTitle, ``City Manager''); (Ciudad\_Ayala, timeZone, Pacific\_Standard\_Time\_Zone) \\
+Pipeline & (Ciudad\_Ayala, timeZone, Pacific\_Standard\_Time\_Zone) \textit{[đúng]}; (Ciudad\_Ayala, leaderTitle, City\_Manager) \textit{[đúng]} \\
+EDC & (Ciudad\_Ayala, timeZone, Pacific\_Standard\_Time\_Zone) \textit{[đúng]}; (City\_Manager, leaderTitle, Ciudad\_Ayala) \textit{[đảo chiều]} \\
+ATOM+EDC & \textit{[rỗng: bước tách factoid không trả factoid nào]} \\
+\midrule
+\multicolumn{2}{p{15.4cm}}{\textbf{(c) Câu 264:} \textit{``Abraham A. Ribicoff, an American worked as the United States Secretary of Health, Education and Welfare and his wife is Casey Ribicoff.''}} \\
+\midrule
+Gold & (Abraham\_A.\_Ribicoff, spouse, Casey\_Ribicoff); (Abraham\_A.\_Ribicoff, nationality, American); (Abraham\_A.\_Ribicoff, office, ``United States Secretary of Health, Education, and Welfare'') \\
+Pipeline & (\ldots, nationality, American) \textit{[đúng]}; (\ldots, occupation, United\_States\_Secretary\_of\_Health,\_Education\_and\_Welfare) \textit{[sai quan hệ]}; (Casey\_Ribicoff, spouse, Abraham\_A.\_Ribicoff) \textit{[đảo chiều]} \\
+EDC & (\ldots, nationality, American) \textit{[đúng]}; (\ldots, occupation, \ldots) \textit{[sai quan hệ]}; (Abraham\_A.\_Ribicoff, spouse, Casey\_Ribicoff) \textit{[đúng]} \\
+ATOM+EDC & (\ldots, affiliation, American) \textit{[sai quan hệ]}; (\ldots, occupation, \ldots) \textit{[sai quan hệ]}; (Casey Ribicoff, spouse, Abraham A. Ribicoff) \textit{[đảo chiều]} \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-Bảng~\ref{tab:cost} cho thấy chi phí của pipeline phụ thuộc vào chế độ chạy. Ở chế độ phán trên KG (EMERGE, NBA) và chế độ trích theo schema, pipeline rẻ: dưới một giây mỗi bài cho Exists/Deprecate nhờ gom lô 12 cạnh, và một lệnh gọi mỗi câu, nhanh hơn EDC khoảng 2,5 đến 3 lần. Ở chế độ dựng KG tích lũy từ văn bản dài (COVID-NYT, MINE-1), pipeline đắt hơn các hệ trích một lượt; trên COVID-NYT, pipeline còn chậm hơn ATOM hai bước (57 so với 49 phút) dù dùng khoảng một nửa số lệnh gọi. Trên MINE-1, pipeline chậm hơn KGGen khoảng năm lần, do bước rút câu đơn, cập nhật theo từng đoạn và gộp tên. Toàn bộ thực nghiệm chạy được trên GPU T4 miễn phí của Kaggle với một mô hình 4B lượng tử hóa, đúng với mục tiêu ``LLM mở cỡ nhỏ trên GPU phổ thông''.
+\paragraph*{Ví dụ (a): bắt được quan hệ diễn đạt gián tiếp.}
+Vế sau của câu (``he no longer plays for them'') chỉ nói gián tiếp rằng Tennessee Titans là đội cũ của Akeem Ayers.
+Pipeline nhận ra cả \textit{debutTeam} và \textit{formerTeam}, vì cả hai quan hệ cùng mô tả của chúng nằm trong danh sách mà mô hình nhìn thấy khi đọc câu.
+EDC và ATOM+EDC chỉ giữ vế đầu; với ATOM, factoid duy nhất được tách ra là ``Akeem Ayers began his NFL career with the Tennessee Titans'', nên vế sau mất ngay từ bước tách.
+Khi chấm, triple vàng \textit{formerTeam} của EDC bị ghép với triple rỗng, nên cả ba phần tử bị tính là sót ở mọi mức khớp.
+Tên ``Akeem Ayers'' và ``Akeem\_Ayers'' trùng nhau sau chuẩn hóa, nên cách viết tên không ảnh hưởng tới điểm.
 
-\subsection{Hạn chế của thực nghiệm}
+\paragraph*{Ví dụ (b): khác biệt giữa Strict và Exact.}
+EDC trích đúng nội dung của vế thứ hai nhưng đảo vai trò: \textit{City Manager} thành chủ ngữ, \textit{Ciudad Ayala} thành tân ngữ. Khi cả chủ ngữ lẫn tân ngữ đều không khớp, script so chéo chủ ngữ dự đoán với tân ngữ vàng và ngược lại.
+Ở đây các chuỗi trùng nhau nhưng mang nhãn vai trò khác nhau, nên được tính đúng ở mức Exact (không xét vai trò) và sai ở mức Strict; khoảng cách giữa Exact và Strict trong các bảng kết quả chính là phần điểm mất vì loại lỗi này.
+Pipeline giữ đúng chiều; dấu ngoặc kép trong gold bị bỏ khi tách từ, nên \textit{City\_Manager} của pipeline khớp hoàn toàn. ATOM không tách được factoid nào cho câu này, nên câu bị tính rỗng.
 
-Để đánh giá trung thực, chúng tôi nêu rõ các hạn chế sau.
+\paragraph*{Ví dụ (c): trường hợp pipeline giải sai.}
+Pipeline đảo chiều quan hệ \textit{spouse}, đặt Casey Ribicoff làm chủ ngữ, trong khi gold và EDC đặt Abraham A. Ribicoff làm chủ ngữ; ở mức Strict, triple này của pipeline không được tính đúng.
+Cả ba hệ cùng chọn \textit{occupation} thay cho \textit{office}; hai quan hệ gần nghĩa này đều có trong schema WebNLG, và ràng buộc \texttt{enum} chỉ bảo đảm quan hệ hợp lệ chứ không bảo đảm quan hệ đúng.
+Tân ngữ vẫn khớp với gold sau chuẩn hóa (dấu phẩy bị bỏ khi tách từ), nên triple chỉ sai ở phần quan hệ. Với ATOM, factoid ``Casey Ribicoff is the wife of Abraham A. Ribicoff'' đã đổi chủ ngữ ngay khi viết lại câu, dẫn tới triple đảo chiều.
+Ví dụ này cho thấy lỗi chiều quan hệ và lỗi chọn giữa hai quan hệ gần nghĩa là hướng cần cải thiện tiếp của module trích.
+
+% ----------------------------------------------------------------------
+\section{Hạn chế của thực nghiệm}\label{sec:exp-limits}
+
 \begin{itemize}
-  \item \textbf{EMERGE dùng mentions có sẵn QID.} Pipeline chạy ở chế độ được cung cấp liên kết thực thể, nên chưa đo được trường hợp phải tự liên kết thực thể trên toàn Wikidata. Mint+Add bằng 0 vì chưa có cơ chế tạo thực thể mới; Infer bị loại khỏi phạm vi. C và G-R đều là recall; chúng tôi đã bổ sung khớp QID chính xác, nhưng precision của Add vẫn thấp. Ngoài ra, tập phát triển 350 bài dùng khi xây dựng bộ phán là tập con của tập đánh giá.
-  \item \textbf{Giám khảo ``có căn cứ'' là Gemma}, tức là cùng mô hình với các hệ được chấm, và chưa được kiểm tay. Độ đo này chỉ ước lượng precision, không thay được gold.
-  \item \textbf{MINE-1 là độ đo thuần recall}, có lợi cho KG lớn; giám khảo của chúng tôi khác giám khảo của bài báo, nên số tuyệt đối không so được với số công bố.
-  \item \textbf{KnowledgeNet đánh giá trên fold 4 (dev)}, không phải tập kiểm tra chính thức; bước ánh xạ span có trần 0,933; các hệ LLM không có Link evaluation.
-  \item \textbf{NBAtransactions chưa chạy đầu-cuối}: thao tác tường minh lấy từ gold; tập 438 tin khác tập 422 tin của bài báo.
-  \item \textbf{Trên các benchmark trích theo schema, chỉ module trích được đánh giá}; kết quả ở đó không phản ánh các bước khoanh vùng, bộ phán và gộp tên.
-  \item \textbf{Độ ổn định câu chữ giữa các lượt thấp} (Jaccard chính xác 0,22--0,28), dù điểm F1 ổn định.
-  \item \textbf{Số lượt chạy}: chỉ COVID-NYT được chạy lặp ba lần; các benchmark khác chạy một lượt, nên chưa có khoảng tin cậy cho các chênh lệch nhỏ (ví dụ trên NYT11-HRL).
-  \item \textbf{Dữ liệu không trùng khớp hoàn toàn với bài báo gốc}: COVID-NYT phát hành 122 nhóm so với 274 nhóm trong bài báo; mẫu REBEL/Wiki-NRE có thể khác mẫu của bài báo EDC; số công bố của EDC dùng GPT-3.5 ở các bước sau OIE.
+  \item \textbf{Chỉ đánh giá module trích.} Thực nghiệm chỉ kiểm chứng bước trích ở dạng trích theo schema. Các bước rút câu đơn, khoanh vùng cấu trúc, bộ phán và gộp tên định kỳ của pipeline chưa được đánh giá định lượng trong khóa luận, nên kết luận của chương không mở rộng cho toàn bộ pipeline.
+  \item \textbf{Một LLM duy nhất.} Mọi hệ chỉ chạy với Gemma~4 E4B lượng tử hóa 4-bit; chúng tôi chưa kiểm tra xu hướng trên có giữ nguyên với LLM khác hay không.
+  \item \textbf{Một lượt chạy.} Mỗi hệ chạy một lượt với nhiệt độ 0; chưa có khoảng tin cậy hay kiểm định thống kê. Chênh lệch với EDC nhất quán ở cả 9 phép so sánh, nhưng độ dao động giữa các lượt chưa được đo.
+  \item \textbf{Mẫu dữ liệu và số công bố.} Mẫu 1.000 câu của REBEL và Wiki-NRE có thể khác mẫu của bài báo EDC, và số công bố dùng GPT-3.5 cho các bước sau bước trích mở; so sánh với số công bố chỉ mang tính định vị. Sáu ví dụ few-shot trùng sáu câu đầu của tệp đánh giá, như trong kho mã EDC.
+  \item \textbf{Đo thời gian.} Thời gian phụ thuộc cách gửi yêu cầu (song song hay tuần tự) của từng mã nguồn, nên chỉ nên đọc cùng với số lệnh gọi mỗi câu.
+  \item \textbf{Chưa chạy EDC+R.} Bước tinh chỉnh của EDC chưa được chạy với Gemma; bước này độc lập với module trích và có thể ghép thêm trong tương lai.
 \end{itemize}
 
-Tóm lại, các thực nghiệm cho thấy pipeline đề xuất đạt mục tiêu chính trong điều kiện tài nguyên hạn chế: với một LLM mở 4B lượng tử hóa, pipeline xử lý tốt các thao tác Exists và Deprecate khi được nhìn KG, trích theo schema tốt hơn EDC cùng mô hình, và lan truyền được các thay đổi gián tiếp khi thao tác tường minh đúng. Các điểm còn yếu gồm recall trên văn bản tin dài, độ ổn định câu chữ, thao tác tạo thực thể mới và chế độ chạy đầu-cuối trên NBA. Đây là cơ sở cho các hướng phát triển được trình bày ở Chương~\ref{chap:conclusion}.
+Tóm lại, chúng tôi đã cài đặt và đánh giá module trích theo schema của pipeline trên ba benchmark của EDC, với cùng LLM và cùng script chấm cho mọi hệ.
+Module này vượt EDC và ATOM+EDC ở cả ba bộ và ba mức khớp, trong khi chỉ cần một lệnh gọi mỗi câu. Các kết luận và hướng phát triển được trình bày ở Chương~\ref{chap:conclusion}.

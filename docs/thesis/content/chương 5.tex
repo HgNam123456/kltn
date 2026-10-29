@@ -6,175 +6,103 @@
 \label{chap:conclusion}
 
 Khóa luận đã nghiên cứu bài toán tự động cập nhật đồ thị tri thức từ bản tin bằng mô hình ngôn ngữ lớn.
-Xuất phát điểm là quan sát rằng KG nhanh chóng lỗi thời so với văn bản \cite{odke2025},
+Xuất phát điểm là quan sát rằng KG nhanh chóng lỗi thời so với văn bản,
 trong khi các hệ xây dựng KG từ văn bản hiện có chủ yếu chỉ thêm tri thức
-và hầu như không thực hiện được thao tác vô hiệu hóa \cite{zaporojets2025emerge}.
-Chương này tổng kết các kết quả đã đạt được, rút ra ý nghĩa của chúng,
+và hầu như không vô hiệu hóa được tri thức đã hết hiệu lực \cite{zaporojets2025emerge}.
+Chương này tổng kết các kết quả đạt được, rút ra ý nghĩa của chúng,
 nêu các hạn chế còn tồn tại và đề xuất hướng phát triển tiếp theo.
 
 % ---------------------------------------------------------------------
 \section{Kết quả đạt được}
 \label{sec:conclusion-results}
 
-Khóa luận đã đề xuất và cài đặt một pipeline sáu bước cho bài toán cập nhật KG bi-temporal,
+Về phương pháp, khóa luận đã thiết kế và cài đặt một pipeline sáu bước cho bài toán cập nhật KG bi-temporal,
 vận hành theo nguyên tắc LLM trích xuất, cấu trúc khoanh vùng và bộ phán quyết định.
-Pipeline gồm bước rút câu đơn, bước trích thao tác tường minh với đầu ra JSON ép lược đồ,
-bước áp thao tác lên KG theo nguyên tắc không xóa, bước khoanh vùng cấu trúc hai vế không dùng luật miền,
-bộ phán LLM gom lô và bước gộp tên định kỳ.
-Toàn bộ hệ thống chạy với Gemma~4 E4B lượng tử hóa 4 bit \cite{gemma4} qua llama.cpp \cite{llamacpp} trên GPU T4,
-và mọi hệ so sánh đều được chạy lại với cùng LLM này để tách đóng góp của phương pháp khỏi đóng góp của mô hình.
-Các kết quả chính được tóm tắt theo bốn nhóm câu hỏi mà khóa luận đặt ra.
+Pipeline gồm bước rút câu đơn, bước trích thao tác tường minh với đầu ra JSON ép schema,
+bước áp thao tác lên KG theo nguyên tắc không xóa mà chỉ vô hiệu hóa có dấu thời gian,
+bước khoanh vùng cấu trúc hai vế không dùng luật miền, bộ phán LLM gom lô và bước gộp tên định kỳ.
+Toàn bộ hệ thống chạy với Gemma~4 E4B lượng tử hóa 4 bit \cite{gemma4} qua llama.cpp \cite{llamacpp} trên GPU T4.
 
-\textbf{Cập nhật KG có vô hiệu hóa.}
-Trên toàn bộ 3.500 bài của EMERGE, pipeline đạt Completeness 91,3 cho Exists và 63,3 cho Deprecate
-(G-BERTScore-R lần lượt 90,7 và 67,4).
-Đây là kết quả cao nhất trong các hệ được so sánh trên hai thao tác này,
-kể cả cấu hình KG-aware dùng GPT-5.1 được cung cấp bộ ba vàng làm ngữ cảnh (60,4 và 37,4)
-và EDC+ dùng GPT-5.1 theo số công bố (25,7 và 34,8).
-Theo độ đo khớp chính xác mã định danh Wikidata, F1 của Deprecate đạt 44,5 so với 34,0 của cấu hình KG-aware.
-Thời gian xử lý trung bình là 0,96 giây mỗi bài cho Exists và Deprecate.
-Với thao tác Add, pipeline đạt Completeness 39,3, gần gấp đôi EDC+ chạy cùng LLM (19,9)
-nhưng còn thấp hơn cấu hình KG-aware dùng GPT-5.1 (46,5).
+Về thực nghiệm, khóa luận đã đánh giá module trích triple theo schema,
+bước nền của mọi thao tác thêm, trên ba benchmark WebNLG, REBEL và Wiki-NRE \cite{zhang2024edc,cabot2021rebel}.
+EDC \cite{zhang2024edc} và ATOM+EDC \cite{lairgi2025atom} được chạy lại với cùng LLM
+để tách đóng góp của phương pháp khỏi đóng góp của mô hình,
+và mọi hệ được chấm bằng cùng script đánh giá của EDC.
+Với một lệnh gọi LLM mỗi câu, module đề xuất đạt F1 theo chế độ Partial 74,4 trên WebNLG, 55,2 trên REBEL và 66,2 trên Wiki-NRE,
+cao hơn EDC chạy cùng LLM (70,6, 49,2 và 62,2) lần lượt 3,8, 6,0 và 4,0 điểm,
+và cao hơn rõ rệt ATOM+EDC (56,8, 40,3 và 40,7).
+Thời gian chạy của module là 20, 21 và 15 phút, so với 50, 61 và 41 phút của EDC.
+Các điểm số này cũng tương đương, thậm chí nhỉnh hơn, số công bố của EDC khi dùng Mistral-7B ở bước trích mở (72,8, 51,6 và 64,7),
+dù hai kết quả không so sánh trực tiếp được vì cấu hình công bố dùng GPT-3.5 cho các bước còn lại.
 
-\textbf{Thay đổi gián tiếp.}
-Trên 438 tin kiểm thử của NBAtransactions, khi thao tác tường minh được lấy từ nhãn vàng,
-bước khoanh vùng hai vế cùng bộ phán Gemma đạt F1 tái dựng đồ thị 0,993 và độ chính xác cạnh xóa 0,997,
-so với 0,987 và 0,899 của GUpdater \cite{tang2019gupdate}.
-Độ chính xác cạnh thêm đạt 0,840, thấp hơn GUpdater (0,893).
-Nếu chỉ áp các thao tác tường minh mà không dùng bộ phán, độ chính xác cạnh thêm và cạnh xóa chỉ là 0,056,
-cho thấy gần như toàn bộ phần cải thiện đến từ bước khoanh vùng và bộ phán.
-Tập ứng viên do bước khoanh vùng sinh ra bao phủ toàn bộ thay đổi gián tiếp trên tập kiểm thử.
-
-\textbf{Xây dựng KG tích lũy từ chuỗi văn bản.}
-Trên 2020-COVID-NYT, qua ba lượt chạy, pipeline đạt F1 trung bình 49,9 với độ lệch chuẩn 0,2,
-xếp sau ATOM hai bước (52,8) nhưng trên KGGen (48,5) và ATOM trích thẳng (38,1),
-trong khi chỉ dùng khoảng 5,5 lệnh gọi LLM mỗi nhóm ngày so với khoảng 11 của ATOM hai bước.
-Theo bộ phán Gemma, 96,2\% bộ ba trích được có căn cứ trong văn bản.
-Trên MINE-1, pipeline đạt độ chính xác 85,4, cao hơn KGGen chạy cùng LLM (75,9)
-và các KG do KGGen dùng GPT-4o phát hành (68,7),
-đổi lại thời gian xử lý mỗi bài dài hơn (178 giây so với 34 giây của KGGen).
-
-\textbf{Trích xuất theo lược đồ.}
-Chỉ với module trích xuất và một lệnh gọi LLM mỗi câu,
-pipeline đạt F1 Partial 74,4 trên WebNLG, 55,3 trên REBEL và 66,2 trên Wiki-NRE,
-cao hơn EDC \cite{zhang2024edc} chạy cùng LLM lần lượt 3,8, 6,1 và 4,0 điểm,
-với thời gian chạy chưa bằng một nửa thời gian của EDC.
-Trên KnowledgeNet, pipeline đạt F1 55,4 theo bộ chấm của tác giả bộ dữ liệu, cao nhất trong các hệ dùng LLM (EDC đạt 51,3),
-với precision 77,8 cao hơn cả mô hình có giám sát;
-tuy vậy recall thấp khiến F1 còn kém mô hình có giám sát (70,4).
-Trên NYT11-HRL, mọi hệ dùng LLM đều đạt điểm thấp do nhãn vàng thưa,
-và pipeline (F1 khớp chính xác 12,5) xếp sau EDC (15,5).
-
-\textbf{Ý nghĩa của kết quả.}
 Từ các kết quả trên, khóa luận rút ra ba nhận định.
-Thứ nhất, việc nhìn vào KG là yếu tố then chốt của thao tác vô hiệu hóa:
-khi được đặt đúng các fact liên quan làm ngữ cảnh, một LLM nhỏ chạy tại chỗ đã làm tốt hơn hệ dùng GPT-5.1 trên Exists và Deprecate.
-Thứ hai, tách phần lập luận cấu trúc khỏi LLM giúp phát hiện các thay đổi gián tiếp mà không cần luật miền,
-vì bước khoanh vùng chỉ dựa trên hình dạng của đồ thị nên có thể dùng lại cho miền khác.
-Thứ ba, các lựa chọn kỹ thuật như giải mã có ràng buộc, gom lô và một lệnh gọi mỗi câu
-giữ chi phí đủ thấp để triển khai trên phần cứng phổ thông.
-Các kết quả này cho thấy phương pháp có thể ứng dụng để duy trì KG chuyên ngành, KG nội bộ của tổ chức
-hoặc bộ nhớ dài hạn của tác tử LLM, nơi tri thức cần được cập nhật liên tục và phải lưu được lịch sử.
+Thứ nhất, với một LLM mở cỡ nhỏ, việc ép quan hệ vào schema ngay lúc sinh bằng giải mã có ràng buộc
+cho kết quả tốt hơn quy trình trích mở rồi mới chuẩn hóa về schema như EDC,
+có lẽ vì mô hình không phải tự đặt tên quan hệ rồi trông vào một bước sau để sửa lại.
+Thứ hai, thêm bước LLM phía trước như cách ATOM tách văn bản thành mệnh đề không làm tăng mà còn làm giảm F1 trên các câu ngắn;
+với mô hình nhỏ, mỗi bước LLM thêm vào là một chỗ có thể làm mất thông tin.
+Thứ ba, một lệnh gọi mỗi câu giữ chi phí đủ thấp để triển khai trên phần cứng phổ thông.
+Các nhận định này ủng hộ lựa chọn thiết kế của pipeline:
+giao cho LLM những tác vụ hẹp với đầu ra ép schema,
+và chuyển phần lập luận trên cấu trúc sang các bước tất định.
+Phương pháp vì vậy có triển vọng ứng dụng để duy trì KG chuyên ngành, KG nội bộ của tổ chức
+hoặc bộ nhớ dài hạn của tác tử LLM, nơi dữ liệu cần được xử lý tại chỗ và tri thức cần được cập nhật liên tục.
 
 % ---------------------------------------------------------------------
 \section{Hạn chế}
 \label{sec:conclusion-limits}
 
-Bên cạnh các kết quả trên, khóa luận còn một số hạn chế cần được nêu rõ.
-
 \begin{itemize}
-  \item \textbf{Chưa có lần chạy đầu-cuối trên NBAtransactions.}
-  Kết quả F1 0,993 dùng thao tác tường minh lấy từ nhãn vàng, nên chỉ đánh giá bước khoanh vùng và bộ phán.
-  Lần thử trên 20 tin với mô hình cũ không trích được thao tác nào,
-  và khóa luận chưa chạy lại toàn bộ chuỗi với Gemma~4.
+  \item \textbf{Phần lớn pipeline chưa được đánh giá định lượng.}
+  Các bước khoanh vùng cấu trúc, bộ phán, rút câu đơn và gộp tên mới được thiết kế và cài đặt,
+  chưa được đánh giá định lượng trong khóa luận.
+  Vì vậy, khả năng vô hiệu hóa fact và phát hiện thay đổi gián tiếp,
+  vốn là điểm khác biệt chính của phương pháp, mới được lập luận và minh họa qua ví dụ.
 
-  \item \textbf{Chưa xử lý thực thể mới và giả định liên kết thực thể có sẵn trên EMERGE.}
-  Pipeline dùng danh sách thực thể được nhắc kèm mã Wikidata do benchmark cung cấp,
-  tức là được đánh giá trong chế độ đã có liên kết thực thể.
-  Thao tác Mint+Add chưa được cài đặt nên đạt 0, còn thao tác Infer nằm ngoài phạm vi.
-  Hai độ đo chính Completeness và G-BERTScore-R đều là độ đo recall;
-  precision của Deprecate theo khớp mã định danh chỉ khoảng 0,45,
-  một phần do giới hạn của nhãn vàng: chiều của một số quan hệ trong nhãn ngược với chiều hệ thống đề xuất,
-  và một số fact vàng không xuất hiện trong đoạn văn.
+  \item \textbf{Chỉ dùng một LLM.}
+  Mọi thực nghiệm dùng Gemma~4 E4B lượng tử hóa 4 bit;
+  chưa rõ ưu thế so với EDC có còn giữ nguyên với các LLM khác, đặc biệt là các mô hình lớn hơn.
 
-  \item \textbf{Bộ phán ``có căn cứ'' chưa được kiểm tra thủ công.}
-  Tỷ lệ bộ ba có căn cứ được chấm bằng chính Gemma, cùng mô hình với hệ được đánh giá, và chỉ phản ánh precision.
-  Trên MINE-1, bộ phán Gemma cũng khác bộ phán gốc của bài báo:
-  độ lệch điểm so với bộ phán gốc lên tới 18,1 điểm (với OpenIE),
-  và mức đồng ý trên từng fact chỉ từ 71\% đến 85\%.
-  Ngoài ra, độ đo MINE thuần recall nên có lợi cho KG lớn;
-  KG của pipeline có 7.161 bộ ba, nhiều hơn KG của KGGen chạy cùng LLM (4.687).
+  \item \textbf{So sánh với số công bố chỉ mang tính tham khảo.}
+  Mẫu 1.000 câu của REBEL và Wiki-NRE được lấy từ bản dữ liệu trong kho mã của EDC,
+  không chắc trùng với mẫu mà bài báo EDC dùng;
+  cấu hình công bố của EDC cũng chỉ đổi LLM ở bước trích mở.
 
-  \item \textbf{Câu chữ kém ổn định giữa các lượt chạy.}
-  Trên COVID-NYT, F1 gần như không đổi giữa ba lượt và độ trùng khớp mềm đạt 0,78 đến 0,81,
-  nhưng độ trùng khớp chính xác (Jaccard) chỉ 0,22 đến 0,28,
-  thấp hơn ATOM (0,52 đến 0,53) và KGGen (0,55 đến 0,58).
-  Nguyên nhân là hai bước dùng LLM là rút câu và gộp tên làm thay đổi cách viết tên thực thể và quan hệ,
-  dù nội dung của phần lớn fact vẫn giữ nguyên.
-
-  \item \textbf{Một số kết quả chưa vượt hệ tốt nhất.}
-  Trên COVID-NYT, pipeline thua ATOM hai bước 2,9 điểm F1,
-  với cả precision (65,0 so với 67,6) và recall (40,5 so với 43,3) đều thấp hơn.
-  Trên KnowledgeNet, pipeline còn kém mô hình có giám sát;
-  kết quả được đo trên tập phát triển (fold 4) chứ không phải tập kiểm thử ẩn nhãn,
-  bước ánh xạ bộ ba sang vị trí ký tự có trần F1 0,933, và phần liên kết Wikidata không chấm được.
-  Trên NYT11-HRL, pipeline thấp hơn EDC theo độ đo khớp chính xác.
-
-  \item \textbf{Đánh giá từng phần của pipeline.}
-  Trên các bộ trích xuất theo lược đồ, chỉ module trích xuất được sử dụng;
-  trên EMERGE, COVID-NYT và MINE-1, pipeline chạy ở các cấu hình rút gọn phù hợp với từng benchmark.
-  Các phương án bộ phán dựa trên dự đoán liên kết và phương án lai mới dừng ở mức thiết kế.
+  \item \textbf{Benchmark chưa có yếu tố thời gian.}
+  Ba benchmark gồm các câu độc lập, không có KG trước và không có mốc thời gian,
+  nên chưa đo được việc quy đổi thời gian tương đối và việc nhận ra fact cũ đã hết hiệu lực.
 \end{itemize}
 
 % ---------------------------------------------------------------------
 \section{Hướng phát triển}
 \label{sec:conclusion-future}
 
-Từ các hạn chế trên, khóa luận đề xuất các hướng phát triển sau.
-
 \begin{itemize}
-  \item \textbf{Chạy đầu-cuối trên NBAtransactions:}
-  để Gemma~4 tự trích thao tác tường minh từ bản tin rồi chuyển cho bước khoanh vùng và bộ phán,
-  qua đó đo được mức sai số lan truyền giữa các bước.
+  \item \textbf{Đánh giá trên benchmark cập nhật KG:}
+  đo các bước còn lại trên EMERGE \cite{zaporojets2025emerge} cho thao tác giữ, thêm và vô hiệu hóa,
+  và trên NBAtransactions \cite{tang2019gupdate} cho thay đổi gián tiếp, so với GUpdater;
+  đồng thời lặp lại thực nghiệm với nhiều LLM khác nhau.
 
-  \item \textbf{Tạo thực thể mới:}
+  \item \textbf{Tạo thực thể mới (Mint):}
   bổ sung bước quyết định khi nào một tên trong bản tin là thực thể chưa có trong KG,
-  cấp định danh mới và sinh các fact đi kèm, nhằm giải thao tác Mint+Add của EMERGE.
-
-  \item \textbf{Liên kết thực thể tự động:}
-  thay danh sách thực thể có sẵn mã định danh bằng một module liên kết thực thể như ReLiK \cite{orlando2024relik},
-  đưa hệ thống về đúng điều kiện triển khai thực tế.
+  cấp định danh mới và sinh các fact đi kèm.
 
   \item \textbf{Bộ phán lai:}
   kết hợp LLM với mô hình dự đoán liên kết quy nạp (\textit{inductive}) như AnyBURL \cite{meilicke2019anyburl} hoặc ULTRA \cite{galkin2024ultra};
-  ứng viên có độ tin cậy từ 0,9 trở lên được quyết định trực tiếp, chỉ vùng xám mới chuyển cho LLM, nhằm giảm số lệnh gọi.
+  ứng viên có độ tin cậy cao được quyết định trực tiếp, chỉ vùng xám mới chuyển cho LLM, nhằm giảm số lệnh gọi.
   Các mô hình nhúng kiểu \textit{transductive} như TransE \cite{bordes2013transe} hay RotatE \cite{sun2019rotate}
   không phù hợp vì chỉ biểu diễn được các thực thể đã thấy khi huấn luyện.
-
-  \item \textbf{Kiểm tra thủ công bộ phán:}
-  gán nhãn tay một mẫu bộ ba để đo độ đồng thuận giữa người và bộ phán Gemma,
-  đồng thời thử bộ phán thuộc một họ mô hình khác với hệ được đánh giá.
-
-  \item \textbf{Ổn định câu chữ:}
-  giữ một danh mục tên chuẩn xuyên suốt các lượt chạy
-  và ưu tiên tái sử dụng tên đã có để KG ít phụ thuộc vào cách diễn đạt của từng lần gọi LLM.
 
   \item \textbf{Bộ dữ liệu tiếng Việt:}
   xây dựng một bộ bản tin tiếng Việt kèm KG trước và sau sự kiện để đánh giá phương pháp trên tiếng Việt.
 
   \item \textbf{Hệ thống trình diễn:}
-  chiếu KG bi-temporal sang Neo4j và xây dựng giao diện Streamlit cho phép xem lịch sử của từng fact,
+  xây dựng giao diện cho phép xem lịch sử của từng fact trong KG bi-temporal,
   duyệt và chấp nhận các thao tác do hệ thống đề xuất.
-
-  \item \textbf{Cập nhật định kỳ:}
-  theo hướng AutoVU-KG \cite{autovu2025} và ODKE+ \cite{odke2025},
-  tự động thu thập bản tin theo lịch, cập nhật KG liên tục
-  và đo độ trễ giữa thời điểm sự kiện được đưa tin và thời điểm KG phản ánh sự kiện đó.
 \end{itemize}
 
-Tóm lại, khóa luận đã cho thấy một LLM mở cỡ nhỏ, khi được kết hợp với KG bi-temporal,
-bước khoanh vùng dựa trên cấu trúc và một bộ phán gom lô,
-có thể sinh được cả thao tác thêm lẫn thao tác vô hiệu hóa tri thức từ bản tin,
-điều mà các hệ trích xuất hiện có chưa làm được.
-Hoàn thiện các hướng nêu trên, đặc biệt là chạy đầu-cuối và tạo thực thể mới,
-sẽ đưa phương pháp tới gần hơn một hệ thống cập nhật KG tự động có thể triển khai trong thực tế.
+Tóm lại, khóa luận đã đề xuất một pipeline cập nhật KG có thao tác vô hiệu hóa và lưu được lịch sử,
+và đã cho thấy bước nền của pipeline là trích triple theo schema,
+khi chạy với một LLM mở cỡ nhỏ, chính xác hơn EDC và ATOM+EDC, đồng thời nhanh hơn EDC khi dùng cùng mô hình.
+Đánh giá định lượng các bước còn lại trên benchmark cập nhật KG là việc cần làm tiếp theo
+để đưa phương pháp tới gần một hệ thống cập nhật KG tự động có thể triển khai trong thực tế.

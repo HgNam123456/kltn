@@ -7,36 +7,29 @@
 \fontsize{13pt}{1pt}\selectfont
 
 Đồ thị tri thức (\textit{knowledge graph}, KG) nhanh chóng lỗi thời khi thế giới thay đổi,
-trong khi các hệ thống xây dựng KG từ văn bản dựa trên mô hình ngôn ngữ lớn (LLM) hiện nay chủ yếu chỉ thêm tri thức mới
+trong khi các hệ xây dựng KG từ văn bản dựa trên mô hình ngôn ngữ lớn (LLM) hiện nay chủ yếu chỉ thêm tri thức mới
 và hầu như không vô hiệu hóa được tri thức đã hết hiệu lực.
 Khóa luận nghiên cứu bài toán tự động cập nhật KG từ bản tin:
 với đầu vào là một KG có thời gian hai trục (\textit{bi-temporal}) và một bản tin mới,
 hệ thống cần sinh tập thao tác giữ nguyên, thêm mới và vô hiệu hóa fact, rồi áp lên KG mà không xóa lịch sử.
 Phương pháp cần tổng quát cho nhiều miền, không dùng luật viết tay và chạy được với LLM mở cỡ nhỏ.
 
-Khóa luận đề xuất một pipeline sáu bước theo nguyên tắc ``LLM trích xuất, cấu trúc khoanh vùng, bộ phán quyết định'':
+Khóa luận thiết kế một pipeline sáu bước theo nguyên tắc ``LLM trích xuất, cấu trúc khoanh vùng, bộ phán quyết định'':
 rút bản tin thành các câu đơn;
-trích các thao tác tường minh với đầu ra JSON ép lược đồ;
+trích các thao tác tường minh với đầu ra JSON ép schema;
 áp thao tác lên KG bi-temporal;
 khoanh vùng cấu trúc hai vế để tìm các cạnh có thể thay đổi gián tiếp mà không cần luật miền;
 dùng một bộ phán LLM gom lô để quyết định giữ, vô hiệu hóa hay thêm cho từng ứng viên;
 và định kỳ gộp các tên thực thể, quan hệ trùng nghĩa.
 
-Pipeline được cài đặt với Gemma 4 E4B lượng tử hóa 4 bit
-và được đánh giá trên tám bộ dữ liệu chuẩn cùng bộ NBAtransactions,
-trong đó mọi hệ so sánh dùng cùng LLM và bộ chấm chính thức.
-Trên EMERGE (3.500 bài), pipeline đạt Completeness 91,3 cho thao tác Exists và 63,3 cho Deprecate,
-cao hơn cấu hình được cung cấp bộ ba vàng dùng GPT-5.1 (60,4 và 37,4).
-Trên WebNLG, REBEL và Wiki-NRE, pipeline vượt EDC chạy cùng LLM từ 3,8 đến 6,1 điểm F1
-với thời gian chạy chưa bằng một nửa;
-trên MINE-1, pipeline đạt 85,4 so với 75,9 của KGGen.
-Trên NBAtransactions, khi thao tác tường minh lấy từ nhãn vàng,
-bước khoanh vùng và bộ phán đạt F1 0,993 so với 0,987 của GUpdater.
-Trên COVID-NYT, pipeline xếp sau ATOM (F1 49,9 so với 52,8).
+Phần thực nghiệm tập trung kiểm chứng bước nền của mọi thao tác thêm là module trích triple theo schema,
+với một lệnh gọi LLM mỗi câu và trường quan hệ bị ép vào danh sách quan hệ của schema bằng giải mã có ràng buộc.
+Module được đánh giá trên ba benchmark WebNLG, REBEL và Wiki-NRE, so với EDC và ATOM+EDC;
+mọi hệ dùng cùng LLM Gemma 4 E4B lượng tử hóa 4 bit và cùng script chấm của EDC.
+Module đạt F1 theo chế độ Partial 74,4 trên WebNLG, 55,2 trên REBEL và 66,2 trên Wiki-NRE,
+cao hơn EDC (70,6, 49,2 và 62,2) và ATOM+EDC (56,8, 40,3 và 40,7),
+trong khi thời gian chạy chỉ bằng khoảng 34\% đến 40\% thời gian của EDC.
+Kết quả cho thấy với LLM mở cỡ nhỏ, trích một lần với đầu ra ép schema vừa chính xác hơn vừa rẻ hơn quy trình trích mở rồi chuẩn hóa nhiều pha.
+Các bước khoanh vùng, bộ phán và gộp tên đã được cài đặt; đánh giá định lượng các bước này là hướng phát triển tiếp theo.
 
-Kết quả cho thấy một LLM nhỏ chạy tại chỗ, khi được đặt đúng ngữ cảnh KG và kết hợp với khoanh vùng cấu trúc,
-có thể thực hiện thao tác vô hiệu hóa tri thức mà các hệ trích xuất hiện có chưa làm được.
-Các hạn chế chính là chưa có lần chạy đầu-cuối trên NBAtransactions, chưa tạo được thực thể mới
-và bộ phán độ có căn cứ chưa được kiểm tra thủ công.
-
-\textit{\textbf{Từ khóa:} đồ thị tri thức, cập nhật đồ thị tri thức, mô hình ngôn ngữ lớn, trích xuất thông tin, đồ thị tri thức hai trục thời gian.}
+\textit{\textbf{Từ khóa:} đồ thị tri thức, cập nhật đồ thị tri thức, mô hình ngôn ngữ lớn, trích xuất triple theo schema, đồ thị tri thức hai trục thời gian.}

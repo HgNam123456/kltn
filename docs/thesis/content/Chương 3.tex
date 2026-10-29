@@ -1,13 +1,9 @@
 % ======================================================================
 % CHƯƠNG 3. PHƯƠNG PHÁP
-%
-% CẦN THÊM VÀO main.tex (preamble):
-%   \usepackage[ruled,vlined,linesnumbered]{algorithm2e}   % Thuật toán 3.1
-% Các gói đã có trong mẫu và được dùng ở đây: tikz (tự nạp xcolor), graphicx
-% (\resizebox), booktabs, array, makecell, amsmath, amssymb (\checkmark, \nsim),
-% caption; môi trường defn ("Định nghĩa") đã khai báo trong main.tex.
-% Thư viện TikZ và vài macro cục bộ được nạp ngay sau tiêu đề chương.
-% Nhãn cố định: chap:method, sec:problem, fig:pipeline.
+% Gói dùng ở đây đều đã có trong main.tex: tikz, xcolor, graphicx,
+% booktabs, array, amsmath, amssymb, algorithm2e (ruled, vlined,
+% linesnumbered); môi trường defn ("Định nghĩa") đã khai báo trong main.tex.
+% Nhãn cố định: chap:method, sec:problem, fig:pipeline, alg:localize.
 % ======================================================================
 \chapter{Phương pháp cập nhật knowledge graph từ bản tin bằng mô hình ngôn ngữ lớn kết hợp khoanh vùng cấu trúc}\label{chap:method}
 
@@ -21,112 +17,70 @@
 \providecommand{\vuntil}{v_{\mathrm{until}}}
 
 Chương này trình bày phương pháp mà khóa luận đề xuất cho bài toán tự động cập nhật \textit{knowledge graph} (KG) từ bản tin.
-Mục~\ref{sec:method-idea} nêu ý tưởng chung trước khi đi vào chi tiết.
-Mục~\ref{sec:problem} định nghĩa hình thức bài toán và đưa ra ví dụ dùng xuyên suốt chương.
-Mục~\ref{sec:architecture} mô tả kiến trúc tổng thể của pipeline; Mục~\ref{sec:steps} trình bày từng bước, trong đó thuật toán khoanh vùng cấu trúc hai vế là đóng góp chính về mặt thuật toán.
-Mục~\ref{sec:adapt} giải thích cách pipeline được cắt gọn cho từng bộ dữ liệu đánh giá.
-Mục~\ref{sec:analysis} phân tích ưu điểm, hạn chế và nêu các độ đo dùng ở Chương~\ref{chap:experiments}.
+Mục~\ref{sec:method-idea} nêu ý tưởng; Mục~\ref{sec:problem} định nghĩa hình thức bài toán kèm ví dụ dùng xuyên suốt; Mục~\ref{sec:architecture} mô tả kiến trúc và Mục~\ref{sec:steps} trình bày từng bước của pipeline.
+Mục~\ref{sec:schema-extract} mô tả module trích triple theo lược đồ, là phần được đánh giá ở Chương~\ref{chap:experiments}; Mục~\ref{sec:analysis} phân tích ưu điểm và hạn chế.
 
 % ======================================================================
-\section{Ý tưởng chung: LLM trích, cấu trúc khoanh vùng, bộ phán quyết}\label{sec:method-idea}
+\section{Ý tưởng: LLM trích, cấu trúc khoanh vùng, bộ phán quyết}\label{sec:method-idea}
 
-Một bản tin thường chỉ nói thẳng vài thay đổi, nhưng mỗi thay đổi đó kéo theo những thay đổi khác trên KG mà văn bản không nhắc tới.
-Khi đọc tin ``Barcelona star Lionel Messi has left the club and joined Inter Milan on Monday.'', người đọc hiểu ngay rằng Messi không còn chơi cho Barcelona và đã chuyển sang Inter Milan.
-Đó là các thay đổi \emph{tường minh}.
-Tuy nhiên, nếu KG đang lưu Pedri là đồng đội của Messi thì quan hệ đồng đội này cũng phải kết thúc, còn Lautaro, một cầu thủ của Inter, trở thành đồng đội mới của Messi.
-Đó là các thay đổi \emph{gián tiếp}: chúng chỉ suy ra được khi kết hợp văn bản với cấu trúc KG hiện có.
-Trên bộ NBAtransactions~\cite{tang2019gupdate}, chỉ 5,6\% thay đổi được bản tin nói thẳng; 94,4\% còn lại là thay đổi gián tiếp, chủ yếu là quan hệ đồng đội.
-Một hệ chỉ trích xuất điều văn bản nói sẽ bỏ sót phần lớn thay đổi.
+Một bản tin thường chỉ nói thẳng vài thay đổi, nhưng mỗi thay đổi kéo theo những thay đổi khác mà văn bản không nhắc.
+Với tin ``Barcelona star Lionel Messi has left the club and joined Inter Milan on Monday.'', người đọc hiểu ngay rằng Messi không còn chơi cho Barcelona và đã sang Inter Milan; đó là các thay đổi \emph{tường minh}.
+Nếu KG đang lưu Pedri là đồng đội của Messi thì quan hệ này cũng phải kết thúc, còn Lautaro, một cầu thủ của Inter, trở thành đồng đội mới; đó là các thay đổi \emph{gián tiếp}, chỉ suy ra được khi kết hợp văn bản với cấu trúc KG.
+Trên NBAtransactions~\cite{tang2019gupdate}, 94,4\% thay đổi thuộc loại gián tiếp, nên một hệ chỉ trích điều văn bản nói sẽ bỏ sót phần lớn thay đổi.
 
-Phương pháp đề xuất chia công việc cho ba vai, mỗi vai làm phần việc mà nó làm tốt nhất:
+Phương pháp đề xuất chia công việc cho ba vai:
 \begin{itemize}
-  \item \textbf{LLM trích.} Mô hình ngôn ngữ lớn (LLM) đọc bản tin và sinh các thao tác \emph{tường minh} (thêm fact, vô hiệu hóa fact) dưới dạng JSON ép theo schema. Đây là phần cần hiểu ngôn ngữ: diễn đạt lại, quy đổi thời gian tương đối, nhận ra fact cũ nào văn bản nói đã hết đúng.
-  \item \textbf{Cấu trúc khoanh vùng.} Một thuật toán thuần đồ thị, không gọi LLM và không dùng luật miền, tìm một vùng nhỏ các cạnh có thể phải đổi theo: các thực thể nối đồng thời tới ít nhất hai thực thể tham gia sự kiện (vế cắt), và các hàng xóm của bối cảnh mới mà một thực thể vừa gia nhập (vế sinh). Khoanh vùng chỉ trả lời câu hỏi ``nhìn vào đâu''.
-  \item \textbf{Bộ phán quyết.} Với từng ứng viên trong vùng, bộ phán (trong thực nghiệm là LLM) trả lời câu hỏi ``đổi cái gì'': giữ nguyên (\opk{KEEP}), vô hiệu hóa (\opk{INVALIDATE}) hay thêm cạnh với quan hệ nào (\opk{ADD}).
+  \item \textbf{LLM trích} các thao tác tường minh (thêm fact, vô hiệu hóa fact) dưới dạng JSON ép schema. Đây là phần cần hiểu ngôn ngữ: diễn đạt lại, quy đổi thời gian tương đối, nhận ra fact cũ nào văn bản nói đã hết đúng.
+  \item \textbf{Cấu trúc khoanh vùng}: một thuật toán thuần đồ thị, không gọi LLM và không dùng luật miền, chỉ ra vùng nhỏ các cạnh có thể phải đổi theo, tức trả lời câu hỏi ``nhìn vào đâu''.
+  \item \textbf{Bộ phán quyết} cho từng ứng viên trong vùng: giữ nguyên (\opk{KEEP}), vô hiệu hóa (\opk{INVALIDATE}) hay thêm cạnh với quan hệ nào (\opk{ADD}), tức trả lời câu hỏi ``đổi cái gì''.
 \end{itemize}
-Mọi thay đổi được ghi vào một KG \textit{bi-temporal} (Mục~\ref{sec:bg-kg}): không fact nào bị xóa, một fact hết đúng chỉ bị đóng mốc kết thúc hiệu lực, nhờ đó lịch sử vẫn truy vấn được.
-Ngoài ra, vì KG tích lũy qua nhiều bản tin nên cùng một thực thể dễ xuất hiện dưới nhiều tên; một bước gộp tên định kỳ giữ cho KG gọn.
+Mọi thay đổi được ghi vào một KG bi-temporal: không fact nào bị xóa, fact hết đúng chỉ bị đóng mốc kết thúc hiệu lực.
+Vì KG tích lũy qua nhiều bản tin, một bước gộp tên định kỳ giữ cho KG gọn.
 
-\paragraph*{Vì sao không để LLM tự lo toàn bộ.}
-Cách đơn giản nhất là đưa KG hiện tại cùng bản tin cho LLM và yêu cầu sinh ra KG mới.
-Khóa luận không chọn cách này vì bốn lý do.
-Thứ nhất, KG thực tế lớn hơn nhiều so với cửa sổ ngữ cảnh.
-Truy xuất theo độ giống văn bản như RAG~\cite{lewis2020rag} lấy được các fact chứa tên được nhắc, nhưng không cho biết fact nào chịu ảnh hưởng: \kgr{teammate}(Messi, Pedri) và \kgr{friend}(Messi, Pedri) giống văn bản như nhau, song chỉ cạnh thứ nhất phải đổi; còn \kgr{plays\_for}(Pedri, Barca) không nói gì về Messi nhưng vẫn cần được xem xét.
-Biết ``nhìn vào đâu'' đòi hỏi dựa vào cấu trúc chứ không dựa vào câu chữ.
-Thứ hai, khóa luận nhắm tới LLM mở cỡ nhỏ (Gemma~4 E4B lượng tử hóa 4-bit~\cite{gemma4}) chạy trên GPU phổ thông.
-Một prompt gánh nhiều việc cùng lúc dễ khiến mô hình nhỏ bỏ sót hoặc lẫn lộn; các tác vụ hẹp với đầu ra ép schema dễ kiểm soát hơn.
-Thứ ba, các thao tác đồ thị như tìm hàng xóm hay đóng khoảng hiệu lực là xác định, rẻ và kiểm chứng được bằng mã.
-Giao chúng cho LLM chỉ thêm rủi ro ảo giác, nhất là với thao tác làm mất tri thức.
-Thứ tư, đánh giá trên EMERGE~\cite{zaporojets2025emerge} cho thấy các hệ trích xuất thông tin hiện có hầu như không thực hiện được thao tác vô hiệu hóa (Deprecate).
-Nhiều hệ gần đây như KARMA~\cite{lu2025karma}, ODKE+~\cite{odke2025} và TRAIL~\cite{trail2026} cũng tách bước trích bằng LLM khỏi tầng kiểm chứng hoặc phán quyết.
-
-\paragraph*{Nguyên tắc thiết kế.}
-Pipeline tuân theo năm nguyên tắc sau.
-\begin{enumerate}
-  \item \emph{LLM trích, cấu trúc khoanh vùng, bộ phán quyết}, như đã nêu ở trên.
-  \item \emph{Không xóa, chỉ vô hiệu hóa.} Mọi thay đổi mang dấu thời gian; KG truy vấn được lịch sử, kiểm toán được và hoàn tác được.
-  \item \emph{Không suy đoán sự kiện chưa xảy ra.} Hệ chỉ ghi điều văn bản khẳng định và điều suy ra được từ cấu trúc. Chẳng hạn, hệ không tự đoán ai sẽ thay vị trí của Messi ở Barcelona.
-  \item \emph{Đầu ra LLM là JSON ép theo schema} bằng giải mã ràng buộc (\textit{constrained decoding})~\cite{willard2023outlines}, để đầu ra tuân theo cấu trúc định trước ngay từ lúc sinh.
-  \item \emph{Không luật miền.} Không có luật viết tay kiểu ``cầu thủ chuyển câu lạc bộ thì mất đồng đội cũ''. Mọi tín hiệu cấu trúc đều được đo trên chính KG, nên nạp một miền mới không phải viết thêm luật.
-\end{enumerate}
+Khóa luận không đưa toàn bộ KG cùng bản tin cho LLM để sinh KG mới, vì ba lý do.
+Thứ nhất, KG thực tế lớn hơn nhiều so với cửa sổ ngữ cảnh, và truy xuất theo độ giống văn bản~\cite{lewis2020rag} không cho biết fact nào chịu ảnh hưởng: \kgr{teammate}(Messi, Pedri) và \kgr{friend}(Messi, Pedri) giống văn bản như nhau nhưng chỉ cạnh đầu phải đổi.
+Thứ hai, LLM mở cỡ nhỏ (Gemma~4 E4B lượng tử hóa 4-bit~\cite{gemma4}) dễ bỏ sót khi một prompt gánh nhiều việc; các tác vụ hẹp với đầu ra ép schema dễ kiểm soát hơn.
+Thứ ba, các thao tác đồ thị như tìm hàng xóm hay đóng khoảng hiệu lực là tất định, rẻ và kiểm chứng được bằng mã; giao chúng cho LLM chỉ thêm rủi ro ảo giác.
+Việc tách LLM trích khỏi tầng phán cũng là xu hướng của KARMA~\cite{lu2025karma}, ODKE+~\cite{odke2025} và TRAIL~\cite{trail2026}.
 
 \paragraph*{Phần kế thừa và phần mới.}
-Theo hướng dẫn trình bày, chúng tôi tách rõ phần kế thừa khỏi phần đề xuất.
-Phần kế thừa gồm: mô hình lưu trữ bi-temporal theo Zep/Graphiti~\cite{rasmussen2025zep}; ý tưởng tách câu trước khi trích của CoDe-KG~\cite{codekg2025} (giải đồng tham chiếu, tách câu phức) và ATOM~\cite{lairgi2025atom} (tách đoạn thành factoid); quy ước quy đổi thời gian tương đối và đặt tên quan hệ theo schema công bố của ATOM; ý tưởng nhúng tên rồi để LLM xác minh khi chuẩn hóa, như EDC~\cite{zhang2024edc} và bước gom cụm của KGGen~\cite{mo2025kggen}.
-Phần đề xuất mới gồm: (i) thuật toán khoanh vùng cấu trúc hai vế với điều kiện ``nối tới ít nhất hai thực thể tham gia''; (ii) bộ phán gom ứng viên theo mẫu quan hệ và đưa vào prompt các bằng chứng cấu trúc đo trên KG; (iii) bước kiểm tra thông tin bị sót sau khi rút câu; (iv) cách lắp ghép các thành phần thành một pipeline cập nhật chạy được với LLM mở cỡ nhỏ, cùng các chế độ thích nghi theo từng bài toán (Mục~\ref{sec:adapt}).
+Phần kế thừa gồm mô hình lưu trữ bi-temporal của Zep/Graphiti~\cite{rasmussen2025zep}, ý tưởng tách câu trước khi trích của CoDe-KG~\cite{codekg2025} và ATOM~\cite{lairgi2025atom}, quy ước quy đổi thời gian tương đối của ATOM, và ý tưởng nhúng tên rồi để LLM xác minh của EDC~\cite{zhang2024edc} và KGGen~\cite{mo2025kggen}.
+Phần đề xuất mới gồm: (i) thuật toán khoanh vùng cấu trúc hai vế với điều kiện ``nối tới ít nhất hai thực thể tham gia''; (ii) bộ phán gom ứng viên theo mẫu quan hệ, kèm bằng chứng cấu trúc đo trên KG; (iii) phép kiểm thông tin bị sót sau khi rút câu; (iv) module trích theo lược đồ gộp việc trích và việc tuân theo lược đồ vào một lệnh gọi ép enum; (v) cách lắp ghép các thành phần thành một pipeline chạy được với LLM mở cỡ nhỏ.
 
 % ======================================================================
 \section{Định nghĩa bài toán cập nhật KG bi-temporal từ bản tin}\label{sec:problem}
 
-Mục này hình thức hóa bài toán. Các ký hiệu được tổng hợp ở Bảng~\ref{tab:notation}.
-
-\subsection{KG bi-temporal}
-
 \begin{defn}[KG bi-temporal]\label{def:kg}
 Cho tập tên thực thể $\mathcal{E}$, tập tên quan hệ $\mathcal{R}$ và miền thời gian có thứ tự toàn phần $\mathcal{T}$ (các ngày).
-Một \emph{fact} là bộ năm $f=(h,r,t,\vfrom,\vuntil)$ với $h,t\in\mathcal{E}$, $r\in\mathcal{R}$, $\vfrom\in\mathcal{T}\cup\{\bot\}$ và $\vuntil\in\mathcal{T}\cup\{+\infty\}$; $\bot$ nghĩa là mốc bắt đầu chưa biết, $+\infty$ nghĩa là fact chưa kết thúc (fact \emph{mở}).
+Một \emph{fact} là bộ năm $f=(h,r,t,\vfrom,\vuntil)$ với $h,t\in\mathcal{E}$, $r\in\mathcal{R}$, $\vfrom\in\mathcal{T}\cup\{\bot\}$ và $\vuntil\in\mathcal{T}\cup\{+\infty\}$; $\bot$ là mốc bắt đầu chưa biết, $+\infty$ nghĩa là fact chưa kết thúc (fact \emph{mở}).
 Một KG bi-temporal là một tập hữu hạn $G$ các fact.
-Fact $f$ \emph{có hiệu lực} tại thời điểm $\tau$ nếu $\vfrom\preceq\tau<\vuntil$, trong đó $\vfrom\preceq\tau$ nghĩa là $\vfrom=\bot$ hoặc $\vfrom\le\tau$.
-\emph{Ảnh chụp} của $G$ tại $\tau$ là tập triple
+\emph{Ảnh chụp} của $G$ tại thời điểm $\tau$ là tập triple có hiệu lực tại $\tau$:
 \[
-G(\tau)=\bigl\{(h,r,t)\ \big|\ (h,r,t,\vfrom,\vuntil)\in G,\ \vfrom\preceq\tau<\vuntil\bigr\}.
+G(\tau)=\bigl\{(h,r,t)\ \big|\ (h,r,t,\vfrom,\vuntil)\in G,\ \vfrom\preceq\tau<\vuntil\bigr\},
 \]
+trong đó $\vfrom\preceq\tau$ nghĩa là $\vfrom=\bot$ hoặc $\vfrom\le\tau$.
 \end{defn}
 
-Một triple có thể ứng với nhiều fact có khoảng hiệu lực rời nhau, chẳng hạn khi một cầu thủ trở lại câu lạc bộ cũ, nhưng tại mỗi thời điểm có nhiều nhất một khoảng còn mở.
-Chúng tôi gọi mô hình này là bi-temporal theo nghĩa của Zep/Graphiti~\cite{rasmussen2025zep}, vì nó phân biệt hai loại thời gian.
-Loại thứ nhất là thời gian hiệu lực của fact trong thế giới thực, lấy từ văn bản (\textit{valid time}).
-Loại thứ hai là thời điểm hệ thống biết được thay đổi, chính là ngày đăng tin.
-Khi văn bản không nêu ngày kết thúc, ngày đăng tin được dùng làm mốc đóng: đó là thời điểm hệ thống biết chắc fact đã hết đúng.
-
-Hai ký hiệu bổ trợ được dùng trong các thuật toán.
-Hàng xóm của thực thể $x$ tại $\tau$ là $N_\tau(x)=\{y\neq x \mid \exists r: (x,r,y)\in G(\tau)\ \lor\ (y,r,x)\in G(\tau)\}$, không xét chiều cạnh.
-Tập cạnh nối hai thực thể là $E_\tau(x,y)=\{(h,r,t)\in G(\tau)\mid \{h,t\}=\{x,y\}\}$.
-
-\subsection{Bản tin và thao tác cập nhật}
+Mô hình là bi-temporal theo nghĩa của Zep/Graphiti~\cite{rasmussen2025zep}: $\vfrom$ và $\vuntil$ là thời gian hiệu lực lấy từ văn bản, còn ngày đăng tin là thời điểm hệ thống biết thay đổi; khi văn bản không nêu ngày kết thúc, ngày đăng tin được dùng làm mốc đóng.
+Hàng xóm của $x$ tại $\tau$ là $N_\tau(x)=\{y\neq x \mid \exists r: (x,r,y)\in G(\tau)\lor(y,r,x)\in G(\tau)\}$, không xét chiều cạnh; tập cạnh nối hai thực thể là $E_\tau(x,y)=\{(h,r,t)\in G(\tau)\mid \{h,t\}=\{x,y\}\}$.
 
 \begin{defn}[Bản tin và thao tác cập nhật]\label{def:ops}
 Một \emph{bản tin} là cặp $d=(x_d,\tau_d)$ gồm văn bản $x_d$ và ngày đăng $\tau_d\in\mathcal{T}$.
-Một \emph{thao tác} là bộ $o=(\kappa,h,r,t)$ với loại $\kappa\in\{\opk{KEEP},\opk{ADD},\opk{INVALIDATE}\}$; thao tác \opk{ADD} mang thêm mốc bắt đầu $v\in\mathcal{T}\cup\{\bot\}$.
-Kết quả áp tập thao tác $O$ lên $G$ tại $\tau_d$, ký hiệu $\mathrm{Apply}(G,O,\tau_d)$, nhận được khi xử lý lần lượt từng $o\in O$:
-\begin{itemize}
-  \item \opk{INVALIDATE}: nếu $G$ có fact mở $(h,r,t,\vfrom,+\infty)$ thì thay nó bằng $(h,r,t,\vfrom,\tau_d)$; ngược lại bỏ qua;
-  \item \opk{ADD}: nếu $G$ chưa có fact mở nào của triple $(h,r,t)$ thì thêm $(h,r,t,v,+\infty)$; ngược lại bỏ qua;
-  \item \opk{KEEP}: không thay đổi $G$.
-\end{itemize}
+Một \emph{thao tác} là bộ $o=(\kappa,h,r,t)$ với $\kappa\in\{\opk{KEEP},\opk{ADD},\opk{INVALIDATE}\}$; thao tác \opk{ADD} mang thêm mốc bắt đầu $v\in\mathcal{T}\cup\{\bot\}$.
+Kết quả áp tập thao tác $O$ lên $G$, ký hiệu $\mathrm{Apply}(G,O,\tau_d)$, nhận được khi xử lý lần lượt từng $o\in O$:
+\opk{INVALIDATE} thay fact mở $(h,r,t,\vfrom,+\infty)$ bằng $(h,r,t,\vfrom,\tau_d)$;
+\opk{ADD} thêm $(h,r,t,v,+\infty)$ nếu triple $(h,r,t)$ chưa có fact mở;
+\opk{KEEP} và các thao tác không áp được (vô hiệu cạnh không tồn tại, thêm cạnh đang có) không làm thay đổi $G$.
 \end{defn}
 
-Ba loại thao tác này tương ứng với Exists, Add và Deprecate trong cách gọi của EMERGE~\cite{zaporojets2025emerge} (Mục~\ref{sec:bg-task}).
-Tập thao tác được chia thành hai phần: $O^{\mathrm{exp}}$ gồm các thao tác mà văn bản nói thẳng, $O^{\mathrm{imp}}$ gồm các thao tác gián tiếp suy ra từ cấu trúc.
-Các thực thể xuất hiện trong $O^{\mathrm{exp}}$ được gọi là thực thể tham gia (\textit{participant}): $P=\{h,t\mid(\kappa,h,r,t)\in O^{\mathrm{exp}}\}$.
-
-\subsection{Phát biểu bài toán}
+Ba loại thao tác tương ứng với Exists, Add và Deprecate của EMERGE~\cite{zaporojets2025emerge}.
+Tập thao tác gồm hai phần: $O^{\mathrm{exp}}$ do văn bản nói thẳng và $O^{\mathrm{imp}}$ suy ra từ cấu trúc.
+Các thực thể xuất hiện trong $O^{\mathrm{exp}}$ là \emph{thực thể tham gia} (\textit{participant}): $P=\{h,t\mid(\kappa,h,r,t)\in O^{\mathrm{exp}}\}$.
 
 \begin{defn}[Bài toán cập nhật KG từ bản tin]\label{def:problem}
 Cho KG bi-temporal $G$ và bản tin $d=(x_d,\tau_d)$.
-Gọi $\Omega_d$ là \emph{phạm vi tri thức} của $d$, gồm các triple mà $x_d$ khẳng định là đúng hoặc đã hết đúng, cùng các triple mà tính đúng sai tại $\tau_d$ phụ thuộc vào các triple đó thông qua cấu trúc của $G$.
-Gọi $G^\star$ là KG đúng sau bản tin.
-Bài toán yêu cầu tìm tập thao tác $O=O^{\mathrm{exp}}\cup O^{\mathrm{imp}}$ sao cho ảnh chụp tại $\tau_d$ của KG sau cập nhật khớp nhất với $G^\star$ trên phạm vi $\Omega_d$:
+Gọi $\Omega_d$ là \emph{phạm vi tri thức} của $d$, gồm các triple mà $x_d$ khẳng định là đúng hoặc đã hết đúng, cùng các triple mà tính đúng sai tại $\tau_d$ phụ thuộc vào chúng thông qua cấu trúc của $G$; gọi $G^\star$ là KG đúng sau bản tin.
+Bài toán yêu cầu tìm tập thao tác $O=O^{\mathrm{exp}}\cup O^{\mathrm{imp}}$ sao cho
 \begin{equation}\label{eq:objective}
 O=\operatorname*{arg\,min}_{O'}\ \Bigl|\bigl(\mathrm{Apply}(G,O',\tau_d)(\tau_d)\ \triangle\ G^\star(\tau_d)\bigr)\cap\Omega_d\Bigr|,
 \end{equation}
@@ -135,18 +89,11 @@ trong đó $\triangle$ là hiệu đối xứng của hai tập.
 
 Lời giải còn phải thỏa ba ràng buộc.
 (R1) \emph{Không xóa}: mọi thay đổi đi qua $\mathrm{Apply}$, nên không fact nào bị loại khỏi $G$.
-(R2) \emph{Không suy đoán ngoài $\Omega_d$}: hệ không ghi các fact mà văn bản không khẳng định và cấu trúc không hàm ý.
-Do đó các thuộc tính nền mà văn bản không nói (loại Infer của EMERGE) nằm ngoài phạm vi khóa luận.
-(R3) \emph{Không luật miền}: tri thức miền chỉ đến từ văn bản, từ KG hiện có và từ LLM, không đến từ luật viết tay.
+(R2) \emph{Không suy đoán ngoài $\Omega_d$}: hệ không ghi fact mà văn bản không khẳng định và cấu trúc không hàm ý; vì vậy loại Infer của EMERGE nằm ngoài phạm vi khóa luận.
+(R3) \emph{Không luật miền}: tri thức miền chỉ đến từ văn bản, từ KG hiện có và từ LLM.
+Từ R1 suy ra tính \emph{bảo toàn lịch sử}: với mọi $O$ và mọi $\tau<\tau_d$, ta có $G(\tau)\subseteq\mathrm{Apply}(G,O,\tau_d)(\tau)$, vì \opk{INVALIDATE} chỉ đổi $\vuntil$ từ $+\infty$ thành $\tau_d>\tau$ còn \opk{ADD} chỉ thêm fact.
 
-\paragraph*{Tính chất bảo toàn lịch sử.}
-Với mọi tập thao tác $O$ và mọi $\tau<\tau_d$, ta có $G(\tau)\subseteq\mathrm{Apply}(G,O,\tau_d)(\tau)$.
-Thật vậy, \opk{INVALIDATE} chỉ đổi $\vuntil$ từ $+\infty$ thành $\tau_d>\tau$, nên fact vẫn có hiệu lực tại $\tau$; \opk{ADD} chỉ thêm fact; \opk{KEEP} không làm gì.
-Nói cách khác, cập nhật không bao giờ ghi đè quá khứ đã biết.
-Bao hàm có thể chặt khi văn bản cho biết một fact mới bắt đầu trước $\tau_d$, như trong ví dụ dưới đây.
-
-\subsection{Ví dụ minh họa xuyên suốt}\label{sec:example}
-
+\paragraph*{Ví dụ xuyên suốt.}
 KG-trước gồm sáu fact:
 \begin{align*}
 f_1 &= (\text{Messi},\ \kgr{plays\_for},\ \text{Barca},\ 2004,\ +\infty), &
@@ -156,20 +103,18 @@ f_4 &= (\text{Messi},\ \kgr{friend},\ \text{Pedri},\ \bot,\ +\infty),\\
 f_5 &= (\text{Lautaro},\ \kgr{plays\_for},\ \text{Inter},\ 2018,\ +\infty), &
 f_6 &= (\text{Inter},\ \kgr{coach},\ \text{Inzaghi},\ 2021,\ +\infty).
 \end{align*}
-Bản tin $d$ có $x_d=$ ``Barcelona star Lionel Messi has left the club and joined Inter Milan on Monday.'' và $\tau_d=$ 2026-07-01 (thứ Tư).
-Kết quả mong muốn gồm hai thao tác tường minh và năm phán quyết gián tiếp:
-\begin{itemize}
-  \item $O^{\mathrm{exp}}$: \opk{INVALIDATE} \kgr{plays\_for}(Messi, Barca); \opk{ADD} \kgr{plays\_for}(Messi, Inter) với $v=$ 2026-06-29, là ngày thứ Hai của tuần chứa $\tau_d$ (``on Monday'').
-  \item $O^{\mathrm{imp}}$: \opk{INVALIDATE} \kgr{teammate}(Messi, Pedri), vì quan hệ đồng đội gắn với việc cùng câu lạc bộ; \opk{ADD} \kgr{teammate}(Messi, Lautaro); \opk{ADD} \kgr{coached\_by}(Messi, Inzaghi).
-  \item \opk{KEEP} \kgr{plays\_for}(Pedri, Barca), vì Pedri không rời đi; \opk{KEEP} \kgr{friend}(Messi, Pedri), vì tình bạn không phụ thuộc câu lạc bộ.
-\end{itemize}
-Sau cập nhật, $f_1$ thành $(\text{Messi},\kgr{plays\_for},\text{Barca},2004,\text{2026-07-01})$, $f_3$ thành $(\text{Messi},\kgr{teammate},\text{Pedri},2020,\text{2026-07-01})$, và KG có thêm $(\text{Messi},\kgr{plays\_for},\text{Inter},\text{2026-06-29},+\infty)$ cùng hai cạnh mới mở từ $\tau_d$.
-Truy vấn ``năm 2025 Messi chơi cho đội nào?'' trên $G(\text{2025-06-01})$ vẫn trả về Barca, còn truy vấn tại 2026-07-02 trả về Inter.
-Phạm vi $\Omega_d$ không chứa fact kiểu ``ai thay Messi ở Barca'', nên hệ không được phép tự sinh fact đó.
+Bản tin có $x_d=$ ``Barcelona star Lionel Messi has left the club and joined Inter Milan on Monday.'' và $\tau_d=$ 2026-07-01 (thứ Tư).
+Kết quả mong muốn gồm:
+$O^{\mathrm{exp}}$ là \opk{INVALIDATE} \kgr{plays\_for}(Messi, Barca) và \opk{ADD} \kgr{plays\_for}(Messi, Inter) với $v=$ 2026-06-29, ngày thứ Hai của tuần chứa $\tau_d$ (``on Monday'');
+$O^{\mathrm{imp}}$ là \opk{INVALIDATE} \kgr{teammate}(Messi, Pedri), \opk{ADD} \kgr{teammate}(Messi, Lautaro) và \opk{ADD} \kgr{coached\_by}(Messi, Inzaghi);
+còn \kgr{plays\_for}(Pedri, Barca) và \kgr{friend}(Messi, Pedri) được giữ (\opk{KEEP}), vì Pedri không rời đi và tình bạn không phụ thuộc câu lạc bộ.
+Sau cập nhật, truy vấn ``Messi chơi cho đội nào?'' trên $G(\text{2025-06-01})$ vẫn trả về Barca, còn trên $G(\text{2026-07-02})$ trả về Inter.
+Fact kiểu ``ai thay Messi ở Barca'' nằm ngoài $\Omega_d$, nên hệ không được tự sinh.
+Bảng~\ref{tab:notation} tóm tắt các ký hiệu chính.
 
 \begin{table}[!htbp]
 \centering
-\caption{Ký hiệu dùng trong chương}
+\caption{Ký hiệu chính dùng trong chương}
 \label{tab:notation}
 \small
 \renewcommand{\arraystretch}{1.2}
@@ -177,22 +122,14 @@ Phạm vi $\Omega_d$ không chứa fact kiểu ``ai thay Messi ở Barca'', nên
 \toprule
 Ký hiệu & Ý nghĩa \\
 \midrule
-$\mathcal{E}$, $\mathcal{R}$ & Tập tên thực thể và tập tên quan hệ của KG \\
-$\mathcal{T}$; $\bot$; $+\infty$ & Miền thời gian (ngày); mốc chưa biết; khoảng hiệu lực chưa đóng \\
-$f=(h,r,t,\vfrom,\vuntil)$ & Fact bi-temporal: đầu $h$, quan hệ $r$, đuôi $t$, có hiệu lực trong $[\vfrom,\vuntil)$ \\
-$G$, $G'$, $G''$ & KG trước khi đọc tin; sau khi áp thao tác tường minh; sau khi áp kết quả bộ phán \\
-$G(\tau)$ & Ảnh chụp của KG tại $\tau$: các triple có hiệu lực tại $\tau$ \\
-$d=(x_d,\tau_d)$ & Bản tin gồm văn bản $x_d$ và ngày đăng $\tau_d$ \\
-$S_d$ & Danh sách câu đơn rút từ $x_d$ ở bước \buoc{0} \\
+$f=(h,r,t,\vfrom,\vuntil)$ & Fact bi-temporal, có hiệu lực trong $[\vfrom,\vuntil)$; $\bot$ là mốc chưa biết, $+\infty$ là chưa kết thúc \\
+$G$; $G(\tau)$ & KG bi-temporal; ảnh chụp của KG tại $\tau$ \\
+$G'$, $G''$ & KG sau khi áp thao tác tường minh; sau khi áp kết quả bộ phán \\
+$d=(x_d,\tau_d)$; $S_d$ & Bản tin gồm văn bản và ngày đăng; danh sách câu đơn rút từ $x_d$ \\
 $o=(\kappa,h,r,t)$ & Thao tác, $\kappa\in\{\opk{KEEP},\opk{ADD},\opk{INVALIDATE}\}$ \\
-$O^{\mathrm{exp}}$, $O^{\mathrm{imp}}$ & Thao tác tường minh (văn bản nói thẳng) và thao tác gián tiếp (suy ra từ cấu trúc) \\
-$P$ & Tập thực thể tham gia: mọi đầu và đuôi của các thao tác trong $O^{\mathrm{exp}}$ \\
-$N_\tau(x)$ & Tập hàng xóm của $x$ trong $G(\tau)$, không xét chiều cạnh \\
-$E_\tau(x,y)$ & Tập cạnh có hiệu lực tại $\tau$ nối $x$ với $y$ theo một trong hai chiều \\
-$\mathcal{C}^{\mathrm{cut}}$, $\mathcal{C}^{\mathrm{gen}}$ & Ứng viên của vế cắt (cạnh có thể phải vô hiệu) và của vế sinh (cặp có thể phải nối) \\
-$\Omega_d$ & Phạm vi tri thức của bản tin $d$ \\
-$B$ & Số ứng viên hoặc số mẫu trong một lệnh gọi bộ phán \\
-$k$, $\delta$ & Số cụm k-means và ngưỡng cosine của bước gộp tên ($\delta=0{,}75$) \\
+$O^{\mathrm{exp}}$, $O^{\mathrm{imp}}$; $P$ & Thao tác tường minh và gián tiếp; tập thực thể tham gia \\
+$N_\tau(x)$; $E_\tau(x,y)$ & Hàng xóm của $x$ tại $\tau$; tập cạnh nối $x$ với $y$ tại $\tau$ \\
+$\mathcal{C}^{\mathrm{cut}}$, $\mathcal{C}^{\mathrm{gen}}$ & Ứng viên của vế cắt (cạnh có thể phải vô hiệu) và vế sinh (cặp có thể phải nối) \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -200,22 +137,12 @@ $k$, $\delta$ & Số cụm k-means và ngưỡng cosine của bước gộp tên
 % ======================================================================
 \section{Kiến trúc tổng thể của pipeline}\label{sec:architecture}
 
-Hình~\ref{fig:pipeline} trình bày kiến trúc tổng thể.
-Pipeline gồm sáu thành phần, đánh số theo thứ tự xử lý một bản tin từ \buoc{0} đến \buoc{6}; hai bước \buoc{2} và \buoc{5} dùng chung một bộ thực thi.
-Các khối được tô màu theo ba loại: khối xanh dương là bước gọi LLM, khối xanh lá là thao tác đồ thị viết bằng mã thuần (không gọi LLM), khối hình trụ màu cam là dữ liệu.
-Mỗi khối kèm một ô ghi chú nền vàng nhạt cho biết ví dụ Messi trông như thế nào tại bước đó.
-
-Luồng xử lý một bản tin đi theo hình chữ U.
-Ở hàng trên, bản tin được rút thành câu đơn \buoc{0}, rồi LLM trích thao tác tường minh \buoc{1} từ các câu đơn cùng các fact đã lưu có liên quan.
-Các thao tác này được áp ngay vào KG \buoc{2}.
-Ở hàng dưới, thuật toán khoanh vùng \buoc{3} đọc cấu trúc \emph{mới} của KG để tìm ứng viên, bộ phán \buoc{4} quyết định từng ứng viên, và kết quả được áp vào KG \buoc{5}.
-KG thu được là KG-trước của bản tin kế tiếp.
-Bước gộp tên \buoc{6} không chạy cho từng tin mà chạy định kỳ, chẳng hạn sau mỗi 10 bản tin.
-
-Ba quyết định thiết kế đáng chú ý.
-Thứ nhất, thao tác tường minh được áp \emph{trước} khi khoanh vùng, để cấu trúc mới hiện hình: cạnh (Messi, Inter) phải có mặt thì vế sinh mới thấy được các hàng xóm của Inter.
-Thứ hai, bộ phán chỉ nhìn thấy một vùng nhỏ của KG, nên số lệnh gọi LLM phụ thuộc vào số ứng viên chứ không phụ thuộc vào kích thước KG.
-Thứ ba, mọi bước gọi LLM đều qua cùng một giao diện: endpoint tương thích OpenAI do \texttt{llama-server} của llama.cpp~\cite{llamacpp} cung cấp, nhiệt độ 0, đầu ra ép theo JSON schema sinh tự động từ kiểu dữ liệu Python.
+Hình~\ref{fig:pipeline} trình bày kiến trúc tổng thể, gồm sáu thành phần đánh số theo thứ tự xử lý một bản tin; hai bước \buoc{2} và \buoc{5} dùng chung một bộ thực thi.
+Luồng xử lý đi theo hình chữ U.
+Ở hàng trên, bản tin được rút thành câu đơn \buoc{0}, LLM trích thao tác tường minh \buoc{1} từ các câu đơn cùng các fact đã lưu có liên quan, và các thao tác này được áp ngay vào KG \buoc{2}.
+Ở hàng dưới, thuật toán khoanh vùng \buoc{3} đọc cấu trúc \emph{mới} của KG để tìm ứng viên, bộ phán \buoc{4} quyết định từng ứng viên, và kết quả được áp vào KG \buoc{5}; KG thu được là KG-trước của bản tin kế tiếp.
+Bước gộp tên \buoc{6} chạy định kỳ chứ không chạy cho từng tin.
+Mọi bước gọi LLM đều qua cùng một giao diện: endpoint tương thích OpenAI do \texttt{llama-server} của llama.cpp~\cite{llamacpp} cung cấp, nhiệt độ 0, đầu ra ép theo JSON Schema sinh tự động từ kiểu dữ liệu Python.
 Bảng~\ref{tab:steps} tóm tắt đầu vào, đầu ra và số lệnh gọi LLM của từng bước.
 
 \begin{figure}[!htbp]
@@ -309,12 +236,12 @@ Bảng~\ref{tab:steps} tóm tắt đầu vào, đầu ra và số lệnh gọi L
 Bước & Đầu vào & Đầu ra & Số lệnh gọi LLM \\
 \midrule
 \buoc{0} Rút câu đơn & Văn bản $x_d$ & Danh sách câu đơn $S_d$ & 1; thêm 1 nếu có mục bị sót \\
-\buoc{1} Trích thao tác tường minh & $S_d$ đánh số; tối đa 40 fact đã lưu có tên xuất hiện trong tin; tối đa 60 quan hệ đang dùng; $\tau_d$ & Fact $(h,r,t,\vfrom,\vuntil)$ kèm số câu nguồn; danh sách \texttt{ended}; quy về $O^{\mathrm{exp}}$ & 1; thêm 1 cho các câu chưa ra fact \\
-\buoc{2} Áp thao tác & $G$, $O^{\mathrm{exp}}$, $\tau_d$ & $G'$ và các thao tác có tác dụng & 0 \\
-\buoc{3} Khoanh vùng & $G'$, $O^{\mathrm{exp}}$ & $\mathcal{C}^{\mathrm{cut}}$, $\mathcal{C}^{\mathrm{gen}}$ & 0 \\
-\buoc{4} Bộ phán & $x_d$, $O^{\mathrm{exp}}$, ứng viên kèm bằng chứng cấu trúc, quan hệ cho phép & $O^{\mathrm{imp}}$ gồm \opk{INVALIDATE} và \opk{ADD}; mặc định \opk{KEEP} & 1 cho mỗi lô ứng viên \\
+\buoc{1} Trích thao tác tường minh & $S_d$; tối đa 40 fact đã lưu có tên xuất hiện trong tin; tối đa 60 quan hệ; $\tau_d$ & $O^{\mathrm{exp}}$: fact mới và fact đã lưu bị kết thúc & 1; thêm 1 cho các câu chưa ra fact \\
+\buoc{2} Áp thao tác & $G$, $O^{\mathrm{exp}}$, $\tau_d$ & $G'$ & 0 \\
+\buoc{3} Khoanh vùng & $G'$, $O^{\mathrm{exp}}$ & $\mathcal{C}^{\mathrm{cut}}$, $\mathcal{C}^{\mathrm{gen}}$ kèm bằng chứng & 0 \\
+\buoc{4} Bộ phán & $x_d$, $O^{\mathrm{exp}}$, ứng viên kèm bằng chứng, quan hệ cho phép & $O^{\mathrm{imp}}$; mặc định \opk{KEEP} & 1 mỗi lô ứng viên \\
 \buoc{5} Áp kết quả & $G'$, $O^{\mathrm{imp}}$, $\tau_d$ & $G''$ & 0 \\
-\buoc{6} Gộp tên (định kỳ) & Toàn bộ tên thực thể và tên quan hệ của KG & Ánh xạ về tên chung; bảng bí danh & 1 cho mỗi cụm có tên mới, chia cho nhiều tin \\
+\buoc{6} Gộp tên (định kỳ) & Tên thực thể và tên quan hệ của KG & Tên chung; bảng bí danh & 1 mỗi cụm có tên mới \\
 \bottomrule
 \end{tabular}
 \end{table}
@@ -322,175 +249,52 @@ Bước & Đầu vào & Đầu ra & Số lệnh gọi LLM \\
 % ======================================================================
 \section{Chi tiết các bước của pipeline}\label{sec:steps}
 
-Mỗi bước dưới đây được mô tả theo cùng một khuôn: mục đích, đầu vào và đầu ra, cách làm, rồi ví dụ Messi.
 Tên hàm và mô-đun được ghi kèm để đối chiếu với mã nguồn trong gói \texttt{kgu/}.
 
 % ----------------------------------------------------------------------
-\subsection{Bước 0: rút đoạn tin thành câu đơn và kiểm tra thông tin bị sót}\label{sec:step-condense}
+\subsection{Bước 0: rút câu đơn và kiểm thông tin bị sót}\label{sec:step-condense}
 
-\paragraph*{Mục đích.}
-Bản tin thường có câu dài nhiều mệnh đề, có đại từ và cụm chỉ định như ``the club'' hay ``he''.
-Với LLM nhỏ, trích trực tiếp trên đoạn như vậy dễ sinh fact có đầu là đại từ, hoặc gộp nhiều ý vào một fact.
-Trên KnowledgeNet~\cite{mesquita2019knowledgenet}, chẳng hạn, 49,9\% fact vàng có chứa đại từ.
-Bước \buoc{0} (hàm \texttt{condense} trong \texttt{kgu/extract/condense.py}) viết lại đoạn tin thành các câu ngắn để bước trích làm việc trên đơn vị dễ hơn.
-
-\paragraph*{Cách làm.}
-Prompt yêu cầu bốn điều: (i) mỗi câu nêu đúng một fact hoặc một ý; (ii) mỗi câu tự đứng được, đại từ và cụm chỉ định được thay bằng tên đầy đủ; (iii) giữ nguyên mọi con số, tên, địa danh và cụm thời gian như trong đoạn (``on Sunday'', ``last week'', ``1,694 cases''), không quy đổi ngày ở bước này; (iv) giữ toàn bộ thông tin và không thêm điều đoạn tin không nói.
-Prompt kèm một ví dụ minh họa; đầu ra là JSON có một trường \texttt{sentences} chứa danh sách câu.
-
-Sau lệnh gọi, hàm \texttt{missing\_items} kiểm tra thông tin bị sót bằng một phép so khớp tất định, không gọi LLM.
-Mục bị sót là mọi con số và mọi cụm từ viết hoa của đoạn gốc mà không câu nào chứa.
-Con số được so theo dãy chữ số, nên ``1,694'' và ``1694'' được coi là một; cụm viết hoa được bỏ các từ chức năng đứng đầu (như ``The'') và so không phân biệt hoa thường.
-Danh sách mục sót được cắt tối đa 15 mục.
-Nếu danh sách khác rỗng, một lệnh gọi bổ sung gửi kèm đoạn gốc, các câu đã viết và danh sách mục sót, yêu cầu viết thêm câu cho đúng các mục đó.
-Như vậy bước \buoc{0} tốn 1 lệnh gọi, thêm 1 lệnh khi có sót.
-Nếu lệnh gọi đầu lỗi, bước \buoc{1} trích trực tiếp trên đoạn gốc; nếu lệnh bổ sung lỗi, hệ giữ các câu đã có.
-
-\paragraph*{Ví dụ.}
-Tin về Messi được rút thành hai câu: ``Lionel Messi has left Barcelona.'' và ``Lionel Messi joined Inter Milan on Monday.''.
-Cụm ``the club'' đã được thay bằng ``Barcelona''.
-Các cụm viết hoa của đoạn gốc là ``Barcelona'', ``Lionel Messi'', ``Inter Milan'' và ``Monday''; cả bốn đều có trong các câu, nên không cần lệnh bổ sung.
-
-\paragraph*{Liên hệ.}
-CoDe-KG~\cite{codekg2025} cũng giải đồng tham chiếu và tách câu phức trước khi trích, và ATOM~\cite{lairgi2025atom} tách đoạn thành các factoid.
-Khác với hai hệ này, khóa luận dùng bước rút câu trong bối cảnh cập nhật một KG tích lũy, và thêm phép kiểm sót tất định để bù lại điểm yếu của việc viết lại bằng LLM: một câu bị bỏ ở đây sẽ mất hẳn ở các bước sau.
+Bản tin thường có câu dài nhiều mệnh đề, có đại từ và cụm chỉ định như ``the club''; trích trực tiếp trên đoạn như vậy, LLM nhỏ dễ sinh fact có đầu là đại từ hoặc gộp nhiều ý vào một fact.
+Bước \buoc{0} (hàm \texttt{condense}, \texttt{kgu/extract/condense.py}) yêu cầu LLM viết lại đoạn tin thành danh sách câu sao cho mỗi câu mang một ý, tự đứng được (đại từ được thay bằng tên đầy đủ), giữ nguyên mọi con số, tên và cụm thời gian, và không thêm điều đoạn tin không nói.
+Sau đó hàm \texttt{missing\_items} kiểm sót một cách tất định: mọi con số (so theo dãy chữ số, nên ``1,694'' và ``1694'' là một) và mọi cụm viết hoa của đoạn gốc mà không câu nào chứa được coi là bị sót; nếu có, một lệnh gọi bổ sung yêu cầu viết thêm câu cho đúng các mục đó.
+Như vậy bước \buoc{0} tốn 1 lệnh gọi, thêm 1 khi có sót.
+Tin về Messi được rút thành ``Lionel Messi has left Barcelona.'' và ``Lionel Messi joined Inter Milan on Monday.''; bốn cụm viết hoa của đoạn gốc đều có mặt nên không cần lệnh bổ sung.
+Khác với CoDe-KG~\cite{codekg2025} và ATOM~\cite{lairgi2025atom}, bước rút câu ở đây phục vụ cập nhật một KG tích lũy, và phép kiểm sót bù cho rủi ro của việc viết lại: một ý bị bỏ ở đây sẽ mất hẳn ở các bước sau.
 
 % ----------------------------------------------------------------------
-\subsection{Bước 1: trích thao tác tường minh với đầu ra JSON ép schema}\label{sec:step-extract}
+\subsection{Bước 1: trích thao tác tường minh}\label{sec:step-extract}
 
-\paragraph*{Mục đích.}
-Bước \buoc{1} (phương thức \texttt{TemporalKG.update} trong \texttt{kgu/extract/text\_kg.py}) biến các câu đơn thành thao tác tường minh $O^{\mathrm{exp}}$: fact mới cần thêm và fact đã lưu mà văn bản nói không còn đúng.
+Bước \buoc{1} (phương thức \texttt{TemporalKG.update}, \texttt{kgu/extract/text\_kg.py}) biến các câu đơn thành $O^{\mathrm{exp}}$.
+Prompt gồm phần tĩnh đặt trước (hướng dẫn, ví dụ) để \texttt{llama-server} dùng lại bộ đệm KV giữa các lệnh gọi, và phần thay đổi đặt cuối: ngày đăng tin $\tau_d$; tối đa 40 fact đã lưu có đầu hoặc đuôi xuất hiện trong tin (so theo tên chung và các bí danh, đánh số); tối đa 60 quan hệ được dùng nhiều nhất trong KG; và các câu đơn đánh số.
+LLM được yêu cầu tách câu thành fact $(h,r,t,\vfrom,\vuntil)$, mỗi fact một quan hệ; dùng lại đúng tên thực thể và tên quan hệ đã có khi cùng nghĩa; chỉ điền mốc thời gian khi văn bản nêu hoặc ngụ ý, và quy thời gian tương đối về ngày theo quy ước của ATOM~\cite{lairgi2025atom} (``last week'' thành thứ Hai của tuần trước, ``in 2019'' thành 2019-01-01); với điều không còn đúng thì giữ quan hệ khẳng định và đặt $\vuntil$; cuối cùng ghi vào trường \texttt{ended} số thứ tự các fact đã lưu mà văn bản nói không còn đúng.
+Đầu ra được khai báo bằng một kiểu dữ liệu Python (danh sách \texttt{facts} gồm \texttt{head}, \texttt{relation}, \texttt{tail}, \texttt{valid\_from}, \texttt{valid\_until}, \texttt{sentence}; danh sách \texttt{ended}), chuyển thành JSON Schema để \texttt{llama-server} ép ngay khi sinh~\cite{llamacpp}.
+Nhờ trường \texttt{sentence}, hệ biết câu nào chưa sinh fact; nếu có, một lệnh bù chỉ gửi các câu đó.
+Mỗi chỉ số trong \texttt{ended} trỏ tới một fact còn mở sinh một \opk{INVALIDATE}; fact có trường rỗng, có đầu trùng đuôi hoặc trùng lặp bị loại; fact còn lại được quy về tên chung qua bảng bí danh và sinh \opk{ADD} nếu triple chưa có, \opk{KEEP} nếu đã có.
 
-\paragraph*{Đầu vào.}
-Prompt gồm phần tĩnh đặt trước (hướng dẫn, ví dụ) và phần thay đổi đặt cuối, để \texttt{llama-server} dùng lại bộ nhớ đệm KV giữa các lệnh gọi.
-Phần thay đổi gồm bốn khối.
-\begin{itemize}
-  \item \texttt{OBSERVATION DATE}: ngày đăng tin $\tau_d$.
-  \item \texttt{STORED}: tối đa 40 fact đã lưu có đầu hoặc đuôi xuất hiện trong tin, đánh số \texttt{[0]}, \texttt{[1]}, \ldots{} Tên được so theo ranh giới từ, không phân biệt hoa thường, trên cả tên chung lẫn các bí danh do bước \buoc{6} ghi lại; khi quá 40 fact, hệ giữ các fact mới nhất.
-  \item \texttt{RELATIONS}: tối đa 60 quan hệ được dùng nhiều nhất trong KG.
-  \item \texttt{SENTENCES}: các câu đơn đánh số từ 1.
-\end{itemize}
-
-\paragraph*{Hướng dẫn trích.}
-Hướng dẫn hệ thống yêu cầu LLM: (a) tách các câu thành fact nguyên tử $(h,r,t,\vfrom,\vuntil)$, mỗi fact một quan hệ, đầu và đuôi là tên thực thể ngắn; (b) dùng lại đúng tên thực thể và tên quan hệ của \texttt{STORED} và \texttt{RELATIONS} khi cùng nghĩa, nếu không thì tạo quan hệ ngắn dạng \texttt{snake\_case} ở thì hiện tại; (c) chỉ điền $\vfrom$ khi văn bản nêu hoặc ngụ ý thời điểm, chỉ điền $\vuntil$ khi văn bản nói fact đã hoặc sẽ dừng, sự kiện xảy ra một lần chỉ có $\vfrom$, không gán ngày quan sát cho fact không có thời gian và không bao giờ dùng ngày làm đầu hay đuôi; (d) với điều không còn đúng, giữ quan hệ khẳng định và đặt $\vuntil$, thay vì tạo quan hệ phủ định; (e) ghi vào trường \texttt{ended} số thứ tự các fact \texttt{STORED} mà văn bản nói không còn đúng.
-Mốc thời gian tương đối được quy về ngày theo các quy tắc ở Bảng~\ref{tab:time}.
-Quy tắc quy đổi và cách đặt tên quan hệ lấy theo quy ước công bố trong schema của ATOM~\cite{lairgi2025atom}, cũng là quy ước của dữ liệu vàng 2020-COVID-NYT.
-
-\begin{table}[!htbp]
-\centering
-\caption{Quy tắc quy đổi mốc thời gian tương đối trong prompt của bước 1}
-\label{tab:time}
-\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}ll@{}}
-\toprule
-Cụm trong văn bản & Ngày được ghi vào $\vfrom$ hoặc $\vuntil$ \\
-\midrule
-today & $\tau_d$ \\
-yesterday & Một ngày trước $\tau_d$ \\
-this week & Thứ Hai của tuần chứa $\tau_d$ \\
-last week & Thứ Hai của tuần liền trước \\
-this month & Ngày đầu tiên của tháng chứa $\tau_d$ \\
-last month & Ngày đầu tiên của tháng liền trước \\
-this year & Ngày 1 tháng 1 của năm chứa $\tau_d$ \\
-last year & Ngày 1 tháng 1 của năm liền trước \\
-Một năm đơn lẻ (``in 2019'') & Ngày 1 tháng 1 của năm đó \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph*{Đầu ra ép schema.}
-Đầu ra được khai báo bằng một kiểu dữ liệu Python gồm danh sách \texttt{facts}, mỗi phần tử có \texttt{head}, \texttt{relation}, \texttt{tail}, \texttt{valid\_from}, \texttt{valid\_until} và \texttt{sentence} (số câu nguồn), cùng danh sách số nguyên \texttt{ended}.
-Kiểu này được chuyển thành JSON schema, và \texttt{llama-server} dùng schema đó làm văn phạm ràng buộc khi sinh~\cite{willard2023outlines,llamacpp}, nên đầu ra tuân theo schema ngay từ lúc sinh. Khi máy chủ không nhận JSON schema, lớp gọi API chuyển sang chế độ chỉ yêu cầu JSON hợp lệ; vì vậy các ràng buộc như kiểu liệt kê vẫn được kiểm lại sau khi nhận đầu ra.
-Ở chế độ KG tích lũy, tên quan hệ là chuỗi tự do vì schema mở; ở chế độ trích theo schema của bộ dữ liệu (Mục~\ref{sec:adapt}), trường quan hệ được ép thành kiểu liệt kê (\textit{enum}) các quan hệ hợp lệ.
-
-\paragraph*{Lệnh bù.}
-Nhờ trường \texttt{sentence}, hệ biết câu nào chưa sinh fact nào.
-Nếu có, một lệnh gọi thứ hai chỉ gửi các câu đó; phần \texttt{ended} của lệnh bù bị bỏ qua.
-Vậy bước \buoc{1} tốn 1 lệnh gọi, thêm 1 lệnh bù khi cần.
-
-\paragraph*{Chuyển thành thao tác.}
-Mỗi chỉ số $k$ hợp lệ trong \texttt{ended} mà fact \texttt{STORED}[$k$] còn mở sinh một thao tác \opk{INVALIDATE}, đóng tại $\tau_d$.
-Fact có trường rỗng, có đầu trùng đuôi, hoặc trùng lặp bị loại.
-Fact còn lại được quy về tên chung qua bảng bí danh; nếu triple chưa có trong KG thì sinh \opk{ADD}, nếu đã có thì được coi là xác nhận (\opk{KEEP}).
-
-\paragraph*{Ví dụ.}
-Với tin về Messi, tên ``Messi'' và ``Inter'' xuất hiện trong tin, còn ``Barca'', ``Pedri'', ``Lautaro'' và ``Inzaghi'' thì không.
-Phần cuối của prompt và một đầu ra hợp lệ có dạng:
-{\small
-\begin{verbatim}
-OBSERVATION DATE: 2026-07-01
-STORED:
-[0] Messi | plays_for | Barca
-[1] Messi | teammate | Pedri
-[2] Messi | friend | Pedri
-[3] Lautaro | plays_for | Inter
-[4] Inter | coach | Inzaghi
-RELATIONS: plays_for, teammate, friend, coach
-SENTENCES:
-[1] Lionel Messi has left Barcelona.
-[2] Lionel Messi joined Inter Milan on Monday.
-
-{"facts": [{"head": "Messi", "relation": "plays_for", "tail": "Inter",
-            "valid_from": "2026-06-29", "valid_until": "", "sentence": 2}],
- "ended": [0]}
-\end{verbatim}
-}
-\noindent Đầu ra này cho \opk{INVALIDATE} \kgr{plays\_for}(Messi, Barca) và \opk{ADD} \kgr{plays\_for}(Messi, Inter) từ 2026-06-29.
-LLM dùng lại tên ``Messi'' và ``Inter'' của KG thay cho ``Lionel Messi'' và ``Inter Milan'' trong câu.
-Fact \kgr{plays\_for}(Pedri, Barca) không có trong \texttt{STORED} vì không tên nào của nó xuất hiện trong tin.
-Fact \texttt{[1]} có mặt vì chứa tên Messi, nhưng văn bản không nói gì về Pedri, nên theo nguyên tắc không suy đoán, LLM không được đưa nó vào \texttt{ended}.
-Việc phát hiện các thay đổi như vậy thuộc về bước \buoc{3} và \buoc{4}.
-Câu 1 không sinh fact mới vì nội dung của nó đã nằm trong \texttt{ended}; khi đó lệnh bù được gọi riêng cho câu này, và mọi fact nó trả về đi qua cùng bộ lọc.
+Với tin về Messi, prompt chứa năm fact có tên ``Messi'' hoặc ``Inter''; \kgr{plays\_for}(Pedri, Barca) không có mặt vì không tên nào của nó xuất hiện trong tin.
+LLM trả \texttt{ended} chứa chỉ số của \kgr{plays\_for}(Messi, Barca) và một fact mới \kgr{plays\_for}(Messi, Inter) với \texttt{valid\_from} là 2026-06-29, dùng lại tên ``Messi'', ``Inter'' của KG thay cho ``Lionel Messi'', ``Inter Milan''.
+Fact \kgr{teammate}(Messi, Pedri) cũng có trong prompt, nhưng văn bản không nói gì về Pedri nên theo ràng buộc R2 LLM không đưa nó vào \texttt{ended}; phát hiện thay đổi này là việc của bước \buoc{3} và \buoc{4}.
 
 % ----------------------------------------------------------------------
-\subsection{Bước 2 và 5: bộ thực thi bi-temporal, vô hiệu hóa thay cho xóa}\label{sec:step-exec}
+\subsection{Bước 2 và 5: bộ thực thi bi-temporal}\label{sec:step-exec}
 
-\paragraph*{Cấu trúc dữ liệu.}
-Lớp \texttt{BiTemporalGraph} (\texttt{kgu/graph.py}) lưu mỗi triple kèm danh sách khoảng hiệu lực \texttt{(valid\_from, valid\_to)}, và một chỉ mục từ thực thể tới các triple chứa nó để tra hàng xóm nhanh.
-Lớp này không có hàm xóa.
-Các truy vấn gồm: \texttt{is\_active}(triple, $\tau$) kiểm tra hiệu lực, \texttt{active}($\tau$) trả về ảnh chụp $G(\tau)$, \texttt{neighbors}($x$, $\tau$) trả về $N_\tau(x)$, và \texttt{history}(triple) trả về mọi khoảng hiệu lực của một triple.
-
-\paragraph*{Thực thi.}
-Hàm \texttt{apply\_ops} (\texttt{kgu/ops.py}) cài đặt đúng $\mathrm{Apply}$ của Định nghĩa~\ref{def:ops}.
-\opk{INVALIDATE} đóng \texttt{valid\_to} của khoảng đang mở; \opk{ADD} mở khoảng mới nếu triple chưa có khoảng mở.
-Thao tác không có tác dụng, như vô hiệu hóa một cạnh không tồn tại hay thêm một cạnh đang có, bị bỏ qua và không được trả về trong danh sách thao tác có tác dụng.
-Vì vậy bộ thực thi có tính lũy đẳng: áp một thao tác hai lần cho cùng kết quả như áp một lần.
-Tính chất này giúp pipeline chịu được việc LLM đề xuất trùng lặp.
-Ở chế độ KG tích lũy (lớp \texttt{TemporalKG}), fact được lưu kèm mốc bắt đầu lấy từ văn bản và mốc kết thúc là $\tau_d$ khi bị vô hiệu; trên NBAtransactions, bộ dữ liệu chỉ có hai thời điểm trước và sau tin, nên $\tau$ nhận giá trị 0 và 1.
-
-\paragraph*{Vì sao áp trước khi khoanh vùng.}
-Sau bước \buoc{2}, cạnh (Messi, Barca) đã đóng nên Barca không còn là hàng xóm của Messi tại $\tau_d$, còn cạnh (Messi, Inter) đã mở nên các hàng xóm của Inter trở thành bối cảnh mới của Messi.
-Thuật toán khoanh vùng (và các bộ dự đoán liên kết, nếu được dùng làm bộ phán) đọc đúng trạng thái sau thay đổi tường minh nhờ thứ tự này.
-
-\paragraph*{Ví dụ truy vấn lịch sử.}
-Sau bước \buoc{2}, \texttt{history}(\kgr{plays\_for}(Messi, Barca)) trả về một khoảng $[2004,\ \text{2026-07-01})$.
-Câu hỏi ``tháng 5 năm 2026 Messi chơi cho đội nào?'' được trả lời bằng ảnh chụp $G(\text{2026-05-15})$, chứa \kgr{plays\_for}(Messi, Barca).
-Câu hỏi tương tự cho ngày 2026-07-02 trả về Inter.
-Nếu một hệ xóa cạnh thay vì đóng nó, câu hỏi thứ nhất sẽ không còn lời đáp.
+Lớp \texttt{BiTemporalGraph} (\texttt{kgu/graph.py}) lưu mỗi triple kèm danh sách khoảng hiệu lực và một chỉ mục từ thực thể tới các triple chứa nó để tra hàng xóm nhanh; lớp này không có hàm xóa.
+Hàm \texttt{apply\_ops} (\texttt{kgu/ops.py}) cài đặt đúng $\mathrm{Apply}$ của Định nghĩa~\ref{def:ops}; thao tác không có tác dụng bị bỏ qua, nên bộ thực thi lũy đẳng và chịu được việc LLM đề xuất trùng lặp.
+Thao tác tường minh được áp \emph{trước} khi khoanh vùng để cấu trúc mới hiện hình: sau bước \buoc{2}, Barca không còn là hàng xóm của Messi tại $\tau_d$, còn các hàng xóm của Inter trở thành bối cảnh mới của Messi.
+Cạnh \kgr{plays\_for}(Messi, Barca) lúc này mang khoảng $[2004,\ \text{2026-07-01})$, nên câu hỏi ``tháng 5 năm 2026 Messi chơi cho đội nào?'' vẫn có lời đáp.
 
 % ----------------------------------------------------------------------
 \subsection{Bước 3: khoanh vùng cấu trúc hai vế}\label{sec:step-localize}
 
-\paragraph*{Ý tưởng.}
-Thay đổi tường minh tạo ra một ``vết nứt'' trên đồ thị, và các hệ quả gián tiếp nằm ở những cạnh bám vào đúng vết nứt đó.
-Khi cạnh $(a,b)$ bị vô hiệu, các quan hệ tồn tại \emph{nhờ} $a$ và $b$ gắn với nhau, chẳng hạn quan hệ đồng đội nhờ cùng câu lạc bộ, phải đi qua một thực thể kề với cả hai phía; đó là vế cắt.
-Khi cạnh $(a,b)$ mới được thêm, $a$ bước vào bối cảnh của $b$, nên các hàng xóm của $b$ là ứng viên có quan hệ mới với $a$; đó là vế sinh.
-Khoanh vùng không cần luật miền và không cần tham số bán kính $k$-hop như các cách lấy đồ thị con thông thường (Mục~\ref{sec:bg-localize}): kích thước vùng do chính cấu trúc quanh cạnh thay đổi quyết định.
-
-\paragraph*{Định nghĩa hình thức.}
-Cho $G'$ là KG sau bước \buoc{2} và $\tau=\tau_d$.
+Thay đổi tường minh tạo một ``vết nứt'' trên đồ thị, và hệ quả gián tiếp nằm ở các cạnh bám vào vết nứt đó.
+Khi cạnh $(a,b)$ bị vô hiệu, các quan hệ tồn tại \emph{nhờ} $a$ và $b$ gắn với nhau (đồng đội nhờ cùng câu lạc bộ) phải đi qua một thực thể kề cả hai phía: đó là \emph{vế cắt}.
+Khi cạnh $(a,b)$ mới được thêm, $a$ bước vào bối cảnh của $b$, nên các hàng xóm của $b$ là ứng viên có quan hệ mới với $a$: đó là \emph{vế sinh}.
+Cho $G'$ là KG sau bước \buoc{2} và $\tau=\tau_d$:
 \begin{itemize}
-  \item \emph{Vế cắt.} Với mỗi $(\opk{INVALIDATE},a,r,b)\in O^{\mathrm{exp}}$, tập hub tiềm năng là $H_{ab}=\bigl(N_\tau(a)\cup N_\tau(b)\bigr)\setminus P$. Một thực thể $x\in H_{ab}$ là \emph{hub} nếu tập neo $A_x=N_\tau(x)\cap P$ có ít nhất hai phần tử. Ứng viên cắt là mọi cạnh nối hub với các neo của nó:
-  \[
-  \mathcal{C}^{\mathrm{cut}}=\bigcup_{(a,b)}\ \bigcup_{x\in H_{ab},\,|A_x|\ge 2}\ \bigcup_{p\in A_x} E_\tau(x,p).
-  \]
-  \item \emph{Vế sinh.} Với mỗi $(\opk{ADD},a,r,b)\in O^{\mathrm{exp}}$, tập hàng xóm mới là $F_{ab}=N_\tau(b)\setminus\bigl(N_\tau(a)\cup\{a,b\}\bigr)$. Mỗi $n\in F_{ab}$ cho một ứng viên sinh $(a,n,e_n)$, trong đó $e_n\in E_\tau(b,n)$ là cạnh bằng chứng cho biết $n$ gắn với $b$ như thế nào.
+\item \emph{Vế cắt.} Với mỗi $(\opk{INVALIDATE},a,r,b)\in O^{\mathrm{exp}}$, xét $H_{ab}=\bigl(N_\tau(a)\cup N_\tau(b)\bigr)\setminus P$. Thực thể $x\in H_{ab}$ là \emph{hub} nếu tập neo $A_x=N_\tau(x)\cap P$ có ít nhất hai phần tử. Ứng viên cắt là mọi cạnh nối hub với các neo: $\mathcal{C}^{\mathrm{cut}}=\bigcup_{(a,b)}\bigcup_{x\in H_{ab},\,|A_x|\ge 2}\bigcup_{p\in A_x}E_\tau(x,p)$.
+\item \emph{Vế sinh.} Với mỗi $(\opk{ADD},a,r,b)\in O^{\mathrm{exp}}$, mỗi $n\in F_{ab}=N_\tau(b)\setminus\bigl(N_\tau(a)\cup\{a,b\}\bigr)$ cho một ứng viên sinh $(a,n,e_n)$, với cạnh bằng chứng $e_n\in E_\tau(b,n)$ cho biết $n$ gắn với $b$ như thế nào.
 \end{itemize}
-Thuật toán~\ref{alg:localize} cài đặt định nghĩa trên, đúng như hàm \texttt{localize} trong \texttt{kgu/localize.py}.
-Mỗi ứng viên cắt mang theo hub và tập neo; mỗi ứng viên sinh mang theo cạnh bằng chứng.
-Các thông tin này được bộ phán dùng ở bước \buoc{4}.
-Khi $b$ và $n$ nối với nhau bằng nhiều cạnh, cạnh có $n$ ở đầu được ưu tiên làm bằng chứng, để các ứng viên cùng dạng gom được vào cùng một mẫu.
+Thuật toán~\ref{alg:localize} cài đặt định nghĩa trên (hàm \texttt{localize}, \texttt{kgu/localize.py}).
 
 \begin{algorithm}[!htbp]
 \SetAlgorithmName{Thuật toán}{thuật toán}{Danh sách thuật toán}
@@ -528,13 +332,9 @@ $\mathcal{C}^{\mathrm{cut}}\leftarrow\emptyset$;\ $\mathcal{C}^{\mathrm{gen}}\le
 \TraVe $\mathcal{C}^{\mathrm{cut}},\ \mathcal{C}^{\mathrm{gen}}$\;
 \end{algorithm}
 
-\paragraph*{Ví dụ.}
-Trên $G'$ của ví dụ Messi, $P=\{\text{Messi},\text{Barca},\text{Inter}\}$.
-Với vế cắt quanh cạnh (Messi, Barca): $N_\tau(\text{Messi})=\{\text{Pedri},\text{Inter}\}$ vì cạnh tới Barca đã đóng, $N_\tau(\text{Barca})=\{\text{Pedri}\}$, nên $H=\{\text{Pedri}\}$.
-Vì $N_\tau(\text{Pedri})\cap P=\{\text{Messi},\text{Barca}\}$ có hai phần tử, Pedri là hub, và vùng ứng viên gồm ba cạnh \kgr{teammate}(Messi, Pedri), \kgr{friend}(Messi, Pedri) và \kgr{plays\_for}(Pedri, Barca).
-Với vế sinh quanh cạnh (Messi, Inter): $N_\tau(\text{Inter})=\{\text{Messi},\text{Lautaro},\text{Inzaghi}\}$, nên $F=\{\text{Lautaro},\text{Inzaghi}\}$.
-Hai ứng viên sinh là (Messi, Lautaro) với bằng chứng \kgr{plays\_for}(Lautaro, Inter) và (Messi, Inzaghi) với bằng chứng \kgr{coach}(Inter, Inzaghi).
-Hình~\ref{fig:localize} minh họa hai vế; các nhãn màu tím là phán quyết mà bước \buoc{4} sẽ đưa ra.
+Trên ví dụ Messi (Hình~\ref{fig:localize}), $P=\{\text{Messi},\text{Barca},\text{Inter}\}$.
+Ở vế cắt quanh (Messi, Barca), $N_\tau(\text{Messi})=\{\text{Pedri},\text{Inter}\}$ vì cạnh tới Barca đã đóng và $N_\tau(\text{Barca})=\{\text{Pedri}\}$, nên $H=\{\text{Pedri}\}$; Pedri kề cả Messi lẫn Barca nên là hub, cho ba ứng viên \kgr{teammate}(Messi, Pedri), \kgr{friend}(Messi, Pedri) và \kgr{plays\_for}(Pedri, Barca).
+Ở vế sinh quanh (Messi, Inter), $F=\{\text{Lautaro},\text{Inzaghi}\}$, cho hai ứng viên (Messi, Lautaro) với bằng chứng \kgr{plays\_for}(Lautaro, Inter) và (Messi, Inzaghi) với bằng chứng \kgr{coach}(Inter, Inzaghi).
 
 \begin{figure}[!htbp]
 \centering
@@ -617,261 +417,95 @@ Hình~\ref{fig:localize} minh họa hai vế; các nhãn màu tím là phán quy
 \label{fig:localize}
 \end{figure}
 
-\paragraph*{Vì sao cần điều kiện ``ít nhất hai thực thể tham gia''.}
-Nếu lấy mọi hàng xóm của $a$ và $b$ làm ứng viên, vùng sẽ chứa nhiều thực thể chỉ có ``một chân'' trong sự kiện: nhà tài trợ hay sân vận động của Barca chỉ kề Barca, người thân của Messi chỉ kề Messi.
-Quan hệ của các thực thể này với đúng một phía không phụ thuộc vào việc Messi và Barca còn gắn với nhau, nên chúng là dương tính giả.
-Ngược lại, một hub kề \emph{cả hai} phía nằm trên một tam giác đi qua cạnh vừa đổi, và cạnh của nó có thể tồn tại chính nhờ cạnh đó, như quan hệ đồng đội tồn tại nhờ cùng câu lạc bộ.
-Điều kiện này cũng bao trường hợp hub kề hai thực thể tham gia bất kỳ, chẳng hạn một người vừa kề Messi vừa kề Inter, vì tập neo được tính trên toàn bộ $P$ chứ không chỉ trên $\{a,b\}$.
-Vế sinh không cần điều kiện tương tự, vì thực thể $a$ vừa gia nhập bối cảnh của $b$ và mọi hàng xóm của $b$ đều là ứng viên hợp lý; khi $b$ có nhiều hàng xóm, bộ phán gom các ứng viên cùng dạng thành một mẫu (Mục~\ref{sec:step-judge}) để giữ số lệnh gọi nhỏ.
-
-\paragraph*{Tính dừng và độ phức tạp.}
-Thuật toán chỉ duyệt các tập hữu hạn và không lan truyền lặp, nên luôn dừng.
-Với một thao tác \opk{INVALIDATE} $(a,b)$, số hub phải xét bị chặn bởi $|N_\tau(a)|+|N_\tau(b)|$, và với mỗi hub chỉ cần tra kề với $|P|$ thực thể tham gia qua chỉ mục theo thực thể.
-Tổng chi phí vì vậy là $O\bigl((|N_\tau(a)|+|N_\tau(b)|)\cdot|P|\bigr)$ lần tra, cộng với kích thước đầu ra.
-Vì $|P|$ chỉ gồm các thực thể được bản tin nhắc tới trong thao tác tường minh, rất nhỏ so với $|\mathcal{E}|$, chi phí thực tế là $O(|N_\tau(a)|+|N_\tau(b)|)$ lần tra.
-Vế sinh tốn $O(|N_\tau(a)|+|N_\tau(b)|)$ phép toán tập hợp cho mỗi thao tác \opk{ADD}.
-Chi phí không phụ thuộc kích thước toàn KG, chỉ phụ thuộc bậc của hai đầu cạnh thay đổi.
-Trên NBAtransactions, mỗi tin sinh trung bình 70,3 ứng viên cắt và 31,0 ứng viên sinh, và vùng ứng viên chứa toàn bộ thay đổi gián tiếp của dữ liệu vàng (độ phủ 1,0; Mục~\ref{sec:res-nba}).
+Điều kiện ``ít nhất hai thực thể tham gia'' loại các thực thể chỉ có một chân trong sự kiện, như nhà tài trợ của Barca hay người thân của Messi: quan hệ của chúng với một phía không phụ thuộc việc Messi và Barca còn gắn với nhau.
+Ngược lại, hub nằm trên một tam giác đi qua cạnh vừa đổi, và cạnh của nó có thể tồn tại chính nhờ cạnh đó.
+Vế sinh không cần điều kiện này vì mọi hàng xóm của $b$ đều là bối cảnh mới hợp lý của $a$.
+Thuật toán chỉ duyệt các tập hữu hạn nên luôn dừng; với mỗi cạnh thay đổi $(a,b)$, chi phí là $O\bigl((|N_\tau(a)|+|N_\tau(b)|)\cdot|P|\bigr)$ lần tra qua chỉ mục, không phụ thuộc kích thước toàn KG và không cần tham số bán kính $k$-hop.
 
 % ----------------------------------------------------------------------
 \subsection{Bước 4: bộ phán KEEP, INVALIDATE, ADD}\label{sec:step-judge}
 
-\paragraph*{Vai trò.}
-Khoanh vùng chỉ trả lời ``nhìn vào đâu''.
-Ví dụ Messi cho thấy ba cạnh trong cùng một vùng quanh Pedri có ba số phận khác nhau: \kgr{teammate}(Messi, Pedri) phải vô hiệu, \kgr{plays\_for}(Pedri, Barca) và \kgr{friend}(Messi, Pedri) phải giữ.
-Vì vậy cần một bộ phán quyết định cho từng cạnh.
-Đầu vào của bộ phán gồm bản tin, các thao tác tường minh đã áp, danh sách thực thể tham gia, danh sách quan hệ cho phép và các ứng viên kèm bằng chứng.
-Với ứng viên cắt, đầu ra là \opk{KEEP} (mặc định) hoặc \opk{INVALIDATE}; với ứng viên sinh, đầu ra là bỏ qua (mặc định) hoặc \opk{ADD} với một quan hệ $r$ thuộc danh sách cho phép và một chiều cạnh.
+Khoanh vùng chỉ trả lời ``nhìn vào đâu'': ba cạnh quanh Pedri có ba kết cục khác nhau, nên cần một bộ phán cho từng cạnh.
+Đầu vào gồm bản tin, các thao tác tường minh, danh sách quan hệ cho phép và các ứng viên kèm bằng chứng.
+Với ứng viên cắt, đầu ra là \opk{KEEP} (mặc định) hoặc \opk{INVALIDATE}; với ứng viên sinh, đầu ra là bỏ qua (mặc định) hoặc \opk{ADD} với một quan hệ và một chiều cạnh.
+Hướng dẫn của bộ phán nhấn mạnh rằng chỉ fact \emph{trạng thái} (đang chơi cho, đang là đồng đội) mới có thể hết hiệu lực, còn fact \emph{sự kiện} lịch sử (đã vô địch, sinh tại) đúng mãi.
 
-\paragraph*{Fact trạng thái và fact sự kiện.}
-Chỉ fact \emph{trạng thái} (đang chơi cho, đang giữ chức, đang là đồng đội) mới có thể hết hiệu lực.
-Fact \emph{sự kiện} lịch sử (đã ghi bàn, đã vô địch, sinh tại) đúng mãi mãi và không bao giờ bị vô hiệu, dù nó cũng nối Messi với Barca.
-KG không gắn sẵn nhãn phân biệt hai loại này, nên sự phân biệt được đưa vào hướng dẫn của bộ phán.
-Prompt ở chế độ NBAtransactions nêu rằng mọi cạnh của KG là trạng thái hiện tại, còn fact sự kiện lịch sử luôn đúng.
-Prompt ở chế độ EMERGE nêu rằng một fact không kết thúc nếu nó đúng mãi (nơi sinh, quốc tịch, kết quả của một trận đấu hay một cuộc bầu cử đã qua) hoặc đã kết thúc từ lâu trước ngày chụp KG.
-
-\paragraph*{Ba phương án thiết kế.}
-Bảng~\ref{tab:judge-options} so sánh ba phương án bộ phán đã cân nhắc.
-Phương án A dùng LLM; phương án B dùng dự đoán liên kết (\textit{link prediction}) quy nạp, áp kết quả khi độ tin cậy từ 0,9 trở lên và chuyển vùng xám cho LLM; phương án C lai hai phương án trên.
-Khóa luận cài đặt và thực nghiệm phương án A; B và C được giữ ở mức thiết kế làm hướng phát triển.
-
-\begin{table}[!htbp]
-\centering
-\caption{Ba phương án thiết kế bộ phán}
-\label{tab:judge-options}
-\small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{1.7cm}>{\raggedright\arraybackslash}p{5.2cm}>{\raggedright\arraybackslash}p{3.8cm}>{\raggedright\arraybackslash}p{3.8cm}@{}}
-\toprule
-Phương án & Cơ chế & Điểm mạnh & Điểm yếu \\
-\midrule
-A. LLM & LLM đọc bản tin, thao tác tường minh và ứng viên kèm bằng chứng cấu trúc; trả \opk{KEEP}, \opk{INVALIDATE} hoặc \opk{ADD}($r$) & Hiểu nội dung văn bản; phân biệt được fact trạng thái và fact sự kiện; không cần huấn luyện & Tốn lệnh gọi LLM; chất lượng phụ thuộc mô hình \\
-B. Link prediction quy nạp & AnyBURL~\cite{meilicke2019anyburl} (luật kèm độ tin cậy) hoặc ULTRA~\cite{galkin2024ultra} (zero-shot) chấm điểm ứng viên trên đồ thị đã áp thao tác tường minh; áp khi độ tin cậy $\ge 0{,}9$, vùng xám chuyển cho LLM & Rẻ; dựa trên quy luật đo được của KG & Điểm cao chỉ nói cạnh hợp lý, không nói cạnh đúng; không đọc văn bản \\
-C. Lai & Kết hợp A và B & Dùng cả tín hiệu văn bản lẫn tín hiệu cấu trúc & Nhiều tham số cần hiệu chỉnh \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph*{Bẫy embedding chuyển dịch.}
-Một lựa chọn tưởng tự nhiên cho phương án B là các mô hình nhúng KG chuyển dịch (\textit{transductive}) như TransE~\cite{bordes2013transe} hay RotatE~\cite{sun2019rotate}.
-Các mô hình này học một vectơ cố định cho mỗi thực thể từ ảnh chụp lúc huấn luyện.
-Sau bản tin, vectơ của Messi vẫn mã hóa việc ``thuộc Barca'', nên mô hình vẫn coi \kgr{teammate}(Messi, Pedri) là hợp lý và không thấy Messi gần Lautaro.
-Muốn cập nhật phải huấn luyện lại sau mỗi tin, và thực thể mới hoàn toàn không có vectơ.
-Vì vậy, nếu dùng dự đoán liên kết thì bộ dự đoán phải là quy nạp (\textit{inductive}) hoặc dựa trên đường đi, như AnyBURL hay ULTRA, đọc cấu trúc tại thời điểm suy diễn; và thao tác tường minh phải được áp trước, để bộ dự đoán thấy cạnh (Messi, Inter).
-Ngoài ra, điểm dự đoán liên kết chỉ đo độ hợp lý chứ không đo sự thật, nên chỉ được chấm bên trong vùng ứng viên, với ngưỡng cao, và không bao giờ thêm mù quáng $k$ cạnh có điểm cao nhất.
-
-\paragraph*{Cài đặt phương án A.}
-Lớp \texttt{LLMJudge} (\texttt{kgu/judge/llm.py}) có bốn điểm chính.
+Bộ phán có thể thay bằng một mô hình dự đoán liên kết \textit{inductive} như AnyBURL~\cite{meilicke2019anyburl} hay ULTRA~\cite{galkin2024ultra}, chỉ áp kết quả khi độ tin cậy từ 0,9 trở lên và chuyển vùng xám cho LLM; mô hình transductive như TransE~\cite{bordes2013transe} không phù hợp vì vector cũ vẫn mã hóa fact vừa lỗi thời.
+Khóa luận cài đặt phương án LLM (lớp \texttt{LLMJudge}, \texttt{kgu/judge/llm.py}) với ba điểm chính.
 \begin{enumerate}
-  \item \emph{Gom ứng viên theo mẫu quan hệ.} Các ứng viên cắt cùng thực thể tham gia $p$, cùng quan hệ $r$ và cùng chiều được gom thành một mẫu $(p,r,X)$ hoặc $(X,r,p)$, trong đó $X$ chạy trên các hub. Các ứng viên sinh cùng thực thể $a$, cùng quan hệ bằng chứng $r'$, cùng chiều và cùng $b$ được gom thành mẫu ``$a\sim X$, bằng chứng $(X,r',b)$''. Mỗi mẫu được nêu bằng một fact đại diện, và phán quyết của mẫu áp cho mọi cạnh trong mẫu.
-  \item \emph{Hai pha với đầu ra ép schema.} Pha cắt trả về \texttt{reasoning} (một đến hai câu) rồi \texttt{invalidate}, danh sách chỉ số mẫu cần vô hiệu. Pha sinh trả về \texttt{reasoning} rồi \texttt{add}, danh sách bộ \texttt{\{idx, r, direction\}}, trong đó $r$ bị ép thành kiểu liệt kê các quan hệ cho phép và \texttt{direction} nhận một trong hai giá trị. Trường lý do đứng trước quyết định, để mô hình suy luận trước khi kết luận theo tinh thần chuỗi suy luận~\cite{wei2022cot}, mà đầu ra vẫn bị ràng buộc.
-  \item \emph{Bằng chứng cấu trúc thay cho luật miền.} Với mẫu cắt có quan hệ $r$ và cạnh vừa vô hiệu có quan hệ $r_0$, prompt nêu mức phụ thuộc
-  \[
-  \mathrm{dep}(r,r_0)=\frac{\bigl|\{(u,r,v)\in G(\tau_0)\ :\ (N^{r_0}(u)\setminus\{v\})\cap(N^{r_0}(v)\setminus\{u\})\neq\emptyset\}\bigr|}{\bigl|\{(u,r,v)\in G(\tau_0)\}\bigr|},
-  \]
-  trong đó $G(\tau_0)$ là KG-trước và $N^{r_0}(u)$ là các hàng xóm của $u$ qua cạnh quan hệ $r_0$. Đây là tỷ lệ cặp nối bằng $r$ có chung một hàng xóm qua $r_0$. Với quan hệ đồng đội, gần như mọi cặp đều chung câu lạc bộ qua \kgr{plays\_for} nên tỷ lệ rất cao, báo hiệu \kgr{teammate} phụ thuộc vào cạnh vừa mất; với quan hệ bạn bè, tỷ lệ thấp. Với mẫu sinh, prompt nêu dòng ``tương tự'': gọi $\Sigma$ là các thực thể cùng vai với $a$ (có cùng loại cạnh tới $b$, tối đa 30 thực thể), hệ đếm tỷ lệ cặp $(s,x)\in\Sigma\times X$, $s\neq x$, đang có cạnh $(s,r,x)$ hoặc $(x,r,s)$, và báo các quan hệ có tỷ lệ từ 50\% trở lên. Cả hai đại lượng chỉ là phép đếm trên KG, nên không chứa tri thức miền viết tay.
-  \item \emph{Ví dụ few-shot khác miền.} Ví dụ trong prompt lấy từ bóng đá (chính ví dụ Messi), trong khi dữ liệu thực nghiệm là NBA. Mô hình được dạy cách đọc bằng chứng cấu trúc chứ không được mớm luật của miền dữ liệu~\cite{brown2020gpt3}.
+  \item \emph{Gom ứng viên theo mẫu.} Các ứng viên cắt cùng thực thể tham gia, cùng quan hệ và cùng chiều được gom thành một mẫu; các ứng viên sinh cùng $a$, cùng $b$ và cùng quan hệ bằng chứng cũng vậy. Phán quyết của mẫu áp cho mọi cạnh trong mẫu, và các mẫu được gom thành lô, mỗi lô một lệnh gọi.
+  \item \emph{Bằng chứng cấu trúc thay cho luật miền.} Với mẫu cắt có quan hệ $r$ quanh cạnh vừa vô hiệu có quan hệ $r_0$, prompt nêu mức phụ thuộc $\mathrm{dep}(r,r_0)$: tỉ lệ cặp thực thể nối bằng $r$ trong KG-trước có chung một hàng xóm qua $r_0$. Đồng đội gần như luôn chung câu lạc bộ qua \kgr{plays\_for} nên tỉ lệ rất cao, còn bạn bè thì thấp. Với mẫu sinh, prompt nêu tỉ lệ các thực thể cùng vai với $a$ đang có quan hệ $r$ với các ứng viên. Cả hai chỉ là phép đếm trên KG.
+  \item \emph{Đầu ra ép schema có lý do.} Mỗi pha trả trường \texttt{reasoning} trước rồi mới tới quyết định, theo tinh thần chain-of-thought~\cite{wei2022cot}; quan hệ của \opk{ADD} bị ép thành enum các quan hệ cho phép. Ví dụ few-shot lấy từ miền bóng đá, khác miền dữ liệu, để mô hình học cách đọc bằng chứng chứ không học luật miền.
 \end{enumerate}
-Ứng viên được gom thành lô để mỗi lệnh gọi phán nhiều cạnh: ở chế độ EMERGE, mỗi lô có $B=12$ cạnh; ở chế độ NBAtransactions, mỗi lô có $B$ mẫu (tham số \texttt{batch\_size}, mặc định một mẫu mỗi lệnh gọi), và chỉ số trong đầu ra là chỉ số cục bộ của lô.
-Cài đặt còn có một cổng cấu trúc tùy chọn (tham số \texttt{gate}): mẫu cắt có mức phụ thuộc dưới ngưỡng được giữ nguyên mà không hỏi LLM, mẫu sinh không có dòng ``tương tự'' bị bỏ qua.
-Cổng này chỉ dùng phép đếm nói trên, không dùng mô hình dự đoán liên kết đã huấn luyện, nên vẫn thuộc phương án A; cấu hình cụ thể dùng trong thực nghiệm được nêu ở Chương~\ref{chap:experiments}.
-Cuối cùng, đầu ra được hậu kiểm: chỉ số ngoài lô bị bỏ, quan hệ ngoài danh sách bị bỏ (phòng khi máy chủ không ép được enum), cạnh đã có hiệu lực không được thêm lại.
-
-\paragraph*{Ví dụ.}
-Ba ứng viên cắt quanh Pedri tạo ba mẫu, mỗi mẫu một hub.
-Các mức phụ thuộc nêu dưới đây là xu hướng trong một KG đủ lớn; trên KG sáu fact của ví dụ, mọi tỷ lệ đều bị chi phối bởi một vài cạnh nên không có ý nghĩa thống kê.
-Mẫu ``Pedri \kgr{plays\_for} Barca'' có $\mathrm{dep}(\kgr{plays\_for},\kgr{plays\_for})$ thấp, vì một cầu thủ và câu lạc bộ của mình hiếm khi chung một hàng xóm qua \kgr{plays\_for}; Pedri lại không rời đi, nên cạnh được giữ.
-Mẫu ``Messi \kgr{teammate} Pedri'' có $\mathrm{dep}(\kgr{teammate},\kgr{plays\_for})$ gần tuyệt đối, vì đồng đội luôn chung câu lạc bộ, nên bị vô hiệu.
-Mẫu ``Messi \kgr{friend} Pedri'' có mức phụ thuộc thấp hơn hẳn, vì nhiều cặp bạn bè không chung câu lạc bộ; bộ phán coi đây không phải quy luật và giữ cạnh.
-Ở vế sinh, nếu danh sách quan hệ cho phép có \kgr{coached\_by}, bộ phán thêm \kgr{teammate}(Messi, Lautaro) vì Messi vào cùng câu lạc bộ với Lautaro, và thêm \kgr{coached\_by}(Messi, Inzaghi) vì Inzaghi huấn luyện Inter.
-Trong một KG thực tế, Inter có nhiều cầu thủ khác cùng vai với Messi; dòng ``tương tự'' khi đó cho thấy các cầu thủ này đều có cạnh \kgr{teammate} với $X$, củng cố phán quyết.
-Trên NBAtransactions, nhờ gom mẫu, bộ phán chỉ tốn khoảng 3,3 lệnh gọi mỗi tin (1.428 lệnh gọi cho 438 tin) dù mỗi tin có trung bình hơn 100 ứng viên.
+Với ví dụ Messi, mẫu \kgr{teammate}(Messi, Pedri) có mức phụ thuộc gần tuyệt đối nên bị vô hiệu; \kgr{friend}(Messi, Pedri) và \kgr{plays\_for}(Pedri, Barca) có mức phụ thuộc thấp và Pedri không rời đi, nên được giữ; ở vế sinh, bộ phán thêm \kgr{teammate}(Messi, Lautaro) và \kgr{coached\_by}(Messi, Inzaghi).
 
 % ----------------------------------------------------------------------
-\subsection{Bước 6: gộp tên thực thể và quan hệ định kỳ}\label{sec:step-canon}
+\subsection{Bước 6: gộp tên định kỳ}\label{sec:step-canon}
 
-\paragraph*{Mục đích.}
-Khi KG được dựng dần từ nhiều bản tin, cùng một thực thể xuất hiện dưới nhiều tên (``WHO'' và ``World Health Organization''), cùng một quan hệ dưới nhiều dạng (\kgr{is\_located\_in} và \kgr{are\_located\_in}).
-Nếu không gộp, fact bị phân mảnh, và việc tra fact đã lưu theo tên ở bước \buoc{1} sẽ trượt.
-Bước \buoc{6} (lớp \texttt{Canonicalizer} trong \texttt{kgu/extract/canonicalize.py}) gộp các tên này.
-Bước chạy định kỳ chứ không chạy sau mỗi tin, vì tên cần tích lũy đủ lần xuất hiện mới so sánh được và vì chi phí: trên 2020-COVID-NYT là sau mỗi 10 nhóm ngày, trên MINE-1 là một lần ở cuối mỗi bài.
-
-\paragraph*{Cách làm.}
-Mỗi lượt gộp xử lý tên thực thể trước, tên quan hệ sau, theo sáu bước.
-\begin{enumerate}
-  \item \emph{Thu thập.} Duyệt fact từ mới tới cũ, đếm số fact chứa mỗi tên và giữ tối đa ba fact gần nhất làm ngữ cảnh.
-  \item \emph{Nhúng.} Mỗi tên được nhúng bằng một mô hình sentence embedding~\cite{reimers2019sbert} và chuẩn hóa về độ dài 1; với tên quan hệ, dấu gạch dưới được thay bằng dấu cách trước khi nhúng.
-  \item \emph{Phân cụm.} Chạy k-means (khởi tạo k-means++ với hạt giống cố định, tối đa 50 vòng, cài bằng numpy) với $k=\lceil n/10\rceil$, trong đó $n$ là số tên, tức trung bình khoảng 10 tên mỗi cụm.
-  \item \emph{Lập nhóm ứng viên.} Trong mỗi cụm, nối hai tên nếu cosine của chúng từ $\delta=0{,}75$ trở lên, chúng có cùng dãy chữ số, và cặp này chưa từng bị phán khác nhau. Mỗi thành phần liên thông có từ hai tên trở lên là một nhóm. Tên \emph{mốc} của nhóm là tên gần tâm nhóm nhất (hòa thì chọn tên có nhiều fact hơn); nhóm quá 8 tên chỉ giữ mốc và 7 tên gần mốc nhất. Điều kiện cùng chữ số ngăn gộp các tên gần nhau về câu chữ nhưng khác số lượng, như ``1,694 Cases'' và ``1,700 Cases''.
-  \item \emph{Hỏi LLM.} Mỗi cụm có ít nhất một tên mới so với các lượt trước được hỏi bằng đúng một lệnh gọi. Prompt liệt kê từng nhóm, gồm tên mốc và các tên ứng viên, mỗi tên kèm fact ngữ cảnh. Với từng ứng viên, LLM viết lý do ngắn trước rồi mới trả \texttt{same} là đúng hay sai, sau đó chọn tên chung trong số tên mốc và các tên được phán \texttt{same}. Trường tên và tên chung bị ép thành kiểu liệt kê các tên của cụm, nên LLM không thể bịa tên mới.
-  \item \emph{Áp ánh xạ.} Đổi tên trong mọi fact, bỏ fact trùng hệt và vòng tự thân; tên cũ cùng các bí danh của nó trở thành bí danh của tên chung và được dùng lại khi tra fact đã lưu ở bước \buoc{1}. Cặp bị phán khác nhau được ghi nhớ và không bao giờ hỏi lại.
-\end{enumerate}
-
-\paragraph*{Tiêu chí ``cùng một''.}
-Với thực thể, hai tên là một nếu ứng viên chỉ là tên viết tắt, bản dịch, hay biến thể chính tả, hoa thường, số nhiều, định dạng của tên mốc.
-Hai tên không là một nếu ứng viên rộng hơn hoặc hẹp hơn, là một loại hay một thể hiện cụ thể, một bộ phận hay một vùng, một sự kiện, quá trình hay hành động liên quan đến tên mốc, hoặc là một địa điểm, người, con số hay ngày khác.
-Với quan hệ, hai tên là một nếu cùng nghĩa và cùng chiều (từ đầu tới đuôi), chỉ khác thì, số, cách viết hay định dạng; quan hệ rộng hơn, hẹp hơn, ngược nghĩa hay ngược chiều đều không gộp.
-Bốn ví dụ trong prompt minh họa các tiêu chí này: ``WHO'' và ``World Health Organization'' được gộp; ``coronavirus'' và ``coronavirus outbreak'' không gộp vì vế sau là một sự kiện; \kgr{is\_located\_in} và \kgr{are\_located\_in} được gộp; \kgr{causes} và \kgr{caused\_by} không gộp vì ngược chiều.
-Hình~\ref{fig:canon} tóm tắt quy trình.
-
-\begin{figure}[!htbp]
-\centering
-\linespread{1}\selectfont
-\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[
-    font=\fontsize{8.5}{10.5}\selectfont,
-    >={Stealth[length=2.4mm]},
-    stage/.style={rectangle, rounded corners=3pt, line width=0.9pt, align=left, anchor=north,
-                  text width=3.3cm, minimum height=4.1cm, inner sep=4pt},
-    dat/.style={stage, draw=orange!75!black, fill=orange!12},
-    cod/.style={stage, draw=green!45!black, fill=green!10},
-    lm/.style={stage, draw=blue!60!black, fill=blue!8},
-    flow/.style={->, line width=1pt, black!75},
-    lbl/.style={font=\fontsize{7.5}{9}\selectfont, fill=white, inner sep=1.5pt}
-]
-\node[dat] (s1) at (0,0) {\textbf{Tên trong KG} ($n$ tên)\\[3pt]
-  WHO\\ World Health Organization\\ coronavirus\\ coronavirus outbreak\\ 1,694 Cases\\ 1,700 Cases\\ \ldots};
-\node[cod] (s2) at (4.2,0) {\textbf{Nhúng tên, k-means}\\ $k=\lceil n/10\rceil$ cụm\\[3pt]
-  cụm 1: WHO, World Health Organization, \ldots\\[2pt]
-  cụm 2: coronavirus, coronavirus outbreak, \ldots\\[2pt]
-  cụm 3: 1,694 Cases, 1,700 Cases, \ldots};
-\node[cod] (s3) at (8.4,0) {\textbf{Nhóm ứng viên trong cụm}\\ cos $\ge 0{,}75$, cùng dãy chữ số, chưa bị từ chối\\[3pt]
-  WHO $\sim$ World Health Organization\\[2pt]
-  coronavirus $\sim$ coronavirus outbreak\\[2pt]
-  {\color{gray!70!black}1,694 Cases $\nsim$ 1,700 Cases: khác chữ số}};
-\node[lm] (s4) at (12.6,0) {\textbf{LLM phán từng ứng viên}\\ 1 lệnh gọi mỗi cụm có tên mới; lý do trước, \textit{same} sau\\[3pt]
-  WHO: viết tắt $\Rightarrow$ \textit{same}; tên chung: World Health Organization\\[2pt]
-  coronavirus outbreak: một sự kiện $\Rightarrow$ \textit{not same}};
-\node[cod, minimum height=0.9cm, text width=2.7cm, anchor=north] (s5) at (12.95,-4.8) {\textbf{Áp ánh xạ}: đổi tên, bỏ fact trùng, tên cũ thành bí danh};
-\node[dat, minimum height=0.9cm, text width=2.6cm, anchor=north] (rej) at (8.4,-4.8) {\textbf{Cặp đã bị từ chối}\\ (không hỏi lại)};
-\draw[flow] (s1.east) -- (s1.east -| s2.west);
-\draw[flow] (s2.east) -- (s2.east -| s3.west);
-\draw[flow] (s3.east) -- (s3.east -| s4.west);
-\draw[flow] (s4.south -| s5.north) -- node[lbl, right] {\textit{same}} (s5.north);
-\draw[flow, dashed] ([xshift=3mm]s4.south west) -- node[lbl, above left] {\textit{not same}} (rej.north east);
-\draw[flow, dashed] (rej.north) -- node[lbl, left] {chặn} (s3.south);
-\draw[flow] (s5.south) -- ++(0,-0.35) -| node[lbl, below, pos=0.25] {KG đã gộp; lượt sau chỉ hỏi các cụm có tên mới} (s1.south);
-\end{tikzpicture}%
-}
-\caption{Bước gộp tên định kỳ: nhúng và phân cụm để lọc ứng viên rẻ, rồi mỗi cụm một lệnh gọi LLM xác minh kèm lý do; cặp bị từ chối được ghi nhớ.}
-\label{fig:canon}
-\end{figure}
-
-\paragraph*{Độ phức tạp.}
-So cặp chỉ diễn ra trong từng cụm, nên số cặp là $\sum_c m_c^2$ với $m_c$ là cỡ cụm $c$, xấp xỉ $10n$ khi cụm cỡ trung bình 10, thay vì $n^2$ khi so mọi cặp.
-Mỗi lượt tốn tối đa $k$ lệnh gọi LLM cho mỗi loại tên, và thường ít hơn nhiều vì cụm không có tên mới được bỏ qua.
-Nhờ ghi nhớ cặp bị từ chối, cùng một câu hỏi không bao giờ được hỏi hai lần, nên tổng số lệnh gọi qua cả quá trình tăng theo số tên mới chứ không theo số lượt.
+Bước \buoc{6} (lớp \texttt{Canonicalizer}, \texttt{kgu/extract/canonicalize.py}) chạy định kỳ, chẳng hạn sau mỗi 10 bản tin, để gộp các tên khác nhau của cùng một thực thể hay quan hệ; nếu không gộp, việc tra fact đã lưu theo tên ở bước \buoc{1} sẽ trượt.
+Mỗi lượt xử lý tên thực thể trước, tên quan hệ sau.
+Các tên được nhúng bằng sentence embedding~\cite{reimers2019sbert} và chia cụm bằng k-means với $k=\lceil n/10\rceil$, trong đó $n$ là số tên.
+Trong mỗi cụm, hai tên được nối nếu cosine từ $0{,}75$ trở lên, có cùng dãy chữ số (để ``1,694 Cases'' không bị gộp với ``1,700 Cases'') và chưa từng bị phán khác nhau; mỗi thành phần liên thông là một nhóm ứng viên, với tên gần tâm nhóm nhất làm mốc.
+Mỗi cụm có tên mới được hỏi bằng một lệnh gọi LLM: với từng ứng viên, LLM viết lý do rồi trả \texttt{same} đúng hay sai kèm tên chung, trong đó các trường tên bị ép thành enum các tên của cụm để LLM không bịa tên mới.
+Tên bị gộp trở thành bí danh của tên chung, fact trùng bị bỏ, còn cặp bị phán khác nhau được ghi nhớ và không bao giờ hỏi lại.
+Tiêu chí ``cùng một'' chấp nhận viết tắt, biến thể chính tả, số nhiều hay thì của động từ, nhưng loại tên rộng hơn, hẹp hơn, là sự kiện liên quan hoặc ngược chiều: ``WHO'' và ``World Health Organization'' được gộp, ``coronavirus'' và ``coronavirus outbreak'' thì không; \kgr{is\_located\_in} và \kgr{are\_located\_in} được gộp, \kgr{causes} và \kgr{caused\_by} thì không.
 
 % ======================================================================
-\section{Thích nghi pipeline theo từng bài toán đánh giá}\label{sec:adapt}
+\section{Module trích triple theo lược đồ}\label{sec:schema-extract}
 
-Không có benchmark công khai nào đo trọn vẹn bài toán ở Định nghĩa~\ref{def:problem}.
-Mỗi bộ dữ liệu đo một phần, và có định dạng đầu vào riêng.
-Vì vậy pipeline được chạy ở các chế độ khác nhau, mỗi chế độ bật đúng các bước mà bộ dữ liệu đo được (Bảng~\ref{tab:modes}).
-Mọi chế độ dùng chung mã nguồn và cùng một LLM.
+Khi đầu vào là các câu độc lập và lược đồ quan hệ đã cho sẵn, như trên WebNLG, REBEL~\cite{cabot2021rebel} và Wiki-NRE, không có KG-trước, mốc thời gian hay thao tác vô hiệu, nên các bước \buoc{0} và \buoc{2} đến \buoc{6} không có gì để làm.
+Pipeline khi đó chỉ dùng bước trích ở dạng theo lược đồ: hàm \texttt{extract\_schema} trong \texttt{kgu/extract/text\_kg.py}.
+Đây là phần được đánh giá ở Chương~\ref{chap:experiments} (Bảng~\ref{tab:edc}); Bảng~\ref{tab:modes} so sánh nó với chế độ cập nhật KG đầy đủ.
 
 \begin{table}[!htbp]
 \centering
-\caption{Chế độ chạy pipeline theo từng bộ dữ liệu đánh giá}
+\caption{Hai chế độ chạy của pipeline}
 \label{tab:modes}
 \small
 \setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.25}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{3.4cm}ccccccc>{\raggedright\arraybackslash}p{6.6cm}@{}}
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}p{2.3cm}@{}}
 \toprule
-Bộ dữ liệu & \buoc{0} & \buoc{1} & \buoc{2} & \buoc{3} & \buoc{4} & \buoc{5} & \buoc{6} & Cách dùng \\
+Chế độ & Bước dùng & Đầu vào & Đầu ra & Lệnh gọi LLM \\
 \midrule
-NBAtransactions~\cite{tang2019gupdate} & & $\circ$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & $\checkmark$ & & Thao tác tường minh lấy từ dữ liệu vàng; đo riêng khoanh vùng hai vế và bộ phán \\
-EMERGE~\cite{zaporojets2025emerge} & & $\circ$ & & $\circ$ & $\circ$ & & & Ứng viên 0-hop là cạnh KG-trước nối hai thực thể được nhắc; Gemma phán lô 12 cạnh (Exists hay Deprecate); Add: sinh tối đa 5 triple rồi chuẩn hóa cấu trúc bằng KGShape \\
-2020-COVID-NYT~\cite{lairgi2025atom}, MINE-1~\cite{mo2025kggen} & $\checkmark$ & $\checkmark$ & $\checkmark$ & & & & $\checkmark$ & KG tự tích lũy; gộp tên sau mỗi 10 nhóm ngày (MINE-1: một lần ở cuối mỗi bài), $\delta=0{,}75$ \\
-WebNLG, REBEL~\cite{cabot2021rebel}, Wiki-NRE (bản trong~\cite{zhang2024edc}), NYT11-HRL~\cite{hoffmann2011nyt,takanobu2019hrl}, KnowledgeNet~\cite{mesquita2019knowledgenet} & & $\circ$ & & & & & & Chỉ module trích theo schema: 1 lệnh gọi mỗi câu, quan hệ ép enum theo schema của bộ, ví dụ few-shot lấy từ bộ \\
+Cập nhật KG đầy đủ & \buoc{0} đến \buoc{6} & KG bi-temporal; bản tin kèm ngày đăng & Thao tác \opk{ADD}, \opk{INVALIDATE}, \opk{KEEP} đã áp lên KG & 2 đến 4 mỗi tin, cộng 1 mỗi lô phán \\
+Trích theo lược đồ & Biến thể của \buoc{1} & Một câu; lược đồ quan hệ kèm mô tả; ví dụ few-shot & Tập triple (chủ ngữ, quan hệ thuộc lược đồ, tân ngữ) & 1 mỗi câu \\
 \bottomrule
 \end{tabular}
-
-\smallskip
-\parbox{15cm}{\small $\checkmark$: dùng nguyên bước; $\circ$: dùng một biến thể của bước; ô trống: không dùng.}
 \end{table}
 
-\paragraph*{NBAtransactions: đo riêng phần suy ra thay đổi gián tiếp.}
-Bộ dữ liệu này cho sẵn KG-trước và KG-sau của từng tin chuyển nhượng, và 94,4\% thay đổi là gián tiếp.
-Đây là nơi phù hợp nhất để đo khoanh vùng và bộ phán.
-Trong một thử nghiệm trên 20 tin với mô hình cũ, LLM không trích được thao tác tường minh nào.
-Để tách đóng góp của bước \buoc{3} và \buoc{4} khỏi chất lượng trích, thao tác tường minh được lấy từ dữ liệu vàng, rồi pipeline chạy các bước \buoc{2} đến \buoc{5}.
-Chưa có lượt chạy đầu cuối với LLM tự trích trên bộ này; đây là một hạn chế được nêu ở Mục~\ref{sec:analysis}.
+Module tốn đúng một lệnh gọi LLM cho mỗi câu và gồm ba phần.
+\begin{enumerate}
+  \item \emph{Prompt.} Hướng dẫn hệ thống yêu cầu trích mọi fact mà câu nói ra, trực tiếp hoặc diễn đạt lại rõ ràng, dưới dạng (chủ ngữ, quan hệ, tân ngữ); \emph{chỉ} dùng các quan hệ trong danh sách; chủ ngữ và tân ngữ chép từ văn bản theo cách viết của các ví dụ; không lặp. Phần người dùng gồm danh sách quan hệ của lược đồ, mỗi quan hệ kèm mô tả ngắn lấy từ tệp lược đồ của bộ dữ liệu; các ví dụ few-shot đi kèm bộ dữ liệu trong kho mã của EDC, cũng là ví dụ mà EDC dùng ở pha trích; và câu cần trích, đặt cuối để máy chủ dùng lại bộ đệm KV cho phần tĩnh.
+  \item \emph{Đầu ra ép enum.} Đầu ra được khai báo là danh sách \texttt{facts}, mỗi phần tử gồm \texttt{subject}, \texttt{relation}, \texttt{object}, trong đó \texttt{relation} có kiểu liệt kê đúng bằng tập quan hệ của lược đồ. JSON Schema sinh từ kiểu này được \texttt{llama-server} dùng làm văn phạm ràng buộc, nên mô hình không thể sinh quan hệ ngoài lược đồ.
+  \item \emph{Lọc sau sinh.} Quan hệ được so lại với lược đồ, không phân biệt hoa thường, phòng khi máy chủ chỉ ép JSON hợp lệ mà không ép enum; triple có chủ ngữ hoặc tân ngữ rỗng, có chủ ngữ trùng tân ngữ, hoặc trùng lặp bị loại. Nếu lệnh gọi lỗi, câu đó nhận danh sách rỗng để giữ đúng thứ tự dòng cho script chấm.
+\end{enumerate}
+Chẳng hạn, với câu ``Aarhus Airport serves the city of Aarhus.'' và lược đồ của WebNLG, mô hình phải chọn quan hệ trong danh sách, ở đây là cityServed, và trả về (Aarhus Airport, cityServed, Aarhus).
 
-\paragraph*{EMERGE: vì sao chỉ cần ứng viên 0-hop.}
-Trên EMERGE, thay đổi Deprecate gần như luôn tường minh: 98\% cạnh bị vô hiệu có cả hai đầu được nhắc trong đoạn văn.
-Khác với NBA, nơi phần lớn cạnh bị xóa là hệ quả lan truyền, ở đây không cần vế cắt tìm hub; chỉ cần tra KG-trước xem giữa các thực thể được nhắc đang có cạnh nào, rồi để LLM phán cạnh nào văn bản nói đã hết hiệu lực.
-Vì vậy bước \buoc{3} thu về dạng 0-hop: ứng viên là các cạnh KG-trước nối hai thực thể được nhắc (mỗi instance có sẵn danh sách thực thể được nhắc kèm mã QID của Wikidata~\cite{vrandecic2014wikidata}).
-KG-trước được thu gọn thành vùng 1-hop quanh các thực thể được nhắc; vùng này giữ 99,3\% cạnh Exists và 91,2\% cạnh Deprecate của dữ liệu vàng, còn tập ứng viên 0-hop giữ 99,4\% và 90,1\%, với trung vị chỉ 2 cạnh mỗi bài.
-Bộ phán \buoc{4} hỏi Gemma theo lô 12 cạnh, mỗi cạnh hai câu hỏi tuần tự: đoạn văn có bàn tới fact này không, và nếu có, fact có vừa kết thúc không.
-Prompt có ngày chụp KG, ngày viết đoạn văn và ví dụ few-shot; cạnh còn đúng được xếp là Exists, cạnh vừa kết thúc là Deprecate.
-Với Add, mỗi bài tốn một lệnh gọi: LLM nhận các thực thể được nhắc và các quan hệ cho phép (lấy từ các cạnh 1-hop của chúng), rồi sinh tối đa 5 triple mới.
-Các triple này được bộ chuẩn hóa \texttt{KGShape} chỉnh lại cấu trúc mà không gọi LLM, theo ba quy tắc rút từ thống kê của KG-trước: đảo chiều nếu chiều ngược khớp hơn với các quan hệ mà hai đầu vốn phát ra và nhận vào; khi quan hệ do LLM sinh chưa từng xuất hiện ở hai đầu, đổi sang quan hệ $r'$ nếu chỉ có đúng một quan hệ mà đầu đã phát ra và đuôi đã nhận; thêm chiều nghịch đảo theo 53 cặp quan hệ nghịch đảo rút từ KG-trước, vì Wikidata lưu cả hai chiều.
-Loại Infer nằm ngoài phạm vi (ràng buộc R2), và Mint+Add (tạo thực thể mới rồi thêm cạnh) chưa được cài đặt.
-
-\paragraph*{2020-COVID-NYT và MINE-1: KG tích lũy.}
-Hai bộ này dựng KG từ đầu bằng một chuỗi văn bản dài (các nhóm tin theo ngày, hoặc một bài luận), không có KG-trước giàu cấu trúc và không có nhãn cho thay đổi gián tiếp.
-Pipeline chạy \buoc{0}, \buoc{1}, \buoc{2} và gộp tên định kỳ \buoc{6}; bước \buoc{3} và \buoc{4} được tắt.
-Bước \buoc{6} đặc biệt cần thiết ở đây; chẳng hạn trên 2020-COVID-NYT, cùng một thực thể xuất hiện lặp lại qua 122 nhóm tin dưới những tên khác nhau.
-
-\paragraph*{Các bộ trích theo schema: chỉ module trích.}
-WebNLG, REBEL, Wiki-NRE, NYT11-HRL và KnowledgeNet đo việc trích triple từ một câu hay một đoạn ngắn theo một bộ quan hệ cố định.
-Các bộ này không có KG-trước, không có thời gian và không có thao tác vô hiệu, nên bước \buoc{2} đến \buoc{6} không có gì để làm.
-Pipeline chỉ dùng module trích ở dạng theo schema (hàm \texttt{extract\_schema}): mỗi câu một lệnh gọi, trường quan hệ bị ép thành kiểu liệt kê các quan hệ trong schema của bộ, kèm các ví dụ few-shot lấy từ chính bộ dữ liệu.
-Mục đích của chế độ này là so module trích của pipeline với các hệ trích xuất ngay trên sân nhà của chúng.
+So với EDC, module gộp hai việc mà EDC làm tách rời: trích và đưa quan hệ về lược đồ.
+Vì lược đồ được đặt sẵn trong prompt và ép bằng enum, module không cần pha định nghĩa quan hệ, mô hình nhúng hay lệnh xác minh cho từng triple, và không có triple nào bị bỏ ở bước chuẩn hóa do quan hệ mở không khớp lược đồ.
+Đổi lại, prompt phải chứa toàn bộ lược đồ (159 quan hệ với WebNLG, 196 với REBEL, 45 với Wiki-NRE), nên cách làm phù hợp với lược đồ cỡ vài trăm quan hệ; lược đồ lớn hơn sẽ cần thêm bước truy xuất quan hệ liên quan như bộ truy xuất lược đồ của EDC.
 
 % ======================================================================
-\section{Phân tích ưu điểm, hạn chế và độ đo đánh giá}\label{sec:analysis}
+\section{Phân tích ưu điểm và hạn chế}\label{sec:analysis}
 
 \paragraph*{Ưu điểm.}
 \begin{itemize}
-  \item \emph{Không luật miền.} Khoanh vùng thuần cấu trúc; bằng chứng cho bộ phán là phép đếm trên KG; ví dụ few-shot của bộ phán lấy từ một miền khác với dữ liệu. Nạp miền mới chỉ cần nạp KG, không phải viết luật.
-  \item \emph{Ít lệnh gọi LLM.} Mỗi bước dùng LLM chỉ tốn một vài lệnh gọi cho một bản tin: rút câu và trích mỗi bước 1 đến 2 lệnh gọi; bộ phán trên NBAtransactions trung bình khoảng 3,3 lệnh gọi mỗi tin nhờ gom mẫu, dù mỗi tin có hơn 100 ứng viên. Số lệnh gọi phụ thuộc số ứng viên trong vùng chứ không phụ thuộc kích thước KG.
-  \item \emph{Không xóa.} Lịch sử luôn truy vấn được (tính chất bảo toàn lịch sử ở Mục~\ref{sec:problem}); một thao tác sai có thể được hoàn tác vì dữ liệu cũ vẫn còn nguyên.
-  \item \emph{Giải thích được.} Mỗi thao tác mang nguồn gốc: câu nguồn với thao tác tường minh, hub và tập neo với ứng viên cắt, cạnh bằng chứng với ứng viên sinh, lý do bằng lời với phán quyết của bộ phán và của bước gộp tên.
-  \item \emph{Chạy được với LLM mở cỡ nhỏ.} Đầu ra ép schema giúp mô hình nhỏ tránh lỗi định dạng, và mỗi bước LLM chỉ làm một tác vụ hẹp; toàn bộ thực nghiệm dùng Gemma~4 E4B lượng tử hóa 4-bit trên GPU T4.
+  \item \emph{Không luật miền}: khoanh vùng thuần cấu trúc, bằng chứng cho bộ phán là phép đếm trên KG; nạp miền mới chỉ cần nạp KG hoặc lược đồ, không phải viết luật.
+  \item \emph{Ít lệnh gọi LLM}: mỗi bước LLM chỉ làm một tác vụ hẹp với vài lệnh gọi mỗi tin; số lệnh gọi của bộ phán phụ thuộc số mẫu ứng viên chứ không phụ thuộc kích thước KG; module trích theo lược đồ tốn đúng một lệnh gọi mỗi câu.
+  \item \emph{Không xóa và giải thích được}: lịch sử luôn truy vấn được, thao tác sai hoàn tác được; mỗi thao tác mang nguồn gốc (câu nguồn, hub và tập neo, cạnh bằng chứng, lý do của bộ phán).
+  \item \emph{Chạy được với LLM mở cỡ nhỏ}: đầu ra ép schema giúp mô hình 4-bit tránh lỗi định dạng và lỗi tên quan hệ.
 \end{itemize}
 
 \paragraph*{Hạn chế.}
 \begin{itemize}
-  \item \emph{Phụ thuộc vào thao tác tường minh do LLM trích.} Khoanh vùng chỉ được kích hoạt bởi $O^{\mathrm{exp}}$. Nếu bước \buoc{1} bỏ sót một thao tác \opk{INVALIDATE}, mọi hệ quả gián tiếp của nó cũng bị bỏ sót. Trên NBAtransactions, thực nghiệm mới đo phần sau bước trích (thao tác tường minh lấy từ dữ liệu vàng), chưa đo đầu cuối.
-  \item \emph{Chưa tạo thực thể mới có liên kết.} Pipeline chưa làm Mint+Add theo nghĩa của EMERGE: tạo một thực thể chưa có trong KG rồi liên kết nó với cơ sở tri thức. Ở chế độ KG tích lũy, tên mới được tạo tự do nhưng không được gắn mã định danh.
-  \item \emph{Câu chữ không ổn định giữa các lượt chạy.} Hai bước viết lại bằng LLM (rút câu và gộp tên) khiến tên thực thể và quan hệ thay đổi giữa các lượt dù nhiệt độ bằng 0. Trên 2020-COVID-NYT, độ trùng Jaccard khớp chính xác giữa các lượt chỉ 0,22 đến 0,28, trong khi Jaccard mềm đạt 0,78 đến 0,81 và F1 qua ba lượt là $49{,}9\pm0{,}2$; bất ổn nằm ở câu chữ, không ở nội dung.
-  \item \emph{Bộ phán và giám khảo dùng cùng mô hình.} Bộ phán \buoc{4} dùng cùng LLM với bước trích nên lỗi của hai bước có thể tương quan. Tỷ lệ ``có căn cứ'' dùng ở Chương~\ref{chap:experiments} cũng do Gemma chấm, tức cùng mô hình với hệ được chấm, và chưa được kiểm bằng người.
-  \item \emph{Vùng ứng viên bám quanh cạnh thay đổi.} Vùng được định nghĩa quanh hai đầu của cạnh vừa đổi. Trên NBAtransactions vùng này phủ toàn bộ thay đổi gián tiếp, nhưng ở miền có hệ quả dây chuyền nhiều bước, có thể cần lặp lại khoanh vùng trên chính các thao tác do bộ phán sinh ra.
+  \item \emph{Phụ thuộc vào thao tác tường minh}: khoanh vùng chỉ được kích hoạt bởi $O^{\mathrm{exp}}$, nên một \opk{INVALIDATE} bị bước \buoc{1} bỏ sót kéo theo mất mọi hệ quả gián tiếp của nó.
+  \item \emph{Chưa tạo thực thể mới có liên kết}: tên mới được tạo tự do nhưng chưa được gắn mã định danh của một cơ sở tri thức (loại Mint+Add của EMERGE).
+  \item \emph{Cùng một mô hình cho nhiều vai}: bộ phán và bước trích dùng cùng LLM nên lỗi của hai bước có thể tương quan; hai bước viết lại bằng LLM (rút câu, gộp tên) có thể làm câu chữ thay đổi giữa các lượt chạy.
+  \item \emph{Vùng ứng viên bám quanh cạnh thay đổi}: ở miền có hệ quả dây chuyền nhiều bước, có thể cần lặp khoanh vùng trên chính các thao tác do bộ phán sinh ra.
+  \item \emph{Phạm vi đánh giá}: thực nghiệm ở Chương~\ref{chap:experiments} chỉ đánh giá module trích theo lược đồ trên ba bộ dữ liệu của EDC; các bước khoanh vùng, bộ phán và gộp tên được trình bày ở mức thiết kế và cài đặt, chưa được đánh giá định lượng trong khóa luận.
 \end{itemize}
 
-\paragraph*{Độ đo sẽ dùng.}
-Mỗi nhóm benchmark trả lời một câu hỏi khác nhau về phương pháp, nên dùng nhóm độ đo khác nhau; định nghĩa chi tiết và cách chấm được trình bày ở Mục~\ref{sec:exp-metrics}.
-\begin{itemize}
-  \item \emph{Suy ra thay đổi gián tiếp} (NBAtransactions): F1 tái dựng KG-sau, độ chính xác cạnh thêm và độ chính xác cạnh xóa~\cite{tang2019gupdate}.
-  \item \emph{Thao tác cập nhật trên Wikidata} (EMERGE): Completeness, G-BERTScore-R~\cite{zhang2020bertscore}, và precision, recall, F1 khớp chính xác QID theo từng loại thao tác~\cite{zaporojets2025emerge}.
-  \item \emph{Chất lượng trích} (WebNLG, REBEL, Wiki-NRE, NYT11-HRL): precision, recall, F1 ở ba mức Partial, Strict, Exact theo script của EDC~\cite{zhang2024edc}, cùng khớp chính xác cho NYT11-HRL; KnowledgeNet dùng Text evaluation và Link evaluation của bộ chấm gốc~\cite{mesquita2019knowledgenet}.
-  \item \emph{KG tích lũy} (2020-COVID-NYT, MINE-1): MATCH, HALL và F1 theo nhóm ngày như ATOM~\cite{lairgi2025atom}; MINE accuracy~\cite{mo2025kggen}.
-  \item \emph{Độ đo bổ trợ}: tỷ lệ fact có căn cứ trong văn bản, độ ổn định giữa các lượt chạy (Jaccard), độ gọn của KG (số cặp tên gần trùng), và chi phí (số lệnh gọi LLM, thời gian chạy).
-\end{itemize}
-
-Tóm lại, phương pháp đề xuất tách bài toán cập nhật KG thành phần cần hiểu ngôn ngữ, giao cho LLM với đầu ra ép schema, và phần cần lập luận trên cấu trúc, giao cho một thuật toán khoanh vùng tất định cùng một bộ phán chỉ nhìn vào vùng nhỏ.
-Mọi thay đổi được ghi theo mô hình bi-temporal, nên lịch sử không bao giờ bị ghi đè.
-Chương~\ref{chap:experiments} trình bày các thực nghiệm kiểm chứng từng phần của thiết kế này trên chín bộ dữ liệu công khai.
+\paragraph*{Độ đo.}
+Module trích theo lược đồ được chấm bằng precision, recall và F1 ở ba mức Partial, Strict, Exact theo script của EDC~\cite{zhang2024edc} như đã trình bày ở chương trước, kèm chi phí (số lệnh gọi LLM, thời gian chạy).
+Với pipeline đầy đủ, độ đo tự nhiên là precision, recall và F1 trên từng loại thao tác so với KG-sau vàng, theo cách chấm của GUpdater~\cite{tang2019gupdate} và EMERGE~\cite{zaporojets2025emerge}.

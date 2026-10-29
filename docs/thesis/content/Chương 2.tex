@@ -1,65 +1,46 @@
 % =====================================================================
 % Chương 2. Cơ sở lý thuyết và các nghiên cứu liên quan
-% Chỉ dùng các gói đã có trong main.tex: tikz, graphicx, booktabs, array,
-% makecell, amsmath, amssymb.
-% CẦN THÊM VÀO main.tex: không cần gói mới (chỉ nạp thư viện TikZ ở dưới).
+% Không cần gói mới ngoài main.tex; chỉ nạp thư viện TikZ ở dưới.
 % =====================================================================
 \usetikzlibrary{shapes,arrows.meta,positioning,calc,fit,backgrounds,decorations.pathreplacing}
 
 \chapter{Cơ sở lý thuyết và các nghiên cứu liên quan}\label{chap:background}
 
 Chương này trình bày các kiến thức nền được dùng ở các chương sau.
-Mục~\ref{sec:bg-kg} nhắc lại khái niệm knowledge graph, triple và mô hình thời gian bi-temporal.
-Mục~\ref{sec:bg-task} phát biểu bài toán cập nhật KG từ văn bản theo cách nhìn của benchmark EMERGE và chỉ ra điểm khác với trích xuất thông tin thuần.
-Các mục~\ref{sec:bg-llm}, \ref{sec:bg-localize} và~\ref{sec:bg-canon} trình bày ba nhóm kỹ thuật mà pipeline đề xuất kế thừa: trích xuất tri thức bằng mô hình ngôn ngữ lớn, khoanh vùng cấu trúc cùng dự đoán liên kết, và chuẩn hóa thực thể.
-Mục~\ref{sec:bg-related} điểm qua các nghiên cứu cập nhật KG bằng LLM giai đoạn 2024--2026 và nêu khoảng trống mà khóa luận nhắm tới.
-Mục~\ref{sec:bg-metrics} tóm tắt các độ đo; cách chấm chi tiết được để lại cho Chương~\ref{chap:experiments}.
+Mục~\ref{sec:bg-kg} nhắc lại khái niệm knowledge graph và mô hình thời gian bi-temporal.
+Mục~\ref{sec:bg-task} phát biểu bài toán cập nhật KG từ văn bản.
+Mục~\ref{sec:bg-llm} trình bày cách dùng mô hình ngôn ngữ lớn để trích tri thức và các pipeline tiêu biểu, trong đó EDC là hệ so sánh chính của khóa luận.
+Mục~\ref{sec:bg-localize} và~\ref{sec:bg-canon} tóm tắt hai kỹ thuật bổ trợ: khoanh vùng cấu trúc kèm bộ phán, và chuẩn hóa tên.
+Mục~\ref{sec:bg-related} điểm qua các nghiên cứu cập nhật KG bằng LLM; Mục~\ref{sec:bg-metrics} trình bày độ đo.
 
 % =====================================================================
-\section{Knowledge graph và biểu diễn tri thức có thời gian}\label{sec:bg-kg}
-
-\subsection{Knowledge graph và triple}
+\section{Knowledge graph và tri thức có thời gian}\label{sec:bg-kg}
 
 \textit{Knowledge graph} (KG, đồ thị tri thức) biểu diễn tri thức dưới dạng đồ thị có hướng và có nhãn, trong đó nút là thực thể và cạnh là quan hệ giữa các thực thể~\cite{hogan2021kg}.
-Một cách hình thức, KG là bộ $\mathcal{G} = (\mathcal{E}, \mathcal{R}, \mathcal{T})$, với $\mathcal{E}$ là tập thực thể, $\mathcal{R}$ là tập quan hệ và $\mathcal{T} \subseteq \mathcal{E} \times \mathcal{R} \times \mathcal{E}$ là tập \textit{triple} (bộ ba).
+Một cách hình thức, KG là bộ $\mathcal{G} = (\mathcal{E}, \mathcal{R}, \mathcal{T})$ với tập thực thể $\mathcal{E}$, tập quan hệ $\mathcal{R}$ và tập \textit{triple} (bộ ba) $\mathcal{T} \subseteq \mathcal{E} \times \mathcal{R} \times \mathcal{E}$.
 Mỗi triple $(h, r, t)$ gồm thực thể đầu $h$, quan hệ $r$ và thực thể đuôi $t$, ví dụ (Lionel Messi, plays\_for, FC Barcelona).
-Dạng biểu diễn này đơn giản, dễ lưu trong cơ sở dữ liệu đồ thị và dễ truy vấn theo đường đi, nên được hầu hết KG mở và hệ trích xuất tri thức dùng làm đơn vị đầu ra.
+Tập quan hệ được phép dùng, mỗi quan hệ kèm mô tả ý nghĩa, tạo thành \textit{lược đồ} (schema) của KG.
+Các KG mở lớn như Freebase~\cite{bollacker2008freebase} và Wikidata~\cite{vrandecic2014wikidata} đều lấy triple làm đơn vị; Wikidata còn cho phép gắn \textit{qualifier} như thời điểm bắt đầu, kết thúc vào mỗi phát biểu và lưu toàn bộ lịch sử sửa đổi.
 
-Hai KG mở thường được dùng làm nguồn dữ liệu là Freebase và Wikidata.
-Freebase~\cite{bollacker2008freebase} là cơ sở tri thức cộng tác với lược đồ quan hệ phân cấp theo miền, ví dụ quan hệ /location/location/contains; bộ dữ liệu trích quan hệ NYT được gán nhãn bằng giám sát xa theo các quan hệ Freebase~\cite{hoffmann2011nyt,takanobu2019hrl}.
-Wikidata~\cite{vrandecic2014wikidata} là KG cộng tác do Wikimedia vận hành.
-Mỗi thực thể Wikidata có mã định danh dạng QID (Q212654 là Washington Commanders), mỗi thuộc tính có mã PID (P54 là ``member of sports team'').
-Một phát biểu có thể kèm \textit{qualifier} như thời điểm bắt đầu, thời điểm kết thúc, và toàn bộ lịch sử sửa đổi được lưu lại.
-Lịch sử sửa đổi này là nguồn nhãn của các benchmark cập nhật tri thức như EMERGE~\cite{zaporojets2025emerge} và WikiFactDiff~\cite{wikifactdiff2024}; KnowledgeNet~\cite{mesquita2019knowledgenet} cũng lấy thuộc tính Wikidata làm lược đồ quan hệ.
-
-\subsection{KG có thời gian và mô hình bi-temporal}
-
-Nhiều fact chỉ đúng trong một khoảng thời gian, chẳng hạn một cầu thủ chơi cho một câu lạc bộ hay một người giữ một chức vụ.
-KG có thời gian (\textit{temporal KG}) gắn thêm thông tin thời gian vào cạnh, thường dưới dạng bộ năm $(h, r, t, \tau_s, \tau_e)$ với $[\tau_s, \tau_e)$ là khoảng hiệu lực; ATOM~\cite{lairgi2025atom} dùng đúng dạng 5-tuple này làm đầu ra trích xuất.
-Khi biết một fact đã hết đúng, hệ thống có hai lựa chọn: xóa cạnh (\textit{xóa cứng}) hoặc giữ cạnh nhưng đóng khoảng hiệu lực.
-
-Mô hình \textit{bi-temporal} tách hai trục thời gian độc lập.
-Trục thứ nhất là \textit{thời gian hiệu lực} (valid time): khoảng mà sự việc đúng ngoài đời, ghi bằng hai trường valid\_from và valid\_until.
-Trục thứ hai là \textit{thời gian giao dịch} (transaction time): thời điểm hệ thống biết và ghi nhận sự việc, ví dụ ngày đăng bản tin.
-Hai trục thường lệch nhau: một bản tin đăng ngày 2026-07-01 có thể kể về sự việc xảy ra ngày 2026-06-29.
-Zep và thư viện mã nguồn mở Graphiti đi kèm~\cite{rasmussen2025zep} áp dụng mô hình này cho bộ nhớ của agent: mỗi cạnh mang cả hai trục, và khi thông tin mới mâu thuẫn với một cạnh cũ, hệ không xóa cạnh đó mà ghi thời điểm nó hết hiệu lực.
-Nhờ vậy KG trả lời được truy vấn tại một thời điểm $\tau$ bất kỳ qua ảnh chụp
+Nhiều fact chỉ đúng trong một khoảng thời gian, chẳng hạn một cầu thủ chơi cho một câu lạc bộ.
+KG có thời gian (\textit{temporal KG}) gắn khoảng hiệu lực vào cạnh, thường dưới dạng bộ năm $(h, r, t, \tau_s, \tau_e)$ với $[\tau_s, \tau_e)$ là khoảng fact đúng; ATOM~\cite{lairgi2025atom} dùng đúng dạng này làm đầu ra trích xuất.
+Mô hình \textit{bi-temporal} phân biệt hai trục thời gian.
+Trục thứ nhất là \textit{thời gian hiệu lực} (valid time): khoảng sự việc đúng ngoài đời, ghi bằng hai trường valid\_from và valid\_until.
+Trục thứ hai là \textit{thời gian giao dịch} (transaction time): thời điểm hệ thống ghi nhận sự việc, ví dụ ngày đăng bản tin.
+Zep và thư viện mã nguồn mở Graphiti~\cite{rasmussen2025zep} áp dụng mô hình này: khi thông tin mới mâu thuẫn với một cạnh cũ, hệ không xóa cạnh mà ghi thời điểm nó hết hiệu lực.
+Nhờ vậy KG trả lời được truy vấn tại thời điểm $\tau$ bất kỳ qua ảnh chụp
 \begin{equation}
-  \mathcal{G}(\tau) = \{(h, r, t) \mid \tau_s \le \tau < \tau_e\},
+  \mathcal{G}(\tau) = \{(h, r, t) \mid (h, r, t, \tau_s, \tau_e) \in \mathcal{G},\ \tau_s \le \tau < \tau_e\},
 \end{equation}
-đồng thời giữ lịch sử để kiểm tra và hoàn tác khi hệ cập nhật nhầm.
-Hình~\ref{fig:bitemporal} minh họa khác biệt giữa hai cách cập nhật.
-Khóa luận dùng mô hình bi-temporal cho tầng lưu trữ của pipeline (Chương~\ref{chap:method}).
+đồng thời giữ lịch sử để kiểm tra và hoàn tác khi cập nhật nhầm (Hình~\ref{fig:bitemporal}).
 
 \begin{figure}[htbp]
 \centering
-\resizebox{\textwidth}{!}{%
+\resizebox{0.9\textwidth}{!}{%
 \begin{tikzpicture}[font=\small, >={Stealth[length=2.2mm]},
   lab/.style={font=\scriptsize, text=black!70}]
-  % đường dóng (vẽ trước để thanh tô màu phủ lên)
   \draw[densely dashed, gray!70] (9,0) -- (9,4.5);
   \draw[densely dotted, gray!70] (11.6,0) -- (11.6,4.5);
-  % trục thời gian hiệu lực
   \draw[->, thick] (0,0) -- (13.9,0) node[right, font=\footnotesize] {$t$};
   \foreach \x/\l in {1/2004, 2.6/2010, 5/2020, 9/2026-06-29, 11.6/2026-07-01}{
     \draw (\x,0.1) -- (\x,-0.1) node[below, font=\footnotesize] {\l};
@@ -85,114 +66,67 @@ Khóa luận dùng mô hình bi-temporal cho tầng lưu trữ của pipeline (C
   \node[font=\footnotesize] at (11.2,1.15) {plays\_for(Messi, Inter)};
   \draw[->, thick, green!45!black] (13.4,1.15) -- (13.95,1.15);
   \node[lab, anchor=south] at (11.2,1.4) {đang hiệu lực (valid\_until = null)};
-  % truy vấn tại 2010
   \draw[thick, orange!85!black] (2.6,0) -- (2.6,2.2);
   \fill[orange!85!black] (2.6,2.2) circle (0.07);
   \node[lab, text=orange!85!black, anchor=west] at (2.7,1.3) {truy vấn tại 2010 $\Rightarrow$ Barca};
 \end{tikzpicture}}
-\caption{Cập nhật một cạnh có thời gian bằng xóa cứng và bằng mô hình bi-temporal (ví dụ giả định, trục không theo tỉ lệ). Bản tin ngày 2026-07-01 cho biết Messi rời Barca và gia nhập Inter từ 2026-06-29: cách (a) xóa cạnh cũ nên mất lịch sử; cách (b) chỉ đóng valid\_until của cạnh cũ, nên truy vấn tại năm 2010 vẫn trả lời đúng.}
+\caption{Cập nhật một cạnh có thời gian bằng xóa cứng và bằng mô hình bi-temporal (ví dụ giả định, trục không theo tỉ lệ). Cách (a) xóa cạnh cũ nên mất lịch sử; cách (b) chỉ đóng valid\_until của cạnh cũ, nên truy vấn tại năm 2010 vẫn trả lời đúng.}
 \label{fig:bitemporal}
 \end{figure}
 
 % =====================================================================
 \section{Bài toán cập nhật KG từ văn bản}\label{sec:bg-task}
 
-\subsection{Phát biểu chung}
+Cho KG hiện tại $\mathcal{G}_t$ và một văn bản mới $d$ kèm ngày đăng $\tau_d$, bài toán cập nhật KG từ văn bản yêu cầu tìm tập thao tác sao cho áp chúng lên $\mathcal{G}_t$ cho ra KG phản ánh đúng thế giới sau khi đọc $d$.
+Điểm khác với trích xuất thông tin (\textit{information extraction}, IE) thuần là đầu ra đúng phụ thuộc đồng thời vào văn bản và trạng thái KG.
+Các hệ IE, kể cả hệ sinh triple đầu-cuối như REBEL~\cite{cabot2021rebel}, ReLiK~\cite{orlando2024relik} hay Stanford OpenIE~\cite{angeli2015openie}, chỉ trả về các triple mà văn bản khẳng định, nên thiếu hai năng lực.
+Thứ nhất, chúng không phân biệt được fact đã có với fact mới vì không tra cứu KG.
+Thứ hai, chúng không có khái niệm vô hiệu hóa: câu ``Messi rời Barcelona'' không khẳng định triple nào cần thêm, mà cho biết một triple đang có đã hết đúng.
 
-Cho KG hiện tại $\mathcal{G}_t$ (ảnh chụp tại thời điểm $t$) và một văn bản mới $d$ kèm ngày đăng $\tau_d$, bài toán cập nhật KG từ văn bản yêu cầu tìm tập thao tác $\mathcal{O} = \{(o_i, h_i, r_i, t_i)\}$, với $o_i$ là loại thao tác, sao cho áp $\mathcal{O}$ lên $\mathcal{G}_t$ cho ra KG phản ánh đúng thế giới sau khi đọc $d$.
-Điểm cốt lõi là đầu ra đúng phụ thuộc đồng thời vào văn bản và trạng thái KG.
-Với cùng câu ``Messi gia nhập Inter'', nếu KG đã có fact này thì không cần làm gì; nếu KG đang ghi Messi chơi cho Barca thì phải vô hiệu fact cũ rồi mới thêm fact mới.
-Định nghĩa hình thức dùng trong khóa luận được trình bày ở Mục~\ref{sec:problem}.
-
-\subsection{Năm loại thao tác theo EMERGE}
-
-EMERGE~\cite{zaporojets2025emerge} là benchmark gần đây nhất cho bài toán này, được nhóm tác giả gọi là \textit{text-driven KG updating} (TKGU).
-Nhóm tác giả ghép ảnh chụp Wikidata tại các mốc từ 2019 đến 2025 với đoạn văn Wikipedia viết sau mốc đó, lấy nhãn từ chính các sửa đổi Wikidata đã xảy ra, rồi dùng LLM (Llama-3.1-405B) xác nhận nhãn; độ đồng thuận giữa LLM và người đạt $\kappa = 0{,}765$.
-EMERGE chia thao tác thành năm loại (Bảng~\ref{tab:emerge-ops}, Hình~\ref{fig:emerge-ops}).
-Exists, Add và Mint+Add ứng với tri thức được văn bản nói thẳng, khác nhau ở chỗ triple hoặc thực thể đã có trong KG hay chưa.
-Infer đòi hỏi tri thức nền ngoài văn bản, còn Deprecate đòi hỏi nhận ra một fact cũ không còn đúng.
-Tập kiểm thử gồm 3.500 instance (7 ảnh chụp $\times$ 5 mốc cập nhật $\times$ 100 đoạn văn).
+\paragraph*{Năm loại thao tác theo EMERGE.}
+EMERGE~\cite{zaporojets2025emerge} gọi bài toán này là \textit{text-driven KG updating}.
+Benchmark ghép ảnh chụp Wikidata tại nhiều mốc với đoạn văn Wikipedia viết sau mốc đó, lấy nhãn từ các sửa đổi Wikidata đã thực sự xảy ra, và chia thao tác thành năm loại (Bảng~\ref{tab:emerge-ops}).
+Exists, Add và Mint+Add ứng với tri thức được văn bản nói thẳng; Infer cần tri thức nền ngoài văn bản; Deprecate cần nhận ra một fact cũ không còn đúng.
+Đánh giá của nhóm tác giả cho thấy các hệ IE hiện có hầu như không đề xuất được Deprecate, vì kiến trúc của chúng chỉ sinh triple được khẳng định.
 
 \begin{table}[htbp]
 \centering
-\caption{Năm loại thao tác cập nhật KG theo EMERGE~\cite{zaporojets2025emerge}; ví dụ lấy từ instance ở Hình~\ref{fig:emerge-ops}, cột cuối là số triple vàng đã xác nhận trong tập kiểm thử}
+\caption{Năm loại thao tác cập nhật KG theo EMERGE~\cite{zaporojets2025emerge}; ví dụ lấy từ một đoạn văn về đội Washington Commanders viết sau ảnh chụp KG ngày 2024-01-01}
 \label{tab:emerge-ops}
 \small
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}p{1.8cm}p{4.7cm}p{6.2cm}r@{}}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}p{1.8cm}p{5.4cm}p{7.4cm}@{}}
 \toprule
-Thao tác & Ý nghĩa & Ví dụ & \makecell[r]{Số gold} \\
+Thao tác & Ý nghĩa & Ví dụ \\
 \midrule
-Exists & Triple đã có trong KG, văn bản xác nhận lại & (Josh Harris, owner of, Washington Commanders) & 12.783 \\
-Add & Triple mới, mọi thực thể đều đã có trong KG & (Washington Commanders, general manager, Adam Peters) nếu Adam Peters đã có trong KG & 2.277 \\
-Mint+Add & Triple mới có thực thể chưa có trong KG, phải tạo thực thể trước & (Washington Commanders, general manager, Adam Peters), Adam Peters là thực thể mới & 2.264 \\
-Infer & Triple nối thực thể mới với thực thể có sẵn, văn bản không nói thẳng & (Adam Peters, educated at, University of California, Los Angeles) & 4.170 \\
-Deprecate & Triple đang có trong KG trở nên lỗi thời & (Washington Commanders, head coach, Ron Rivera) & 1.628 \\
+Exists & Triple đã có trong KG, văn bản xác nhận lại & (Josh Harris, owner of, Washington Commanders) \\
+Add & Triple mới giữa các thực thể đã có trong KG & (Washington Commanders, general manager, Adam Peters), khi Adam Peters đã có trong KG \\
+Mint+Add & Triple mới có thực thể chưa có, phải tạo thực thể trước & Như trên, khi Adam Peters là thực thể mới \\
+Infer & Triple văn bản không nói thẳng, cần tri thức nền & (Adam Peters, educated at, University of California, Los Angeles) \\
+Deprecate & Triple đang có trong KG trở nên lỗi thời & (Washington Commanders, head coach, Ron Rivera), khi đoạn văn kể Rivera bị sa thải \\
 \bottomrule
 \end{tabular}
 \end{table}
 
-\begin{figure}[htbp]
-\centering
-\resizebox{\textwidth}{!}{%
-\begin{tikzpicture}[font=\small, >={Stealth[length=2.2mm]},
-  ent/.style={draw=gray!60, fill=gray!8, rounded corners=3pt, inner sep=4pt, align=center, minimum height=0.9cm},
-  newent/.style={ent, draw=green!45!black, fill=green!10, dashed},
-  lbl/.style={font=\footnotesize, fill=white, inner sep=1.5pt, align=center},
-  exists/.style={->, thick, blue!55!black},
-  depr/.style={->, thick, red!70!black, dashed},
-  mint/.style={->, thick, green!45!black},
-  infer/.style={->, thick, orange!85!black, densely dotted}]
-  \node[draw=gray!50, fill=yellow!6, rounded corners=2pt, text width=16.4cm, align=left, font=\footnotesize] at (2.7,3.0)
-    {\textbf{Đoạn văn} (Wikipedia, viết sau ảnh chụp KG ngày 2024-01-01): ``\ldots It will be their second under owner Josh Harris, and the first under general manager Adam Peters and a new head coach. The season started with the firing of head coach Ron Rivera\ldots''};
-  \node[ent] (wc) at (0,0) {Washington\\Commanders};
-  \node[ent] (nfl) at (-4.6,1.2) {National Football\\League};
-  \node[ent] (jh) at (-4.6,-1.3) {Josh Harris};
-  \node[ent] (rr) at (4.6,1.2) {Ron Rivera};
-  \node[newent] (ap) at (4.6,-1.3) {Adam Peters\\{\scriptsize (thực thể mới)}};
-  \node[ent] (ucla) at (9.6,-1.3) {University of California,\\Los Angeles};
-  \draw[exists] (wc) -- node[lbl] {league\\\textbf{Exists}} (nfl);
-  \draw[exists] (jh) -- node[lbl] {owner of\\\textbf{Exists}} (wc);
-  \draw[depr] (wc) -- node[lbl] {head coach\\\textbf{Deprecate}} (rr);
-  \draw[mint] (wc) -- node[lbl] {general manager\\\textbf{Mint+Add}} (ap);
-  \draw[infer] (ap) -- node[lbl] {educated at\\\textbf{Infer}} (ucla);
-\end{tikzpicture}}
-\caption{Các loại thao tác của EMERGE trên đồ thị con quanh thực thể Washington Commanders, dựng lại từ một instance của tập kiểm thử (ảnh chụp KG ngày 2024-01-01). Nét liền xanh dương: Exists; nét đứt đỏ: Deprecate; nét liền xanh lá: Mint+Add (Adam Peters chưa có trong KG); nét chấm cam: Infer (văn bản không nói). Add có cùng dạng với Mint+Add nhưng mọi thực thể đều đã có trong KG.}
-\label{fig:emerge-ops}
-\end{figure}
-
-\subsection{Khác biệt với trích xuất thông tin thuần}
-
-Trích xuất thông tin (\textit{information extraction}, IE) truyền thống, kể cả các hệ sinh triple đầu-cuối như REBEL~\cite{cabot2021rebel}, ReLiK~\cite{orlando2024relik} hay Stanford OpenIE~\cite{angeli2015openie}, nhận văn bản và trả về tập triple mà văn bản khẳng định.
-Đầu ra này không phụ thuộc KG hiện có, nên IE thuần thiếu hai năng lực mà bài toán cập nhật cần.
-Thứ nhất, IE không phân biệt được Exists với Add vì không tra cứu KG.
-Thứ hai, IE không có khái niệm vô hiệu hóa: câu ``Rivera bị sa thải'' không khẳng định triple (Washington Commanders, head coach, Ron Rivera), nên một hệ chỉ trích điều được khẳng định sẽ không bao giờ đề xuất Deprecate.
-Trong đánh giá của EMERGE, các hệ IE như ReLiK không hỗ trợ Deprecate về mặt kiến trúc; chỉ EDC+ (bản EDC được nhóm tác giả chỉnh prompt) đề xuất được triple lỗi thời, và chỉ baseline được xem KG mới sinh được thao tác Deprecate thực thi được trên KG~\cite{zaporojets2025emerge}.
-
-\subsection{GUpdater và thay đổi gián tiếp}
-
-Tang và cộng sự~\cite{tang2019gupdate} là nhóm đầu tiên đặt bài toán đọc bản tin để cập nhật KG, với mô hình GUpdater.
-GUpdater mã hóa bản tin bằng BiGRU kèm cơ chế chú ý; mã hóa đồ thị con quanh các thực thể được nhắc bằng mạng chú ý đồ thị có quan hệ (R-GAT), có thêm cạnh tắt giữa các thực thể cùng xuất hiện trong tin; cuối cùng dùng bộ giải mã DistMult chấm xác suất tồn tại của từng triple trong KG mới.
-Bộ dữ liệu NBAtransactions đi kèm gồm 4.100 tin chuyển nhượng NBA giai đoạn 2010--2019, mỗi tin có KG trước và KG sau; trung bình mỗi tin kéo theo 17,07 cạnh thêm và 18,37 cạnh xóa.
-Phát hiện quan trọng của bộ dữ liệu là chỉ 5,6\% thay đổi được tin nói thẳng; 94,4\% còn lại là thay đổi gián tiếp, chẳng hạn khi một cầu thủ chuyển đội thì quan hệ teammate với đồng đội cũ và mới đều phải đổi theo.
-Như vậy, trích xuất dù tốt đến đâu cũng chỉ giải quyết phần nhỏ của bài toán; phần lớn còn lại phải suy ra từ cấu trúc KG.
-Đây là động lực cho bước khoanh vùng cấu trúc ở Chương~\ref{chap:method}.
-Hạn chế của GUpdater là phải huấn luyện có giám sát trên dữ liệu gán nhãn của từng miền, nên khó chuyển sang miền mới.
+\paragraph*{GUpdater và thay đổi gián tiếp.}
+Tang và cộng sự~\cite{tang2019gupdate} là nhóm đầu tiên đặt bài toán đọc bản tin để cập nhật KG, với mô hình GUpdater: bản tin được mã hóa bằng mạng hồi quy, đồ thị con quanh các thực thể được nhắc được mã hóa bằng mạng chú ý đồ thị có quan hệ (R-GAT), rồi một bộ giải mã chấm xác suất tồn tại của từng triple trong KG mới.
+Trên bộ dữ liệu NBAtransactions đi kèm (4.100 tin chuyển nhượng NBA), chỉ 5,6\% thay đổi được tin nói thẳng; 94,4\% còn lại là gián tiếp, chẳng hạn khi một cầu thủ chuyển đội thì quan hệ đồng đội với cầu thủ của đội cũ và đội mới đều phải đổi theo.
+Như vậy trích xuất dù tốt đến đâu cũng chỉ giải quyết phần nhỏ của bài toán; phần còn lại phải suy ra từ cấu trúc KG.
+Hạn chế của GUpdater là cần huấn luyện có giám sát trên dữ liệu gán nhãn của từng miền.
 
 % =====================================================================
 \section{Mô hình ngôn ngữ lớn cho trích xuất tri thức}\label{sec:bg-llm}
 
-\subsection{Prompting, few-shot và đầu ra có cấu trúc}
+\subsection{Prompting, few-shot và đầu ra ép schema}
 
 Mô hình ngôn ngữ lớn (\textit{large language model}, LLM) là mô hình Transformer sinh văn bản tự hồi quy, ước lượng phân phối $p(x_i \mid x_{<i})$ trên chuỗi token.
-Brown và cộng sự~\cite{brown2020gpt3} cho thấy LLM đủ lớn có khả năng học trong ngữ cảnh: chỉ cần mô tả nhiệm vụ và vài ví dụ mẫu (\textit{few-shot}) trong prompt, không cần cập nhật trọng số.
-Đây là cách các hệ trích triple hiện nay thích ứng với miền mới: thay ví dụ và danh sách quan hệ trong prompt thay vì huấn luyện lại như các mô hình dựa trên BERT~\cite{devlin2019bert}.
-Hai kỹ thuật bổ trợ thường gặp là yêu cầu mô hình suy luận từng bước (\textit{chain-of-thought}~\cite{wei2022cot}) và đưa tri thức truy xuất được vào prompt (\textit{retrieval-augmented generation}, RAG~\cite{lewis2020rag}).
-Trong bài toán cập nhật, phần truy xuất chính là các fact liên quan lấy từ KG hiện tại.
+LLM đủ lớn có khả năng học trong ngữ cảnh: chỉ cần mô tả nhiệm vụ và vài ví dụ mẫu (\textit{few-shot}) trong prompt, không cần cập nhật trọng số~\cite{brown2020gpt3}.
+Nhờ đó một hệ trích triple thích ứng với lược đồ mới bằng cách thay danh sách quan hệ và ví dụ trong prompt, thay vì huấn luyện lại như các mô hình dựa trên BERT~\cite{devlin2019bert}.
+Hai kỹ thuật bổ trợ thường gặp là yêu cầu mô hình nêu lập luận trước khi kết luận (\textit{chain-of-thought}~\cite{wei2022cot}) và đưa tri thức truy xuất được vào prompt (\textit{retrieval-augmented generation}~\cite{lewis2020rag}).
 
 Đầu ra của bước trích phải đọc được bằng máy, thường ở dạng JSON.
-Nếu chỉ dặn trong prompt, LLM cỡ nhỏ dễ sinh JSON sai cú pháp, thiếu trường hoặc dùng tên quan hệ ngoài danh sách.
-\textit{Giải mã ràng buộc} (constrained decoding) khắc phục điều này ngay ở bước sinh: tại bước $i$, bộ giải mã chỉ giữ các token thuộc tập hợp lệ $V_i$ suy ra từ trạng thái hiện tại của văn phạm, các token còn lại bị gán xác suất bằng không:
+Nếu chỉ dặn trong prompt, LLM cỡ nhỏ dễ sinh JSON sai cú pháp hoặc dùng tên quan hệ ngoài lược đồ.
+\textit{Giải mã ràng buộc} (constrained decoding) khắc phục điều này ngay khi sinh: tại bước $i$, bộ giải mã chỉ giữ các token thuộc tập hợp lệ $V_i$ suy ra từ trạng thái hiện tại của văn phạm,
 \begin{equation}
   p'(x_i = v \mid x_{<i}) \propto
   \begin{cases}
@@ -200,30 +134,40 @@ Nếu chỉ dặn trong prompt, LLM cỡ nhỏ dễ sinh JSON sai cú pháp, thi
     0 & \text{nếu } v \notin V_i.
   \end{cases}
 \end{equation}
-Willard và Louf~\cite{willard2023outlines} (thư viện Outlines) biên dịch biểu thức chính quy hoặc JSON Schema thành automat hữu hạn, rồi lập chỉ mục trước từ mỗi trạng thái automat sang tập token hợp lệ, nên chi phí ràng buộc ở mỗi bước gần như không đổi; các thư viện ra đời sau như XGrammar tiếp tục tối ưu cho văn phạm phi ngữ cảnh.
-llama.cpp~\cite{llamacpp} hỗ trợ văn phạm GBNF và tự chuyển JSON Schema sang GBNF, cho phép ép đầu ra theo schema ngay trên máy chủ suy luận cục bộ.
-Với ràng buộc dạng enum, tên quan hệ chỉ được chọn trong danh sách cho trước; khóa luận dùng cơ chế này để buộc mô hình dùng đúng tên quan hệ của lược đồ.
+Thư viện Outlines~\cite{willard2023outlines} biên dịch biểu thức chính quy hoặc JSON Schema thành automat hữu hạn và lập chỉ mục trước tập token hợp lệ cho mỗi trạng thái, nên chi phí ràng buộc mỗi bước gần như không đổi.
+llama.cpp~\cite{llamacpp} hỗ trợ văn phạm GBNF và tự chuyển JSON Schema sang GBNF.
+Khi một trường được khai báo là kiểu liệt kê (\textit{enum}), mô hình chỉ chọn được giá trị trong danh sách cho trước; khóa luận dùng cơ chế này để buộc tên quan hệ thuộc lược đồ.
 
 \subsection{LLM mở lượng tử hóa}
 
-Khóa luận nhắm tới việc chạy được trên GPU phổ thông, nên dùng LLM mở cỡ nhỏ thay vì API thương mại.
-Gemma 4 E4B~\cite{gemma4} là mô hình mở của Google DeepMind thuộc nhóm ``E'' (\textit{effective}), có khoảng 4 tỷ tham số hiệu dụng và hướng tới thiết bị có tài nguyên hạn chế.
-\textit{Lượng tử hóa} (quantization) biểu diễn trọng số bằng ít bit hơn: từng khối trọng số được lưu ở 4 bit kèm hệ số tỉ lệ chung, giảm bộ nhớ khoảng bốn lần so với 16 bit.
-Định dạng GGUF của llama.cpp~\cite{llamacpp} đóng gói trọng số đã lượng tử hóa theo nhiều biến thể (ví dụ họ Q4\_K); bản huấn luyện có tính đến lượng tử hóa (QAT) giúp giảm mất mát chất lượng ở mức 4 bit.
-Máy chủ llama-server của llama.cpp cung cấp giao diện tương thích OpenAI, xử lý song song nhiều yêu cầu và hỗ trợ ép JSON Schema; nhờ đó mọi hệ so sánh trong khóa luận đều chạy lại được trên cùng một mô hình.
+Khóa luận nhắm tới việc chạy trên GPU phổ thông nên dùng LLM mở cỡ nhỏ thay vì API thương mại.
+Gemma 4 E4B~\cite{gemma4} là mô hình mở của Google DeepMind có khoảng 4 tỷ tham số hiệu dụng, hướng tới thiết bị có tài nguyên hạn chế.
+\textit{Lượng tử hóa} (quantization) lưu trọng số bằng ít bit hơn, chẳng hạn từng khối trọng số ở 4 bit kèm hệ số tỉ lệ chung, giảm bộ nhớ khoảng bốn lần so với 16 bit; bản huấn luyện có tính đến lượng tử hóa (QAT) giảm mất mát chất lượng ở mức 4 bit.
+Định dạng GGUF và máy chủ llama-server của llama.cpp~\cite{llamacpp} cho phép chạy mô hình lượng tử hóa qua giao diện tương thích OpenAI, xử lý song song nhiều yêu cầu và ép đầu ra theo JSON Schema.
+Giao diện chung này cho phép chạy lại mọi hệ so sánh trên cùng một mô hình, chỉ cần đổi địa chỉ máy chủ.
 
-\subsection{Các pipeline trích triple tiêu biểu}
+\subsection{Các pipeline trích triple bằng LLM}
 
-EDC~\cite{zhang2024edc} (Extract, Define, Canonicalize) gồm ba pha: trích triple mở (OIE) bằng LLM với few-shot; để LLM viết định nghĩa cho từng quan hệ vừa trích; rồi chuẩn hóa bằng cách tìm quan hệ gần nhất trong lược đồ đích qua embedding của định nghĩa và để LLM xác minh lựa chọn.
-KGGen~\cite{mo2025kggen} trích thực thể rồi trích quan hệ bằng LLM thông qua DSPy, sau đó gom cụm lặp các thực thể và quan hệ đồng nghĩa bằng LLM để giảm phân mảnh; nhóm tác giả cũng đề xuất benchmark MINE đo lượng fact của bài viết được KG giữ lại.
-iText2KG~\cite{lairgi2024itext2kg} xây KG tăng dần: chưng cất tài liệu theo một blueprint, trích thực thể, trích quan hệ, rồi với mỗi tài liệu mới thì so khớp thực thể và quan hệ với tập toàn cục bằng khớp chính xác trước, cosine sau (ngưỡng 0,7 cho thực thể).
-ATOM~\cite{lairgi2025atom} của cùng nhóm tách văn bản thành các \textit{atomic fact} (câu ngắn mang một ý), trích 5-tuple có thời gian từ từng fact, rồi hợp nhất các đồ thị con; việc tách nhỏ giúp tăng độ phủ nhưng làm số lệnh gọi LLM tăng theo số fact.
+\paragraph*{EDC.}
+EDC~\cite{zhang2024edc} (Extract, Define, Canonicalize) là hệ so sánh chính của khóa luận, vì được thiết kế và đánh giá trên đúng ba bộ dữ liệu có lược đồ cố định là WebNLG, REBEL và Wiki-NRE.
+Ý tưởng của EDC là tách việc trích khỏi việc tuân theo lược đồ, qua ba pha.
+\begin{enumerate}
+  \item \emph{Extract.} LLM trích triple mở (\textit{open information extraction}, OIE) từ văn bản với vài ví dụ few-shot; tên quan hệ là tự do.
+  \item \emph{Define.} LLM viết một câu định nghĩa bằng ngôn ngữ tự nhiên cho từng quan hệ vừa trích, dựa trên văn bản và các triple chứa quan hệ đó.
+  \item \emph{Canonicalize.} Quan hệ đã có trong lược đồ đích được giữ nguyên. Với quan hệ chưa có, EDC nhúng định nghĩa của nó bằng mô hình e5-mistral-7b-instruct, lấy vài quan hệ của lược đồ có định nghĩa gần nhất, rồi hỏi LLM chọn một quan hệ thay thế hoặc ``không quan hệ nào''. Ở chế độ căn chỉnh về lược đồ đích, triple bị bỏ khi LLM chọn ``không quan hệ nào''; ở chế độ tự chuẩn hóa, quan hệ mới được thêm vào lược đồ.
+\end{enumerate}
+Mỗi câu vì vậy tốn ít nhất hai lệnh gọi LLM (trích và định nghĩa), cộng một lệnh xác minh cho mỗi triple có quan hệ nằm ngoài lược đồ, và cần thêm một mô hình nhúng cỡ 7 tỷ tham số.
+Bản mở rộng EDC+R thêm vòng \emph{tinh chỉnh} (refinement): triple của lượt trước, các thực thể do LLM trích riêng và các quan hệ do một bộ truy xuất lược đồ (\textit{schema retriever}) đề xuất được đưa vào prompt làm gợi ý cho một lượt trích mới.
+Tinh chỉnh cải thiện F1 trong báo cáo gốc nhưng nhân số lệnh gọi và cần thêm mô hình truy xuất được huấn luyện riêng.
+
+\paragraph*{Các hệ khác.}
+KGGen~\cite{mo2025kggen} trích thực thể rồi trích quan hệ bằng LLM qua thư viện DSPy, sau đó gom cụm lặp các thực thể và quan hệ đồng nghĩa bằng LLM để giảm phân mảnh.
+iText2KG~\cite{lairgi2024itext2kg} xây KG tăng dần: chưng cất tài liệu, trích thực thể, trích quan hệ, rồi so khớp thực thể và quan hệ mới với tập toàn cục bằng khớp chính xác trước, cosine sau.
+ATOM~\cite{lairgi2025atom} của cùng nhóm tách văn bản thành các \textit{atomic fact} (câu ngắn mang một ý) rồi trích 5-tuple có thời gian từ từng fact; tách nhỏ tăng độ phủ nhưng số lệnh gọi tăng theo số fact.
 CoDe-KG~\cite{codekg2025} giải đồng tham chiếu và tách câu phức thành câu đơn trước khi trích, cải thiện khoảng 8 điểm macro-F1 so với kết quả tốt nhất trước đó trên REBEL.
-GraphRAG~\cite{edge2024graphrag} và RAKG~\cite{rakg2025} cũng dựng KG bằng LLM, nhưng mục tiêu là phục vụ truy xuất cho hỏi đáp.
-
 Bảng~\ref{tab:ie-pipelines} so sánh định tính các hệ.
-Điểm chung là tất cả đều xây mới hoặc mở rộng KG; không hệ nào sinh thao tác vô hiệu hóa fact đang có trong KG.
-Bước rút câu đơn của khóa luận gần với CoDe-KG và ATOM, nhưng được dùng làm đầu vào cho cập nhật một KG tích lũy theo thời gian thay vì trích độc lập từng câu.
+Điểm chung là các hệ đều xây mới hoặc mở rộng KG; không hệ nào sinh thao tác vô hiệu hóa fact đang có.
+Riêng việc tuân theo lược đồ, EDC thực hiện \emph{sau} khi trích, qua các lệnh gọi riêng; khóa luận đưa lược đồ vào ngay lệnh gọi trích, và Chương~\ref{chap:experiments} so sánh hai cách này.
 
 \begin{table}[htbp]
 \centering
@@ -232,224 +176,90 @@ Bước rút câu đơn của khóa luận gần với CoDe-KG và ATOM, nhưng 
 \small
 \setlength{\tabcolsep}{4pt}
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}p{1.9cm}p{2.3cm}p{4.8cm}p{1.6cm}p{1.9cm}p{2.0cm}@{}}
+\begin{tabular}{@{}p{1.7cm}p{6.0cm}p{3.0cm}p{1.9cm}p{2.0cm}@{}}
 \toprule
-Hệ & Đầu vào & Các bước chính & Vô hiệu hóa? & Dùng KG sẵn có? & Lệnh gọi LLM \\
+Hệ & Các bước chính & Lệnh gọi LLM & Dùng KG sẵn có & Vô hiệu hóa \\
 \midrule
-EDC~\cite{zhang2024edc} & Câu hoặc đoạn & Trích mở $\to$ định nghĩa quan hệ $\to$ chuẩn hóa theo lược đồ (embedding + LLM xác minh) & Không & Không & $\geq 2$ mỗi câu \\
-KGGen~\cite{mo2025kggen} & Văn bản thô & Trích thực thể $\to$ trích quan hệ $\to$ gom cụm lặp bằng LLM & Không & Không & 2 mỗi đoạn + gom cụm \\
-iText2KG~\cite{lairgi2024itext2kg} & Tài liệu + blueprint & Chưng cất $\to$ trích thực thể $\to$ trích quan hệ; gộp tăng dần bằng cosine & Không & Có (gộp tên) & khoảng 3 mỗi tài liệu \\
-ATOM~\cite{lairgi2025atom} & Đoạn tin + ngày quan sát & Tách atomic fact $\to$ trích 5-tuple từng fact $\to$ hợp nhất đồ thị con & Gián tiếp ($\tau_e$ từ văn bản) & Có (gộp tên) & 1 + số atomic fact \\
-CoDe-KG~\cite{codekg2025} & Câu & Giải đồng tham chiếu $\to$ tách câu phức $\to$ trích triple & Không & Không & nhiều bước mỗi câu \\
+EDC~\cite{zhang2024edc} & Trích mở $\to$ định nghĩa quan hệ $\to$ chuẩn hóa về lược đồ (embedding + LLM xác minh); tùy chọn tinh chỉnh & $\geq 2$ mỗi câu, thêm 1 mỗi triple cần xác minh & Không & Không \\
+KGGen~\cite{mo2025kggen} & Trích thực thể $\to$ trích quan hệ $\to$ gom cụm lặp bằng LLM & 2 mỗi đoạn, cộng gom cụm & Không & Không \\
+iText2KG~\cite{lairgi2024itext2kg} & Chưng cất $\to$ trích thực thể $\to$ trích quan hệ; gộp tăng dần bằng cosine & khoảng 3 mỗi tài liệu & Có (gộp tên) & Không \\
+ATOM~\cite{lairgi2025atom} & Tách atomic fact $\to$ trích 5-tuple từng fact $\to$ hợp nhất đồ thị con & 1 cộng số atomic fact & Có (gộp tên) & Gián tiếp ($\tau_e$ từ văn bản) \\
+CoDe-KG~\cite{codekg2025} & Giải đồng tham chiếu $\to$ tách câu phức $\to$ trích triple & nhiều bước mỗi câu & Không & Không \\
 \midrule
-Khóa luận & Tin + KG + ngày đăng & Rút câu đơn $\to$ trích fact mới và fact kết thúc $\to$ khoanh vùng $\to$ phán & Có & Có (fact liên quan vào prompt) & 2--4 mỗi tin + 1 mỗi lô phán \\
+Khóa luận & Rút câu đơn $\to$ trích fact mới và fact kết thúc $\to$ khoanh vùng $\to$ phán; chế độ theo lược đồ: một lệnh gọi ép enum quan hệ & 1 mỗi câu ở chế độ theo lược đồ & Có & Có \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 % =====================================================================
-\section{Khoanh vùng cấu trúc và dự đoán liên kết}\label{sec:bg-localize}
+\section{Khoanh vùng cấu trúc và LLM làm bộ phán}\label{sec:bg-localize}
 
-Như NBAtransactions cho thấy, phần lớn thay đổi là gián tiếp.
-Để tìm chúng mà không phải hỏi LLM về toàn bộ KG, cần một cơ chế \textit{khoanh vùng}: chọn ra một tập nhỏ cạnh ứng viên có khả năng bị ảnh hưởng, rồi giao cho một bộ phán quyết định.
+Vì phần lớn thay đổi là gián tiếp, hệ cập nhật cần tìm các cạnh văn bản không nhắc nhưng có thể phải đổi theo, mà không phải hỏi LLM về toàn bộ KG.
+Cách làm chung là \textit{khoanh vùng}: chọn một tập nhỏ cạnh ứng viên có khả năng bị ảnh hưởng, rồi giao cho một bộ phán quyết định.
 
-\subsection{Lân cận k-hop và hàng xóm chung}
+\paragraph*{Lân cận và hàng xóm chung.}
+Lân cận $k$-hop của thực thể $v$ là tập thực thể đến được từ $v$ qua tối đa $k$ cạnh, bỏ qua chiều cạnh.
+GUpdater lấy lân cận 1-hop của các thực thể được nhắc làm đồ thị con đầu vào~\cite{tang2019gupdate}; DYNAMO cũng truy hồi triple 1-hop quanh thực thể của câu hỏi~\cite{dynamo2025}.
+Trong dự đoán liên kết cổ điển, số hàng xóm chung của hai nút là một heuristic đơn giản: hai nút có nhiều hàng xóm chung thì dễ nối với nhau.
+Bài toán cập nhật vận dụng ý này theo chiều ngược lại: khi cạnh $(a, b)$ bị vô hiệu, các thực thể kề cả $a$ lẫn $b$ là nơi quan hệ phái sinh như đồng đội dễ phải đổi theo.
 
-Lân cận $k$-hop của thực thể $v$, ký hiệu $\mathcal{N}_k(v)$, là tập thực thể đến được từ $v$ qua tối đa $k$ cạnh khi bỏ qua chiều cạnh.
-GUpdater dùng lân cận 1-hop của các thực thể được nhắc làm đồ thị con đầu vào~\cite{tang2019gupdate}; DYNAMO cũng truy hồi các triple 1-hop quanh thực thể của câu hỏi~\cite{dynamo2025}.
-Trong dự đoán liên kết cổ điển, số hàng xóm chung $|\mathcal{N}_1(u) \cap \mathcal{N}_1(v)|$ là một heuristic đơn giản: hai nút có nhiều hàng xóm chung thì dễ có cạnh nối nhau.
-Bài toán cập nhật vận dụng ý này theo hướng khác: khi cạnh $(a, b)$ bị vô hiệu, những thực thể kề cả $a$ lẫn $b$ là nơi các quan hệ phái sinh như teammate dễ phải đổi theo.
-Trong ví dụ Messi, Pedri kề cả Messi lẫn Barca, nên quan hệ teammate(Messi, Pedri) là ứng viên cần xét lại.
-Chương~\ref{chap:method} xây dựng quy tắc khoanh vùng dựa trên quan sát này.
+\paragraph*{Dự đoán liên kết.}
+Một hướng khác là chấm điểm ứng viên bằng mô hình dự đoán liên kết.
+Các mô hình embedding \textit{transductive} như TransE~\cite{bordes2013transe} và RotatE~\cite{sun2019rotate} học một vector cố định cho mỗi thực thể, nên không xử lý được thực thể mới và vẫn mã hóa các fact vừa lỗi thời cho tới khi được huấn luyện lại.
+Các mô hình \textit{inductive} như AnyBURL~\cite{meilicke2019anyburl} (học luật kèm độ tin cậy) hay ULTRA~\cite{galkin2024ultra} không gán vector riêng cho thực thể mà đọc cấu trúc tại thời điểm suy diễn, nên phù hợp hơn với KG thay đổi liên tục.
 
-\subsection{Embedding KG transductive và bẫy embedding cũ}
-
-Hướng tiếp cận phổ biến cho dự đoán liên kết là học embedding cho thực thể và quan hệ.
-TransE~\cite{bordes2013transe} biểu diễn quan hệ như phép tịnh tiến, $\mathbf{h} + \mathbf{r} \approx \mathbf{t}$, với hàm điểm $f(h, r, t) = -\lVert \mathbf{h} + \mathbf{r} - \mathbf{t} \rVert$.
-RotatE~\cite{sun2019rotate} biểu diễn quan hệ như phép quay trong không gian phức, $\mathbf{t} \approx \mathbf{h} \circ \mathbf{r}$ với $|r_j| = 1$, nhờ đó mô hình hóa được các mẫu đối xứng, phản đối xứng, nghịch đảo và hợp thành.
-Cả hai đều là mô hình \textit{transductive}: mỗi thực thể có một vector riêng, học trên một KG cố định.
-Trong bối cảnh cập nhật, điều này gây ra hai vấn đề.
-Thứ nhất, thực thể mới (trường hợp Mint+Add) chưa có vector nên không dự đoán được.
-Thứ hai, vector học trên KG trước cập nhật mã hóa chính các fact sắp lỗi thời: vector của Messi được kéo về gần $\mathbf{Barca} - \mathbf{r}_{\text{plays\_for}}$, nên sau khi fact này bị vô hiệu, mô hình vẫn xếp Barca cao trừ khi được huấn luyện lại.
-Khóa luận gọi hiện tượng này là \textit{bẫy embedding cũ}; vì vậy nếu dùng dự đoán liên kết trong bộ phán thì phải chọn mô hình inductive.
-
-\subsection{Predictor inductive: AnyBURL và ULTRA}
-
-AnyBURL~\cite{meilicke2019anyburl} học luật từ dưới lên: lấy mẫu đường đi trong KG rồi khái quát thành luật Horn, ví dụ
-\begin{equation}
-  \text{teammate}(X, Y) \leftarrow \text{plays\_for}(X, Z) \wedge \text{plays\_for}(Y, Z),
-\end{equation}
-mỗi luật kèm độ tin cậy bằng tỉ lệ số lần thân luật đúng mà đầu luật cũng đúng.
-Thuật toán có tính \textit{anytime}: có thể dừng bất cứ lúc nào và dùng tập luật đã học.
-Vì luật dùng biến thay cho thực thể cụ thể, luật áp được cho thực thể mới và phản ánh ngay thay đổi của KG mà không cần huấn luyện lại.
-ULTRA~\cite{galkin2024ultra} là mô hình nền tảng cho suy luận trên KG: quan hệ được biểu diễn qua đồ thị tương tác giữa các quan hệ (hai quan hệ nối nhau khi dùng chung thực thể đầu hoặc đuôi), sau đó lan truyền thông điệp có điều kiện theo truy vấn trên đồ thị thực thể.
-ULTRA không gán vector riêng cho thực thể, nên dự đoán được trên KG chưa từng gặp mà không cần huấn luyện lại.
-Trong thiết kế ở Chương~\ref{chap:method}, AnyBURL và ULTRA là phương án bộ phán thay thế cho LLM, kèm ngưỡng tin cậy.
-
-\subsection{LLM làm bộ phán}
-
-\textit{LLM-as-judge} là cách dùng LLM để đánh giá một phát biểu theo ngữ cảnh cho trước thay vì sinh nội dung mới.
-Trong các hệ cập nhật KG, Grounder của ODKE+ hỏi LLM xem bằng chứng có thực sự ủng hộ triple vừa trích hay không~\cite{odke2025}; KARMA cho các agent LLM tranh biện để xác định triple mới có mâu thuẫn với KG hay không~\cite{lu2025karma}; benchmark MINE dùng LLM để xét ngữ cảnh truy xuất từ KG có chứa một fact cho trước hay không~\cite{mo2025kggen}.
-Ưu điểm của bộ phán LLM là hiểu ngữ nghĩa, không cần dữ liệu huấn luyện, và phân biệt được fact trạng thái (có thể hết hiệu lực, như teammate) với fact sự kiện lịch sử (đúng mãi, như ``từng cùng đoạt một danh hiệu'').
-Nhược điểm là tốn lệnh gọi và có nguy cơ thiên lệch khi mô hình chấm cũng là mô hình sinh; TRAIL tránh điều này bằng một LLM chấm khác kiến trúc với LLM sinh~\cite{trail2026}.
-Khoanh vùng cấu trúc giúp giảm khối lượng cho bộ phán, từ toàn bộ KG xuống còn vài chục cạnh mỗi bản tin.
+\paragraph*{LLM làm bộ phán.}
+\textit{LLM-as-judge} dùng LLM để đánh giá một phát biểu theo ngữ cảnh cho trước thay vì sinh nội dung mới.
+Grounder của ODKE+ hỏi LLM xem bằng chứng có ủng hộ triple vừa trích không~\cite{odke2025}; KARMA cho các agent LLM tranh biện để xác định triple mới có mâu thuẫn với KG không~\cite{lu2025karma}.
+Bộ phán LLM hiểu ngữ nghĩa và không cần dữ liệu huấn luyện, chẳng hạn phân biệt được fact trạng thái (có thể hết hiệu lực, như đồng đội) với fact sự kiện (đúng mãi, như từng cùng vô địch).
+Nhược điểm là tốn lệnh gọi và dễ thiên lệch khi mô hình chấm cũng là mô hình sinh; TRAIL giảm thiên lệch này bằng một LLM chấm khác với LLM sinh~\cite{trail2026}.
+Khoanh vùng giúp giảm khối lượng cho bộ phán, từ toàn bộ KG xuống vài chục cạnh mỗi bản tin.
 
 % =====================================================================
 \section{Chuẩn hóa thực thể và quan hệ}\label{sec:bg-canon}
 
-Khi KG được xây dần từ nhiều văn bản, cùng một thực thể xuất hiện dưới nhiều tên (``WHO'' và ``World Health Organization''), cùng một quan hệ có nhiều cách viết (``is\_located\_in'' và ``are\_located\_in'').
-Nếu không gộp, KG bị phân mảnh và việc tra cứu fact cũ khi cập nhật sẽ bỏ sót.
-Ngược lại, gộp nhầm còn nguy hiểm hơn: ``coronavirus'' (tác nhân) khác ``coronavirus outbreak'' (sự kiện), ``causes'' và ``caused\_by'' ngược chiều nhau dù rất giống về mặt chữ.
-Quy trình chuẩn hóa thường gồm ba bước: nhúng tên thành vector, chia cụm để giới hạn số cặp cần so, và quyết định gộp.
-
-\textbf{Sentence embedding.}
-Sentence-BERT (SBERT)~\cite{reimers2019sbert} tinh chỉnh BERT theo kiến trúc siamese để mỗi câu được nhúng độc lập thành một vector, sau đó độ tương đồng được đo bằng cosine.
-So với việc đưa cả cặp câu vào BERT, cách này nhanh hơn nhiều vì mỗi tên chỉ cần nhúng một lần.
-Các mô hình all-mpnet-base-v2 và all-MiniLM-L6-v2 thuộc họ này được dùng trong bộ chấm của EMERGE, MINE và trong khóa luận.
-
-\textbf{Phân cụm k-means.}
-Thuật toán k-means chia $n$ vector thành $k$ cụm sao cho cực tiểu tổng bình phương khoảng cách tới tâm cụm, $J = \sum_{j=1}^{k} \sum_{\mathbf{x} \in C_j} \lVert \mathbf{x} - \boldsymbol{\mu}_j \rVert^2$, bằng cách lặp luân phiên bước gán điểm và bước cập nhật tâm.
-Khi chỉ so các cặp tên trong cùng cụm, số cặp cần xét giảm từ $O(n^2)$ xuống khoảng $O(n^2/k)$ nếu các cụm có kích thước tương đương.
-
-\textbf{Entity resolution bằng LLM.}
-Độ tương đồng cosine cao là điều kiện cần nhưng chưa đủ để gộp, như các ví dụ ngược chiều ở trên cho thấy.
-Vì vậy embedding thường chỉ dùng để lọc cặp ứng viên, còn quyết định cuối được giao cho LLM kèm các fact ngữ cảnh của từng tên.
-
-\textbf{Chuẩn hóa trong các hệ hiện có.}
-EDC~\cite{zhang2024edc} chuẩn hóa quan hệ về lược đồ đích bằng embedding của định nghĩa quan hệ và LLM xác minh, nhưng không gộp tên thực thể.
-KGGen~\cite{mo2025kggen} gom cụm lặp cả thực thể lẫn quan hệ bằng LLM, cho KG gọn nhưng tốn nhiều lệnh gọi.
-iText2KG~\cite{lairgi2024itext2kg} và ATOM~\cite{lairgi2025atom} gộp bằng ngưỡng cosine mà không hỏi LLM, nhanh nhưng dễ gộp nhầm hoặc bỏ sót.
-Pipeline của khóa luận kết hợp các ý trên: embedding và k-means để lọc ứng viên, LLM để phán, và nhớ các cặp đã bị từ chối (Chương~\ref{chap:method}).
+Khi KG được xây dần từ nhiều văn bản, cùng một thực thể xuất hiện dưới nhiều tên (``WHO'' và ``World Health Organization''), cùng một quan hệ có nhiều cách viết (is\_located\_in và are\_located\_in).
+Không gộp thì KG bị phân mảnh; gộp nhầm còn tệ hơn, vì ``coronavirus'' (tác nhân) khác ``coronavirus outbreak'' (sự kiện), còn causes và caused\_by ngược chiều dù rất giống về chữ.
+Quy trình chuẩn hóa thường gồm ba bước.
+Thứ nhất, nhúng tên thành vector bằng mô hình sentence embedding như Sentence-BERT~\cite{reimers2019sbert}, vốn nhúng từng câu độc lập để so bằng cosine.
+Thứ hai, phân cụm (ví dụ k-means) để chỉ so các cặp trong cùng cụm, giảm số cặp từ $O(n^2)$ xuống khoảng $O(n^2/k)$ với $k$ cụm cỡ đều.
+Thứ ba, quyết định gộp: cosine cao là điều kiện cần nhưng chưa đủ, nên quyết định cuối thường giao cho LLM kèm ngữ cảnh của từng tên.
+EDC chuẩn hóa quan hệ về lược đồ đích nhưng không gộp tên thực thể~\cite{zhang2024edc}; KGGen gom cụm lặp bằng LLM, cho KG gọn nhưng tốn lệnh gọi~\cite{mo2025kggen}; iText2KG và ATOM gộp chỉ bằng ngưỡng cosine, nhanh nhưng dễ gộp nhầm~\cite{lairgi2024itext2kg,lairgi2025atom}.
 
 % =====================================================================
-\section{Các nghiên cứu cập nhật KG bằng LLM giai đoạn 2024--2026}\label{sec:bg-related}
+\section{Các nghiên cứu cập nhật KG bằng LLM}\label{sec:bg-related}
 
-Sau GUpdater, hướng nghiên cứu đọc văn bản để cập nhật KG gần như lắng xuống cho tới khi LLM xuất hiện.
-Mục này điểm qua các công trình gần nhất theo bốn nhóm: hệ cập nhật KG từ văn bản, kiểm chứng và đồng bộ chủ động, bộ nhớ của agent, và chỉnh sửa tri thức trong mô hình.
+Sau GUpdater, hướng đọc văn bản để cập nhật KG trở lại cùng với sự phát triển của LLM.
+\textbf{EMERGE}~\cite{zaporojets2025emerge} (Mục~\ref{sec:bg-task}) là benchmark trực tiếp nhất cho bài toán; nhóm tác giả phát hành dự đoán của nhiều hệ IE cùng một baseline GPT-5.1 được xem KG, và chỉ ra rằng chưa kiến trúc nào phủ đủ năm loại thao tác.
+\textbf{KARMA}~\cite{lu2025karma} làm giàu KG y sinh từ bài báo khoa học bằng nhiều agent LLM chuyên biệt (trích thực thể, trích quan hệ, căn chỉnh lược đồ, giải quyết xung đột, đánh giá); triple mới mâu thuẫn với KG được tranh biện trước khi ghi, nhưng hệ chỉ quyết định giữ hay bỏ triple mới, không vô hiệu triple cũ.
+\textbf{ODKE+}~\cite{odke2025} là pipeline vận hành của Apple: theo dõi các trang Wikipedia vừa được sửa, trích fact bằng luật và LLM, rồi kiểm chứng bằng một LLM thứ hai đóng vai Grounder; hệ thiên về thêm và làm mới fact, không công bố mã nguồn hay dữ liệu.
+\textbf{TRAIL}~\cite{trail2026} cập nhật KG trong lúc hỏi đáp: khi suy luận trên KG gặp ngõ cụt, LLM sinh fact ứng viên, một LLM khác chấm điểm, fact vượt ngưỡng được ghi và fact điểm thấp bị tỉa ở lần sau; fact không được hỏi tới thì không bao giờ được sửa.
+\textbf{Zep/Graphiti}~\cite{rasmussen2025zep} là bộ nhớ dạng KG bi-temporal cho agent: khi thông tin mới mâu thuẫn, LLM xác định cạnh cũ bị thay thế và hệ đóng mốc hiệu lực thay vì xóa; dữ liệu đánh giá là hội thoại, không có KG vàng cho từng thao tác.
+\textbf{Reddy và Challaram}~\cite{freshness2026} (bản đầu mang tên ``Don't Ask the LLM to Track Freshness'') chỉ ra rằng để LLM tự quyết fact nào mới hơn cho kết quả kém, còn để LLM chỉ trích bằng chứng kèm mốc thời gian và giao quyết định thay thế cho một chính sách tất định thì tăng rõ độ chính xác.
+Các hướng gần khác gồm bộ nhớ agent như Mem0~\cite{chhikara2025mem0} và AriGraph~\cite{arigraph2024}, đồng bộ KG chủ động như AutoVU-KG~\cite{autovu2025}, và chỉnh sửa tri thức trong tham số mô hình như AKEW~\cite{akew2024} hay WikiFactDiff~\cite{wikifactdiff2024}.
 
-\subsection{Hệ cập nhật KG từ văn bản}
-
-\textbf{EMERGE}~\cite{zaporojets2025emerge} là benchmark trực tiếp nhất cho bài toán (Mục~\ref{sec:bg-task}).
-Ngoài dữ liệu, nhóm tác giả phát hành dự đoán của nhiều hệ (ReLiK, REBEL, KGGen, RAKG, EDC+) và một baseline GPT-5.1 được xem KG.
-Kết quả cho thấy chưa kiến trúc nào phủ đủ năm loại thao tác, và Deprecate là loại ít hệ làm được nhất.
-Hạn chế là nhãn vàng sinh từ sửa đổi Wikidata, nên có những thay đổi đoạn văn không nhắc tới.
-Đây là benchmark chính của khóa luận (Chương~\ref{chap:experiments}).
-
-\textbf{KARMA}~\cite{lu2025karma} làm giàu KG y sinh từ bài báo khoa học bằng chín agent LLM chuyên biệt: đọc và lọc đoạn, tóm tắt, trích thực thể, trích quan hệ, căn chỉnh lược đồ, giải quyết xung đột và đánh giá.
-Triple mới mâu thuẫn với KG được các LLM tranh biện để phân loại đồng thuận hay mâu thuẫn; triple chỉ được ghi khi điểm tổng hợp vượt ngưỡng.
-Trên 1.200 bài PubMed, KARMA tìm được 38.230 thực thể mới với độ đúng 83,1\% theo đánh giá bằng LLM.
-Hạn chế là hệ chỉ quyết định giữ hay bỏ triple mới, không vô hiệu triple cũ, và mỗi tài liệu cần nhiều lệnh gọi LLM.
-Tầng giải quyết xung đột của KARMA gần với bộ phán của khóa luận, nhưng chỉ gác chiều thêm vào.
-
-\textbf{ODKE+}~\cite{odke2025} là pipeline vận hành thực tế của Apple: theo dõi các trang Wikipedia vừa được sửa để phát hiện fact thiếu hoặc cũ, truy xuất bằng chứng, trích fact theo hai nhánh (luật cho infobox, LLM có kèm đoạn mô tả ontology cho văn bản tự do), rồi kiểm chứng qua một LLM thứ hai đóng vai Grounder.
-Grounder giảm 35\% trích xuất bịa, và sau bước hợp nhất nhiều nguồn, hệ đạt độ chính xác 98,8\% trên 19 triệu fact thuộc 195 vị từ.
-Hạn chế là hệ thiên về thêm và làm mới fact, không mô tả thao tác vô hiệu hóa tường minh, và không công bố mã nguồn hay dữ liệu.
-ODKE+ là bằng chứng thực tế cho nguyên tắc tách LLM trích khỏi tầng kiểm chứng mà khóa luận áp dụng.
-
-\textbf{TRAIL}~\cite{trail2026} cập nhật KG trong lúc trả lời câu hỏi: khi việc suy luận trên KG gặp ngõ cụt, LLM sinh fact ứng viên, một LLM khác chấm điểm từ 0 đến 100, fact vượt ngưỡng được ghi kèm điểm, và fact bị chấm thấp ở lần đi qua sau sẽ bị tỉa.
-Fact gốc luôn mang điểm tối đa, tạo ra hai tầng tin cậy trong cùng một KG.
-Trên các bộ hỏi đáp y sinh, TRAIL cải thiện 3--13\% so với các baseline KG-RAG.
-Hạn chế là fact không được hỏi tới thì không bao giờ được sửa, và chất lượng KG chỉ được đo gián tiếp qua điểm hỏi đáp.
-
-\textbf{DYNAMO}~\cite{dynamo2025} dùng KG tin tức để phát hiện tin giả: bản tin được phân rã bằng tìm kiếm cây Monte Carlo thành chuỗi câu hỏi con, mỗi câu hỏi được trả lời bằng các triple 1-hop truy xuất từ KG; tin được xác minh là thật thì được trích triple để bổ sung ngược vào KG.
-Hạn chế là triple mới được ghi thẳng mà không kiểm tra mâu thuẫn với fact cũ.
-DYNAMO minh họa giá trị của KG luôn được làm mới cho bài toán hạ nguồn, đồng thời cho thấy cập nhật chỉ thêm là chưa đủ.
-
-\subsection{Kiểm chứng và đồng bộ chủ động}
-
-\textbf{AutoVU-KG}~\cite{autovu2025} đi theo hướng chủ động quét KG thay vì chờ văn bản mới: một bộ phân loại tách fact hay thay đổi (ví dụ CEO, huấn luyện viên) khỏi fact ổn định, chỉ fact hay thay đổi mới được LLM kiểm chứng bằng tìm kiếm web; fact lỗi thời được thay bằng giá trị mới và căn chỉnh về thực thể có sẵn.
-Theo tóm tắt của bài, hệ giảm tới khoảng 60\% fact lỗi thời trên một tập con Wikidata.
-Hạn chế là chi phí tìm kiếm tính theo từng fact và chưa có mã nguồn công khai.
-Hướng chủ động này bổ sung cho hướng phản ứng theo bản tin của khóa luận.
-
-\textbf{Tong và cộng sự}~\cite{tong2024} xét bài toán đồng bộ ở mức thực thể: dự đoán thực thể nào cần cập nhật dựa trên đồ thị thuộc tính và phân loại chủ đề không giám sát, với nhãn lấy từ tần suất sửa trang bách khoa.
-Cách làm này chỉ xếp lịch đồng bộ, không xác định nội dung thay đổi, nên có thể dùng làm tầng lọc trước cho các hệ mức triple.
-
-\subsection{Nhánh bộ nhớ của agent}
-
-Các hệ bộ nhớ cho agent LLM phải xử lý thông tin mâu thuẫn với điều đã lưu, nên đã phát triển cơ chế vô hiệu hóa sớm hơn các hệ xây KG.
-\textbf{AriGraph}~\cite{arigraph2024} cho agent trong môi trường trò chơi văn bản (TextWorld, NetHack) tự dựng KG từ quan sát: mỗi quan sát mới được trích thành triple, triple cũ mâu thuẫn bị gỡ và thay bằng triple mới.
-\textbf{Mem0}~\cite{chhikara2025mem0} để LLM so mỗi mẩu thông tin mới với các ký ức tương tự rồi chọn một trong bốn thao tác ADD, UPDATE, DELETE, NOOP; biến thể đồ thị đánh dấu quan hệ bị thay thế là không còn hiệu lực.
-\textbf{Zep}~\cite{rasmussen2025zep} dùng KG bi-temporal như đã nêu ở Mục~\ref{sec:bg-kg}, đạt 94,8\% trên benchmark DMR so với 93,4\% của MemGPT.
-Hạn chế chung của nhánh này là LLM tự quyết định thao tác từ đầu đến cuối và dữ liệu đánh giá là hội thoại hoặc trò chơi, không có KG vàng để đo độ đúng của từng thao tác.
-Reddy và Challaram~\cite{freshness2026} (phiên bản đầu mang tên ``Don't Ask the LLM to Track Freshness'') chỉ ra rằng các hệ bộ nhớ trả lời kém các câu hỏi có fact xung đột, và việc để LLM chỉ trích bằng chứng (giá trị kèm mốc thời gian) còn một chính sách tất định quyết định fact nào thay thế fact nào giúp tăng rõ độ chính xác.
-Kết quả này ủng hộ trực tiếp nguyên tắc ``LLM trích, tầng khác phán'' của khóa luận.
-
-\subsection{Nhánh chỉnh sửa tri thức trong mô hình}
-
-Một cộng đồng khác quan tâm tới việc cập nhật tri thức nằm trong tham số của LLM (\textit{knowledge editing}).
-\textbf{AKEW}~\cite{akew2024} chỉ ra rằng các benchmark chỉnh sửa thường cung cấp fact đã có cấu trúc, trong khi thực tế cập nhật đến dưới dạng văn bản; bài đánh giá ba thiết lập (fact có cấu trúc, văn bản phi cấu trúc, triple trích từ văn bản) và cho thấy các phương pháp chỉnh sửa hiện có còn cách xa yêu cầu thực tế.
-\textbf{WikiFactDiff}~\cite{wikifactdiff2024} so sánh hai phiên bản Wikidata để phân loại fact thành mới, lỗi thời và giữ nguyên, kèm câu diễn đạt cho từng fact.
-Hai công trình cho thấy nhu cầu cập nhật tri thức từ văn bản là chung cho cả hai cộng đồng; khác biệt là khóa luận sửa KG tường minh, có thể kiểm tra và hoàn tác, thay vì sửa trọng số mô hình.
-
-\subsection{Tổng hợp và khoảng trống nghiên cứu}
-
-Bảng~\ref{tab:related} tổng hợp định tính các hệ đã điểm qua.
-
-\begin{table}[htbp]
-\centering
-\caption{So sánh định tính các nghiên cứu cập nhật tri thức gần đây}
-\label{tab:related}
-\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}p{2.8cm}p{2.9cm}p{0.9cm}p{2.8cm}p{2.5cm}p{2.5cm}@{}}
-\toprule
-Hệ & Nguồn kích hoạt & Thêm & Vô hiệu hóa & Tầng phán tách riêng & Dữ liệu đánh giá \\
-\midrule
-GUpdater~\cite{tang2019gupdate} & Bản tin & Có & Có (xóa cứng) & Không (một mô hình GNN) & NBAtransactions \\
-KARMA~\cite{lu2025karma} & Bài báo y sinh & Có & Không (chỉ loại triple mới) & Có (tranh biện, đánh giá) & PubMed \\
-ODKE+~\cite{odke2025} & Trang Wikipedia vừa sửa & Có & Không mô tả & Có (Grounder) & Wikipedia \\
-TRAIL~\cite{trail2026} & Ngõ cụt khi hỏi đáp & Có & Tỉa fact do hệ sinh & Có (LLM chấm riêng) & Hỏi đáp y sinh \\
-DYNAMO~\cite{dynamo2025} & Tin đã xác minh & Có & Không & Không & Hover, Feverous \\
-AutoVU-KG~\cite{autovu2025} & Quét fact hay đổi & Có & Có (thay giá trị) & Có (tìm kiếm web) & Tập con Wikidata \\
-Tong và cộng sự~\cite{tong2024} & Lịch sử sửa trang & \multicolumn{2}{p{3.9cm}}{Chỉ xếp lịch đồng bộ thực thể} & Không & Wikipedia, Baidu Baike \\
-AriGraph~\cite{arigraph2024} & Quan sát của agent & Có & Có (thay triple) & Không & TextWorld, NetHack \\
-Mem0~\cite{chhikara2025mem0} & Hội thoại & Có & Có (DELETE) & Không & LOCOMO \\
-Zep~\cite{rasmussen2025zep} & Hội thoại & Có & Có (đóng mốc thời gian) & Không & DMR, LongMemEval \\
-Reddy và Challaram~\cite{freshness2026} & Bộ nhớ agent & Không & Có (thay theo mốc) & Có (chính sách tất định) & FactConsolidation \\
-\midrule
-Khóa luận & Bản tin & Có & Có (bi-temporal) & Có (khoanh vùng + bộ phán) & EMERGE, NBAtransactions và các bộ trích xuất \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Từ bảng tổng hợp, khóa luận rút ra bốn khoảng trống.
-Thứ nhất, phần lớn hệ xây và cập nhật KG bằng LLM chỉ \emph{thêm} tri thức; thao tác vô hiệu hóa hiếm gặp, và nếu có thì hoặc là xóa cứng (GUpdater), hoặc do LLM tự quyết từ đầu đến cuối trên dữ liệu hội thoại (nhánh bộ nhớ agent).
-Thứ hai, trên EMERGE, không hệ trích xuất thông tin nào tự sinh được Deprecate thực thi được trên KG; chỉ baseline GPT-5.1 được cung cấp KG làm được việc này.
-Thứ ba, thay đổi gián tiếp chiếm đa số (94,4\% trên NBAtransactions) nhưng các hệ dùng LLM chưa khai thác cấu trúc KG để tìm chúng, còn GUpdater cần huấn luyện riêng cho từng miền.
-Thứ tư, xu hướng tách LLM trích khỏi tầng phán (ODKE+, KARMA, TRAIL, Reddy và Challaram) mới được áp cho chiều thêm hoặc cho bộ nhớ hội thoại, chưa được áp cho việc vô hiệu hóa fact trên KG từ bản tin; đồng thời hầu hết các hệ dựa vào LLM thương mại cỡ lớn.
-Chương~\ref{chap:method} đề xuất một pipeline lấp các khoảng trống này: LLM mở cỡ nhỏ chỉ làm nhiệm vụ trích thao tác tường minh, cấu trúc KG khoanh vùng các cạnh có thể bị ảnh hưởng, một bộ phán quyết định giữ, vô hiệu hay thêm, và mọi thay đổi được ghi theo mô hình bi-temporal.
+\paragraph*{Khoảng trống nghiên cứu.}
+Thứ nhất, phần lớn hệ xây và cập nhật KG bằng LLM chỉ \emph{thêm} tri thức; vô hiệu hóa hiếm gặp, và nếu có thì là xóa cứng (GUpdater) hoặc do LLM tự quyết trên dữ liệu hội thoại.
+Thứ hai, thay đổi gián tiếp chiếm đa số nhưng các hệ dùng LLM chưa khai thác cấu trúc KG để tìm chúng, còn GUpdater cần huấn luyện riêng cho từng miền.
+Thứ ba, nguyên tắc tách LLM trích khỏi tầng phán (ODKE+, KARMA, TRAIL, Reddy và Challaram) mới được áp cho chiều thêm hoặc cho bộ nhớ hội thoại, và hầu hết các hệ dựa vào LLM thương mại cỡ lớn.
+Chương tiếp theo đề xuất một pipeline nhắm vào các khoảng trống này, chạy được với LLM mở cỡ nhỏ.
 
 % =====================================================================
 \section{Độ đo đánh giá}\label{sec:bg-metrics}
 
-Mục này giới thiệu ngắn các độ đo được dùng ở Chương~\ref{chap:experiments}; cách cài đặt chi tiết và các lưu ý khi chấm được trình bày tại chương đó.
-
-\textbf{Precision, recall và F1.}
-Gọi $\hat{S}$ là tập triple dự đoán, $S$ là tập triple vàng và $M$ là số cặp khớp theo một tiêu chí nào đó, khi đó
+\paragraph*{Precision, recall và F1.}
+Gọi $\hat{S}$ là tập triple dự đoán, $S$ là tập triple vàng và $M$ là số cặp khớp theo một tiêu chí nào đó; khi đó
 \begin{equation}
   P = \frac{M}{|\hat{S}|}, \qquad R = \frac{M}{|S|}, \qquad F_1 = \frac{2PR}{P + R}.
 \end{equation}
-Các benchmark khác nhau chủ yếu ở định nghĩa ``khớp'' và cách lấy trung bình (micro trên toàn tập hay macro theo từng văn bản).
+Precision đo tỉ lệ triple dự đoán là đúng, recall đo tỉ lệ triple vàng được tìm thấy, còn F1 là trung bình điều hòa của hai đại lượng.
 
-\textbf{Khớp Partial, Strict, Exact.}
-Bộ chấm của EDC trên WebNLG, REBEL và Wiki-NRE coi mỗi thành phần của triple (chủ ngữ, vị từ, tân ngữ) như một thực thể có nhãn vai trò.
-Exact đòi chuỗi khớp hoàn toàn, Strict đòi thêm đúng vai trò, Partial chấp nhận khớp một phần chuỗi~\cite{zhang2024edc}.
-Triple dự đoán và triple vàng được ghép một-một để tối đa điểm; bài toán ghép này giải được bằng thuật toán Hungary~\cite{kuhn1955hungarian} thay cho việc duyệt mọi hoán vị.
-
-\textbf{Completeness và G-BERTScore-R.}
-EMERGE chấm riêng từng loại thao tác bằng hai độ đo mềm, đều là recall~\cite{zaporojets2025emerge}.
-Completeness $C$ là tỉ lệ triple vàng (gộp trên toàn tập) có ít nhất một triple dự đoán với cosine giữa hai embedding câu lớn hơn 0,9.
-G-BERTScore-R ghép một-một triple dự đoán với triple vàng theo BERTScore~\cite{zhang2020bertscore} rồi lấy recall trung bình theo bài.
-Bộ chấm còn tính precision và F1 khớp chính xác trên mã QID.
-
-\textbf{MINE accuracy.}
-Benchmark MINE~\cite{mo2025kggen} cho mỗi bài luận 15 fact; với mỗi fact, hệ chấm truy xuất vùng KG gần fact nhất và để LLM xét vùng đó có chứa fact hay không.
-Điểm là tỉ lệ fact được tìm thấy, trung bình theo bài, nên đây là độ đo thuần recall.
-
-\textbf{Text evaluation và Link evaluation.}
-KnowledgeNet~\cite{mesquita2019knowledgenet} chấm ở hai mức.
-Text evaluation coi một fact là đúng khi span chủ ngữ và span tân ngữ chồng lên span vàng và cùng thuộc tính; Link evaluation đòi thêm mã Wikidata đúng cho cả hai đầu.
-Trên 2020-COVID-NYT, khóa luận dùng cách chấm của ATOM~\cite{lairgi2025atom}, ghép tham lam theo cosine của embedding triple; trên NBAtransactions, dùng F1 tái dựng KG sau và độ chính xác của cạnh thêm, cạnh xóa như GUpdater~\cite{tang2019gupdate}.
-Ngoài ra, khóa luận dùng một LLM làm bộ phán để ước lượng tỉ lệ triple có căn cứ trong văn bản, bổ sung cho các độ đo thuần recall ở trên.
+\paragraph*{Ba mức khớp Partial, Strict, Exact.}
+Bộ chấm của EDC~\cite{zhang2024edc} trên WebNLG, REBEL và Wiki-NRE dựa trên thư viện nervaluate: mỗi thành phần của triple (chủ ngữ, vị từ, tân ngữ) được coi như một thực thể có nhãn vai trò và được so với thành phần tương ứng của triple vàng theo ba mức.
+\begin{itemize}
+  \item \emph{Exact}: chuỗi phải khớp hoàn toàn, không xét vai trò.
+  \item \emph{Strict}: chuỗi khớp hoàn toàn và đúng vai trò; đây là mức khắt khe nhất.
+  \item \emph{Partial}: chấp nhận chuỗi chồng lấn một phần, không xét vai trò; khớp một phần được tính nửa điểm.
+\end{itemize}
+Trong mỗi câu, triple dự đoán và triple vàng được ghép một-một sao cho tổng điểm cao nhất.
+Script gốc duyệt mọi hoán vị để tìm cách ghép này; bài toán ghép cũng giải được bằng thuật toán Hungary~\cite{kuhn1955hungarian} với cùng kết quả nhưng nhanh hơn nhiều.
