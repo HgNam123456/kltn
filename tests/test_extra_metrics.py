@@ -62,3 +62,11 @@ def test_knet_spans_respect_word_boundaries_and_pick_closest_pair():
     facts, unmapped = knet.to_facts([["He", "PLACE_OF_BIRTH", "Paris"], ["Bob", "PLACE_OF_BIRTH", "Paris"]],
                                     {"passageText": text, "passageStart": 100}, {"PLACE_OF_BIRTH": "12"})
     assert unmapped == 1 and facts[0]["subjectStart"] == 126 and facts[0]["objectStart"] == 141
+
+
+def test_knet_drops_facts_of_properties_not_annotated_on_the_passage():
+    text = "He was born in Paris."
+    facts, unmapped = knet.to_facts([["He", "PLACE_OF_BIRTH", "Paris"], ["He", "NATIONALITY", "Paris"]],
+                                    {"passageText": text, "passageStart": 0},
+                                    {"PLACE_OF_BIRTH": "12", "NATIONALITY": "3"}, annotated={"12"})
+    assert unmapped == 0 and [f["propertyId"] for f in facts] == ["12"]

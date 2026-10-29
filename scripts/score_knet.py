@@ -32,11 +32,17 @@ def closest_pair(subj: list, obj: list) -> tuple | None:
     return min(pairs)[1:] if pairs else None
 
 
-def to_facts(triples: list, passage: dict, name_to_id: dict[str, str]) -> tuple[list[dict], int]:
+def to_facts(triples: list, passage: dict, name_to_id: dict[str, str],
+             annotated: set[str] | None = None) -> tuple[list[dict], int]:
+    """annotated: thuộc tính được gán nhãn đầy đủ trên đoạn này. Fact thuộc tính khác bị bỏ (không đếm unmapped):
+    evaluator.py từ chối cả file khi gặp chúng, và cách chấm của tác giả (baseline chỉ phân loại thuộc tính được gán
+    nhãn) vốn không tính chúng."""
     facts, unmapped = [], 0
     for t in triples:
         if len(t) != 3 or str(t[1]) not in name_to_id:
             unmapped += 1
+            continue
+        if annotated is not None and name_to_id[str(t[1])] not in annotated:
             continue
         pair = closest_pair(find_spans(passage["passageText"], str(t[0])), find_spans(passage["passageText"], str(t[2])))
         if not pair:
@@ -88,6 +94,8 @@ def main() -> None:
     name_to_id = {v: k for k, v in mp["properties"].items()}
     docs = [json.loads(line) for line in args.kn.read_text(encoding="utf8").splitlines() if line.strip()]
     docs = [d for d in docs if d["fold"] == mp["fold"]]
+    annotated = {p["passageId"]: {a["propertyId"] for a in p["exhaustivelyAnnotatedProperties"]}
+                 for d in docs for p in d["passages"]}
     args.workdir.mkdir(parents=True, exist_ok=True)
     out = {}
     for spec in args.pred:
@@ -95,7 +103,7 @@ def main() -> None:
         preds = read_preds(Path(path))
         by_passage, unmapped = {}, 0
         for i, p in enumerate(mp["passages"]):
-            facts, u = to_facts(preds[i] if i < len(preds) else [], p, name_to_id)
+            facts, u = to_facts(preds[i] if i < len(preds) else [], p, name_to_id, annotated.get(p["passageId"]))
             by_passage[p["passageId"]] = facts
             unmapped += u
         pred_file = args.workdir / f"pred_{name.replace('/', '_')}.json"

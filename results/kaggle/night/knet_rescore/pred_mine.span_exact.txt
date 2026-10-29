@@ -1,0 +1,49 @@
+RESULTS:
+
+ ------ Experiment Recap ------ 
+Fold Evaluated                4              
+Method                        span_exact     
+
+ ------ Predictions Matrix ------
+Property                      TP             FP             FN             
+--------                      --             --             --             
+EMPLOYEE_OR_MEMBER_OF         80             73             260            
+DATE_FOUNDED                  34             35             62             
+FOUNDED_BY                    36             53             113            
+POLITICAL_AFFILIATION         32             16             78             
+PLACE_OF_BIRTH                27             51             225            
+PLACE_OF_RESIDENCE            64             65             282            
+DATE_OF_BIRTH                 88             8              66             
+CHILD_OF                      43             38             98             
+EDUCATED_AT                   60             27             99             
+SUBSIDIARY_OF                 42             32             76             
+NATIONALITY                   62             23             53             
+CEO                           2              71             122            
+DATE_OF_DEATH                 51             21             60             
+SPOUSE                        72             30             240            
+HEADQUARTERS                  15             59             166            
+#global                       708            602            2000           
+
+ ------ Micro Evaluation ------ 
+Property                      Precision      Recall         F1             
+--------                      -----          -----          -----          
+EMPLOYEE_OR_MEMBER_OF         0.523          0.235          0.325          
+DATE_FOUNDED                  0.493          0.354          0.412          
+FOUNDED_BY                    0.404          0.242          0.303          
+POLITICAL_AFFILIATION         0.667          0.291          0.405          
+PLACE_OF_BIRTH                0.346          0.107          0.164          
+PLACE_OF_RESIDENCE            0.496          0.185          0.269          
+DATE_OF_BIRTH                 0.917          0.571          0.704          
+CHILD_OF                      0.531          0.305          0.387          
+EDUCATED_AT                   0.690          0.377          0.488          
+SUBSIDIARY_OF                 0.568          0.356          0.438          
+NATIONALITY                   0.729          0.539          0.620          
+CEO                           0.027          0.016          0.020          
+DATE_OF_DEATH                 0.708          0.459          0.557          
+SPOUSE                        0.706          0.231          0.348          
+HEADQUARTERS                  0.203          0.083          0.118          
+
+ ------ Macro Evaluation ------ 
+Property                      Precision      Recall         F1             
+--------                      -----          -----          -----          
+#global                       0.540          0.261          0.352          
