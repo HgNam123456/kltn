@@ -5,7 +5,6 @@
 % \usepackage{pgfplots} + \pgfplotsset{compat=1.18}, \usepackage{multirow}; ngoài ra dùng
 % graphicx, booktabs, array, makecell, amsmath, url của mẫu.
 % Nhãn: chap:experiments, sec:exp-metrics, tab:edc = tab:webnlg, tab:rebel, tab:wikinre, fig:edc-f1.
-% Số liệu: results/kaggle/{home_bench,edc_bench,atom_edc}/, làm tròn một lần từ giá trị thô.
 % ======================================================================
 
 \chapter{Thực nghiệm và đánh giá}\label{chap:experiments}
@@ -13,12 +12,12 @@
 Chương~\ref{chap:method} đã trình bày pipeline cập nhật \textit{knowledge graph} (KG) từ bản tin.
 Chương này mô tả thực nghiệm mà chúng tôi đã tiến hành để kiểm chứng thành phần trích xuất của pipeline trên ba benchmark công khai mà bài báo EDC~\cite{zhang2024edc} sử dụng: WebNLG, REBEL và Wiki-NRE.
 Nội dung gồm: mục tiêu, công cụ và môi trường, dữ liệu, độ đo, các hệ so sánh, kết quả, phân tích, ví dụ cụ thể và hạn chế.
-Mọi con số trong chương gắn với một lượt chạy có cấu hình, mã nguồn và tệp đầu ra được lưu trong kho mã của khóa luận\footnote{\url{https://github.com/HgNam123456/kltn}, nhánh \texttt{feat/core-pipeline}; đầu ra các lượt chạy nằm trong thư mục \texttt{results/kaggle/}.}, để người đọc có thể tái tạo lại.
+Mọi con số trong chương gắn với một lượt chạy có cấu hình, mã nguồn và tệp đầu ra được lưu trong kho mã của khóa luận\footnote{\url{https://github.com/HgNam123456/kltn}}, để người đọc có thể tái tạo lại.
 
 % ----------------------------------------------------------------------
 \section{Mục tiêu thực nghiệm}\label{sec:exp-goal}
 
-Trong pipeline ở Chương~\ref{chap:method}, bước trích thao tác tường minh (Mục~\ref{sec:step-extract}) là nơi LLM chuyển văn bản thành triple.
+Trong pipeline ở Chương~\ref{chap:method}, bước trích thao tác tường minh là nơi LLM chuyển văn bản thành triple.
 Các bước phía sau đều làm việc trên đầu ra của bước này, nên chất lượng trích đặt ra trần chất lượng cho cả pipeline.
 Khi bộ dữ liệu cho sẵn một schema (lược đồ quan hệ), bước trích chạy dưới dạng module trích theo schema (Mục~\ref{sec:schema-extract}): mỗi câu chỉ cần một lệnh gọi LLM, tên quan hệ bị ép vào danh sách quan hệ của schema bằng kiểu liệt kê (\textit{enum}) trong JSON schema, và lời nhắc kèm các ví dụ few-shot của bộ dữ liệu.
 
@@ -37,10 +36,10 @@ Thứ ba, bài báo EDC công bố số liệu trên chính ba bộ này, giúp 
 \section{Công cụ và môi trường thực nghiệm}\label{sec:exp-env}
 
 \paragraph*{Công cụ chúng tôi đã xây dựng.}
-Chúng tôi đã cài đặt module trích theo schema trong gói \texttt{kgu} của khóa luận (hàm \texttt{extract\_schema} trong \texttt{kgu/extract/text\_kg.py}) và script \texttt{scripts/run\_webnlg.py} chạy module này trên định dạng dữ liệu của EDC: đọc mỗi dòng một câu, ghi mỗi dòng một danh sách triple, đúng định dạng tệp \texttt{canon\_kg.txt} mà script chấm của EDC nhận vào.
-Để chạy biến thể ATOM+EDC, chúng tôi đã viết \texttt{scripts/atom\_edc.py}, chuyển đầu ra của ATOM thành đầu vào cho các bước sau của EDC.
-Để chấm được các câu có nhiều triple, chúng tôi đã viết \texttt{scripts/edc\_eval\_fast.py}, một bản tăng tốc của script chấm EDC (Mục~\ref{sec:exp-metrics}).
-Cuối cùng, chúng tôi đã viết ba \textit{kernel} Kaggle tự động hóa trọn một lượt chạy: \texttt{kaggle/home\_bench} (WebNLG), \texttt{kaggle/edc\_bench} (REBEL, Wiki-NRE) và \texttt{kaggle/atom\_edc} (ATOM+EDC trên cả ba bộ).
+Chúng tôi đã cài đặt module trích theo schema và một chương trình chạy module này trên định dạng dữ liệu của EDC: đọc mỗi dòng một câu, ghi mỗi dòng một danh sách triple, đúng định dạng mà script chấm của EDC nhận vào.
+Để chạy biến thể ATOM+EDC, chúng tôi đã viết một chương trình chuyển đầu ra của ATOM thành đầu vào cho các bước sau của EDC.
+Để chấm được các câu có nhiều triple, chúng tôi đã viết một bản tăng tốc của script chấm EDC (Mục~\ref{sec:exp-metrics}).
+Cuối cùng, chúng tôi đã viết ba \textit{kernel} Kaggle tự động hóa trọn một lượt chạy: một cho WebNLG, một cho REBEL và Wiki-NRE, một cho ATOM+EDC trên cả ba bộ.
 
 \paragraph*{Môi trường.}
 Bảng~\ref{tab:env} tóm tắt môi trường thực nghiệm.
@@ -54,38 +53,37 @@ Bảng~\ref{tab:env} tóm tắt môi trường thực nghiệm.
 \textbf{Thành phần} & \textbf{Cấu hình} \\
 \midrule
 LLM & Gemma 4 E4B \textit{instruct}~\cite{gemma4}, GGUF lượng tử hóa có huấn luyện (QAT) mức Q4\_K\_XL do unsloth phát hành; đầu dự đoán nhiều token (MTP) làm mô hình nháp \\
-Máy chủ suy luận & \texttt{llama-server} của llama.cpp~\cite{llamacpp}, API tương thích OpenAI; nhiệt độ 0; 4 khe song song, gom lô liên tục; 8.192 token mỗi khe (lượt REBEL, Wiki-NRE: 12.288); flash attention; tắt chế độ suy luận nhiều bước; giải mã suy đoán MTP, tối đa 2 token nháp \\
+Máy chủ suy luận & llama.cpp~\cite{llamacpp}, API tương thích OpenAI; nhiệt độ 0; 4 khe song song, gom lô liên tục; 8.192 token mỗi khe (lượt REBEL, Wiki-NRE: 12.288); flash attention; tắt chế độ suy luận nhiều bước; giải mã suy đoán MTP, tối đa 2 token nháp \\
 Ràng buộc đầu ra & JSON schema được chuyển thành văn phạm ràng buộc (\textit{constrained decoding}~\cite{willard2023outlines}); trường quan hệ là \texttt{enum} \\
 Phần cứng & Kaggle, 2 $\times$ NVIDIA T4 (15 GB): GPU0 chạy LLM, GPU1 chạy mô hình nhúng của EDC; máy cá nhân không có GPU CUDA \\
-Mô hình nhúng & \texttt{intfloat/e5-mistral-7b-instruct}, chỉ dùng trong bước chuẩn hóa của EDC \\
-Baseline & EDC: kho mã \texttt{clear-nus/edc} tại commit \texttt{02aad17}; ATOM: thư viện \texttt{itext2kg} 1.1.0, đặt trong môi trường ảo Python 3.11 riêng \\
-Bộ chấm & \texttt{evaluate/evaluation\_script.py} của EDC (thư viện nervaluate 0.1.8), chạy qua \texttt{scripts/edc\_eval\_fast.py} \\
-Mã nguồn & gói \texttt{kgu/}, thư mục \texttt{scripts/} và \texttt{kaggle/} trong kho mã của khóa luận \\
+Mô hình nhúng & e5-mistral-7b-instruct, chỉ dùng trong bước chuẩn hóa của EDC \\
+Baseline & EDC: mã gốc của nhóm tác giả, phiên bản ghim cố định; ATOM: thư viện itext2kg 1.1.0, đặt trong môi trường Python 3.11 riêng \\
+Bộ chấm & script chấm chính thức của EDC (thư viện nervaluate 0.1.8), qua bản tăng tốc của chúng tôi \\
+Mã nguồn & kho mã của khóa luận trên GitHub \\
 \bottomrule
 \end{tabular}
 \end{table}
 
 Máy tính cá nhân của chúng tôi không có GPU CUDA, nên chỉ được dùng để viết mã, chạy kiểm thử đơn vị và xử lý tệp kết quả; mọi lượt gọi LLM và mọi bước cần GPU đều chạy trên Kaggle.
-Mỗi kernel thực hiện cùng một trình tự: (1) sao chép mã khóa luận từ GitHub và mã EDC tại commit \texttt{02aad17}; (2) gắn dữ liệu dưới dạng Kaggle dataset; (3) chép tệp thực thi \texttt{llama-server} đã biên dịch sẵn cho kiến trúc T4; (4) tải tệp GGUF của mô hình và của đầu MTP; (5) khởi động máy chủ, chờ trạng thái sẵn sàng và tự khởi động lại nếu máy chủ ngừng trả lời; (6) chạy lần lượt các hệ; (7) chấm điểm; (8) ghi đầu ra, nhật ký và tệp \texttt{summary.json}.
-Tệp \texttt{summary.json} lưu commit mã đã chạy, cờ khởi động máy chủ, mô hình nhúng, thời gian của từng hệ, số dòng đầu ra và số dòng được chấm.
-Lệnh chạy đầy đủ của từng hệ nằm trong tệp \texttt{run\_*.py} của mỗi kernel; kết quả được tải về bằng Kaggle CLI và lưu trong thư mục \texttt{results/kaggle/}.
+Mỗi kernel thực hiện cùng một trình tự: (1) sao chép mã khóa luận và mã EDC; (2) gắn dữ liệu dưới dạng Kaggle dataset; (3) chép máy chủ suy luận đã biên dịch sẵn cho kiến trúc T4; (4) tải tệp GGUF của mô hình và của đầu MTP; (5) khởi động máy chủ, chờ trạng thái sẵn sàng và tự khởi động lại nếu máy chủ ngừng trả lời; (6) chạy lần lượt các hệ; (7) chấm điểm; (8) ghi đầu ra, nhật ký và một bản tóm tắt lượt chạy (phiên bản mã, cờ khởi động máy chủ, mô hình nhúng, thời gian của từng hệ, số dòng đầu ra và số dòng được chấm).
+Kết quả được tải về bằng Kaggle CLI và lưu trong kho mã.
 
 \paragraph*{Nguyên tắc so sánh.}
 \textit{Thứ nhất, mọi hệ dùng cùng một LLM.}
-Các baseline được chạy lại từ mã gốc với phiên bản ghim cố định; chúng tôi chỉ sửa tầng gọi API để trỏ sang \texttt{llama-server}, cùng vài chỗ vá tối thiểu liệt kê ở Mục~\ref{sec:exp-systems}.
+Các baseline được chạy lại từ mã gốc với phiên bản ghim cố định; chúng tôi chỉ sửa tầng gọi API để trỏ sang máy chủ suy luận, cùng vài chỗ vá tối thiểu liệt kê ở Mục~\ref{sec:exp-systems}.
 \textit{Thứ hai, mọi hệ được chấm bằng cùng một script}, là script chấm gốc của EDC.
 \textit{Thứ ba, số lấy từ bài báo được tách riêng}: các dòng này tô nền xám, chỉ dùng để định vị, không dùng để xếp hạng, vì chúng dùng LLM khác và có thể dùng mẫu dữ liệu khác.
 
 % ----------------------------------------------------------------------
 \section{Dữ liệu thực nghiệm}\label{sec:exp-data}
 
-Chúng tôi dùng đúng bản dữ liệu trong kho mã EDC tại commit \texttt{02aad17}: tệp văn bản (thư mục \texttt{datasets/}), tệp triple vàng (\texttt{evaluate/references/}), schema (\texttt{schemas/}, mỗi quan hệ kèm một câu mô tả) và ví dụ few-shot (\texttt{few\_shot\_examples/}).
+Chúng tôi dùng đúng bản dữ liệu trong kho mã EDC: tệp văn bản, tệp triple vàng, schema (mỗi quan hệ kèm một câu mô tả) và ví dụ few-shot.
 Mỗi dòng của tệp văn bản là một văn bản ngắn, thường là một câu (dưới đây gọi chung là ``câu''); dòng tương ứng của tệp vàng là danh sách triple (chủ ngữ, quan hệ, tân ngữ).
 Bảng~\ref{tab:datasets} tóm tắt ba bộ dữ liệu; số liệu do chúng tôi đếm trực tiếp trên các tệp này.
 
 \begin{table}[htbp]
 \centering
-\caption{Ba bộ dữ liệu trong thực nghiệm (bản trong kho mã EDC tại commit \texttt{02aad17})}\label{tab:datasets}
+\caption{Ba bộ dữ liệu trong thực nghiệm (bản trong kho mã EDC)}\label{tab:datasets}
 \small
 \begin{tabular}{l >{\raggedright\arraybackslash}p{4.4cm} r r r c}
 \toprule
@@ -103,7 +101,7 @@ REBEL có schema lớn nhất (196 quan hệ), và trong mẫu này mỗi câu c
 REBEL và Wiki-NRE trong kho mã EDC là mẫu 1.000 câu; chúng tôi không xác định được mẫu này có trùng với mẫu mà bài báo EDC đã dùng hay không.
 
 \paragraph*{Ví dụ few-shot.}
-Mỗi bộ có sáu ví dụ few-shot cho bước trích (tệp \texttt{oie\_few\_shot\_examples.txt}), mỗi ví dụ gồm một câu và danh sách triple của nó; pipeline và EDC dùng chung đúng tệp này.
+Mỗi bộ có sáu ví dụ few-shot cho bước trích, mỗi ví dụ gồm một câu và danh sách triple của nó; pipeline và EDC dùng chung đúng tệp này.
 Khi kiểm tra, chúng tôi nhận thấy sáu ví dụ chính là sáu câu đầu tiên của tệp đánh giá ở cả ba bộ.
 Chúng tôi giữ nguyên như kho mã EDC để so sánh được với số công bố; vì hai hệ cùng dùng các ví dụ này, ảnh hưởng (6 trên 1.165 hoặc 1.000 câu) là như nhau với cả hai.
 ATOM dùng lời nhắc và ví dụ của riêng nó ở hai bước đầu (Mục~\ref{sec:exp-systems}).
@@ -134,7 +132,7 @@ Chúng tôi báo đủ $P$, $R$, $F_1$ ở cả ba mức, trên thang 100.
 \paragraph*{Tăng tốc script chấm.}
 Script gốc tìm cách ghép bằng cách thử mọi hoán vị của $n = \max(|P|, |G|)$ triple trong câu, với độ phức tạp $O(n!)$: câu có 10 triple cần duyệt khoảng 3,6 triệu hoán vị, câu 12 triple khoảng 479 triệu.
 Khi một hệ trích nhiều triple cho một câu, script gần như không kết thúc.
-Chúng tôi viết \texttt{scripts/edc\_eval\_fast.py}: giữ nguyên toàn bộ script gốc, chỉ thay bước duyệt hoán vị bằng thuật toán Hungarian~\cite{kuhn1955hungarian}, độ phức tạp $O(n^3)$.
+Chúng tôi viết bản tăng tốc: giữ nguyên toàn bộ script gốc, chỉ thay bước duyệt hoán vị bằng thuật toán Hungarian~\cite{kuhn1955hungarian}, độ phức tạp $O(n^3)$.
 Thuật toán tìm giá trị ghép tối ưu rồi chọn đúng hoán vị mà script gốc sẽ chọn (hoán vị đầu tiên theo thứ tự từ điển trong số các hoán vị đạt tối ưu); với $n \le 7$, script vẫn duyệt đủ như bản gốc.
 Để kiểm tra tương đương, chúng tôi đã chạy cả hai bản trên đầu ra của pipeline và của EDC: toàn bộ 1.165 câu WebNLG và 30 câu đầu của REBEL và Wiki-NRE.
 Trên REBEL và Wiki-NRE, đầu ra của hai bản trùng nhau hoàn toàn; trên WebNLG, hai bản chỉ lệch nhau ở một dòng, tại chữ số thập phân thứ 17 của một giá trị precision, tức sai số làm tròn số thực.
@@ -350,12 +348,12 @@ Tồn tại chính là pipeline vẫn thấp hơn các hệ dùng LLM lớn (EDC
 % ----------------------------------------------------------------------
 \section{Ví dụ cụ thể}\label{sec:exp-example}
 
-Bảng~\ref{tab:examples} trình bày ba câu WebNLG cùng đầu ra thật của ba hệ, lấy từ các tệp \texttt{canon\_kg.txt} của lượt chạy chính thức.
+Bảng~\ref{tab:examples} trình bày ba câu WebNLG cùng đầu ra thật của ba hệ, lấy từ lượt chạy chính thức.
 Hai ví dụ đầu là trường hợp pipeline giải quyết được, ví dụ thứ ba là trường hợp pipeline giải sai.
 
 \begin{table}[htbp]
 \centering
-\caption{Ba câu WebNLG và đầu ra thật của ba hệ (Gemma 4 E4B); số thứ tự là dòng trong tệp \texttt{webnlg.txt}}\label{tab:examples}
+\caption{Ba câu WebNLG và đầu ra thật của ba hệ (Gemma 4 E4B); số thứ tự là vị trí câu trong bộ dữ liệu}\label{tab:examples}
 \small
 \begin{tabular}{>{\raggedright\arraybackslash}p{2.0cm} >{\raggedright\arraybackslash}p{13.0cm}}
 \toprule

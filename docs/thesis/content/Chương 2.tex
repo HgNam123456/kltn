@@ -83,31 +83,6 @@ Các hệ IE, kể cả hệ sinh triple đầu-cuối như REBEL~\cite{cabot202
 Thứ nhất, chúng không phân biệt được fact đã có với fact mới vì không tra cứu KG.
 Thứ hai, chúng không có khái niệm vô hiệu hóa: câu ``Messi rời Barcelona'' không khẳng định triple nào cần thêm, mà cho biết một triple đang có đã hết đúng.
 
-\paragraph*{Năm loại thao tác theo EMERGE.}
-EMERGE~\cite{zaporojets2025emerge} gọi bài toán này là \textit{text-driven KG updating}.
-Benchmark ghép ảnh chụp Wikidata tại nhiều mốc với đoạn văn Wikipedia viết sau mốc đó, lấy nhãn từ các sửa đổi Wikidata đã thực sự xảy ra, và chia thao tác thành năm loại (Bảng~\ref{tab:emerge-ops}).
-Exists, Add và Mint+Add ứng với tri thức được văn bản nói thẳng; Infer cần tri thức nền ngoài văn bản; Deprecate cần nhận ra một fact cũ không còn đúng.
-Đánh giá của nhóm tác giả cho thấy các hệ IE hiện có hầu như không đề xuất được Deprecate, vì kiến trúc của chúng chỉ sinh triple được khẳng định.
-
-\begin{table}[htbp]
-\centering
-\caption{Năm loại thao tác cập nhật KG theo EMERGE~\cite{zaporojets2025emerge}; ví dụ lấy từ một đoạn văn về đội Washington Commanders viết sau ảnh chụp KG ngày 2024-01-01}
-\label{tab:emerge-ops}
-\small
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}p{1.8cm}p{5.4cm}p{7.4cm}@{}}
-\toprule
-Thao tác & Ý nghĩa & Ví dụ \\
-\midrule
-Exists & Triple đã có trong KG, văn bản xác nhận lại & (Josh Harris, owner of, Washington Commanders) \\
-Add & Triple mới giữa các thực thể đã có trong KG & (Washington Commanders, general manager, Adam Peters), khi Adam Peters đã có trong KG \\
-Mint+Add & Triple mới có thực thể chưa có, phải tạo thực thể trước & Như trên, khi Adam Peters là thực thể mới \\
-Infer & Triple văn bản không nói thẳng, cần tri thức nền & (Adam Peters, educated at, University of California, Los Angeles) \\
-Deprecate & Triple đang có trong KG trở nên lỗi thời & (Washington Commanders, head coach, Ron Rivera), khi đoạn văn kể Rivera bị sa thải \\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \paragraph*{GUpdater và thay đổi gián tiếp.}
 Tang và cộng sự~\cite{tang2019gupdate} là nhóm đầu tiên đặt bài toán đọc bản tin để cập nhật KG, với mô hình GUpdater: bản tin được mã hóa bằng mạng hồi quy, đồ thị con quanh các thực thể được nhắc được mã hóa bằng mạng chú ý đồ thị có quan hệ (R-GAT), rồi một bộ giải mã chấm xác suất tồn tại của từng triple trong KG mới.
 Trên bộ dữ liệu NBAtransactions đi kèm (4.100 tin chuyển nhượng NBA), chỉ 5,6\% thay đổi được tin nói thẳng; 94,4\% còn lại là gián tiếp, chẳng hạn khi một cầu thủ chuyển đội thì quan hệ đồng đội với cầu thủ của đội cũ và đội mới đều phải đổi theo.

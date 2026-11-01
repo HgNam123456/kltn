@@ -445,41 +445,6 @@ Mỗi cụm có tên mới được hỏi bằng một lệnh gọi LLM: với t
 Tên bị gộp trở thành bí danh của tên chung, fact trùng bị bỏ, còn cặp bị phán khác nhau được ghi nhớ và không bao giờ hỏi lại.
 Tiêu chí ``cùng một'' chấp nhận viết tắt, biến thể chính tả, số nhiều hay thì của động từ, nhưng loại tên rộng hơn, hẹp hơn, là sự kiện liên quan hoặc ngược chiều: ``WHO'' và ``World Health Organization'' được gộp, ``coronavirus'' và ``coronavirus outbreak'' thì không; \kgr{is\_located\_in} và \kgr{are\_located\_in} được gộp, \kgr{causes} và \kgr{caused\_by} thì không.
 
-% ======================================================================
-\section{Module trích triple theo lược đồ}\label{sec:schema-extract}
-
-Khi đầu vào là các câu độc lập và lược đồ quan hệ đã cho sẵn, như trên WebNLG, REBEL và Wiki-NRE, không có KG-trước, mốc thời gian hay thao tác vô hiệu, nên các bước \buoc{0} và \buoc{2} đến \buoc{6} không có gì để làm.
-Pipeline khi đó chỉ dùng bước trích ở dạng theo lược đồ.
-Đây là phần được đánh giá ở Chương~\ref{chap:experiments} (Bảng~\ref{tab:edc}); Bảng~\ref{tab:modes} so sánh nó với chế độ cập nhật KG đầy đủ.
-
-\begin{table}[!htbp]
-\centering
-\caption{Hai chế độ chạy của pipeline}
-\label{tab:modes}
-\small
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{@{}>{\raggedright\arraybackslash}p{2.5cm}>{\raggedright\arraybackslash}p{1.9cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}p{3.9cm}>{\raggedright\arraybackslash}p{2.3cm}@{}}
-\toprule
-Chế độ & Bước dùng & Đầu vào & Đầu ra & Lệnh gọi LLM \\
-\midrule
-Cập nhật KG đầy đủ & \buoc{0} đến \buoc{6} & KG bi-temporal; bản tin kèm ngày đăng & Thao tác \opk{ADD}, \opk{INVALIDATE}, \opk{KEEP} đã áp lên KG & 2 đến 4 mỗi tin, cộng 1 mỗi lô phán \\
-Trích theo lược đồ & Biến thể của \buoc{1} & Một câu; lược đồ quan hệ kèm mô tả; ví dụ few-shot & Tập triple (chủ ngữ, quan hệ thuộc lược đồ, tân ngữ) & 1 mỗi câu \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-Module tốn đúng một lệnh gọi LLM cho mỗi câu và gồm ba phần.
-\begin{enumerate}
-  \item \emph{Prompt.} Hướng dẫn hệ thống yêu cầu trích mọi fact mà câu nói ra, trực tiếp hoặc diễn đạt lại rõ ràng, dưới dạng (chủ ngữ, quan hệ, tân ngữ); \emph{chỉ} dùng các quan hệ trong danh sách; chủ ngữ và tân ngữ chép từ văn bản theo cách viết của các ví dụ; không lặp. Phần người dùng gồm danh sách quan hệ của lược đồ, mỗi quan hệ kèm mô tả ngắn lấy từ tệp lược đồ của bộ dữ liệu; các ví dụ few-shot đi kèm bộ dữ liệu trong kho mã của EDC, cũng là ví dụ mà EDC dùng ở pha trích; và câu cần trích, đặt cuối để máy chủ dùng lại bộ đệm KV cho phần tĩnh.
-  \item \emph{Đầu ra ép enum.} Đầu ra được khai báo là danh sách \texttt{facts}, mỗi phần tử gồm \texttt{subject}, \texttt{relation}, \texttt{object}, trong đó \texttt{relation} có kiểu liệt kê đúng bằng tập quan hệ của lược đồ. JSON Schema sinh từ kiểu này được \texttt{llama-server} dùng làm văn phạm ràng buộc, nên mô hình không thể sinh quan hệ ngoài lược đồ.
-  \item \emph{Lọc sau sinh.} Quan hệ được so lại với lược đồ, không phân biệt hoa thường, phòng khi máy chủ chỉ ép JSON hợp lệ mà không ép enum; triple có chủ ngữ hoặc tân ngữ rỗng, có chủ ngữ trùng tân ngữ, hoặc trùng lặp bị loại. Nếu lệnh gọi lỗi, câu đó nhận danh sách rỗng để giữ đúng thứ tự dòng cho script chấm.
-\end{enumerate}
-Chẳng hạn, với câu ``Aarhus Airport serves the city of Aarhus.'' và lược đồ của WebNLG, mô hình phải chọn quan hệ trong danh sách, ở đây là cityServed, và trả về (Aarhus Airport, cityServed, Aarhus).
-
-So với EDC, module gộp hai việc mà EDC làm tách rời: trích và đưa quan hệ về lược đồ.
-Vì lược đồ được đặt sẵn trong prompt và ép bằng enum, module không cần pha định nghĩa quan hệ, mô hình nhúng hay lệnh xác minh cho từng triple, và không có triple nào bị bỏ ở bước chuẩn hóa do quan hệ mở không khớp lược đồ.
-Đổi lại, prompt phải chứa toàn bộ lược đồ (159 quan hệ với WebNLG, 196 với REBEL, 45 với Wiki-NRE), nên cách làm phù hợp với lược đồ cỡ vài trăm quan hệ; lược đồ lớn hơn sẽ cần thêm bước truy xuất quan hệ liên quan như bộ truy xuất lược đồ của EDC.
 
 % ======================================================================
 \section{Phân tích ưu điểm và hạn chế}\label{sec:analysis}
