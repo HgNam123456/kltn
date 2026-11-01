@@ -19,7 +19,7 @@ Mọi con số trong chương gắn với một lượt chạy có cấu hình, 
 
 Trong pipeline ở Chương~\ref{chap:method}, bước trích thao tác tường minh là nơi LLM chuyển văn bản thành triple.
 Các bước phía sau đều làm việc trên đầu ra của bước này, nên chất lượng trích đặt ra trần chất lượng cho cả pipeline.
-Khi bộ dữ liệu cho sẵn một schema (lược đồ quan hệ), bước trích chạy dưới dạng module trích theo schema (Mục~\ref{sec:schema-extract}): mỗi câu chỉ cần một lệnh gọi LLM, tên quan hệ bị ép vào danh sách quan hệ của schema bằng kiểu liệt kê (\textit{enum}) trong JSON schema, và lời nhắc kèm các ví dụ few-shot của bộ dữ liệu.
+Khi bộ dữ liệu cho sẵn một schema (lược đồ quan hệ), bước trích chạy dưới dạng module trích theo schema (biến thể của bước trích ở Chương~\ref{chap:method}): mỗi câu chỉ cần một lệnh gọi LLM, tên quan hệ bị ép vào danh sách quan hệ của schema bằng kiểu liệt kê (\textit{enum}) trong JSON schema, và lời nhắc kèm các ví dụ few-shot của bộ dữ liệu.
 
 Thực nghiệm nhằm kiểm chứng module này. Chúng tôi so sánh nó với EDC~\cite{zhang2024edc}, hệ trích ba bước được công bố cùng ba benchmark trên, và với biến thể ATOM+EDC, trong đó bước trích mở của EDC được thay bằng cách tách câu thành các mệnh đề nguyên tử (\textit{atomic fact}, gọi tắt là factoid) của ATOM~\cite{lairgi2025atom}.
 Mọi hệ dùng cùng một LLM, nên chênh lệch giữa các hệ phản ánh thiết kế chứ không phản ánh sức mạnh của mô hình.
