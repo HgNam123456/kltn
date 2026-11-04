@@ -78,6 +78,40 @@ Correct output:
 """
 
 
+
+SYSTEM_V2 = """You update a knowledge graph after an event. Given one event sentence, the entities involved, the allowed
+relations and the facts currently stored about those entities, list EVERY fact change the event implies, using only
+what the sentence says or what follows from it with certainty. Do not use outside knowledge about the entities
+(do not guess a club's league, a company's city, a person's residence or nationality).
+- ADD (h, r, t): a fact that becomes true. h must be one of the listed entities; r one of the allowed relations;
+  t a short name, date, title or value copied from the sentence.
+- INVALIDATE (h, r, t): a stored fact that stops being true (copy it exactly from the stored list): a person who
+  dies, resigns, is dismissed or leaves no longer holds the position / employer / team; a divorced couple are no
+  longer spouses.
+Be exhaustive. Checklist, apply every line that the sentence supports:
+- Birth: (child, father, X) and (child, mother, Y) with the CHILD as subject, for each parent named or given as
+  "his wife"/"her husband" only if named; (child, gender, male) for "son"/"boy", (child, gender, female) for
+  "daughter"/"girl"; (child, place of birth (city), CITY) - the city, never the date; (child, sibling, S) if a
+  sibling is named.
+- Founding a company: (company, founded by, founder); (company, inception date, DATE); (company, headquarters
+  location (city), CITY); (company, chief executive officer, P) if a CEO is named.
+- Appointment / new job: (org, chief executive officer | chairperson | head coach | captain | head of state |
+  head of government, person) with the ORGANISATION as subject when the role matches; plus (person, employer, org)
+  and (person, position held, TITLE) where TITLE is the bare title (e.g. "CTO", not "CTO at X").
+- Player transfer: (player, member of sports team, club); (player, jersey number, N) only if stated.
+- Publication: (work, author, A); (work, publisher, P); (work, publication date, DATE); (work, genre, novel |
+  biography | poetry ...) if the sentence names the kind of work; (work, language of work, L) only if stated.
+- Marriage: (A, spouse, B) and (B, spouse, A); in-laws only if the sentence names them.
+- Study: (person, educated at, school); (person, college major, subject) if stated.
+- IPO: (company, stock exchange, X); (company, IPO date, D); (company, stock code, C); (company, IPO price per
+  share, V) as stated.
+- Death: (person, place of death (city), CITY); (person, date of death, DATE); INVALIDATE the person's held
+  positions / employer / team / spouse stored in the list.
+Never output a placeholder such as "unknown" or "X headquarters" as a value. Return {"ops": []} if nothing changes."""
+
+PROMPTS = {"v1": SYSTEM, "v2": SYSTEM_V2}
+
+
 def norm(s: str) -> str:
     s = s.lower().strip().replace("_", " ")
     s = re.sub(r"[\"'’`.,;:!?()\[\]]", "", s)
@@ -143,10 +177,10 @@ def prompt(ex: dict, relations: list[str]) -> str:
     return "\n".join(lines)
 
 
-def run_one(ex: dict, client, schema, relations: list[str]) -> dict:
+def run_one(ex: dict, client, schema, relations: list[str], system: str = SYSTEM) -> dict:
     t0 = time.time()
     try:
-        out = client.complete_json(SYSTEM, prompt(ex, relations), schema)
+        out = client.complete_json(system, prompt(ex, relations), schema)
         raw_ops = [(o.kind, o.h, o.r, o.t) for o in out.ops]
         err = None
     except Exception as e:  # noqa: BLE001
@@ -189,6 +223,7 @@ def main() -> None:
     ap.add_argument("--split", default="test", choices=["test", "train"])
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--prompt", default="v1", choices=sorted(PROMPTS), help="v1 = lời nhắc gốc; v2 = có danh sách kiểm tra")
     ap.add_argument("--out", type=Path, required=True)
     args = ap.parse_args()
 
@@ -208,7 +243,7 @@ def main() -> None:
     records = []
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf8") as f, ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
-        for rec in tqdm(pool.map(lambda ex: run_one(ex, client(), schema, relations), examples), total=len(examples),
+        for rec in tqdm(pool.map(lambda ex: run_one(ex, client(), schema, relations, PROMPTS[args.prompt]), examples), total=len(examples),
                         desc=f"elken-{args.split}"):
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             f.flush()
@@ -224,7 +259,7 @@ def main() -> None:
         n_local += rec["n_local"]
         keep += rec["local_keep"]
     s = summarize(total)
-    s.update({"split": args.split, "n_events": len(records), "n_items_with_fact": len(examples),
+    s.update({"split": args.split, "prompt": args.prompt, "n_events": len(records), "n_items_with_fact": len(examples),
               "n_items_total": len(items), "errors": sum(1 for r in records if r["error"]),
               "gold_add": total.n_add, "gold_del": total.n_del, "pred_ops": sum(len(r["ops"]) for r in records),
               "dropped": sum(r["dropped"] for r in records), "locality": keep / n_local if n_local else None,

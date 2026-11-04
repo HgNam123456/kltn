@@ -173,10 +173,11 @@ if JOB == "cascade":
 elif JOB == "elken":
     elken = f"{WORK}/elken"
     sh(f"git clone -q --depth 1 {ELKEN_REPO} {elken}")
+    prompt = os.environ.get("IMPLICIT_PROMPT", "v1")
     for split, max_h in (("test", 3.0), ("train", 3.0)):
-        name = f"elken_{split}"
+        name = f"elken_{split}" + ("" if prompt == "v1" else f"_{prompt}")
         timed(name, f"cd {KLTN} && python -u scripts/run_elken.py --elken {elken} --split {split} --workers {WORKERS} "
-                    f"--out {OUT}/{name}.jsonl", ENV, max_h=max_h)
+                    f"--prompt {prompt} --out {OUT}/{name}.jsonl", ENV, max_h=max_h)
 else:
     raise SystemExit(f"IMPLICIT_JOB lạ: {JOB}")
 

@@ -5,7 +5,7 @@ import os
 import subprocess
 
 os.environ["LANE_STAGES"] = json.dumps([
-    {"name": "elken", "runner": "implicit", "env": {"IMPLICIT_JOB": "elken"}},
+    {"name": "elken", "runner": "implicit", "env": {"IMPLICIT_JOB": "elken", "IMPLICIT_PROMPT": "v2"}},
 ])
 SRC = "/tmp/kltn_lane"
 subprocess.run(f"git clone -q --depth 1 -b feat/core-pipeline https://github.com/HgNam123456/kltn.git {SRC}",
