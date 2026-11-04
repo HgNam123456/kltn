@@ -18,7 +18,7 @@
 
 Chương này trình bày phương pháp mà khóa luận đề xuất cho bài toán tự động cập nhật \textit{knowledge graph} (KG) từ bản tin.
 Mục~\ref{sec:method-idea} nêu ý tưởng; Mục~\ref{sec:problem} định nghĩa hình thức bài toán kèm ví dụ dùng xuyên suốt; Mục~\ref{sec:architecture} mô tả kiến trúc và Mục~\ref{sec:steps} trình bày từng bước của pipeline.
-Mục~\ref{sec:analysis} phân tích ưu điểm và hạn chế.
+Mục~\ref{sec:schema-extract} mô tả module trích triple theo lược đồ, là phần được đánh giá ở Chương~\ref{chap:experiments}; Mục~\ref{sec:analysis} phân tích ưu điểm và hạn chế.
 
 % ======================================================================
 \section{Ý tưởng: LLM trích, cấu trúc khoanh vùng, bộ phán quyết}\label{sec:method-idea}
@@ -444,7 +444,6 @@ Trong mỗi cụm, hai tên được nối nếu cosine từ $0{,}75$ trở lên
 Mỗi cụm có tên mới được hỏi bằng một lệnh gọi LLM: với từng ứng viên, LLM viết lý do rồi trả \texttt{same} đúng hay sai kèm tên chung, trong đó các trường tên bị ép thành enum các tên của cụm để LLM không bịa tên mới.
 Tên bị gộp trở thành bí danh của tên chung, fact trùng bị bỏ, còn cặp bị phán khác nhau được ghi nhớ và không bao giờ hỏi lại.
 Tiêu chí ``cùng một'' chấp nhận viết tắt, biến thể chính tả, số nhiều hay thì của động từ, nhưng loại tên rộng hơn, hẹp hơn, là sự kiện liên quan hoặc ngược chiều: ``WHO'' và ``World Health Organization'' được gộp, ``coronavirus'' và ``coronavirus outbreak'' thì không; \kgr{is\_located\_in} và \kgr{are\_located\_in} được gộp, \kgr{causes} và \kgr{caused\_by} thì không.
-
 
 % ======================================================================
 \section{Phân tích ưu điểm và hạn chế}\label{sec:analysis}

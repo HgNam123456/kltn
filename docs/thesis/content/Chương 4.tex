@@ -23,14 +23,10 @@ Khi bộ dữ liệu cho sẵn một schema (lược đồ quan hệ), bước t
 
 Thực nghiệm nhằm kiểm chứng module này. Chúng tôi so sánh nó với EDC~\cite{zhang2024edc}, hệ trích ba bước được công bố cùng ba benchmark trên, và với biến thể ATOM+EDC, trong đó bước trích mở của EDC được thay bằng cách tách câu thành các mệnh đề nguyên tử (\textit{atomic fact}, gọi tắt là factoid) của ATOM~\cite{lairgi2025atom}.
 Mọi hệ dùng cùng một LLM, nên chênh lệch giữa các hệ phản ánh thiết kế chứ không phản ánh sức mạnh của mô hình.
-Thực nghiệm trả lời hai câu hỏi:
-\begin{itemize}
-  \item \textbf{CH1 (chất lượng).} Với cùng LLM, module trích theo schema đạt precision, recall và F1 ra sao so với EDC và ATOM+EDC, ở cả ba mức khớp Partial, Strict và Exact?
-  \item \textbf{CH2 (chi phí).} Mỗi hệ cần bao nhiêu lệnh gọi LLM cho một câu và bao nhiêu thời gian cho toàn bộ dữ liệu?
-\end{itemize}
 Chúng tôi chọn ba benchmark của EDC vì ba lý do. Thứ nhất, chúng có schema cố định và script chấm công khai.
 Thứ hai, đây là ``sân nhà'' của EDC: dữ liệu, schema, ví dụ few-shot và script chấm đều do nhóm tác giả EDC chuẩn bị, nên phép so sánh không nghiêng về phía pipeline.
 Thứ ba, bài báo EDC công bố số liệu trên chính ba bộ này, giúp định vị kết quả so với các LLM lớn hơn.
+Ngoài ra, Mục~\ref{sec:exp-nba} trình bày một thực nghiệm bổ sung trên NBAtransactions, bộ dữ liệu mà phần lớn thay đổi của KG là gián tiếp, để kiểm chứng hai bước khoanh vùng cấu trúc và bộ phán.
 
 % ----------------------------------------------------------------------
 \section{Công cụ và môi trường thực nghiệm}\label{sec:exp-env}
@@ -39,7 +35,6 @@ Thứ ba, bài báo EDC công bố số liệu trên chính ba bộ này, giúp 
 Chúng tôi đã cài đặt module trích theo schema và một chương trình chạy module này trên định dạng dữ liệu của EDC: đọc mỗi dòng một câu, ghi mỗi dòng một danh sách triple, đúng định dạng mà script chấm của EDC nhận vào.
 Để chạy biến thể ATOM+EDC, chúng tôi đã viết một chương trình chuyển đầu ra của ATOM thành đầu vào cho các bước sau của EDC.
 Để chấm được các câu có nhiều triple, chúng tôi đã viết một bản tăng tốc của script chấm EDC (Mục~\ref{sec:exp-metrics}).
-Cuối cùng, chúng tôi đã viết ba \textit{kernel} Kaggle tự động hóa trọn một lượt chạy: một cho WebNLG, một cho REBEL và Wiki-NRE, một cho ATOM+EDC trên cả ba bộ.
 
 \paragraph*{Môi trường.}
 Bảng~\ref{tab:env} tóm tắt môi trường thực nghiệm.
@@ -55,7 +50,7 @@ Bảng~\ref{tab:env} tóm tắt môi trường thực nghiệm.
 LLM & Gemma 4 E4B \textit{instruct}~\cite{gemma4}, GGUF lượng tử hóa có huấn luyện (QAT) mức Q4\_K\_XL do unsloth phát hành; đầu dự đoán nhiều token (MTP) làm mô hình nháp \\
 Máy chủ suy luận & llama.cpp~\cite{llamacpp}, API tương thích OpenAI; nhiệt độ 0; 4 khe song song, gom lô liên tục; 8.192 token mỗi khe (lượt REBEL, Wiki-NRE: 12.288); flash attention; tắt chế độ suy luận nhiều bước; giải mã suy đoán MTP, tối đa 2 token nháp \\
 Ràng buộc đầu ra & JSON schema được chuyển thành văn phạm ràng buộc (\textit{constrained decoding}~\cite{willard2023outlines}); trường quan hệ là \texttt{enum} \\
-Phần cứng & Kaggle, 2 $\times$ NVIDIA T4 (15 GB): GPU0 chạy LLM, GPU1 chạy mô hình nhúng của EDC; máy cá nhân không có GPU CUDA \\
+Phần cứng & Kaggle, 2 $\times$ NVIDIA T4 (15 GB): GPU0 chạy LLM, GPU1 chạy mô hình nhúng của EDC \\
 Mô hình nhúng & e5-mistral-7b-instruct, chỉ dùng trong bước chuẩn hóa của EDC \\
 Baseline & EDC: mã gốc của nhóm tác giả, phiên bản ghim cố định; ATOM: thư viện itext2kg 1.1.0, đặt trong môi trường Python 3.11 riêng \\
 Bộ chấm & script chấm chính thức của EDC (thư viện nervaluate 0.1.8), qua bản tăng tốc của chúng tôi \\
@@ -64,9 +59,9 @@ Mã nguồn & kho mã của khóa luận trên GitHub \\
 \end{tabular}
 \end{table}
 
-Máy tính cá nhân của chúng tôi không có GPU CUDA, nên chỉ được dùng để viết mã, chạy kiểm thử đơn vị và xử lý tệp kết quả; mọi lượt gọi LLM và mọi bước cần GPU đều chạy trên Kaggle.
-Mỗi kernel thực hiện cùng một trình tự: (1) sao chép mã khóa luận và mã EDC; (2) gắn dữ liệu dưới dạng Kaggle dataset; (3) chép máy chủ suy luận đã biên dịch sẵn cho kiến trúc T4; (4) tải tệp GGUF của mô hình và của đầu MTP; (5) khởi động máy chủ, chờ trạng thái sẵn sàng và tự khởi động lại nếu máy chủ ngừng trả lời; (6) chạy lần lượt các hệ; (7) chấm điểm; (8) ghi đầu ra, nhật ký và một bản tóm tắt lượt chạy (phiên bản mã, cờ khởi động máy chủ, mô hình nhúng, thời gian của từng hệ, số dòng đầu ra và số dòng được chấm).
-Kết quả được tải về bằng Kaggle CLI và lưu trong kho mã.
+Toàn bộ lượt gọi LLM và các tác vụ cần GPU được thực hiện trên Kaggle. Mỗi kernel tuân theo cùng một quy trình: sao chép mã khóa luận và mã EDC, gắn dữ liệu từ Kaggle Dataset, chép máy chủ suy luận đã biên dịch cho T4, rồi tải các tệp GGUF của mô hình và đầu MTP.
+Sau khi khởi chạy máy chủ, kernel chờ dịch vụ sẵn sàng và tự khởi động lại nếu máy chủ ngừng phản hồi; các hệ được chạy lần lượt, sau đó đầu ra được chấm điểm.
+Mỗi lượt chạy lưu đầu ra, nhật ký và bản tóm tắt gồm phiên bản mã, cờ khởi động máy chủ, mô hình nhúng, thời gian chạy của từng hệ, số dòng đầu ra và số dòng được chấm. Kết quả được tải từ Kaggle bằng Kaggle CLI và lưu trong kho mã.
 
 \paragraph*{Nguyên tắc so sánh.}
 \textit{Thứ nhất, mọi hệ dùng cùng một LLM.}
@@ -163,29 +158,21 @@ ATOM+EDC & Tách câu thành factoid $\rightarrow$ trích 5-tuple cho từng fac
 \end{table}
 
 \paragraph*{Pipeline đề xuất.}
-Lời nhắc gồm một chỉ dẫn ngắn (chỉ trích fact mà văn bản nói ra, chỉ dùng các quan hệ trong danh sách, viết tên như trong ví dụ), danh sách quan hệ của schema kèm mô tả, sáu ví dụ few-shot, rồi đến câu cần trích; phần cố định đặt trước để \texttt{llama-server} dùng lại bộ nhớ đệm KV giữa các câu.
-Đầu ra là JSON gồm danh sách các bộ (\textit{subject}, \textit{relation}, \textit{object}), trong đó trường \textit{relation} là kiểu \texttt{enum} các quan hệ của schema.
-Sau khi nhận đầu ra, chúng tôi chỉ hậu kiểm nhẹ: bỏ triple có trường rỗng, có chủ ngữ trùng tân ngữ, hoặc bị lặp.
-Pipeline gửi bốn yêu cầu song song, bằng số khe của máy chủ.
-Chúng tôi không chỉnh lời nhắc theo kết quả trên tập đánh giá; lượt chạy thử trên 30 câu đầu chỉ dùng để kiểm tra hạ tầng.
+Lời nhắc yêu cầu chỉ trích fact được văn bản khẳng định, dùng quan hệ trong schema và giữ cách viết tên như ví dụ; tiếp theo là danh sách quan hệ kèm mô tả, sáu ví dụ few-shot và câu cần trích.
+Mỗi lượt gửi bốn yêu cầu song song. Lời nhắc không được điều chỉnh theo tập đánh giá; 30 câu đầu chỉ dùng để kiểm tra hạ tầng.
 
 \paragraph*{EDC.}
-Bước trích mở sinh triple với quan hệ tự do, và bước định nghĩa schema yêu cầu LLM viết một câu định nghĩa cho từng quan hệ vừa trích (mỗi bước một lệnh gọi cho mỗi câu).
-Ở bước chuẩn hóa, triple có quan hệ đã nằm sẵn trong schema được giữ nguyên; với triple còn lại, định nghĩa quan hệ được nhúng bằng e5-mistral-7b-instruct, năm quan hệ gần nhất trong schema được lấy làm ứng viên, và LLM chọn một ứng viên (một lệnh gọi mỗi triple).
-Nếu LLM không chọn ứng viên nào, triple bị loại.
-Chúng tôi không chạy bước tinh chỉnh (\textit{refinement}) của EDC; bản có tinh chỉnh, ký hiệu EDC+R, chỉ xuất hiện qua số công bố.
-Mã EDC xử lý các câu tuần tự, mỗi thời điểm một yêu cầu.
+EDC trích triple với quan hệ tự do rồi định nghĩa từng quan hệ (mỗi bước một lệnh gọi mỗi câu). Khi chuẩn hóa, quan hệ đã có trong schema được giữ; các quan hệ khác được nhúng bằng e5-mistral-7b-instruct để lấy năm ứng viên gần nhất, rồi LLM chọn quan hệ hoặc loại triple (mỗi triple ngoài schema cần một lệnh gọi).
+Chúng tôi không chạy bước tinh chỉnh; EDC+R chỉ được đối chiếu bằng số liệu đã công bố. EDC xử lý từng câu tuần tự.
 
 \paragraph*{ATOM+EDC.}
-Chúng tôi chạy hai bước của ATOM giống như trong script đánh giá của nhóm tác giả: một lệnh gọi tách mỗi câu thành các factoid, rồi một lệnh gọi trích 5-tuple (\textit{head}, \textit{relation}, \textit{tail}, $t_{\text{start}}$, $t_{\text{end}}$) cho mỗi factoid, với lời nhắc và ví dụ của ATOM.
-Vì benchmark chỉ chấm triple, hai trường thời gian bị bỏ; triple ATOM sau đó thay cho đầu ra bước trích mở của EDC và đi qua hai bước định nghĩa schema và chuẩn hóa của EDC.
-Riêng phần ATOM đã cần 4.264, 4.355 và 3.713 lệnh gọi trên WebNLG, REBEL và Wiki-NRE (3,7, 4,4 và 3,7 lệnh mỗi câu), chưa kể các lệnh của EDC; ATOM gửi yêu cầu bất đồng bộ theo lô 32 câu.
-Chúng tôi cũng thử một biến thể đưa mốc thời gian của ATOM thành triple ngày riêng; biến thể này cho Partial F1 thấp hơn trên cả ba bộ (55,5, 35,2 và 39,7), nên các bảng chỉ báo biến thể không thêm triple ngày.
+ATOM tách câu thành factoid, rồi trích bộ gồm head, relation, tail và hai mốc thời gian cho từng factoid. Vì benchmark chỉ chấm triple, hai mốc bị bỏ; triple còn lại tiếp tục qua hai bước định nghĩa schema và chuẩn hóa của EDC.
+ATOM cần 4.264, 4.355 và 3.713 lệnh gọi trên WebNLG, REBEL và Wiki-NRE (tương ứng 3,7; 4,4; 3,7 lệnh mỗi câu), chưa kể EDC; các yêu cầu được gửi bất đồng bộ theo lô 32 câu.
+Biến thể thêm mốc thời gian thành triple riêng đạt Partial F1 thấp hơn (55,5; 35,2; 39,7), nên không được dùng trong kết quả chính.
 
 \paragraph*{Điều chỉnh khi chạy baseline.}
-Với EDC, chúng tôi đặt tên mô hình chứa chuỗi ``gpt'' để mã đi vào nhánh gọi API kiểu OpenAI và trỏ địa chỉ sang \texttt{llama-server}; bọc lệnh nhập một mô-đun chỉ dùng cho bước tinh chỉnh; sửa một lỗi gốc trong khối giải phóng mô hình ở cuối bước chuẩn hóa, vốn cố giải phóng một mô hình cục bộ không tồn tại khi LLM được gọi qua API.
-Với ATOM, \texttt{llama-server} chỉ dùng JSON schema để ép văn phạm chứ không đưa mô tả của các trường vào lời nhắc, trong khi hướng dẫn chính của ATOM lại nằm trong mô tả trường; vì vậy chúng tôi chèn schema kèm mô tả vào lời nhắc để Gemma thấy được hướng dẫn này.
-Ngoài các điểm trên, lời nhắc, ví dụ và cấu hình của baseline được giữ nguyên.
+Với EDC, chúng tôi đổi tầng gọi mô hình sang API, bọc import mô-đun chỉ dùng trong bước tinh chỉnh và sửa lỗi giải phóng mô hình cục bộ khi gọi API.
+Với ATOM, chúng tôi bổ sung mô tả schema vào lời nhắc để Gemma nhận được hướng dẫn vốn được truyền qua mô tả trường. Các lời nhắc, ví dụ và cấu hình khác được giữ nguyên.
 
 % ----------------------------------------------------------------------
 \section{Kết quả thực nghiệm}\label{sec:exp-results}
@@ -305,45 +292,24 @@ Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng G
 % ----------------------------------------------------------------------
 \section{Phân tích và đánh giá}\label{sec:exp-analysis}
 
-\paragraph*{So với EDC khi cùng LLM (CH1).}
-Module trích theo schema của pipeline vượt EDC trên cả ba bộ và ở cả ba mức khớp, tức 9 trên 9 phép so sánh F1.
-Partial F1 cao hơn 3,8 điểm trên WebNLG (74,4 so với 70,6), 6,0 điểm trên REBEL (55,2 so với 49,2) và 4,0 điểm trên Wiki-NRE (66,2 so với 62,2); ở mức Strict, chênh lệch là 4,4, 6,3 và 4,3 điểm; ở mức Exact là 4,3, 5,9 và 4,1 điểm.
-Precision và recall cùng tăng (Partial P tăng 3,9, 6,1 và 4,0 điểm; Partial R tăng 3,7, 6,1 và 3,9 điểm), nên mức tăng không đến từ việc đánh đổi giữa hai đại lượng. Chênh lệch lớn nhất nằm ở REBEL, bộ có schema lớn nhất (196 quan hệ).
+\paragraph*{So sánh với EDC.}
+Pipeline đạt Partial F1 74,4/55,2/66,2 trên WebNLG/REBEL/Wiki-NRE, cao hơn EDC lần lượt 3,8/6,0/4,0 điểm. Pipeline cũng thắng ở cả ba mức khớp (9/9 so sánh F1), với precision và recall đều tăng; chênh lệch lớn nhất là trên REBEL, bộ có 196 quan hệ.
 
-\paragraph*{Nguồn gốc của chênh lệch.}
-Chúng tôi cho rằng có ba nguyên nhân, xuất phát từ khác biệt về thiết kế giữa hai hệ. Thứ nhất, pipeline chọn quan hệ ngay khi đọc câu, với toàn bộ danh sách quan hệ kèm mô tả trước mặt.
-EDC chọn quan hệ ở bước sau, chỉ dựa trên triple mở và câu định nghĩa do chính LLM viết, trong phạm vi năm ứng viên gần nhất theo khoảng cách nhúng; nếu quan hệ đúng không nằm trong năm ứng viên, hoặc triple mở đã sai chiều, bước chuẩn hóa không sửa được (Ví dụ (b) ở Mục~\ref{sec:exp-example}).
-Thứ hai, EDC xếp ba bước LLM nối tiếp, nên sai sót của bước trước truyền sang bước sau; pipeline chỉ có một bước. Thứ ba, ràng buộc \texttt{enum} bảo đảm mọi triple pipeline sinh ra đều mang quan hệ hợp lệ.
-Ở EDC, triple bị loại khi LLM xác minh không chọn được ứng viên nào, và câu trở thành rỗng khi bước trích mở không trả triple hoặc mọi triple của câu bị loại; EDC để rỗng 7 câu WebNLG và 4 câu Wiki-NRE, còn pipeline để rỗng 1 câu REBEL.
+\paragraph*{Nguyên nhân chênh lệch.}
+Pipeline chọn quan hệ ngay khi trích, dựa trên toàn bộ schema và ràng buộc enum; EDC chỉ ánh xạ ở bước sau vào năm ứng viên gần nhất, nên khó sửa triple sai chiều hoặc quan hệ không có trong danh sách. Các bước tuần tự cũng khiến lỗi của EDC lan truyền, còn triple không ánh xạ được sẽ bị loại.
+EDC tạo 7 câu rỗng trên WebNLG và 4 trên Wiki-NRE; pipeline tạo 1 câu rỗng trên REBEL. Trên REBEL, EDC sinh 5,49 triple mỗi câu so với 4,41 của pipeline và 4 triple vàng, góp phần làm precision thấp hơn (48,8 so với 54,9).
 
-Số triple trung bình mỗi câu cũng giải thích một phần chênh lệch về precision.
-Trên REBEL, gold có đúng 4 triple mỗi câu; pipeline trích trung bình 4,41 triple, còn EDC trích 5,49 triple, nên EDC có nhiều triple thừa hơn và precision thấp hơn (48,8 so với 54,9).
-Trên WebNLG, số triple của hai hệ gần với gold (3,33 và 3,41 so với 3,43), nên chênh lệch đến chủ yếu từ việc chọn đúng quan hệ; trên Wiki-NRE, cả hai hệ đều trích nhiều hơn gold (3,60 và 3,77 so với 2,86).
-
-\paragraph*{Chi phí (CH2).}
-Pipeline cần đúng một lệnh gọi LLM cho mỗi câu, tức 1.165, 1.000 và 1.000 lệnh gọi cho ba bộ.
-EDC cần ít nhất hai lệnh gọi mỗi câu (trích mở và định nghĩa schema), cộng một lệnh xác minh cho mỗi triple cần chuẩn hóa, và còn cần một mô hình nhúng 7B chạy trên GPU thứ hai.
-Về thời gian, pipeline mất 20, 21 và 15 phút, so với 50, 61 và 41 phút của EDC, tức chỉ bằng khoảng 34 đến 40\% thời gian của EDC.
-Cần lưu ý rằng thời gian phản ánh cả cách gọi: pipeline gửi bốn yêu cầu song song, còn mã EDC gốc gọi tuần tự từng yêu cầu. Vì vậy, số lệnh gọi mỗi câu là thước đo chi phí không phụ thuộc phần cứng, và trên thước đo này pipeline cũng rẻ hơn EDC ít nhất hai lần.
+\paragraph*{Chi phí.}
+Pipeline cần một lệnh gọi mỗi câu (1.165/1.000/1.000 lượt), còn EDC cần ít nhất hai lệnh gọi, thêm bước xác minh và mô hình nhúng 7B. Pipeline chạy trong 20/21/15 phút, so với 50/61/41 phút của EDC; tuy nhiên, pipeline xử lý song song còn EDC chạy tuần tự. Số lệnh gọi cho thấy pipeline cần ít nhất một nửa lượt gọi và ít phụ thuộc phần cứng hơn.
 
 \paragraph*{Biến thể ATOM+EDC.}
-ATOM+EDC thấp hơn EDC rõ rệt (Partial F1 56,8, 40,3 và 40,7), có nhiều câu rỗng (106, 47 và 217) và chạy lâu nhất (119, 135 và 101 phút). Đầu ra trung gian của ATOM cho thấy ba nguyên nhân.
-Thứ nhất, phần lớn câu rỗng phát sinh ngay ở bước tách factoid, trước khi tới EDC: bước này không trả factoid nào cho 88 câu WebNLG, 39 câu REBEL và 167 câu Wiki-NRE, thường là các câu định nghĩa ngắn như ``Kurniwadi is a village in Belgaum district in Karnataka, India.''
-Thứ hai, factoid được viết lại bằng câu chữ của ATOM, nên có thể bỏ sót vế câu hoặc đổi chủ ngữ (Ví dụ (a) và (c) ở Mục~\ref{sec:exp-example}).
-Dấu hiệu định lượng là khoảng cách giữa Exact F1 và Strict F1, tức phần điểm mất vì phần tử đúng chuỗi nhưng sai vai trò: khoảng cách này của ATOM+EDC là 5,6, 3,5 và 10,6 điểm trên ba bộ, so với 2,8, 1,4 và 0,2 điểm của pipeline.
-Thứ ba, ATOM đưa mốc thời gian vào trường $t_{\text{start}}$ hay $t_{\text{end}}$ chứ không đặt làm tân ngữ, nên các quan hệ ngày tháng của gold (như \textit{activeYearsStartYear}) bị mất khi chuyển 5-tuple về triple.
-Kết quả này cho thấy việc tách câu thành factoid, vốn hữu ích với đoạn tin dài, không giúp ích khi đầu vào đã là câu ngắn và schema đã cố định.
+ATOM+EDC đạt Partial F1 56,8/40,3/40,7, có 106/47/217 câu rỗng và mất 119/135/101 phút trên ba bộ. Bước tách không sinh factoid cho 88/39/167 câu; việc viết lại factoid còn có thể bỏ sót nội dung hoặc đổi vai trò, trong khi mốc thời gian bị mất khi chuyển 5-tuple thành triple. Vì vậy, tách factoid không cải thiện đầu vào vốn đã ngắn và có schema cố định.
 
-\paragraph*{So với số công bố.}
-Số công bố chỉ dùng để định vị, vì bài báo EDC chỉ đổi LLM ở bước trích mở, các bước sau dùng GPT-3.5, và mẫu REBEL, Wiki-NRE có thể khác.
-Với lưu ý đó, pipeline chạy bằng mô hình 4B lượng tử hóa 4-bit cao hơn EDC dùng Mistral-7B ở bước trích mở trên cả ba bộ: Partial F1 74,4 so với 72,8 (WebNLG), 55,2 so với 51,6 (REBEL), 66,2 so với 64,7 (Wiki-NRE); điều này cũng đúng ở mức Strict và Exact.
-So với EDC dùng GPT-4 ở bước trích mở, pipeline thấp hơn trên WebNLG (74,4 so với 78,3) và Wiki-NRE (66,2 so với 68,3), nhỉnh hơn trên REBEL (55,2 so với 54,6).
-EDC+R với GPT-4 vẫn cao nhất trên cả ba bộ, hơn pipeline từ 4,9 đến 7,6 điểm Partial F1. Hệ có giám sát REGEN cao hơn pipeline trên WebNLG (76,7 so với 74,4), còn GenIE thấp hơn pipeline trên REBEL (38,5) và Wiki-NRE (48,4).
+\paragraph*{So với kết quả công bố.}
+So sánh chỉ mang tính định vị vì bài báo EDC dùng GPT-3.5 ở các bước sau trích xuất và mẫu REBEL, Wiki-NRE có thể khác. Pipeline vượt EDC dùng Mistral-7B ở cả ba bộ (Partial F1: 74,4 so với 72,8; 55,2 so với 51,6; 66,2 so với 64,7), nhưng thấp hơn EDC dùng GPT-4 trên WebNLG và Wiki-NRE, và nhỉnh hơn 0,6 điểm trên REBEL. EDC+R với GPT-4 vẫn cao hơn pipeline 4,9–7,6 điểm.
 
 \paragraph*{Đánh giá chung.}
-Về chất lượng (CH1), khi cùng dùng một LLM nhỏ, chọn quan hệ ngay lúc trích bằng ràng buộc \texttt{enum} cho F1 cao hơn cách trích tự do rồi chuẩn hóa về schema, nhất quán trên ba bộ và ba mức khớp.
-Về chi phí (CH2), cách làm này cần ít lệnh gọi hơn, không cần mô hình nhúng riêng và chạy nhanh hơn. Điều này ủng hộ lựa chọn thiết kế ở Chương~\ref{chap:method}: dùng JSON ép schema để thay một chuỗi bước LLM bằng một bước có ràng buộc.
-Tồn tại chính là pipeline vẫn thấp hơn các hệ dùng LLM lớn (EDC với GPT-4 trên hai bộ, EDC+R trên cả ba bộ), và vẫn mắc các lỗi sai chiều quan hệ hay nhầm giữa hai quan hệ gần nghĩa (Ví dụ (c) ở Mục~\ref{sec:exp-example}).
+Kết quả ủng hộ việc trích và chọn quan hệ ngay trong một bước có ràng buộc enum: pipeline vừa chính xác hơn EDC, vừa ít tốn lệnh gọi và thời gian. Tuy nhiên, pipeline vẫn kém một số hệ dùng LLM lớn và còn mắc lỗi sai chiều hoặc nhầm quan hệ gần nghĩa.
 
 % ----------------------------------------------------------------------
 \section{Ví dụ cụ thể}\label{sec:exp-example}
@@ -400,10 +366,61 @@ Tân ngữ vẫn khớp với gold sau chuẩn hóa (dấu phẩy bị bỏ khi 
 Ví dụ này cho thấy lỗi chiều quan hệ và lỗi chọn giữa hai quan hệ gần nghĩa là hướng cần cải thiện tiếp của module trích.
 
 % ----------------------------------------------------------------------
+\section{Thực nghiệm bổ sung: thay đổi gián tiếp trên NBAtransactions}\label{sec:exp-nba}
+
+Ba benchmark trên chỉ đo bước trích. Để kiểm chứng hai bước đặc thù của pipeline là khoanh vùng cấu trúc hai vế và bộ phán, chúng tôi đã tiến hành thêm một thực nghiệm trên NBAtransactions~\cite{tang2019gupdate}, bộ dữ liệu mà phần lớn thay đổi của KG là \emph{gián tiếp}: văn bản không nhắc tới nhưng vẫn phải đổi theo.
+
+\paragraph*{Dữ liệu.}
+NBAtransactions gồm 4.100 bản tin chuyển nhượng NBA (2010--2019), mỗi tin kèm KG-trước và KG-sau; bản phát hành chia 3.263 tin huấn luyện, 399 tin kiểm định và 438 tin kiểm tra, và chúng tôi dùng 438 tin kiểm tra.
+KG-trước là ảnh chụp đội hình của một đến ba đội trong một mùa giải, với bốn quan hệ: cầu thủ của đội, đồng đội, huấn luyện viên trưởng và tổng giám đốc; trung bình mỗi KG có khoảng 480 cạnh, trong đó 89\% là cạnh đồng đội.
+Theo số liệu chúng tôi đếm trên dữ liệu, mỗi tin làm thay đổi trung bình 33 đến 38 cạnh thêm và 36 đến 40 cạnh xóa; 94\% số cạnh thay đổi là cạnh đồng đội, và chỉ 5,6\% số thay đổi có cả hai đầu được nhắc trong văn bản.
+Một tin ``cầu thủ X ký hợp đồng với đội Y'' chỉ nói thẳng hai thay đổi, nhưng kéo theo việc cắt mọi cạnh đồng đội giữa X với đội cũ và thêm mọi cạnh đồng đội giữa X với đội mới.
+Đây là tình huống mà Chương~\ref{chap:method} đặt ra, nên bộ dữ liệu này là phép thử trực tiếp cho hai bước khoanh vùng và bộ phán.
+
+\paragraph*{Cách tổ chức.}
+Thực nghiệm cô lập hai bước cần đo bằng cách lấy các thao tác tường minh từ nhãn vàng: trong hiệu giữa KG-sau và KG-trước, các cạnh có cả hai đầu được nhắc trong tin được coi là thao tác tường minh (đúng 5,6\% số thay đổi).
+Các thao tác này được áp lên KG-trước, sau đó bước khoanh vùng hai vế sinh ứng viên và bộ phán Gemma~4 E4B quyết định giữ, vô hiệu hóa hay thêm cho từng ứng viên; các ứng viên cùng mẫu cấu trúc được gom vào một lệnh gọi, kèm một bộ lọc cấu trúc với ngưỡng 0,5 như mô tả ở Chương~\ref{chap:method}.
+Chúng tôi so với hai cấu hình đối chứng trên cùng đầu vào: \emph{chỉ áp thao tác tường minh} (không khoanh vùng, không bộ phán) cho biết phần văn bản nói thẳng đóng góp bao nhiêu, và \emph{bộ phán oracle} (mọi ứng viên được phán đúng theo nhãn vàng) cho biết trần của bước khoanh vùng.
+Độ đo lấy theo bài báo GUpdater: F1 giữa tập cạnh của KG dự đoán và KG-sau vàng, độ chính xác trên các cạnh cần thêm và độ chính xác trên các cạnh cần xóa.
+Số của GUpdater và của baseline IE kết hợp R-GCN được chép từ bài báo (nền xám); hai hệ này được huấn luyện trên 3.263 tin huấn luyện, còn pipeline không huấn luyện.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên 438 tin kiểm tra của NBAtransactions. Hai dòng cuối là số công bố trong bài báo GUpdater, không phải số chạy lại.}\label{tab:nba}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{7.2cm} c c c}
+\toprule
+\textbf{Cấu hình} & \textbf{F1} & \textbf{Acc cạnh thêm} & \textbf{Acc cạnh xóa} \\
+\midrule
+Chỉ áp thao tác tường minh (không bộ phán) & 0,926 & 0,056 & 0,056 \\
+\rowcolor{green!10}
+Khoanh vùng hai vế + bộ phán Gemma~4 E4B & \textbf{0,993} & 0,840 & \textbf{0,997} \\
+Khoanh vùng hai vế + bộ phán oracle (trần) & 1,000 & 1,000 & 1,000 \\
+\midrule
+\rowcolor{gray!15}
+GUpdater (số công bố) & 0,987 & \textbf{0,893} & 0,899 \\
+\rowcolor{gray!15}
+IE + R-GCN (số công bố) & 0,943 & 0,468 & 0,245 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph*{Kết quả và phân tích.}
+Bảng~\ref{tab:nba} cho thấy vai trò của hai bước được đo.
+Nếu chỉ áp những gì văn bản nói thẳng, độ chính xác trên cạnh thêm và cạnh xóa chỉ đạt 0,056, đúng bằng tỉ lệ thay đổi tường minh của bộ dữ liệu; F1 vẫn ở mức 0,926 chỉ vì phần lớn đồ thị không đổi sau một tin.
+Thêm bước khoanh vùng và bộ phán, F1 tăng lên 0,993 và độ chính xác xóa đạt 0,997, cao hơn GUpdater (0,987 và 0,899) dù pipeline không huấn luyện trên miền này.
+Bước khoanh vùng sinh trung bình 70,3 ứng viên vế cắt và 31,0 ứng viên vế sinh mỗi tin, và mọi cạnh cần đổi của 438 tin đều nằm trong vùng được khoanh; cấu hình oracle đạt 1,000 trên cả ba độ đo, nên toàn bộ sai số còn lại thuộc về bộ phán, không thuộc về bước khoanh vùng.
+Điểm yếu nằm ở cạnh thêm: 0,840 so với 0,893 của GUpdater.
+Soi các tin bị sai, phần lớn là tin có nhiều giao dịch cùng lúc (đổi nhiều cầu thủ giữa hai đội), khi đó bộ phán bỏ sót một phần cạnh đồng đội mới ở vế sinh.
+Chi phí là 1.428 lệnh gọi LLM cho 438 tin, tức khoảng 3,3 lệnh gọi mỗi tin nhờ gom ứng viên theo mẫu, trong khi số ứng viên trung bình là hơn 100.
+
+Cần đọc kết quả này đúng phạm vi của nó: thao tác tường minh được lấy từ nhãn vàng, nên thực nghiệm đo riêng hai bước khoanh vùng và bộ phán, chưa đo cả pipeline từ văn bản thô; việc để LLM tự trích thao tác tường minh trên NBAtransactions rồi chạy tiếp các bước sau là hướng phát triển ở Chương~\ref{chap:conclusion}.
+
+% ----------------------------------------------------------------------
 \section{Hạn chế của thực nghiệm}\label{sec:exp-limits}
 
 \begin{itemize}
-  \item \textbf{Chỉ đánh giá module trích.} Thực nghiệm chỉ kiểm chứng bước trích ở dạng trích theo schema. Các bước rút câu đơn, khoanh vùng cấu trúc, bộ phán và gộp tên định kỳ của pipeline chưa được đánh giá định lượng trong khóa luận, nên kết luận của chương không mở rộng cho toàn bộ pipeline.
+  \item \textbf{Phạm vi đánh giá.} Ba benchmark của EDC chỉ kiểm chứng bước trích ở dạng trích theo schema; thực nghiệm NBAtransactions kiểm chứng hai bước khoanh vùng và bộ phán nhưng với thao tác tường minh lấy từ nhãn vàng. Bước rút câu đơn và bước gộp tên định kỳ chưa được đánh giá định lượng, và chưa có lượt chạy nào đi trọn pipeline từ văn bản thô tới KG-sau.
   \item \textbf{Một LLM duy nhất.} Mọi hệ chỉ chạy với Gemma~4 E4B lượng tử hóa 4-bit; chúng tôi chưa kiểm tra xu hướng trên có giữ nguyên với LLM khác hay không.
   \item \textbf{Một lượt chạy.} Mỗi hệ chạy một lượt với nhiệt độ 0; chưa có khoảng tin cậy hay kiểm định thống kê. Chênh lệch với EDC nhất quán ở cả 9 phép so sánh, nhưng độ dao động giữa các lượt chưa được đo.
   \item \textbf{Mẫu dữ liệu và số công bố.} Mẫu 1.000 câu của REBEL và Wiki-NRE có thể khác mẫu của bài báo EDC, và số công bố dùng GPT-3.5 cho các bước sau bước trích mở; so sánh với số công bố chỉ mang tính định vị. Sáu ví dụ few-shot trùng sáu câu đầu của tệp đánh giá, như trong kho mã EDC.
@@ -412,4 +429,5 @@ Ví dụ này cho thấy lỗi chiều quan hệ và lỗi chọn giữa hai qua
 \end{itemize}
 
 Tóm lại, chúng tôi đã cài đặt và đánh giá module trích theo schema của pipeline trên ba benchmark của EDC, với cùng LLM và cùng script chấm cho mọi hệ.
-Module này vượt EDC và ATOM+EDC ở cả ba bộ và ba mức khớp, trong khi chỉ cần một lệnh gọi mỗi câu. Các kết luận và hướng phát triển được trình bày ở Chương~\ref{chap:conclusion}.
+Module này vượt EDC và ATOM+EDC ở cả ba bộ và ba mức khớp, trong khi chỉ cần một lệnh gọi mỗi câu.
+Trên NBAtransactions, hai bước khoanh vùng và bộ phán tìm lại được các thay đổi gián tiếp với F1 0,993 và độ chính xác xóa 0,997, cao hơn GUpdater, khi thao tác tường minh được cho trước. Các kết luận và hướng phát triển được trình bày ở Chương~\ref{chap:conclusion}.
