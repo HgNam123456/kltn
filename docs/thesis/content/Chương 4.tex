@@ -315,8 +315,10 @@ EDC thua vì trích mở rồi mới ánh xạ vào năm quan hệ gần nhất:
 ATOM+EDC thua vì thêm bước tách factoid trước khi trích: 88/39/167 câu không được tách thành factoid nào, dẫn tới 106/47/217 câu rỗng; với câu đầu vào vốn đã ngắn và schema cố định, bước tách chỉ làm mất thông tin, rồi lỗi đó đi tiếp qua các bước của EDC.
 
 \paragraph*{Chi phí.}
-Pipeline dùng một lệnh gọi mỗi câu (1.165/1.000/1.000 lượt) và chạy trong 20/21/15 phút; EDC cần ít nhất hai lệnh gọi mỗi câu cộng mô hình nhúng 7B và chạy trong 50/61/41 phút; ATOM+EDC hơn bốn lệnh gọi mỗi câu, 119/135/101 phút.
-Thời gian không so sánh trực tiếp được vì pipeline xử lý song song còn EDC chạy tuần tự; số lệnh gọi thì so sánh được: pipeline dùng không quá một nửa.
+Pipeline dùng đúng một lệnh gọi mỗi câu (1.165/1.000/1.000 lượt) và chạy trong 20/21/15 phút.
+EDC cần ít nhất hai lệnh gọi mỗi câu, thêm một lệnh xác minh cho mỗi triple có quan hệ ngoài schema và một mô hình nhúng 7B chạy trên GPU thứ hai; thời gian 50/61/41 phút.
+ATOM+EDC cần 3,7/4,4/3,7 lệnh gọi mỗi câu cho riêng bước tách và trích factoid, cộng các bước của EDC phía sau, tổng hơn bốn lệnh gọi mỗi câu; thời gian 119/135/101 phút.
+Thời gian chỉ nên đọc cùng số lệnh gọi vì pipeline xử lý song song còn EDC chạy tuần tự; tính theo lệnh gọi, pipeline tốn không quá một nửa so với EDC và không quá một phần tư so với ATOM+EDC.
 
 \paragraph*{So với kết quả công bố.}
 So sánh chỉ mang tính định vị vì bài báo EDC dùng GPT-3.5 ở các bước sau trích mở và mẫu REBEL, Wiki-NRE có thể khác.
