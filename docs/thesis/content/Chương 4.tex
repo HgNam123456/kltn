@@ -95,11 +95,6 @@ Ba bộ khác nhau ở những điểm ảnh hưởng tới kết quả. WebNLG 
 REBEL có schema lớn nhất (196 quan hệ), và trong mẫu này mỗi câu có đúng 4 triple vàng; Wiki-NRE có schema nhỏ nhất (45 quan hệ), chủ yếu là quan hệ địa lý và hành chính.
 REBEL và Wiki-NRE trong kho mã EDC là mẫu 1.000 câu; chúng tôi không xác định được mẫu này có trùng với mẫu mà bài báo EDC đã dùng hay không.
 
-\paragraph*{Ví dụ few-shot.}
-Mỗi bộ có sáu ví dụ few-shot cho bước trích, mỗi ví dụ gồm một câu và danh sách triple của nó; pipeline và EDC dùng chung đúng tệp này.
-Khi kiểm tra, chúng tôi nhận thấy sáu ví dụ chính là sáu câu đầu tiên của tệp đánh giá ở cả ba bộ.
-Chúng tôi giữ nguyên như kho mã EDC để so sánh được với số công bố; vì hai hệ cùng dùng các ví dụ này, ảnh hưởng (6 trên 1.165 hoặc 1.000 câu) là như nhau với cả hai.
-ATOM dùng lời nhắc và ví dụ của riêng nó ở hai bước đầu (Mục~\ref{sec:exp-systems}).
 
 % ----------------------------------------------------------------------
 \section{Độ đo}\label{sec:exp-metrics}
@@ -124,18 +119,6 @@ Script tính $P$, $R$, $F_1$ cho từng cặp triple đã ghép rồi lấy trun
 Triple vàng bị ghép với triple rỗng có cả ba phần tử bị tính là sót, còn triple dự đoán bị ghép với triple rỗng bị tính là thừa; vì vậy câu mà hệ không trích được gì (\textit{câu rỗng}) vẫn được chấm và kéo điểm xuống.
 Chúng tôi báo đủ $P$, $R$, $F_1$ ở cả ba mức, trên thang 100.
 
-\paragraph*{Tăng tốc script chấm.}
-Script gốc tìm cách ghép bằng cách thử mọi hoán vị của $n = \max(|P|, |G|)$ triple trong câu, với độ phức tạp $O(n!)$: câu có 10 triple cần duyệt khoảng 3,6 triệu hoán vị, câu 12 triple khoảng 479 triệu.
-Khi một hệ trích nhiều triple cho một câu, script gần như không kết thúc.
-Chúng tôi viết bản tăng tốc: giữ nguyên toàn bộ script gốc, chỉ thay bước duyệt hoán vị bằng thuật toán Hungarian~\cite{kuhn1955hungarian}, độ phức tạp $O(n^3)$.
-Thuật toán tìm giá trị ghép tối ưu rồi chọn đúng hoán vị mà script gốc sẽ chọn (hoán vị đầu tiên theo thứ tự từ điển trong số các hoán vị đạt tối ưu); với $n \le 7$, script vẫn duyệt đủ như bản gốc.
-Để kiểm tra tương đương, chúng tôi đã chạy cả hai bản trên đầu ra của pipeline và của EDC: toàn bộ 1.165 câu WebNLG và 30 câu đầu của REBEL và Wiki-NRE.
-Trên REBEL và Wiki-NRE, đầu ra của hai bản trùng nhau hoàn toàn; trên WebNLG, hai bản chỉ lệch nhau ở một dòng, tại chữ số thập phân thứ 17 của một giá trị precision, tức sai số làm tròn số thực.
-Trong mọi lượt chạy chính thức, số dòng được chấm bằng đúng số câu (1.165, 1.000 và 1.000); không câu nào bị bỏ khỏi phép chấm.
-
-\paragraph*{Độ đo chi phí.}
-\textit{Số lệnh gọi LLM mỗi câu} được xác định từ thiết kế của từng hệ (Mục~\ref{sec:exp-systems}); riêng ATOM, chúng tôi đếm được chính xác từ số factoid sinh ra.
-\textit{Thời gian chạy} là thời gian thực trên Kaggle, tính từ lúc khởi chạy hệ đến khi hệ ghi xong đầu ra, không gồm bước chấm điểm.
 
 % ----------------------------------------------------------------------
 \section{Các hệ so sánh}\label{sec:exp-systems}
@@ -157,9 +140,6 @@ ATOM+EDC & Tách câu thành factoid $\rightarrow$ trích 5-tuple cho từng fac
 \end{tabular}
 \end{table}
 
-\paragraph*{Pipeline đề xuất.}
-Lời nhắc yêu cầu chỉ trích fact được văn bản khẳng định, dùng quan hệ trong schema và giữ cách viết tên như ví dụ; tiếp theo là danh sách quan hệ kèm mô tả, sáu ví dụ few-shot và câu cần trích.
-Mỗi lượt gửi bốn yêu cầu song song. Lời nhắc không được điều chỉnh theo tập đánh giá; 30 câu đầu chỉ dùng để kiểm tra hạ tầng.
 
 \paragraph*{EDC.}
 EDC trích triple với quan hệ tự do rồi định nghĩa từng quan hệ (mỗi bước một lệnh gọi mỗi câu). Khi chuẩn hóa, quan hệ đã có trong schema được giữ; các quan hệ khác được nhúng bằng e5-mistral-7b-instruct để lấy năm ứng viên gần nhất, rồi LLM chọn quan hệ hoặc loại triple (mỗi triple ngoài schema cần một lệnh gọi).
@@ -170,9 +150,6 @@ ATOM tách câu thành factoid, rồi trích bộ gồm head, relation, tail và
 ATOM cần 4.264, 4.355 và 3.713 lệnh gọi trên WebNLG, REBEL và Wiki-NRE (tương ứng 3,7; 4,4; 3,7 lệnh mỗi câu), chưa kể EDC; các yêu cầu được gửi bất đồng bộ theo lô 32 câu.
 Biến thể thêm mốc thời gian thành triple riêng đạt Partial F1 thấp hơn (55,5; 35,2; 39,7), nên không được dùng trong kết quả chính.
 
-\paragraph*{Điều chỉnh khi chạy baseline.}
-Với EDC, chúng tôi đổi tầng gọi mô hình sang API, bọc import mô-đun chỉ dùng trong bước tinh chỉnh và sửa lỗi giải phóng mô hình cục bộ khi gọi API.
-Với ATOM, chúng tôi bổ sung mô tả schema vào lời nhắc để Gemma nhận được hướng dẫn vốn được truyền qua mô tả trường. Các lời nhắc, ví dụ và cấu hình khác được giữ nguyên.
 
 % ----------------------------------------------------------------------
 \section{Kết quả thực nghiệm}\label{sec:exp-results}
@@ -296,17 +273,21 @@ Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng G
 Pipeline đạt Partial F1 74,4/55,2/66,2 trên WebNLG/REBEL/Wiki-NRE, cao hơn EDC lần lượt 3,8/6,0/4,0 điểm. Pipeline cũng thắng ở cả ba mức khớp (9/9 so sánh F1), với precision và recall đều tăng; chênh lệch lớn nhất là trên REBEL, bộ có 196 quan hệ.
 
 \paragraph*{Nguyên nhân chênh lệch.}
-Pipeline chọn quan hệ ngay khi trích, dựa trên toàn bộ schema và ràng buộc enum; EDC chỉ ánh xạ ở bước sau vào năm ứng viên gần nhất, nên khó sửa triple sai chiều hoặc quan hệ không có trong danh sách. Các bước tuần tự cũng khiến lỗi của EDC lan truyền, còn triple không ánh xạ được sẽ bị loại.
-EDC tạo 7 câu rỗng trên WebNLG và 4 trên Wiki-NRE; pipeline tạo 1 câu rỗng trên REBEL. Trên REBEL, EDC sinh 5,49 triple mỗi câu so với 4,41 của pipeline và 4 triple vàng, góp phần làm precision thấp hơn (48,8 so với 54,9).
+Pipeline chọn quan hệ ngay khi trích, với ràng buộc enum trên toàn bộ schema; EDC trích mở rồi mới ánh xạ vào năm quan hệ gần nhất, nên triple sai chiều hoặc không ánh xạ được sẽ bị loại.
+Trên REBEL, EDC sinh 5,49 triple mỗi câu so với 4,41 của pipeline và 4,00 của nhãn vàng, nên precision thấp hơn (48,8 so với 54,9).
+Số câu không có triple: EDC 7/0/4, pipeline 0/1/0.
 
 \paragraph*{Chi phí.}
-Pipeline cần một lệnh gọi mỗi câu (1.165/1.000/1.000 lượt), còn EDC cần ít nhất hai lệnh gọi, thêm bước xác minh và mô hình nhúng 7B. Pipeline chạy trong 20/21/15 phút, so với 50/61/41 phút của EDC; tuy nhiên, pipeline xử lý song song còn EDC chạy tuần tự. Số lệnh gọi cho thấy pipeline cần ít nhất một nửa lượt gọi và ít phụ thuộc phần cứng hơn.
+Pipeline dùng một lệnh gọi mỗi câu (1.165/1.000/1.000 lượt) và chạy trong 20/21/15 phút; EDC cần ít nhất hai lệnh gọi mỗi câu cộng mô hình nhúng 7B và chạy trong 50/61/41 phút.
+Thời gian không so sánh trực tiếp được vì pipeline xử lý song song còn EDC chạy tuần tự; số lệnh gọi thì so sánh được: pipeline dùng không quá một nửa.
 
 \paragraph*{Biến thể ATOM+EDC.}
-ATOM+EDC đạt Partial F1 56,8/40,3/40,7, có 106/47/217 câu rỗng và mất 119/135/101 phút trên ba bộ. Bước tách không sinh factoid cho 88/39/167 câu; việc viết lại factoid còn có thể bỏ sót nội dung hoặc đổi vai trò, trong khi mốc thời gian bị mất khi chuyển 5-tuple thành triple. Vì vậy, tách factoid không cải thiện đầu vào vốn đã ngắn và có schema cố định.
+ATOM+EDC đạt Partial F1 56,8/40,3/40,7, thấp hơn EDC 13,8/8,9/21,5 điểm, với 106/47/217 câu không có triple và 119/135/101 phút chạy.
+Nguyên nhân chính là bước tách không sinh factoid cho 88/39/167 câu; với câu đầu vào vốn đã ngắn và schema cố định, bước tách thêm chỉ làm mất thông tin.
 
 \paragraph*{So với kết quả công bố.}
-So sánh chỉ mang tính định vị vì bài báo EDC dùng GPT-3.5 ở các bước sau trích xuất và mẫu REBEL, Wiki-NRE có thể khác. Pipeline vượt EDC dùng Mistral-7B ở cả ba bộ (Partial F1: 74,4 so với 72,8; 55,2 so với 51,6; 66,2 so với 64,7), nhưng thấp hơn EDC dùng GPT-4 trên WebNLG và Wiki-NRE, và nhỉnh hơn 0,6 điểm trên REBEL. EDC+R với GPT-4 vẫn cao hơn pipeline 4,9–7,6 điểm.
+So sánh chỉ mang tính định vị vì bài báo EDC dùng GPT-3.5 ở các bước sau trích mở và mẫu REBEL, Wiki-NRE có thể khác.
+Partial F1 của pipeline (74,4/55,2/66,2) cao hơn EDC với Mistral-7B (72,8/51,6/64,7) ở cả ba bộ; so với EDC dùng GPT-4 (78,3/54,6/68,3) thì thấp hơn 3,9 và 2,1 điểm trên WebNLG, Wiki-NRE và cao hơn 0,6 điểm trên REBEL; EDC+R với GPT-4 (82,0/60,1/71,3) cao hơn pipeline 7,6/4,9/5,1 điểm.
 
 \paragraph*{Đánh giá chung.}
 Kết quả ủng hộ việc trích và chọn quan hệ ngay trong một bước có ràng buộc enum: pipeline vừa chính xác hơn EDC, vừa ít tốn lệnh gọi và thời gian. Tuy nhiên, pipeline vẫn kém một số hệ dùng LLM lớn và còn mắc lỗi sai chiều hoặc nhầm quan hệ gần nghĩa.
