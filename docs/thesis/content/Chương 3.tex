@@ -260,31 +260,27 @@ Bước rút câu ở đây phục vụ cập nhật một KG tích lũy, và ph
 % ----------------------------------------------------------------------
 \subsection{Bước 1: trích thao tác tường minh}\label{sec:step-extract}
 
-Bước \buoc{1} biến các câu đơn thành $O^{\mathrm{exp}}$.
-Prompt gồm phần tĩnh đặt trước (hướng dẫn, ví dụ) để máy chủ suy luận dùng lại bộ đệm KV giữa các lệnh gọi, và phần thay đổi đặt cuối: ngày đăng tin $\tau_d$; tối đa 40 fact đã lưu có đầu hoặc đuôi xuất hiện trong tin (so theo tên chung và các bí danh, đánh số); tối đa 60 quan hệ được dùng nhiều nhất trong KG; và các câu đơn đánh số.
-LLM được yêu cầu tách câu thành fact $(h,r,t,\vfrom,\vuntil)$, mỗi fact một quan hệ; dùng lại đúng tên thực thể và tên quan hệ đã có khi cùng nghĩa; chỉ điền mốc thời gian khi văn bản nêu hoặc ngụ ý, và quy thời gian tương đối về ngày (``last week'' thành thứ Hai của tuần trước, ``in 2019'' thành 2019-01-01); với điều không còn đúng thì giữ quan hệ khẳng định và đặt $\vuntil$; cuối cùng ghi vào trường \texttt{ended} số thứ tự các fact đã lưu mà văn bản nói không còn đúng.
-Đầu ra được khai báo bằng một kiểu dữ liệu Python (danh sách \texttt{facts} gồm \texttt{head}, \texttt{relation}, \texttt{tail}, \texttt{valid\_from}, \texttt{valid\_until}, \texttt{sentence}; danh sách \texttt{ended}), chuyển thành JSON Schema để máy chủ suy luận ép ngay khi sinh.
-Nhờ trường \texttt{sentence}, hệ biết câu nào chưa sinh fact; nếu có, một lệnh bù chỉ gửi các câu đó.
-Mỗi chỉ số trong \texttt{ended} trỏ tới một fact còn mở sinh một \opk{INVALIDATE}; fact có trường rỗng, có đầu trùng đuôi hoặc trùng lặp bị loại; fact còn lại được quy về tên chung qua bảng bí danh và sinh \opk{ADD} nếu triple chưa có, \opk{KEEP} nếu đã có.
+Bước \buoc{1} biến các câu đơn thành $O^{\mathrm{exp}}$ bằng một lệnh gọi.
+Prompt gồm phần tĩnh (hướng dẫn, ví dụ) đặt trước để máy chủ suy luận dùng lại bộ đệm KV, và phần thay đổi đặt cuối: ngày đăng $\tau_d$; tối đa 40 fact đã lưu có tên xuất hiện trong tin, đánh số; tối đa 60 quan hệ dùng nhiều nhất trong KG; và các câu đơn đánh số.
+LLM trả về danh sách fact $(h,r,t,\vfrom,\vuntil)$ kèm số câu nguồn, và danh sách \texttt{ended} gồm số thứ tự các fact đã lưu mà văn bản nói không còn đúng; đầu ra ép theo JSON Schema, tên thực thể và quan hệ dùng lại tên đã có khi cùng nghĩa, thời gian tương đối quy về ngày (``last week'' thành thứ Hai của tuần trước).
+Câu nào chưa sinh fact được gửi lại trong một lệnh bù.
+Mỗi chỉ số trong \texttt{ended} sinh một \opk{INVALIDATE}; fact mới, sau khi lọc trường rỗng, đầu trùng đuôi và trùng lặp rồi quy về tên chung qua bảng bí danh, sinh \opk{ADD} nếu triple chưa có, \opk{KEEP} nếu đã có.
 
-Với tin về Messi, prompt chứa năm fact có tên ``Messi'' hoặc ``Inter''; \kgr{plays\_for}(Pedri, Barca) không có mặt vì không tên nào của nó xuất hiện trong tin.
-LLM trả \texttt{ended} chứa chỉ số của \kgr{plays\_for}(Messi, Barca) và một fact mới \kgr{plays\_for}(Messi, Inter) với \texttt{valid\_from} là 2026-06-29, dùng lại tên ``Messi'', ``Inter'' của KG thay cho ``Lionel Messi'', ``Inter Milan''.
-Fact \kgr{teammate}(Messi, Pedri) cũng có trong prompt, nhưng văn bản không nói gì về Pedri nên theo ràng buộc R2 LLM không đưa nó vào \texttt{ended}; phát hiện thay đổi này là việc của bước \buoc{3} và \buoc{4}.
+Với tin về Messi, prompt chứa năm fact có tên ``Messi'' hoặc ``Inter''; LLM trả \texttt{ended} trỏ tới \kgr{plays\_for}(Messi, Barca) và một fact mới \kgr{plays\_for}(Messi, Inter) với \texttt{valid\_from} là 2026-06-29, dùng lại tên ``Messi'', ``Inter'' của KG.
+Fact \kgr{teammate}(Messi, Pedri) cũng có trong prompt, nhưng văn bản không nói gì về Pedri nên theo ràng buộc R2 nó không bị kết thúc ở đây; đó là việc của bước \buoc{3} và \buoc{4}.
 
 % ----------------------------------------------------------------------
 \subsection{Bước 2 và 5: bộ thực thi bi-temporal}\label{sec:step-exec}
 
-Bộ thực thi lưu mỗi triple kèm danh sách khoảng hiệu lực và một chỉ mục từ thực thể tới các triple chứa nó để tra hàng xóm nhanh; không có thao tác xóa.
+Bộ thực thi lưu mỗi triple kèm các khoảng hiệu lực và một chỉ mục từ thực thể tới triple để tra hàng xóm nhanh; không có thao tác xóa.
 Phép áp thao tác cài đặt đúng $\mathrm{Apply}$ của Định nghĩa~\ref{def:ops}; thao tác không có tác dụng bị bỏ qua, nên bộ thực thi lũy đẳng và chịu được việc LLM đề xuất trùng lặp.
-Thao tác tường minh được áp \emph{trước} khi khoanh vùng để cấu trúc mới hiện hình: sau bước \buoc{2}, Barca không còn là hàng xóm của Messi tại $\tau_d$, còn các hàng xóm của Inter trở thành bối cảnh mới của Messi.
-Cạnh \kgr{plays\_for}(Messi, Barca) lúc này mang khoảng $[2004,\ \text{2026-07-01})$, nên câu hỏi ``tháng 5 năm 2026 Messi chơi cho đội nào?'' vẫn có lời đáp.
+Thao tác tường minh được áp \emph{trước} khi khoanh vùng để cấu trúc mới hiện hình: sau bước \buoc{2}, Barca không còn là hàng xóm của Messi tại $\tau_d$, còn cạnh \kgr{plays\_for}(Messi, Barca) vẫn giữ khoảng $[2004,\ \text{2026-07-01})$ nên lịch sử vẫn truy vấn được.
 
 % ----------------------------------------------------------------------
 \subsection{Bước 3: khoanh vùng cấu trúc hai vế}\label{sec:step-localize}
 
-Thay đổi tường minh tạo một ``vết nứt'' trên đồ thị, và hệ quả gián tiếp nằm ở các cạnh bám vào vết nứt đó.
-Khi cạnh $(a,b)$ bị vô hiệu, các quan hệ tồn tại \emph{nhờ} $a$ và $b$ gắn với nhau (đồng đội nhờ cùng câu lạc bộ) phải đi qua một thực thể kề cả hai phía: đó là \emph{vế cắt}.
-Khi cạnh $(a,b)$ mới được thêm, $a$ bước vào bối cảnh của $b$, nên các hàng xóm của $b$ là ứng viên có quan hệ mới với $a$: đó là \emph{vế sinh}.
+Thay đổi tường minh tạo một ``vết nứt'' trên đồ thị; hệ quả gián tiếp nằm ở các cạnh bám vào đó.
+Khi cạnh $(a,b)$ bị vô hiệu, các quan hệ tồn tại \emph{nhờ} $a$ và $b$ gắn với nhau (đồng đội nhờ cùng câu lạc bộ) phải đi qua một thực thể kề cả hai phía: đó là \emph{vế cắt}; khi cạnh $(a,b)$ mới được thêm, các hàng xóm của $b$ là ứng viên có quan hệ mới với $a$: đó là \emph{vế sinh}.
 Cho $G'$ là KG sau bước \buoc{2} và $\tau=\tau_d$:
 \begin{itemize}
 \item \emph{Vế cắt.} Với mỗi $(\opk{INVALIDATE},a,r,b)\in O^{\mathrm{exp}}$, xét $H_{ab}=\bigl(N_\tau(a)\cup N_\tau(b)\bigr)\setminus P$. Thực thể $x\in H_{ab}$ là \emph{hub} nếu tập neo $A_x=N_\tau(x)\cap P$ có ít nhất hai phần tử. Ứng viên cắt là mọi cạnh nối hub với các neo: $\mathcal{C}^{\mathrm{cut}}=\bigcup_{(a,b)}\bigcup_{x\in H_{ab},\,|A_x|\ge 2}\bigcup_{p\in A_x}E_\tau(x,p)$.
@@ -329,8 +325,8 @@ $\mathcal{C}^{\mathrm{cut}}\leftarrow\emptyset$;\ $\mathcal{C}^{\mathrm{gen}}\le
 \end{algorithm}
 
 Trên ví dụ Messi (Hình~\ref{fig:localize}), $P=\{\text{Messi},\text{Barca},\text{Inter}\}$.
-Ở vế cắt quanh (Messi, Barca), $N_\tau(\text{Messi})=\{\text{Pedri},\text{Inter}\}$ vì cạnh tới Barca đã đóng và $N_\tau(\text{Barca})=\{\text{Pedri}\}$, nên $H=\{\text{Pedri}\}$; Pedri kề cả Messi lẫn Barca nên là hub, cho ba ứng viên \kgr{teammate}(Messi, Pedri), \kgr{friend}(Messi, Pedri) và \kgr{plays\_for}(Pedri, Barca).
-Ở vế sinh quanh (Messi, Inter), $F=\{\text{Lautaro},\text{Inzaghi}\}$, cho hai ứng viên (Messi, Lautaro) với bằng chứng \kgr{plays\_for}(Lautaro, Inter) và (Messi, Inzaghi) với bằng chứng \kgr{coach}(Inter, Inzaghi).
+Ở vế cắt quanh (Messi, Barca), Pedri là thực thể duy nhất kề cả Messi lẫn Barca nên là hub, cho ba ứng viên \kgr{teammate}(Messi, Pedri), \kgr{friend}(Messi, Pedri) và \kgr{plays\_for}(Pedri, Barca).
+Ở vế sinh quanh (Messi, Inter), hai hàng xóm của Inter chưa nối với Messi cho hai ứng viên: (Messi, Lautaro) với bằng chứng \kgr{plays\_for}(Lautaro, Inter) và (Messi, Inzaghi) với bằng chứng \kgr{coach}(Inter, Inzaghi).
 
 \begin{figure}[!htbp]
 \centering
@@ -413,10 +409,8 @@ Trên ví dụ Messi (Hình~\ref{fig:localize}), $P=\{\text{Messi},\text{Barca},
 \label{fig:localize}
 \end{figure}
 
-Điều kiện ``ít nhất hai thực thể tham gia'' loại các thực thể chỉ có một chân trong sự kiện, như nhà tài trợ của Barca hay người thân của Messi: quan hệ của chúng với một phía không phụ thuộc việc Messi và Barca còn gắn với nhau.
-Ngược lại, hub nằm trên một tam giác đi qua cạnh vừa đổi, và cạnh của nó có thể tồn tại chính nhờ cạnh đó.
-Vế sinh không cần điều kiện này vì mọi hàng xóm của $b$ đều là bối cảnh mới hợp lý của $a$.
-Thuật toán chỉ duyệt các tập hữu hạn nên luôn dừng; với mỗi cạnh thay đổi $(a,b)$, chi phí là $O\bigl((|N_\tau(a)|+|N_\tau(b)|)\cdot|P|\bigr)$ lần tra qua chỉ mục, không phụ thuộc kích thước toàn KG và không cần tham số bán kính $k$-hop.
+Điều kiện ``ít nhất hai thực thể tham gia'' loại các thực thể chỉ có một chân trong sự kiện, như nhà tài trợ của Barca hay người thân của Messi, vì quan hệ của chúng không phụ thuộc việc Messi và Barca còn gắn với nhau; vế sinh không cần điều kiện này vì mọi hàng xóm của $b$ đều là bối cảnh mới hợp lý của $a$.
+Với mỗi cạnh thay đổi $(a,b)$, chi phí là $O\bigl((|N_\tau(a)|+|N_\tau(b)|)\cdot|P|\bigr)$ lần tra qua chỉ mục, không phụ thuộc kích thước toàn KG và không cần tham số bán kính $k$-hop.
 
 % ----------------------------------------------------------------------
 \subsection{Bước 4: bộ phán KEEP, INVALIDATE, ADD}\label{sec:step-judge}
