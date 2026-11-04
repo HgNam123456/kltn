@@ -79,12 +79,41 @@ if not os.path.exists(KLTN):
 summary["kltn_commit"] = sh(f"git -C {KLTN} rev-parse HEAD", capture=True).strip()
 sh("pip install -q huggingface_hub pydantic 'openai>=1' tqdm")
 
-# 1. llama-server (binary cache) + model
+# 1. llama-server (binary cache) + model. Ảnh Kaggle 11/2026 (Python 3.13) không còn libcudart.so.12 mà binary
+# cache (build 09/2026) cần → cài CUDA 12 runtime từ pip và trỏ LD_LIBRARY_PATH; nếu ldd vẫn báo thiếu thì build lại.
 cached = find_dir("llama-server")
 assert cached, "thiếu dataset ngocnam2005/llama-server-cuda"
 bin_dir = f"{WORK}/llama-bin"
 shutil.copytree(cached, bin_dir, dirs_exist_ok=True)
 sh(f"chmod +x {bin_dir}/llama-server")
+sh("pip install -q nvidia-cuda-runtime-cu12 nvidia-cublas-cu12")
+import glob  # noqa: E402
+
+LD = ":".join(sorted(set(os.path.dirname(p) for pat in ("/usr/local/lib/python3*/dist-packages/nvidia/*/lib/*.so*",
+                                                        "/usr/lib/python3*/dist-packages/nvidia/*/lib/*.so*",
+                                                        "/usr/local/lib/python3*/site-packages/nvidia/*/lib/*.so*")
+                          for p in glob.glob(pat))) | {"/usr/local/nvidia/lib64", "/usr/local/cuda/lib64"})
+os.environ["LD_LIBRARY_PATH"] = LD + ":" + os.environ.get("LD_LIBRARY_PATH", "")
+missing = subprocess.run(f"ldd {bin_dir}/llama-server | grep 'not found'", shell=True, capture_output=True, text=True).stdout
+summary["ldd_missing_after_pip"] = missing.strip()
+print("LD_LIBRARY_PATH:", LD, "
+ldd thiếu:", missing or "(không)", flush=True)
+if missing:
+    summary["notes"].append("binary cache thiếu thư viện → build lại llama.cpp trong kernel")
+    sh(f"rm -rf {WORK}/llama.cpp && git clone -q --depth 1 https://github.com/ggml-org/llama.cpp {WORK}/llama.cpp")
+    libcuda = next((p for p in ("/usr/local/nvidia/lib64/libcuda.so", "/usr/local/cuda/compat/libcuda.so",
+                                "/usr/local/cuda/lib64/stubs/libcuda.so", "/usr/lib/x86_64-linux-gnu/libcuda.so",
+                                "/usr/lib/x86_64-linux-gnu/libcuda.so.1") if os.path.exists(p)), None)
+    assert libcuda, "không tìm thấy libcuda.so"
+    sh(f"cmake -S {WORK}/llama.cpp -B {WORK}/llama.cpp/build -DGGML_CUDA=ON -DLLAMA_CURL=OFF "
+       f"-DCMAKE_CUDA_ARCHITECTURES=75 -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release "
+       f"-DCUDAToolkit_ROOT=/usr/local/cuda -DCMAKE_LIBRARY_PATH={os.path.dirname(libcuda)} "
+       f"-DCUDA_cuda_driver_LIBRARY={libcuda} 2>&1 | tail -5")
+    sh(f"cmake --build {WORK}/llama.cpp/build --target llama-server -j $(nproc) 2>&1 | tail -3")
+    shutil.copy(f"{WORK}/llama.cpp/build/bin/llama-server", f"{bin_dir}/llama-server")
+    shutil.rmtree(f"{WORK}/llama.cpp")
+    os.makedirs(f"{OUT}/llama-bin", exist_ok=True)
+    shutil.copy(f"{bin_dir}/llama-server", f"{OUT}/llama-bin/llama-server")      # để cập nhật dataset cache
 from huggingface_hub import hf_hub_download  # noqa: E402
 
 model = hf_hub_download(GGUF_REPO, GGUF_FILE, local_dir=f"{WORK}/models")
@@ -116,7 +145,9 @@ for cmd in ATTEMPTS:
     if healthy():
         break
     server.kill()
-assert healthy(), "llama-server không khởi động được, xem server.log"
+if not healthy():
+    print(open(f"{OUT}/server.log", "rb").read()[-3000:].decode("utf8", "replace"), flush=True)
+    raise SystemExit("llama-server không khởi động được, xem server.log")
 summary["server_cmd"] = cmd
 save()
 
