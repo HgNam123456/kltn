@@ -161,7 +161,6 @@ Biến thể thêm mốc thời gian thành triple riêng đạt Partial F1 th�
 \paragraph*{Trên NBAtransactions.}
 Thao tác tường minh được lấy từ nhãn vàng: trong hiệu giữa KG-sau và KG-trước, cạnh có cả hai đầu được nhắc trong tin là thao tác tường minh (5,6\% số thay đổi).
 Pipeline áp các thao tác này lên KG-trước, khoanh vùng hai vế rồi để bộ phán Gemma~4 E4B quyết định từng ứng viên (gom theo mẫu cấu trúc, ngưỡng lọc 0,5).
-Hai cấu hình đối chứng trên cùng đầu vào: \emph{chỉ áp thao tác tường minh} (không khoanh vùng, không bộ phán) và \emph{bộ phán oracle} (mọi ứng viên được phán đúng theo nhãn vàng, cho trần của bước khoanh vùng).
 GUpdater và baseline IE+R-GCN được đối chiếu bằng số công bố; hai hệ này huấn luyện trên 3.263 tin, pipeline không huấn luyện.
 
 
@@ -282,22 +281,20 @@ Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng G
 
 \paragraph*{NBAtransactions.}
 Bảng~\ref{tab:nba} trình bày kết quả trên 438 tin kiểm tra.
-Chỉ áp thao tác tường minh cho độ chính xác 0,056 trên cả cạnh thêm và cạnh xóa, đúng bằng tỉ lệ thay đổi tường minh; F1 vẫn 0,926 vì phần lớn đồ thị không đổi sau một tin.
-Thêm khoanh vùng và bộ phán, F1 đạt 0,993 và độ chính xác xóa 0,997, cao hơn GUpdater (0,987 và 0,899); độ chính xác thêm 0,840 thấp hơn GUpdater 5,3 điểm.
-Bước khoanh vùng sinh 70,3 ứng viên vế cắt và 31,0 ứng viên vế sinh mỗi tin và phủ mọi cạnh cần đổi (oracle đạt 1,000); bộ phán dùng 1.428 lệnh gọi cho 438 tin, tức 3,3 lệnh gọi mỗi tin.
+Bước khoanh vùng sinh 70,3 ứng viên vế cắt và 31,0 ứng viên vế sinh mỗi tin, phủ 100\% số thay đổi gián tiếp của 438 tin: mọi cạnh cần thêm hay cần xóa đều nằm trong tập ứng viên.
+Bộ phán đạt F1 0,993 và độ chính xác xóa 0,997, cao hơn GUpdater (0,987 và 0,899); độ chính xác thêm 0,840 thấp hơn GUpdater 5,3 điểm.
+Chi phí là 1.428 lệnh gọi LLM cho 438 tin, tức 3,3 lệnh gọi mỗi tin.
 
 \begin{table}[htbp]
 \centering
-\caption{Kết quả trên 438 tin kiểm tra của NBAtransactions. Hai dòng cuối là số công bố trong bài báo GUpdater.}\label{tab:nba}
+\caption{Kết quả trên 438 tin kiểm tra của NBAtransactions. Hai dòng xám là số công bố trong bài báo GUpdater.}\label{tab:nba}
 \small
 \begin{tabular}{>{\raggedright\arraybackslash}p{7.2cm} c c c}
 \toprule
 \textbf{Cấu hình} & \textbf{F1} & \textbf{Acc cạnh thêm} & \textbf{Acc cạnh xóa} \\
 \midrule
-Chỉ áp thao tác tường minh (không bộ phán) & 0,926 & 0,056 & 0,056 \\
 \rowcolor{green!10}
-Khoanh vùng hai vế + bộ phán Gemma~4 E4B & \textbf{0,993} & 0,840 & \textbf{0,997} \\
-Khoanh vùng hai vế + bộ phán oracle (trần) & 1,000 & 1,000 & 1,000 \\
+Pipeline đề xuất (khoanh vùng hai vế + bộ phán Gemma~4 E4B) & \textbf{0,993} & 0,840 & \textbf{0,997} \\
 \midrule
 \rowcolor{gray!15}
 GUpdater (số công bố) & 0,987 & \textbf{0,893} & 0,899 \\
@@ -331,7 +328,7 @@ So sánh chỉ mang tính định vị vì bài báo EDC dùng GPT-3.5 ở các 
 Partial F1 của pipeline (74,4/55,2/66,2) cao hơn EDC với Mistral-7B (72,8/51,6/64,7) ở cả ba bộ; so với EDC dùng GPT-4 (78,3/54,6/68,3) thì thấp hơn 3,9 và 2,1 điểm trên WebNLG, Wiki-NRE và cao hơn 0,6 điểm trên REBEL; EDC+R với GPT-4 (82,0/60,1/71,3) cao hơn pipeline 7,6/4,9/5,1 điểm.
 
 \paragraph*{Trên NBAtransactions.}
-Oracle đạt 1,000 nên toàn bộ sai số còn lại thuộc bộ phán, không thuộc bước khoanh vùng; sai tập trung ở cạnh thêm (0,840) của các tin đổi nhiều cầu thủ cùng lúc giữa hai đội.
+Bước khoanh vùng phủ đủ 100\% thay đổi gián tiếp, nên toàn bộ sai số thuộc bộ phán; sai tập trung ở cạnh thêm (0,840) của các tin đổi nhiều cầu thủ cùng lúc giữa hai đội.
 Thao tác tường minh được lấy từ nhãn vàng, nên kết quả này đo riêng hai bước khoanh vùng và bộ phán, chưa đo cả pipeline từ văn bản thô.
 
 \paragraph*{Đánh giá chung.}
