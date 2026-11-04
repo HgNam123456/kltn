@@ -88,6 +88,8 @@ def summarize_run(records: list[dict], seconds: float, config: str, split: str) 
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--data-dir", type=Path, default=Path("data/raw/nba"))
+    ap.add_argument("--jsonl", type=Path, default=None,
+                    help="bộ dữ liệu JSONL chung (kgu.data.jsonl: ICEWS14-Event, YAGO-Event...) thay cho NBA")
     ap.add_argument("--split", default="test")
     ap.add_argument("--extractor", default="gold_explicit", choices=["gold_all", "gold_explicit", "llm"])
     ap.add_argument("--judge", default="none", choices=["none", "oracle", "llm"])
@@ -100,8 +102,13 @@ def main() -> None:
                     help="phương án C: ngưỡng đồng xuất hiện để cổng cấu trúc lọc mẫu trước LLM (vd 0.5); bỏ = LLM thuần")
     args = ap.parse_args()
 
-    relations = Vocab.load(args.data_dir).relations
-    examples = load_split(args.data_dir, args.split, limit=args.limit)
+    if args.jsonl is not None:
+        from kgu.data.jsonl import load_jsonl
+        examples, relations, _ = load_jsonl(args.jsonl, limit=args.limit)
+        args.split = args.jsonl.stem
+    else:
+        relations = Vocab.load(args.data_dir).relations
+        examples = load_split(args.data_dir, args.split, limit=args.limit)
 
     # Mỗi thread một extractor/judge riêng (client riêng): n_calls/n_dropped cộng dồn theo thread, nên
     # hiệu trước/sau trong run_example vẫn đúng cho từng ví dụ khi chạy song song.

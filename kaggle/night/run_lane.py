@@ -16,12 +16,13 @@ import time
 
 STAGES = json.loads(os.environ["LANE_STAGES"])
 KGU_REPO, KGU_BRANCH = "https://github.com/HgNam123456/kltn.git", "feat/core-pipeline"
-RUNNERS = {"extra": "kaggle/extra_bench/run_extra_bench.py", "quality": "kaggle/quality/run_quality.py"}
+RUNNERS = {"extra": "kaggle/extra_bench/run_extra_bench.py", "quality": "kaggle/quality/run_quality.py",
+           "implicit": "kaggle/implicit/run_implicit.py"}
 WORK = "/kaggle/working"
 KLTN = f"{WORK}/kltn"
 T0 = time.time()
 DEADLINE = T0 + float(os.environ.get("LANE_HOURS", "11")) * 3600
-SCRATCH = ("kltn", "edc", "knowledge-net", "data", "models", "llama-bin", "venv_atom", "venv_kggen", "mine")
+SCRATCH = ("kltn", "edc", "knowledge-net", "data", "models", "llama-bin", "venv_atom", "venv_kggen", "mine", "elken")
 os.makedirs(f"{WORK}/out", exist_ok=True)
 lane = {"stages": [], "deadline_hours": round((DEADLINE - T0) / 3600, 2)}
 
