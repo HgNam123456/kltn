@@ -1,0 +1,17 @@
+{
+ "stages": [
+  {
+   "name": "elken",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "elken"
+   },
+   "commit": "53af0bedb0ac29c1837b6aaf07aecc9d7a5bdad8",
+   "returncode": 1,
+   "status": "error",
+   "minutes": 9.2
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 9.2
+}

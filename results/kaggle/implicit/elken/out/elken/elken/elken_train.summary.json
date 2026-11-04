@@ -1,0 +1,84 @@
+{
+  "precision": 0.8770883054892601,
+  "recall": 0.814404432132964,
+  "f1": 0.8445848893995979,
+  "add_acc": 0.30927835051546393,
+  "del_acc": 0.934010152284264,
+  "split": "train",
+  "n_events": 347,
+  "n_items_with_fact": 347,
+  "n_items_total": 677,
+  "errors": 0,
+  "gold_add": 485,
+  "gold_del": 197,
+  "pred_ops": 528,
+  "dropped": 48,
+  "locality": 1.0,
+  "n_unknown_answers": 289,
+  "by_event_type": {
+    "acquire": {
+      "precision": 0.9138755980861244,
+      "recall": 0.9794871794871794,
+      "f1": 0.9455445544554455,
+      "add_acc": 0.9047619047619048,
+      "del_acc": 0.0,
+      "n_add": 42,
+      "n_del": 0
+    },
+    "death": {
+      "precision": 0.9304635761589404,
+      "recall": 1.0,
+      "f1": 0.9639794168096055,
+      "add_acc": 1.0,
+      "del_acc": 0.9791666666666666,
+      "n_add": 46,
+      "n_del": 48
+    },
+    "divorce": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "add_acc": 0.0,
+      "del_acc": 1.0,
+      "n_add": 0,
+      "n_del": 108
+    },
+    "end-org": {
+      "precision": 0.7142857142857143,
+      "recall": 0.5333333333333333,
+      "f1": 0.6106870229007633,
+      "add_acc": 0.2857142857142857,
+      "del_acc": 0.9090909090909091,
+      "n_add": 49,
+      "n_del": 11
+    },
+    "loss-election": {
+      "precision": 0.975609756097561,
+      "recall": 1.0,
+      "f1": 0.9876543209876543,
+      "add_acc": 0.0,
+      "del_acc": 0.8888888888888888,
+      "n_add": 0,
+      "n_del": 18
+    },
+    "start-position": {
+      "precision": 0.8158844765342961,
+      "recall": 0.6494252873563219,
+      "f1": 0.7232000000000001,
+      "add_acc": 0.17006802721088435,
+      "del_acc": 0.0,
+      "n_add": 294,
+      "n_del": 0
+    },
+    "win-election": {
+      "precision": 0.783410138248848,
+      "recall": 0.7657657657657657,
+      "f1": 0.7744874715261958,
+      "add_acc": 0.037037037037037035,
+      "del_acc": 0.25,
+      "n_add": 54,
+      "n_del": 12
+    }
+  },
+  "seconds": 257.9
+}

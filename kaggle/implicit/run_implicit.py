@@ -188,7 +188,6 @@ for f in sorted(os.listdir(OUT)):
             k: v for k, v in s.items() if k != "by_event_type"}
 save()
 server.kill()
-for f in os.listdir(f"{WORK}/models"):
-    os.remove(f"{WORK}/models/{f}")
+shutil.rmtree(f"{WORK}/models", ignore_errors=True)      # không đưa 4 GB model vào output
 print(json.dumps(summary, indent=1, ensure_ascii=False), flush=True)
 print("DONE", flush=True)

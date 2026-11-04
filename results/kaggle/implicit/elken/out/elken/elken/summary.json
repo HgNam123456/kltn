@@ -1,0 +1,60 @@
+{
+ "job": "elken",
+ "runs": {
+  "elken_test": {
+   "status": "ok",
+   "minutes": 4.1,
+   "summary": {
+    "precision": 0.9506104328523862,
+    "recall": 0.7956339990710636,
+    "f1": 0.8662452591656131,
+    "add_acc": 0.46859903381642515,
+    "del_acc": 1.0,
+    "split": "test",
+    "n_events": 326,
+    "n_items_with_fact": 326,
+    "n_items_total": 724,
+    "errors": 0,
+    "gold_add": 828,
+    "gold_del": 23,
+    "pred_ops": 500,
+    "dropped": 67,
+    "locality": 1.0,
+    "n_unknown_answers": 490,
+    "seconds": 247.7
+   }
+  },
+  "elken_train": {
+   "status": "ok",
+   "minutes": 4.3,
+   "summary": {
+    "precision": 0.8770883054892601,
+    "recall": 0.814404432132964,
+    "f1": 0.8445848893995979,
+    "add_acc": 0.30927835051546393,
+    "del_acc": 0.934010152284264,
+    "split": "train",
+    "n_events": 347,
+    "n_items_with_fact": 347,
+    "n_items_total": 677,
+    "errors": 0,
+    "gold_add": 485,
+    "gold_del": 197,
+    "pred_ops": 528,
+    "dropped": 48,
+    "locality": 1.0,
+    "n_unknown_answers": 289,
+    "seconds": 257.9
+   }
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "53af0bedb0ac29c1837b6aaf07aecc9d7a5bdad8",
+ "ldd_missing_after_pip": "",
+ "server_cmd": "CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "elapsed_minutes": 9.2
+}

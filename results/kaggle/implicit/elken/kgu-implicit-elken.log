@@ -1,0 +1,47 @@
+[{"stream_name":"stdout","time":7.44600293,"data":"### elken bắt đầu, còn 11.00 giờ, commit 53af0be\n"}
+,{"stream_name":"stdout","time":7.623413216,"data":"$ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader\n"}
+,{"stream_name":"stdout","time":7.659566457,"data":"$ git -C /kaggle/working/kltn rev-parse HEAD\n"}
+,{"stream_name":"stdout","time":7.662496526,"data":"$ pip install -q huggingface_hub pydantic 'openai\u003e=1' tqdm\n"}
+,{"stream_name":"stdout","time":12.279595654,"data":"$ chmod +x /kaggle/working/llama-bin/llama-server\n"}
+,{"stream_name":"stdout","time":12.284193609999999,"data":"$ pip install -q nvidia-cuda-runtime-cu12 nvidia-cublas-cu12\n"}
+,{"stream_name":"stdout","time":14.052897809,"data":"LD_LIBRARY_PATH: /usr/local/cuda/lib64:/usr/local/lib/python3.13/dist-packages/nvidia/cu13/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cublas/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cuda_cupti/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cuda_nvcc/nvvm/lib64:/usr/local/lib/python3.13/dist-packages/nvidia/cuda_nvrtc/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cuda_runtime/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cudnn/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cufft/lib:/usr/local/lib/python3.13/dist-packages/nvidia/curand/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cusolver/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cusparse/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cusparselt/lib:/usr/local/lib/python3.13/dist-packages/nvidia/libnvcomp/lib64:/usr/local/lib/python3.13/dist-packages/nvidia/nccl/lib:/usr/local/lib/python3.13/dist-packages/nvidia/nvimgcodec:/usr/local/lib/python3.13/dist-packages/nvidia/nvimgcodec/extensions:/usr/local/lib/python3.13/dist-packages/nvidia/nvjitlink/lib:/usr/local/lib/python3.13/dist-packages/nvidia/nvshmem/lib:/usr/local/nvidia/lib64 | ldd thiếu: (không)\n"}
+,{"stream_name":"stderr","time":15.308888757,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":25.725605774,"data":"$ CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\n"}
+,{"stream_name":"stdout","time":47.763545353,"data":"$ git clone -q --depth 1 https://github.com/THU-KEG/Event-Level-Knowledge-Editing.git /kaggle/working/elken\n"}
+,{"stream_name":"stdout","time":50.305641743,"data":"### elken_test: tối đa 180 phút\n"}
+,{"stream_name":"stdout","time":50.305671667,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_elken.py --elken /kaggle/working/elken --split test --workers 4 --out /kaggle/working/out/elken/elken/elken_test.jsonl\n"}
+,{"stream_name":"stdout","time":298.877213882,"data":"### elken_test: ok sau 4.1 phút\n"}
+,{"stream_name":"stdout","time":298.877582939,"data":"### elken_train: tối đa 180 phút\n"}
+,{"stream_name":"stdout","time":298.877599553,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_elken.py --elken /kaggle/working/elken --split train --workers 4 --out /kaggle/working/out/elken/elken/elken_train.jsonl\n"}
+,{"stream_name":"stdout","time":557.316657376,"data":"### elken_train: ok sau 4.3 phút\n"}
+,{"stream_name":"stderr","time":557.318445989,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":557.318863225,"data":"  File \"/kaggle/working/kltn/kaggle/implicit/run_implicit.py\", line 192, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":557.318875559,"data":"    os.remove(f\"{WORK}/models/{f}\")\n"}
+,{"stream_name":"stderr","time":557.318896654,"data":"    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":557.318899649,"data":"IsADirectoryError: [Errno 21] Is a directory: '/kaggle/working/models/.cache'\n"}
+,{"stream_name":"stdout","time":557.414975122,"data":"### elken: error sau 9.2 phút\n"}
+,{"stream_name":"stdout","time":557.455249927,"data":"{\n"}
+,{"stream_name":"stdout","time":557.455271348,"data":" \"stages\": [\n"}
+,{"stream_name":"stdout","time":557.4552756,"data":"  {\n"}
+,{"stream_name":"stdout","time":557.455278972,"data":"   \"name\": \"elken\",\n"}
+,{"stream_name":"stdout","time":557.455282355,"data":"   \"runner\": \"implicit\",\n"}
+,{"stream_name":"stdout","time":557.455285999,"data":"   \"env\": {\n"}
+,{"stream_name":"stdout","time":557.455289462,"data":"    \"IMPLICIT_JOB\": \"elken\"\n"}
+,{"stream_name":"stdout","time":557.455293134,"data":"   },\n"}
+,{"stream_name":"stdout","time":557.455296614,"data":"   \"commit\": \"53af0bedb0ac29c1837b6aaf07aecc9d7a5bdad8\",\n"}
+,{"stream_name":"stdout","time":557.455300422,"data":"   \"returncode\": 1,\n"}
+,{"stream_name":"stdout","time":557.455304227,"data":"   \"status\": \"error\",\n"}
+,{"stream_name":"stdout","time":557.455307695,"data":"   \"minutes\": 9.2\n"}
+,{"stream_name":"stdout","time":557.45531114,"data":"  }\n"}
+,{"stream_name":"stdout","time":557.455314785,"data":" ],\n"}
+,{"stream_name":"stdout","time":557.455318134,"data":" \"deadline_hours\": 11.0,\n"}
+,{"stream_name":"stdout","time":557.455322297,"data":" \"elapsed_minutes\": 9.2\n"}
+,{"stream_name":"stdout","time":557.455325863,"data":"}\n"}
+,{"stream_name":"stdout","time":557.455329175,"data":"DONE\n"}
+,{"stream_name":"stderr","time":559.750263188,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":559.75029478,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":560.063579188,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":560.063605256,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":560.914316495,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":561.965027089,"data":"[NbConvertApp] Writing 274930 bytes to __results__.html\n"}
+]
