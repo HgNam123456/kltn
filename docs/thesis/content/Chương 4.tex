@@ -307,12 +307,12 @@ Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng G
 \paragraph*{So sánh với các baseline.}
 Pipeline đạt Partial F1 74,4/55,2/66,2 trên WebNLG/REBEL/Wiki-NRE, cao hơn EDC 3,8/6,0/4,0 điểm và cao hơn ATOM+EDC 17,6/14,9/25,5 điểm.
 So với EDC, pipeline thắng ở cả ba mức khớp (9/9 so sánh F1), precision và recall đều tăng; chênh lệch lớn nhất trên REBEL, bộ có 196 quan hệ.
-ATOM+EDC (56,8/40,3/40,7) còn thấp hơn EDC 13,8/8,9/21,5 điểm, với 106/47/217 câu không có triple, trong đó 88/39/167 câu do bước tách không sinh factoid nào; với câu đầu vào vốn đã ngắn và schema cố định, bước tách thêm chỉ làm mất thông tin.
+ATOM+EDC (56,8/40,3/40,7) còn thấp hơn EDC 13,8/8,9/21,5 điểm.
 
 \paragraph*{Nguyên nhân chênh lệch.}
-Pipeline chọn quan hệ ngay khi trích, với ràng buộc enum trên toàn bộ schema; EDC trích mở rồi mới ánh xạ vào năm quan hệ gần nhất, nên triple sai chiều hoặc không ánh xạ được sẽ bị loại.
-Trên REBEL, EDC sinh 5,49 triple mỗi câu so với 4,41 của pipeline và 4,00 của nhãn vàng, nên precision thấp hơn (48,8 so với 54,9).
-Số câu không có triple: EDC 7/0/4, pipeline 0/1/0.
+Pipeline chọn quan hệ ngay khi trích, với ràng buộc enum trên toàn bộ schema, nên mọi triple đầu ra đều có quan hệ hợp lệ; câu nào cũng cho ra triple (0/1/0 câu rỗng).
+EDC thua vì trích mở rồi mới ánh xạ vào năm quan hệ gần nhất: triple sai chiều hoặc không ánh xạ được bị loại (7/0/4 câu rỗng), và trên REBEL EDC sinh 5,49 triple mỗi câu so với 4,41 của pipeline và 4,00 của nhãn vàng, kéo precision xuống 48,8 so với 54,9.
+ATOM+EDC thua vì thêm bước tách factoid trước khi trích: 88/39/167 câu không được tách thành factoid nào, dẫn tới 106/47/217 câu rỗng; với câu đầu vào vốn đã ngắn và schema cố định, bước tách chỉ làm mất thông tin, rồi lỗi đó đi tiếp qua các bước của EDC.
 
 \paragraph*{Chi phí.}
 Pipeline dùng một lệnh gọi mỗi câu (1.165/1.000/1.000 lượt) và chạy trong 20/21/15 phút; EDC cần ít nhất hai lệnh gọi mỗi câu cộng mô hình nhúng 7B và chạy trong 50/61/41 phút; ATOM+EDC hơn bốn lệnh gọi mỗi câu, 119/135/101 phút.
