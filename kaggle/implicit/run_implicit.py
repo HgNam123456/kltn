@@ -89,10 +89,10 @@ sh(f"chmod +x {bin_dir}/llama-server")
 sh("pip install -q nvidia-cuda-runtime-cu12 nvidia-cublas-cu12")
 import glob  # noqa: E402
 
-LD_DIRS = {os.path.dirname(f) for pat in ("/usr/local/lib/python3*/dist-packages/nvidia/*/lib/*.so*",
-                                           "/usr/lib/python3*/dist-packages/nvidia/*/lib/*.so*",
-                                           "/usr/local/lib/python3*/site-packages/nvidia/*/lib/*.so*")
-           for f in glob.glob(pat)} | {"/usr/local/nvidia/lib64", "/usr/local/cuda/lib64"}
+LD_DIRS = {os.path.dirname(f) for pat in ("/usr/local/lib/python3*/dist-packages/nvidia/**/*.so*",
+                                           "/usr/lib/python3*/dist-packages/nvidia/**/*.so*",
+                                           "/usr/local/lib/python3*/site-packages/nvidia/**/*.so*")
+           for f in glob.glob(pat, recursive=True)} | {"/usr/local/nvidia/lib64", "/usr/local/cuda/lib64"}
 LD = ":".join(sorted(LD_DIRS))
 os.environ["LD_LIBRARY_PATH"] = LD + ":" + os.environ.get("LD_LIBRARY_PATH", "")
 missing = subprocess.run(f"ldd {bin_dir}/llama-server | grep 'not found'", shell=True, capture_output=True, text=True).stdout
