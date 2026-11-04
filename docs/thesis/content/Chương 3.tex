@@ -421,18 +421,15 @@ Thuật toán chỉ duyệt các tập hữu hạn nên luôn dừng; với mỗ
 % ----------------------------------------------------------------------
 \subsection{Bước 4: bộ phán KEEP, INVALIDATE, ADD}\label{sec:step-judge}
 
-Khoanh vùng chỉ trả lời ``nhìn vào đâu'': ba cạnh quanh Pedri có ba kết cục khác nhau, nên cần một bộ phán cho từng cạnh.
-Đầu vào gồm bản tin, các thao tác tường minh, danh sách quan hệ cho phép và các ứng viên kèm bằng chứng.
-Với ứng viên cắt, đầu ra là \opk{KEEP} (mặc định) hoặc \opk{INVALIDATE}; với ứng viên sinh, đầu ra là bỏ qua (mặc định) hoặc \opk{ADD} với một quan hệ và một chiều cạnh.
-Hướng dẫn của bộ phán nhấn mạnh rằng chỉ fact \emph{trạng thái} (đang chơi cho, đang là đồng đội) mới có thể hết hiệu lực, còn fact \emph{sự kiện} lịch sử (đã vô địch, sinh tại) đúng mãi.
-
-Bộ phán dùng LLM với ba điểm chính.
+Khoanh vùng chỉ trả lời ``nhìn vào đâu'': ba cạnh quanh Pedri có ba kết cục khác nhau, nên bước \buoc{4} để LLM phán từng ứng viên.
+Đầu vào gồm bản tin, $O^{\mathrm{exp}}$, danh sách quan hệ cho phép và các ứng viên kèm bằng chứng; với ứng viên cắt, đầu ra là \opk{KEEP} (mặc định) hoặc \opk{INVALIDATE}, với ứng viên sinh là bỏ qua (mặc định) hoặc \opk{ADD} kèm quan hệ và chiều cạnh.
+Ba điểm chính của bộ phán:
 \begin{enumerate}
-  \item \emph{Gom ứng viên theo mẫu.} Các ứng viên cắt cùng thực thể tham gia, cùng quan hệ và cùng chiều được gom thành một mẫu; các ứng viên sinh cùng $a$, cùng $b$ và cùng quan hệ bằng chứng cũng vậy. Phán quyết của mẫu áp cho mọi cạnh trong mẫu, và các mẫu được gom thành lô, mỗi lô một lệnh gọi.
-  \item \emph{Bằng chứng cấu trúc thay cho luật miền.} Với mẫu cắt có quan hệ $r$ quanh cạnh vừa vô hiệu có quan hệ $r_0$, prompt nêu mức phụ thuộc $\mathrm{dep}(r,r_0)$: tỉ lệ cặp thực thể nối bằng $r$ trong KG-trước có chung một hàng xóm qua $r_0$. Đồng đội gần như luôn chung câu lạc bộ qua \kgr{plays\_for} nên tỉ lệ rất cao, còn bạn bè thì thấp. Với mẫu sinh, prompt nêu tỉ lệ các thực thể cùng vai với $a$ đang có quan hệ $r$ với các ứng viên. Cả hai chỉ là phép đếm trên KG.
-  \item \emph{Đầu ra ép schema có lý do.} Mỗi pha trả trường \texttt{reasoning} trước rồi mới tới quyết định; quan hệ của \opk{ADD} bị ép thành enum các quan hệ cho phép. Ví dụ few-shot lấy từ miền bóng đá, khác miền dữ liệu, để mô hình học cách đọc bằng chứng chứ không học luật miền.
+  \item \emph{Gom theo mẫu}: ứng viên cùng thực thể tham gia, cùng quan hệ và cùng chiều được gom thành một mẫu, phán một lần cho cả mẫu; các mẫu gom thành lô, mỗi lô một lệnh gọi.
+  \item \emph{Bằng chứng cấu trúc thay cho luật miền}: với mẫu cắt có quan hệ $r$ quanh cạnh vừa vô hiệu $r_0$, prompt nêu tỉ lệ cặp nối bằng $r$ trong KG-trước có chung hàng xóm qua $r_0$ (đồng đội gần như luôn chung câu lạc bộ, bạn bè thì không); với mẫu sinh, prompt nêu tỉ lệ thực thể cùng vai với $a$ đang có quan hệ $r$ với ứng viên. Cả hai chỉ là phép đếm trên KG.
+  \item \emph{Đầu ra ép schema có lý do}: trường \texttt{reasoning} đi trước quyết định, quan hệ của \opk{ADD} bị ép thành enum; ví dụ few-shot lấy từ miền khác dữ liệu để mô hình học cách đọc bằng chứng chứ không học luật miền. Prompt cũng nhắc rằng chỉ fact trạng thái (đang chơi cho) mới hết hiệu lực, còn fact sự kiện (đã vô địch) đúng mãi.
 \end{enumerate}
-Với ví dụ Messi, mẫu \kgr{teammate}(Messi, Pedri) có mức phụ thuộc gần tuyệt đối nên bị vô hiệu; \kgr{friend}(Messi, Pedri) và \kgr{plays\_for}(Pedri, Barca) có mức phụ thuộc thấp và Pedri không rời đi, nên được giữ; ở vế sinh, bộ phán thêm \kgr{teammate}(Messi, Lautaro) và \kgr{coached\_by}(Messi, Inzaghi).
+Với ví dụ Messi, \kgr{teammate}(Messi, Pedri) có mức phụ thuộc gần tuyệt đối nên bị vô hiệu; \kgr{friend}(Messi, Pedri) và \kgr{plays\_for}(Pedri, Barca) được giữ; ở vế sinh, bộ phán thêm \kgr{teammate}(Messi, Lautaro) và \kgr{coached\_by}(Messi, Inzaghi).
 
 % ----------------------------------------------------------------------
 \subsection{Bước 6: gộp tên định kỳ}\label{sec:step-canon}
