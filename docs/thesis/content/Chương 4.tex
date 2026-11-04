@@ -100,7 +100,6 @@ NBAtransactions gồm 4.100 tin chuyển nhượng NBA (2010--2019), mỗi tin k
 KG là đội hình của một đến ba đội với bốn quan hệ (cầu thủ của đội, đồng đội, huấn luyện viên trưởng, tổng giám đốc), trung bình 480 cạnh, 89\% là cạnh đồng đội.
 Mỗi tin làm thay đổi trung bình 33 đến 38 cạnh thêm và 36 đến 40 cạnh xóa, nhưng chỉ 5,6\% số thay đổi có cả hai đầu được nhắc trong tin: tin ``X ký hợp đồng với đội Y'' kéo theo việc cắt mọi cạnh đồng đội của X ở đội cũ và thêm mọi cạnh đồng đội ở đội mới.
 
-
 % ----------------------------------------------------------------------
 \section{Độ đo}\label{sec:exp-metrics}
 
@@ -126,7 +125,6 @@ Chúng tôi báo đủ $P$, $R$, $F_1$ ở cả ba mức, trên thang 100.
 
 \paragraph*{Trên NBAtransactions.}
 Độ đo lấy theo bài báo GUpdater: F1 giữa tập cạnh của KG dự đoán và KG-sau vàng, độ chính xác trên các cạnh cần thêm và độ chính xác trên các cạnh cần xóa.
-
 
 % ----------------------------------------------------------------------
 \section{Các hệ so sánh}\label{sec:exp-systems}
@@ -163,11 +161,10 @@ Thao tác tường minh được lấy từ nhãn vàng: trong hiệu giữa KG-
 Pipeline áp các thao tác này lên KG-trước, khoanh vùng hai vế rồi để bộ phán Gemma~4 E4B quyết định từng ứng viên (gom theo mẫu cấu trúc, ngưỡng lọc 0,5).
 GUpdater và baseline IE+R-GCN được đối chiếu bằng số công bố; hai hệ này huấn luyện trên 3.263 tin, pipeline không huấn luyện.
 
-
 % ----------------------------------------------------------------------
 \section{Kết quả thực nghiệm}\label{sec:exp-results}
 
-Bảng~\ref{tab:webnlg}, Bảng~\ref{tab:rebel} và Bảng~\ref{tab:wikinre} trình bày kết quả trên từng bộ; mỗi hệ được chạy một lượt trên mỗi bộ, với nhiệt độ 0.
+Bảng~\ref{tab:webnlg}, Bảng~\ref{tab:rebel} và Bảng~\ref{tab:wikinre} trình bày kết quả trên ba bộ của EDC, Bảng~\ref{tab:nba} trên NBAtransactions; mỗi hệ được chạy một lượt trên mỗi bộ, với nhiệt độ 0.
 Nhóm dòng trên là ba hệ chúng tôi đã chạy bằng Gemma~4 E4B; dòng pipeline tô nền xanh nhạt; số in đậm là tốt nhất trong nhóm này.
 Nhóm dòng dưới, tô nền xám, là số công bố trong bài báo EDC~\cite{zhang2024edc}, chỉ gồm F1. Cột cuối ghi thời gian chạy (phút trên Kaggle T4) và, trong ngoặc, số lệnh gọi LLM cho mỗi câu.
 
@@ -246,6 +243,31 @@ ATOM+EDC (Gemma 4 E4B) & 40,5 & 41,0 & 40,7 & 28,3 & 28,7 & 28,5 & 39,0 & 39,4 &
 \parbox{\textwidth}{\small Ghi chú như Bảng~\ref{tab:webnlg} và Bảng~\ref{tab:rebel}.}
 \end{table}
 
+\paragraph*{NBAtransactions.}
+Bảng~\ref{tab:nba} trình bày kết quả trên 438 tin kiểm tra.
+Bước khoanh vùng sinh 70,3 ứng viên vế cắt và 31,0 ứng viên vế sinh mỗi tin, phủ 100\% số thay đổi gián tiếp của 438 tin: mọi cạnh cần thêm hay cần xóa đều nằm trong tập ứng viên.
+Bộ phán đạt F1 0,993 và độ chính xác xóa 0,997, cao hơn GUpdater (0,987 và 0,899); độ chính xác thêm 0,840 thấp hơn GUpdater 5,3 điểm.
+Chi phí là 1.428 lệnh gọi LLM cho 438 tin, tức 3,3 lệnh gọi mỗi tin.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên 438 tin kiểm tra của NBAtransactions. Hai dòng xám là số công bố trong bài báo GUpdater.}\label{tab:nba}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{7.2cm} c c c}
+\toprule
+\textbf{Cấu hình} & \textbf{F1} & \textbf{Acc cạnh thêm} & \textbf{Acc cạnh xóa} \\
+\midrule
+\rowcolor{green!10}
+Pipeline đề xuất (khoanh vùng hai vế + bộ phán Gemma~4 E4B) & \textbf{0,993} & 0,840 & \textbf{0,997} \\
+\midrule
+\rowcolor{gray!15}
+GUpdater (số công bố) & 0,987 & \textbf{0,893} & 0,899 \\
+\rowcolor{gray!15}
+IE + R-GCN (số công bố) & 0,943 & 0,468 & 0,245 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng Gemma~4 E4B trên ba bộ.
 
 \begin{figure}[htbp]
@@ -278,31 +300,6 @@ Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng G
 \end{tikzpicture}
 \caption{Partial F1 trên WebNLG, REBEL và Wiki-NRE; cả ba hệ dùng Gemma 4 E4B và cùng script chấm của EDC (số liệu từ Bảng~\ref{tab:webnlg}, \ref{tab:rebel} và \ref{tab:wikinre}).}\label{fig:edc-f1}
 \end{figure}
-
-\paragraph*{NBAtransactions.}
-Bảng~\ref{tab:nba} trình bày kết quả trên 438 tin kiểm tra.
-Bước khoanh vùng sinh 70,3 ứng viên vế cắt và 31,0 ứng viên vế sinh mỗi tin, phủ 100\% số thay đổi gián tiếp của 438 tin: mọi cạnh cần thêm hay cần xóa đều nằm trong tập ứng viên.
-Bộ phán đạt F1 0,993 và độ chính xác xóa 0,997, cao hơn GUpdater (0,987 và 0,899); độ chính xác thêm 0,840 thấp hơn GUpdater 5,3 điểm.
-Chi phí là 1.428 lệnh gọi LLM cho 438 tin, tức 3,3 lệnh gọi mỗi tin.
-
-\begin{table}[htbp]
-\centering
-\caption{Kết quả trên 438 tin kiểm tra của NBAtransactions. Hai dòng xám là số công bố trong bài báo GUpdater.}\label{tab:nba}
-\small
-\begin{tabular}{>{\raggedright\arraybackslash}p{7.2cm} c c c}
-\toprule
-\textbf{Cấu hình} & \textbf{F1} & \textbf{Acc cạnh thêm} & \textbf{Acc cạnh xóa} \\
-\midrule
-\rowcolor{green!10}
-Pipeline đề xuất (khoanh vùng hai vế + bộ phán Gemma~4 E4B) & \textbf{0,993} & 0,840 & \textbf{0,997} \\
-\midrule
-\rowcolor{gray!15}
-GUpdater (số công bố) & 0,987 & \textbf{0,893} & 0,899 \\
-\rowcolor{gray!15}
-IE + R-GCN (số công bố) & 0,943 & 0,468 & 0,245 \\
-\bottomrule
-\end{tabular}
-\end{table}
 
 % ----------------------------------------------------------------------
 \section{Phân tích và đánh giá}\label{sec:exp-analysis}
