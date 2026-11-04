@@ -320,10 +320,6 @@ EDC cần ít nhất hai lệnh gọi mỗi câu, thêm một lệnh xác minh c
 ATOM+EDC cần 3,7/4,4/3,7 lệnh gọi mỗi câu cho riêng bước tách và trích factoid, cộng các bước của EDC phía sau, tổng hơn bốn lệnh gọi mỗi câu; thời gian 119/135/101 phút.
 Thời gian chỉ nên đọc cùng số lệnh gọi vì pipeline xử lý song song còn EDC chạy tuần tự; tính theo lệnh gọi, pipeline tốn không quá một nửa so với EDC và không quá một phần tư so với ATOM+EDC.
 
-\paragraph*{So với kết quả công bố.}
-So sánh chỉ mang tính định vị vì bài báo EDC dùng GPT-3.5 ở các bước sau trích mở và mẫu REBEL, Wiki-NRE có thể khác.
-Partial F1 của pipeline (74,4/55,2/66,2) cao hơn EDC với Mistral-7B (72,8/51,6/64,7) ở cả ba bộ; so với EDC dùng GPT-4 (78,3/54,6/68,3) thì thấp hơn 3,9 và 2,1 điểm trên WebNLG, Wiki-NRE và cao hơn 0,6 điểm trên REBEL; EDC+R với GPT-4 (82,0/60,1/71,3) cao hơn pipeline 7,6/4,9/5,1 điểm.
-
 \paragraph*{Trên NBAtransactions.}
 Bước khoanh vùng phủ đủ 100\% thay đổi gián tiếp, nên toàn bộ sai số thuộc bộ phán; sai tập trung ở cạnh thêm (0,840) của các tin đổi nhiều cầu thủ cùng lúc giữa hai đội.
 Thao tác tường minh được lấy từ nhãn vàng, nên kết quả này đo riêng hai bước khoanh vùng và bộ phán, chưa đo cả pipeline từ văn bản thô.
