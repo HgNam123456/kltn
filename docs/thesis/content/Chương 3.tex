@@ -18,7 +18,7 @@
 
 Chương này trình bày phương pháp mà khóa luận đề xuất cho bài toán tự động cập nhật \textit{knowledge graph} (KG) từ bản tin.
 Mục~\ref{sec:method-idea} nêu ý tưởng; Mục~\ref{sec:problem} định nghĩa hình thức bài toán kèm ví dụ dùng xuyên suốt; Mục~\ref{sec:architecture} mô tả kiến trúc và Mục~\ref{sec:steps} trình bày từng bước của pipeline.
-Module trích triple theo lược đồ, phần được đánh giá ở Chương~\ref{chap:experiments}, được mô tả trong Mục~\ref{sec:step-extract}; Mục~\ref{sec:analysis} phân tích ưu điểm và hạn chế.
+Module trích triple theo lược đồ, phần được đánh giá ở Chương~\ref{chap:experiments}, được mô tả trong Mục~\ref{sec:step-extract}.
 
 % ======================================================================
 \section{Ý tưởng: LLM trích, cấu trúc khoanh vùng, bộ phán quyết}\label{sec:method-idea}
@@ -444,27 +444,3 @@ Trong mỗi cụm, hai tên được nối nếu cosine từ $0{,}75$ trở lên
 Mỗi cụm có tên mới được hỏi bằng một lệnh gọi LLM: với từng ứng viên, LLM viết lý do rồi trả \texttt{same} đúng hay sai kèm tên chung, trong đó các trường tên bị ép thành enum các tên của cụm để LLM không bịa tên mới.
 Tên bị gộp trở thành bí danh của tên chung, fact trùng bị bỏ, còn cặp bị phán khác nhau được ghi nhớ và không bao giờ hỏi lại.
 Tiêu chí ``cùng một'' chấp nhận viết tắt, biến thể chính tả, số nhiều hay thì của động từ, nhưng loại tên rộng hơn, hẹp hơn, là sự kiện liên quan hoặc ngược chiều: ``WHO'' và ``World Health Organization'' được gộp, ``coronavirus'' và ``coronavirus outbreak'' thì không; \kgr{is\_located\_in} và \kgr{are\_located\_in} được gộp, \kgr{causes} và \kgr{caused\_by} thì không.
-
-% ======================================================================
-\section{Phân tích ưu điểm và hạn chế}\label{sec:analysis}
-
-\paragraph*{Ưu điểm.}
-\begin{itemize}
-  \item \emph{Không luật miền}: khoanh vùng thuần cấu trúc, bằng chứng cho bộ phán là phép đếm trên KG; nạp miền mới chỉ cần nạp KG hoặc lược đồ, không phải viết luật.
-  \item \emph{Ít lệnh gọi LLM}: mỗi bước LLM chỉ làm một tác vụ hẹp với vài lệnh gọi mỗi tin; số lệnh gọi của bộ phán phụ thuộc số mẫu ứng viên chứ không phụ thuộc kích thước KG; module trích theo lược đồ tốn đúng một lệnh gọi mỗi câu.
-  \item \emph{Không xóa và giải thích được}: lịch sử luôn truy vấn được, thao tác sai hoàn tác được; mỗi thao tác mang nguồn gốc (câu nguồn, hub và tập neo, cạnh bằng chứng, lý do của bộ phán).
-  \item \emph{Chạy được với LLM mở cỡ nhỏ}: đầu ra ép schema giúp mô hình 4-bit tránh lỗi định dạng và lỗi tên quan hệ.
-\end{itemize}
-
-\paragraph*{Hạn chế.}
-\begin{itemize}
-  \item \emph{Phụ thuộc vào thao tác tường minh}: khoanh vùng chỉ được kích hoạt bởi $O^{\mathrm{exp}}$, nên một \opk{INVALIDATE} bị bước \buoc{1} bỏ sót kéo theo mất mọi hệ quả gián tiếp của nó.
-  \item \emph{Chưa tạo thực thể mới có liên kết}: tên mới được tạo tự do nhưng chưa được gắn mã định danh của một cơ sở tri thức (loại Mint+Add của EMERGE).
-  \item \emph{Cùng một mô hình cho nhiều vai}: bộ phán và bước trích dùng cùng LLM nên lỗi của hai bước có thể tương quan; hai bước viết lại bằng LLM (rút câu, gộp tên) có thể làm câu chữ thay đổi giữa các lượt chạy.
-  \item \emph{Vùng ứng viên bám quanh cạnh thay đổi}: ở miền có hệ quả dây chuyền nhiều bước, có thể cần lặp khoanh vùng trên chính các thao tác do bộ phán sinh ra.
-  \item \emph{Phạm vi đánh giá}: thực nghiệm ở Chương~\ref{chap:experiments} chỉ đánh giá module trích theo lược đồ trên ba bộ dữ liệu của EDC; các bước khoanh vùng, bộ phán và gộp tên được trình bày ở mức thiết kế và cài đặt, chưa được đánh giá định lượng trong khóa luận.
-\end{itemize}
-
-\paragraph*{Độ đo.}
-Module trích theo lược đồ được chấm bằng precision, recall và F1 ở ba mức Partial, Strict, Exact theo script chấm của EDC như đã trình bày ở chương trước, kèm chi phí (số lệnh gọi LLM, thời gian chạy).
-Với pipeline đầy đủ, độ đo tự nhiên là precision, recall và F1 trên từng loại thao tác so với KG-sau vàng.
