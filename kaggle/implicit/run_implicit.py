@@ -96,8 +96,7 @@ LD = ":".join(sorted(set(os.path.dirname(p) for pat in ("/usr/local/lib/python3*
 os.environ["LD_LIBRARY_PATH"] = LD + ":" + os.environ.get("LD_LIBRARY_PATH", "")
 missing = subprocess.run(f"ldd {bin_dir}/llama-server | grep 'not found'", shell=True, capture_output=True, text=True).stdout
 summary["ldd_missing_after_pip"] = missing.strip()
-print("LD_LIBRARY_PATH:", LD, "
-ldd thiếu:", missing or "(không)", flush=True)
+print("LD_LIBRARY_PATH:", LD, "| ldd thiếu:", missing or "(không)", flush=True)
 if missing:
     summary["notes"].append("binary cache thiếu thư viện → build lại llama.cpp trong kernel")
     sh(f"rm -rf {WORK}/llama.cpp && git clone -q --depth 1 https://github.com/ggml-org/llama.cpp {WORK}/llama.cpp")
