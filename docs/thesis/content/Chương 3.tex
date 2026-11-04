@@ -429,9 +429,6 @@ Với ví dụ Messi, \kgr{teammate}(Messi, Pedri) có mức phụ thuộc gần
 \subsection{Bước 6: gộp tên định kỳ}\label{sec:step-canon}
 
 Bước \buoc{6} chạy định kỳ, chẳng hạn sau mỗi 10 bản tin, để gộp các tên khác nhau của cùng một thực thể hay quan hệ; nếu không gộp, việc tra fact đã lưu theo tên ở bước \buoc{1} sẽ trượt.
-Mỗi lượt xử lý tên thực thể trước, tên quan hệ sau.
-Các tên được nhúng bằng sentence embedding và chia cụm bằng k-means với $k=\lceil n/10\rceil$, trong đó $n$ là số tên.
-Trong mỗi cụm, hai tên được nối nếu cosine từ $0{,}75$ trở lên, có cùng dãy chữ số (để ``1,694 Cases'' không bị gộp với ``1,700 Cases'') và chưa từng bị phán khác nhau; mỗi thành phần liên thông là một nhóm ứng viên, với tên gần tâm nhóm nhất làm mốc.
-Mỗi cụm có tên mới được hỏi bằng một lệnh gọi LLM: với từng ứng viên, LLM viết lý do rồi trả \texttt{same} đúng hay sai kèm tên chung, trong đó các trường tên bị ép thành enum các tên của cụm để LLM không bịa tên mới.
-Tên bị gộp trở thành bí danh của tên chung, fact trùng bị bỏ, còn cặp bị phán khác nhau được ghi nhớ và không bao giờ hỏi lại.
-Tiêu chí ``cùng một'' chấp nhận viết tắt, biến thể chính tả, số nhiều hay thì của động từ, nhưng loại tên rộng hơn, hẹp hơn, là sự kiện liên quan hoặc ngược chiều: ``WHO'' và ``World Health Organization'' được gộp, ``coronavirus'' và ``coronavirus outbreak'' thì không; \kgr{is\_located\_in} và \kgr{are\_located\_in} được gộp, \kgr{causes} và \kgr{caused\_by} thì không.
+Các tên (thực thể trước, quan hệ sau) được nhúng bằng sentence embedding và chia cụm bằng k-means với $k=\lceil n/10\rceil$; trong mỗi cụm, hai tên là ứng viên gộp nếu cosine từ $0{,}75$ trở lên, cùng dãy chữ số (``1,694 Cases'' không gộp với ``1,700 Cases'') và chưa từng bị phán khác nhau.
+Mỗi cụm có ứng viên được hỏi bằng một lệnh gọi LLM: với từng cặp, LLM viết lý do rồi trả \texttt{same} đúng hay sai kèm tên chung, các trường tên bị ép thành enum các tên trong cụm để LLM không bịa tên mới; tên bị gộp thành bí danh của tên chung, cặp bị phán khác nhau được ghi nhớ và không hỏi lại.
+Tiêu chí ``cùng một'' chấp nhận viết tắt, biến thể chính tả, số nhiều hay thì của động từ, nhưng loại tên rộng hơn, hẹp hơn hoặc ngược chiều: ``WHO'' và ``World Health Organization'' được gộp, ``coronavirus'' và ``coronavirus outbreak'' thì không; \kgr{causes} và \kgr{caused\_by} thì không.
