@@ -26,7 +26,7 @@ Mọi hệ dùng cùng một LLM, nên chênh lệch giữa các hệ phản án
 Chúng tôi chọn ba benchmark của EDC vì ba lý do. Thứ nhất, chúng có schema cố định và script chấm công khai.
 Thứ hai, đây là ``sân nhà'' của EDC: dữ liệu, schema, ví dụ few-shot và script chấm đều do nhóm tác giả EDC chuẩn bị, nên phép so sánh không nghiêng về phía pipeline.
 Thứ ba, bài báo EDC công bố số liệu trên chính ba bộ này, giúp định vị kết quả so với các LLM lớn hơn.
-Ngoài ra, Mục~\ref{sec:exp-nba} trình bày một thực nghiệm bổ sung trên NBAtransactions, bộ dữ liệu mà phần lớn thay đổi của KG là gián tiếp, để kiểm chứng hai bước khoanh vùng cấu trúc và bộ phán.
+Benchmark thứ tư là NBAtransactions~\cite{tang2019gupdate}, bộ dữ liệu mà 94\% thay đổi của KG là gián tiếp; trên bộ này chúng tôi đo hai bước khoanh vùng cấu trúc hai vế và bộ phán, so với GUpdater.
 
 % ----------------------------------------------------------------------
 \section{Công cụ và môi trường thực nghiệm}\label{sec:exp-env}
@@ -74,11 +74,11 @@ Các baseline được chạy lại từ mã gốc với phiên bản ghim cố 
 
 Chúng tôi dùng đúng bản dữ liệu trong kho mã EDC: tệp văn bản, tệp triple vàng, schema (mỗi quan hệ kèm một câu mô tả) và ví dụ few-shot.
 Mỗi dòng của tệp văn bản là một văn bản ngắn, thường là một câu (dưới đây gọi chung là ``câu''); dòng tương ứng của tệp vàng là danh sách triple (chủ ngữ, quan hệ, tân ngữ).
-Bảng~\ref{tab:datasets} tóm tắt ba bộ dữ liệu; số liệu do chúng tôi đếm trực tiếp trên các tệp này.
+Bảng~\ref{tab:datasets} tóm tắt ba bộ dữ liệu của EDC; số liệu do chúng tôi đếm trực tiếp trên các tệp này.
 
 \begin{table}[htbp]
 \centering
-\caption{Ba bộ dữ liệu trong thực nghiệm (bản trong kho mã EDC)}\label{tab:datasets}
+\caption{Ba bộ dữ liệu của EDC dùng trong thực nghiệm}\label{tab:datasets}
 \small
 \begin{tabular}{l >{\raggedright\arraybackslash}p{4.4cm} r r r c}
 \toprule
@@ -94,6 +94,11 @@ Wiki-NRE & nhãn thuộc tính Wikidata (\textit{located in the administrative t
 Ba bộ khác nhau ở những điểm ảnh hưởng tới kết quả. WebNLG có số triple mỗi câu dao động mạnh (từ 1 đến 7) và quan hệ viết theo kiểu định danh của DBpedia.
 REBEL có schema lớn nhất (196 quan hệ), và trong mẫu này mỗi câu có đúng 4 triple vàng; Wiki-NRE có schema nhỏ nhất (45 quan hệ), chủ yếu là quan hệ địa lý và hành chính.
 REBEL và Wiki-NRE trong kho mã EDC là mẫu 1.000 câu; chúng tôi không xác định được mẫu này có trùng với mẫu mà bài báo EDC đã dùng hay không.
+
+\paragraph*{NBAtransactions.}
+NBAtransactions gồm 4.100 tin chuyển nhượng NBA (2010--2019), mỗi tin kèm KG-trước và KG-sau; chúng tôi dùng 438 tin của tập kiểm tra.
+KG là đội hình của một đến ba đội với bốn quan hệ (cầu thủ của đội, đồng đội, huấn luyện viên trưởng, tổng giám đốc), trung bình 480 cạnh, 89\% là cạnh đồng đội.
+Mỗi tin làm thay đổi trung bình 33 đến 38 cạnh thêm và 36 đến 40 cạnh xóa, nhưng chỉ 5,6\% số thay đổi có cả hai đầu được nhắc trong tin: tin ``X ký hợp đồng với đội Y'' kéo theo việc cắt mọi cạnh đồng đội của X ở đội cũ và thêm mọi cạnh đồng đội ở đội mới.
 
 
 % ----------------------------------------------------------------------
@@ -119,11 +124,14 @@ Script tính $P$, $R$, $F_1$ cho từng cặp triple đã ghép rồi lấy trun
 Triple vàng bị ghép với triple rỗng có cả ba phần tử bị tính là sót, còn triple dự đoán bị ghép với triple rỗng bị tính là thừa; vì vậy câu mà hệ không trích được gì (\textit{câu rỗng}) vẫn được chấm và kéo điểm xuống.
 Chúng tôi báo đủ $P$, $R$, $F_1$ ở cả ba mức, trên thang 100.
 
+\paragraph*{Trên NBAtransactions.}
+Độ đo lấy theo bài báo GUpdater: F1 giữa tập cạnh của KG dự đoán và KG-sau vàng, độ chính xác trên các cạnh cần thêm và độ chính xác trên các cạnh cần xóa.
+
 
 % ----------------------------------------------------------------------
 \section{Các hệ so sánh}\label{sec:exp-systems}
 
-Bảng~\ref{tab:systems} tóm tắt ba hệ được chạy bằng Gemma~4 E4B.
+Bảng~\ref{tab:systems} tóm tắt ba hệ được chạy bằng Gemma~4 E4B trên ba bộ của EDC.
 
 \begin{table}[htbp]
 \centering
@@ -149,6 +157,12 @@ Chúng tôi không chạy bước tinh chỉnh; EDC+R chỉ được đối chi�
 ATOM tách câu thành factoid, rồi trích bộ gồm head, relation, tail và hai mốc thời gian cho từng factoid. Vì benchmark chỉ chấm triple, hai mốc bị bỏ; triple còn lại tiếp tục qua hai bước định nghĩa schema và chuẩn hóa của EDC.
 ATOM cần 4.264, 4.355 và 3.713 lệnh gọi trên WebNLG, REBEL và Wiki-NRE (tương ứng 3,7; 4,4; 3,7 lệnh mỗi câu), chưa kể EDC; các yêu cầu được gửi bất đồng bộ theo lô 32 câu.
 Biến thể thêm mốc thời gian thành triple riêng đạt Partial F1 thấp hơn (55,5; 35,2; 39,7), nên không được dùng trong kết quả chính.
+
+\paragraph*{Trên NBAtransactions.}
+Thao tác tường minh được lấy từ nhãn vàng: trong hiệu giữa KG-sau và KG-trước, cạnh có cả hai đầu được nhắc trong tin là thao tác tường minh (5,6\% số thay đổi).
+Pipeline áp các thao tác này lên KG-trước, khoanh vùng hai vế rồi để bộ phán Gemma~4 E4B quyết định từng ứng viên (gom theo mẫu cấu trúc, ngưỡng lọc 0,5).
+Hai cấu hình đối chứng trên cùng đầu vào: \emph{chỉ áp thao tác tường minh} (không khoanh vùng, không bộ phán) và \emph{bộ phán oracle} (mọi ứng viên được phán đúng theo nhãn vàng, cho trần của bước khoanh vùng).
+GUpdater và baseline IE+R-GCN được đối chiếu bằng số công bố; hai hệ này huấn luyện trên 3.263 tin, pipeline không huấn luyện.
 
 
 % ----------------------------------------------------------------------
@@ -266,6 +280,33 @@ Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng G
 \caption{Partial F1 trên WebNLG, REBEL và Wiki-NRE; cả ba hệ dùng Gemma 4 E4B và cùng script chấm của EDC (số liệu từ Bảng~\ref{tab:webnlg}, \ref{tab:rebel} và \ref{tab:wikinre}).}\label{fig:edc-f1}
 \end{figure}
 
+\paragraph*{NBAtransactions.}
+Bảng~\ref{tab:nba} trình bày kết quả trên 438 tin kiểm tra.
+Chỉ áp thao tác tường minh cho độ chính xác 0,056 trên cả cạnh thêm và cạnh xóa, đúng bằng tỉ lệ thay đổi tường minh; F1 vẫn 0,926 vì phần lớn đồ thị không đổi sau một tin.
+Thêm khoanh vùng và bộ phán, F1 đạt 0,993 và độ chính xác xóa 0,997, cao hơn GUpdater (0,987 và 0,899); độ chính xác thêm 0,840 thấp hơn GUpdater 5,3 điểm.
+Bước khoanh vùng sinh 70,3 ứng viên vế cắt và 31,0 ứng viên vế sinh mỗi tin và phủ mọi cạnh cần đổi (oracle đạt 1,000); bộ phán dùng 1.428 lệnh gọi cho 438 tin, tức 3,3 lệnh gọi mỗi tin.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên 438 tin kiểm tra của NBAtransactions. Hai dòng cuối là số công bố trong bài báo GUpdater.}\label{tab:nba}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{7.2cm} c c c}
+\toprule
+\textbf{Cấu hình} & \textbf{F1} & \textbf{Acc cạnh thêm} & \textbf{Acc cạnh xóa} \\
+\midrule
+Chỉ áp thao tác tường minh (không bộ phán) & 0,926 & 0,056 & 0,056 \\
+\rowcolor{green!10}
+Khoanh vùng hai vế + bộ phán Gemma~4 E4B & \textbf{0,993} & 0,840 & \textbf{0,997} \\
+Khoanh vùng hai vế + bộ phán oracle (trần) & 1,000 & 1,000 & 1,000 \\
+\midrule
+\rowcolor{gray!15}
+GUpdater (số công bố) & 0,987 & \textbf{0,893} & 0,899 \\
+\rowcolor{gray!15}
+IE + R-GCN (số công bố) & 0,943 & 0,468 & 0,245 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
 % ----------------------------------------------------------------------
 \section{Phân tích và đánh giá}\label{sec:exp-analysis}
 
@@ -288,6 +329,10 @@ Nguyên nhân chính là bước tách không sinh factoid cho 88/39/167 câu; v
 \paragraph*{So với kết quả công bố.}
 So sánh chỉ mang tính định vị vì bài báo EDC dùng GPT-3.5 ở các bước sau trích mở và mẫu REBEL, Wiki-NRE có thể khác.
 Partial F1 của pipeline (74,4/55,2/66,2) cao hơn EDC với Mistral-7B (72,8/51,6/64,7) ở cả ba bộ; so với EDC dùng GPT-4 (78,3/54,6/68,3) thì thấp hơn 3,9 và 2,1 điểm trên WebNLG, Wiki-NRE và cao hơn 0,6 điểm trên REBEL; EDC+R với GPT-4 (82,0/60,1/71,3) cao hơn pipeline 7,6/4,9/5,1 điểm.
+
+\paragraph*{Trên NBAtransactions.}
+Oracle đạt 1,000 nên toàn bộ sai số còn lại thuộc bộ phán, không thuộc bước khoanh vùng; sai tập trung ở cạnh thêm (0,840) của các tin đổi nhiều cầu thủ cùng lúc giữa hai đội.
+Thao tác tường minh được lấy từ nhãn vàng, nên kết quả này đo riêng hai bước khoanh vùng và bộ phán, chưa đo cả pipeline từ văn bản thô.
 
 \paragraph*{Đánh giá chung.}
 Kết quả ủng hộ việc trích và chọn quan hệ ngay trong một bước có ràng buộc enum: pipeline vừa chính xác hơn EDC, vừa ít tốn lệnh gọi và thời gian. Tuy nhiên, pipeline vẫn kém một số hệ dùng LLM lớn và còn mắc lỗi sai chiều hoặc nhầm quan hệ gần nghĩa.
@@ -345,57 +390,6 @@ Pipeline đảo chiều quan hệ \textit{spouse}, đặt Casey Ribicoff làm ch
 Cả ba hệ cùng chọn \textit{occupation} thay cho \textit{office}; hai quan hệ gần nghĩa này đều có trong schema WebNLG, và ràng buộc \texttt{enum} chỉ bảo đảm quan hệ hợp lệ chứ không bảo đảm quan hệ đúng.
 Tân ngữ vẫn khớp với gold sau chuẩn hóa (dấu phẩy bị bỏ khi tách từ), nên triple chỉ sai ở phần quan hệ. Với ATOM, factoid ``Casey Ribicoff is the wife of Abraham A. Ribicoff'' đã đổi chủ ngữ ngay khi viết lại câu, dẫn tới triple đảo chiều.
 Ví dụ này cho thấy lỗi chiều quan hệ và lỗi chọn giữa hai quan hệ gần nghĩa là hướng cần cải thiện tiếp của module trích.
-
-% ----------------------------------------------------------------------
-\section{Thực nghiệm bổ sung: thay đổi gián tiếp trên NBAtransactions}\label{sec:exp-nba}
-
-Ba benchmark trên chỉ đo bước trích. Để kiểm chứng hai bước đặc thù của pipeline là khoanh vùng cấu trúc hai vế và bộ phán, chúng tôi đã tiến hành thêm một thực nghiệm trên NBAtransactions~\cite{tang2019gupdate}, bộ dữ liệu mà phần lớn thay đổi của KG là \emph{gián tiếp}: văn bản không nhắc tới nhưng vẫn phải đổi theo.
-
-\paragraph*{Dữ liệu.}
-NBAtransactions gồm 4.100 bản tin chuyển nhượng NBA (2010--2019), mỗi tin kèm KG-trước và KG-sau; bản phát hành chia 3.263 tin huấn luyện, 399 tin kiểm định và 438 tin kiểm tra, và chúng tôi dùng 438 tin kiểm tra.
-KG-trước là ảnh chụp đội hình của một đến ba đội trong một mùa giải, với bốn quan hệ: cầu thủ của đội, đồng đội, huấn luyện viên trưởng và tổng giám đốc; trung bình mỗi KG có khoảng 480 cạnh, trong đó 89\% là cạnh đồng đội.
-Theo số liệu chúng tôi đếm trên dữ liệu, mỗi tin làm thay đổi trung bình 33 đến 38 cạnh thêm và 36 đến 40 cạnh xóa; 94\% số cạnh thay đổi là cạnh đồng đội, và chỉ 5,6\% số thay đổi có cả hai đầu được nhắc trong văn bản.
-Một tin ``cầu thủ X ký hợp đồng với đội Y'' chỉ nói thẳng hai thay đổi, nhưng kéo theo việc cắt mọi cạnh đồng đội giữa X với đội cũ và thêm mọi cạnh đồng đội giữa X với đội mới.
-Đây là tình huống mà Chương~\ref{chap:method} đặt ra, nên bộ dữ liệu này là phép thử trực tiếp cho hai bước khoanh vùng và bộ phán.
-
-\paragraph*{Cách tổ chức.}
-Thực nghiệm cô lập hai bước cần đo bằng cách lấy các thao tác tường minh từ nhãn vàng: trong hiệu giữa KG-sau và KG-trước, các cạnh có cả hai đầu được nhắc trong tin được coi là thao tác tường minh (đúng 5,6\% số thay đổi).
-Các thao tác này được áp lên KG-trước, sau đó bước khoanh vùng hai vế sinh ứng viên và bộ phán Gemma~4 E4B quyết định giữ, vô hiệu hóa hay thêm cho từng ứng viên; các ứng viên cùng mẫu cấu trúc được gom vào một lệnh gọi, kèm một bộ lọc cấu trúc với ngưỡng 0,5 như mô tả ở Chương~\ref{chap:method}.
-Chúng tôi so với hai cấu hình đối chứng trên cùng đầu vào: \emph{chỉ áp thao tác tường minh} (không khoanh vùng, không bộ phán) cho biết phần văn bản nói thẳng đóng góp bao nhiêu, và \emph{bộ phán oracle} (mọi ứng viên được phán đúng theo nhãn vàng) cho biết trần của bước khoanh vùng.
-Độ đo lấy theo bài báo GUpdater: F1 giữa tập cạnh của KG dự đoán và KG-sau vàng, độ chính xác trên các cạnh cần thêm và độ chính xác trên các cạnh cần xóa.
-Số của GUpdater và của baseline IE kết hợp R-GCN được chép từ bài báo (nền xám); hai hệ này được huấn luyện trên 3.263 tin huấn luyện, còn pipeline không huấn luyện.
-
-\begin{table}[htbp]
-\centering
-\caption{Kết quả trên 438 tin kiểm tra của NBAtransactions. Hai dòng cuối là số công bố trong bài báo GUpdater, không phải số chạy lại.}\label{tab:nba}
-\small
-\begin{tabular}{>{\raggedright\arraybackslash}p{7.2cm} c c c}
-\toprule
-\textbf{Cấu hình} & \textbf{F1} & \textbf{Acc cạnh thêm} & \textbf{Acc cạnh xóa} \\
-\midrule
-Chỉ áp thao tác tường minh (không bộ phán) & 0,926 & 0,056 & 0,056 \\
-\rowcolor{green!10}
-Khoanh vùng hai vế + bộ phán Gemma~4 E4B & \textbf{0,993} & 0,840 & \textbf{0,997} \\
-Khoanh vùng hai vế + bộ phán oracle (trần) & 1,000 & 1,000 & 1,000 \\
-\midrule
-\rowcolor{gray!15}
-GUpdater (số công bố) & 0,987 & \textbf{0,893} & 0,899 \\
-\rowcolor{gray!15}
-IE + R-GCN (số công bố) & 0,943 & 0,468 & 0,245 \\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\paragraph*{Kết quả và phân tích.}
-Bảng~\ref{tab:nba} cho thấy vai trò của hai bước được đo.
-Nếu chỉ áp những gì văn bản nói thẳng, độ chính xác trên cạnh thêm và cạnh xóa chỉ đạt 0,056, đúng bằng tỉ lệ thay đổi tường minh của bộ dữ liệu; F1 vẫn ở mức 0,926 chỉ vì phần lớn đồ thị không đổi sau một tin.
-Thêm bước khoanh vùng và bộ phán, F1 tăng lên 0,993 và độ chính xác xóa đạt 0,997, cao hơn GUpdater (0,987 và 0,899) dù pipeline không huấn luyện trên miền này.
-Bước khoanh vùng sinh trung bình 70,3 ứng viên vế cắt và 31,0 ứng viên vế sinh mỗi tin, và mọi cạnh cần đổi của 438 tin đều nằm trong vùng được khoanh; cấu hình oracle đạt 1,000 trên cả ba độ đo, nên toàn bộ sai số còn lại thuộc về bộ phán, không thuộc về bước khoanh vùng.
-Điểm yếu nằm ở cạnh thêm: 0,840 so với 0,893 của GUpdater.
-Soi các tin bị sai, phần lớn là tin có nhiều giao dịch cùng lúc (đổi nhiều cầu thủ giữa hai đội), khi đó bộ phán bỏ sót một phần cạnh đồng đội mới ở vế sinh.
-Chi phí là 1.428 lệnh gọi LLM cho 438 tin, tức khoảng 3,3 lệnh gọi mỗi tin nhờ gom ứng viên theo mẫu, trong khi số ứng viên trung bình là hơn 100.
-
-Cần đọc kết quả này đúng phạm vi của nó: thao tác tường minh được lấy từ nhãn vàng, nên thực nghiệm đo riêng hai bước khoanh vùng và bộ phán, chưa đo cả pipeline từ văn bản thô; việc để LLM tự trích thao tác tường minh trên NBAtransactions rồi chạy tiếp các bước sau là hướng phát triển ở Chương~\ref{chap:conclusion}.
 
 % ----------------------------------------------------------------------
 \section{Hạn chế của thực nghiệm}\label{sec:exp-limits}
