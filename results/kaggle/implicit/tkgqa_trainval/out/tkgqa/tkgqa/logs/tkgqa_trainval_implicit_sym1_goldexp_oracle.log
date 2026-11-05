@@ -1,0 +1,19 @@
+gold_explicit+oracle:   0%|          | 0/744 [00:00<?, ?it/s]gold_explicit+oracle:  12%|█▏        | 91/744 [00:00<00:00, 872.13it/s]gold_explicit+oracle:  27%|██▋       | 202/744 [00:00<00:00, 1009.38it/s]gold_explicit+oracle:  41%|████      | 304/744 [00:00<00:01, 308.77it/s] gold_explicit+oracle:  52%|█████▏    | 389/744 [00:00<00:00, 395.24it/s]gold_explicit+oracle:  62%|██████▏   | 460/744 [00:01<00:00, 366.81it/s]gold_explicit+oracle:  69%|██████▉   | 517/744 [00:01<00:00, 232.64it/s]gold_explicit+oracle:  75%|███████▌  | 558/744 [00:02<00:01, 105.09it/s]gold_explicit+oracle:  79%|███████▉  | 587/744 [00:03<00:01, 109.37it/s]gold_explicit+oracle:  82%|████████▏ | 611/744 [00:03<00:01, 116.78it/s]gold_explicit+oracle: 100%|██████████| 744/744 [00:03<00:00, 231.16it/s]
+{
+  "precision": 0.9761132659333206,
+  "recall": 0.9985906025716083,
+  "f1": 0.987224008574491,
+  "add_acc": 0.9915628245067497,
+  "del_acc": 0.07089859851607584,
+  "config": "gold_explicit+oracle",
+  "split": "tkgqa_trainval_implicit",
+  "n": 744,
+  "n_scored": 744,
+  "errors": 0,
+  "coverage": 0.8527667984189723,
+  "avg_cut_cand": 0.02956989247311828,
+  "avg_add_cand": 49.928763440860216,
+  "judged_ratio": 0.18574618633807743,
+  "llm_calls": 0,
+  "seconds": 5.9
+}

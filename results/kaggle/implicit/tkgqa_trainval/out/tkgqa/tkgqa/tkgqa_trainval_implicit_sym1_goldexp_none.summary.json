@@ -1,0 +1,18 @@
+{
+  "precision": 0.9718079166149647,
+  "recall": 0.8490860599752813,
+  "f1": 0.9063114773069179,
+  "add_acc": 0.09657320872274143,
+  "del_acc": 0.06347897774113767,
+  "config": "gold_explicit+none",
+  "split": "tkgqa_trainval_implicit",
+  "n": 744,
+  "n_scored": 744,
+  "errors": 0,
+  "coverage": 0.8527667984189723,
+  "avg_cut_cand": 0.02956989247311828,
+  "avg_add_cand": 49.928763440860216,
+  "judged_ratio": 0.0,
+  "llm_calls": 0,
+  "seconds": 4.7
+}

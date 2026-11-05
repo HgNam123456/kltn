@@ -1,0 +1,20 @@
+{
+ "stages": [
+  {
+   "name": "tkgqa",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "tkgqa",
+    "IMPLICIT_TKGQA_FILES": "tkgqa_trainval_implicit.jsonl",
+    "IMPLICIT_TKGQA_SYMS": "1",
+    "IMPLICIT_TKGQA_SCALE": "2"
+   },
+   "commit": "a817f33b5ad87782ae0014c87c11a689ce3f6e63",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 61.0
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 61.0
+}
