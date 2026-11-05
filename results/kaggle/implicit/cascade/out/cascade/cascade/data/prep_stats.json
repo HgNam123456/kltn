@@ -1,0 +1,51 @@
+{
+ "icews14_event": {
+  "candidates": 2568,
+  "no_implicit": 396,
+  "n_before": {
+   "n": 300,
+   "mean": 135.64333333333335,
+   "min": 17,
+   "max": 196
+  },
+  "n_add1": {
+   "n": 300,
+   "mean": 2.566666666666667,
+   "min": 1,
+   "max": 12
+  },
+  "n_add_full": {
+   "n": 300,
+   "mean": 2.6066666666666665,
+   "min": 1,
+   "max": 13
+  },
+  "n": 300
+ },
+ "yago_event": {
+  "candidates": 757840,
+  "n_before": {
+   "n": 400,
+   "mean": 73.2475,
+   "min": 11,
+   "max": 90
+  },
+  "n_implicit": {
+   "n": 400,
+   "mean": 1.3175,
+   "min": 1,
+   "max": 9
+  },
+  "quota": {
+   "hop1/add": 150,
+   "hop1/delete": 150,
+   "hop2/add": 100
+  },
+  "got": {
+   "hop1/add": 150,
+   "hop1/delete": 150,
+   "hop2/add": 100
+  },
+  "n": 400
+ }
+}

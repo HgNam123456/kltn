@@ -1,0 +1,19 @@
+gold_explicit+oracle:   0%|          | 0/400 [00:00<?, ?it/s]gold_explicit+oracle: 100%|██████████| 400/400 [00:00<00:00, 39790.38it/s]
+{
+  "precision": 1.0,
+  "recall": 0.9960699281745494,
+  "f1": 0.9980310951184738,
+  "add_acc": 0.7972027972027972,
+  "del_acc": 1.0,
+  "config": "gold_explicit+oracle",
+  "split": "yago_event",
+  "n": 400,
+  "n_scored": 400,
+  "errors": 0,
+  "coverage": 0.7798861480075902,
+  "avg_cut_cand": 1.155,
+  "avg_add_cand": 24.43,
+  "judged_ratio": 0.04016025014657026,
+  "llm_calls": 0,
+  "seconds": 0.9
+}

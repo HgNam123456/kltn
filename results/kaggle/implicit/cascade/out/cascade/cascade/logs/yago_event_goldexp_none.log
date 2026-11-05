@@ -1,0 +1,19 @@
+gold_explicit+none:   0%|          | 0/400 [00:00<?, ?it/s]gold_explicit+none: 100%|██████████| 400/400 [00:00<00:00, 62292.41it/s]
+{
+  "precision": 0.9930269737065887,
+  "recall": 0.9890906626914217,
+  "f1": 0.9910549096155478,
+  "add_acc": 0.4370629370629371,
+  "del_acc": 0.4225352112676056,
+  "config": "gold_explicit+none",
+  "split": "yago_event",
+  "n": 400,
+  "n_scored": 400,
+  "errors": 0,
+  "coverage": 0.7798861480075902,
+  "avg_cut_cand": 1.155,
+  "avg_add_cand": 24.43,
+  "judged_ratio": 0.0,
+  "llm_calls": 0,
+  "seconds": 0.7
+}

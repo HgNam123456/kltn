@@ -1,0 +1,73 @@
+[{"stream_name":"stdout","time":7.222153286,"data":"### cascade bắt đầu, còn 11.00 giờ, commit 53af0be\n"}
+,{"stream_name":"stdout","time":7.394283304,"data":"$ nvidia-smi --query-gpu=name,memory.total --format=csv,noheader\n"}
+,{"stream_name":"stdout","time":7.429582537,"data":"$ git -C /kaggle/working/kltn rev-parse HEAD\n"}
+,{"stream_name":"stdout","time":7.432428261,"data":"$ pip install -q huggingface_hub pydantic 'openai\u003e=1' tqdm\n"}
+,{"stream_name":"stdout","time":11.96011504,"data":"$ chmod +x /kaggle/working/llama-bin/llama-server\n"}
+,{"stream_name":"stdout","time":11.964646197,"data":"$ pip install -q nvidia-cuda-runtime-cu12 nvidia-cublas-cu12\n"}
+,{"stream_name":"stdout","time":13.672898553,"data":"LD_LIBRARY_PATH: /usr/local/cuda/lib64:/usr/local/lib/python3.13/dist-packages/nvidia/cu13/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cublas/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cuda_cupti/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cuda_nvcc/nvvm/lib64:/usr/local/lib/python3.13/dist-packages/nvidia/cuda_nvrtc/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cuda_runtime/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cudnn/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cufft/lib:/usr/local/lib/python3.13/dist-packages/nvidia/curand/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cusolver/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cusparse/lib:/usr/local/lib/python3.13/dist-packages/nvidia/cusparselt/lib:/usr/local/lib/python3.13/dist-packages/nvidia/libnvcomp/lib64:/usr/local/lib/python3.13/dist-packages/nvidia/nccl/lib:/usr/local/lib/python3.13/dist-packages/nvidia/nvimgcodec:/usr/local/lib/python3.13/dist-packages/nvidia/nvimgcodec/extensions:/usr/local/lib/python3.13/dist-packages/nvidia/nvjitlink/lib:/usr/local/lib/python3.13/dist-packages/nvidia/nvshmem/lib:/usr/local/nvidia/lib64 | ldd thiếu: (không)\n"}
+,{"stream_name":"stderr","time":14.56041675,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":23.630825108,"data":"$ CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf\n"}
+,{"stream_name":"stdout","time":41.670804897,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python scripts/prep_cascade.py --raw /kaggle/working/data/raw/cascade --out /kaggle/working/out/cascade/cascade/data --n-icews 300 --n-yago 400 2\u003e\u00261 | tee /kaggle/working/out/cascade/cascade/logs/prep.log\n"}
+,{"stream_name":"stdout","time":41.778246073,"data":"tải https://raw.githubusercontent.com/nle-ml/mmkb/master/TemporalKGs/icews14/icews_2014_train.txt\n"}
+,{"stream_name":"stdout","time":43.065311464,"data":"tải https://raw.githubusercontent.com/nle-ml/mmkb/master/TemporalKGs/icews14/icews_2014_valid.txt\n"}
+,{"stream_name":"stdout","time":44.069461485,"data":"tải https://raw.githubusercontent.com/nle-ml/mmkb/master/TemporalKGs/icews14/icews_2014_test.txt\n"}
+,{"stream_name":"stdout","time":45.639921628,"data":"icews14_event: {\"candidates\": 2568, \"no_implicit\": 396, \"n_before\": {\"n\": 300, \"mean\": 135.64333333333335, \"min\": 17, \"max\": 196}, \"n_add1\": {\"n\": 300, \"mean\": 2.566666666666667, \"min\": 1, \"max\": 12}, \"n_add_full\": {\"n\": 300, \"mean\": 2.6066666666666665, \"min\": 1, \"max\": 13}, \"n\": 300}\n"}
+,{"stream_name":"stdout","time":45.640274513,"data":"tải https://raw.githubusercontent.com/TimDettmers/ConvE/master/YAGO3-10.tar.gz\n"}
+,{"stream_name":"stdout","time":46.286494869,"data":"/kaggle/working/kltn/scripts/prep_cascade.py:185: DeprecationWarning: Python 3.14 will, by default, filter extracted tar archives and reject files or modify their metadata. Use the filter argument to control this behavior.\n"}
+,{"stream_name":"stdout","time":46.286539417,"data":"  tf.extractall(raw / \"YAGO3-10\")\n"}
+,{"stream_name":"stdout","time":51.22199022,"data":"yago_event: {\"candidates\": 757840, \"n_before\": {\"n\": 400, \"mean\": 73.2475, \"min\": 11, \"max\": 90}, \"n_implicit\": {\"n\": 400, \"mean\": 1.3175, \"min\": 1, \"max\": 9}, \"quota\": {\"hop1/add\": 150, \"hop1/delete\": 150, \"hop2/add\": 100}, \"got\": {\"hop1/add\": 150, \"hop1/delete\": 150, \"hop2/add\": 100}, \"n\": 400}\n"}
+,{"stream_name":"stdout","time":51.279886542,"data":"### icews14_event_goldexp_none: tối đa 30 phút\n"}
+,{"stream_name":"stdout","time":51.279912688,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_eval.py --jsonl /kaggle/working/out/cascade/cascade/data/icews14_event.jsonl --extractor gold_explicit --judge none --workers 4 --out /kaggle/working/out/cascade/cascade/icews14_event_goldexp_none.jsonl\n"}
+,{"stream_name":"stdout","time":52.396934291,"data":"### icews14_event_goldexp_none: ok sau 0.0 phút\n"}
+,{"stream_name":"stdout","time":52.397262648,"data":"### icews14_event_goldexp_oracle: tối đa 30 phút\n"}
+,{"stream_name":"stdout","time":52.397275034,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_eval.py --jsonl /kaggle/working/out/cascade/cascade/data/icews14_event.jsonl --extractor gold_explicit --judge oracle --workers 4 --out /kaggle/working/out/cascade/cascade/icews14_event_goldexp_oracle.jsonl\n"}
+,{"stream_name":"stdout","time":53.714834822,"data":"### icews14_event_goldexp_oracle: ok sau 0.0 phút\n"}
+,{"stream_name":"stdout","time":53.715230099,"data":"### icews14_event_goldexp_llm_gate: tối đa 150 phút\n"}
+,{"stream_name":"stdout","time":53.71524868,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_eval.py --jsonl /kaggle/working/out/cascade/cascade/data/icews14_event.jsonl --extractor gold_explicit --judge llm --judge-batch 1 --judge-gate 0.5 --workers 4 --out /kaggle/working/out/cascade/cascade/icews14_event_goldexp_llm_gate.jsonl\n"}
+,{"stream_name":"stdout","time":58.389525296,"data":"### icews14_event_goldexp_llm_gate: ok sau 0.1 phút\n"}
+,{"stream_name":"stdout","time":58.389873901,"data":"### icews14_event_goldexp_llm_nogate: tối đa 150 phút\n"}
+,{"stream_name":"stdout","time":58.389897537,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_eval.py --jsonl /kaggle/working/out/cascade/cascade/data/icews14_event.jsonl --extractor gold_explicit --judge llm --judge-batch 1 --workers 4 --out /kaggle/working/out/cascade/cascade/icews14_event_goldexp_llm_nogate.jsonl\n"}
+,{"stream_name":"stdout","time":4289.007226353,"data":"### icews14_event_goldexp_llm_nogate: ok sau 70.5 phút\n"}
+,{"stream_name":"stdout","time":4289.007692388,"data":"### yago_event_goldexp_none: tối đa 30 phút\n"}
+,{"stream_name":"stdout","time":4289.007707772,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_eval.py --jsonl /kaggle/working/out/cascade/cascade/data/yago_event.jsonl --extractor gold_explicit --judge none --workers 4 --out /kaggle/working/out/cascade/cascade/yago_event_goldexp_none.jsonl\n"}
+,{"stream_name":"stdout","time":4289.924056483,"data":"### yago_event_goldexp_none: ok sau 0.0 phút\n"}
+,{"stream_name":"stdout","time":4289.924437132,"data":"### yago_event_goldexp_oracle: tối đa 30 phút\n"}
+,{"stream_name":"stdout","time":4289.924449122,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_eval.py --jsonl /kaggle/working/out/cascade/cascade/data/yago_event.jsonl --extractor gold_explicit --judge oracle --workers 4 --out /kaggle/working/out/cascade/cascade/yago_event_goldexp_oracle.jsonl\n"}
+,{"stream_name":"stdout","time":4291.041512239,"data":"### yago_event_goldexp_oracle: ok sau 0.0 phút\n"}
+,{"stream_name":"stdout","time":4291.042110584,"data":"### yago_event_goldexp_llm_gate: tối đa 150 phút\n"}
+,{"stream_name":"stdout","time":4291.042127335,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_eval.py --jsonl /kaggle/working/out/cascade/cascade/data/yago_event.jsonl --extractor gold_explicit --judge llm --judge-batch 1 --judge-gate 0.5 --workers 4 --out /kaggle/working/out/cascade/cascade/yago_event_goldexp_llm_gate.jsonl\n"}
+,{"stream_name":"stdout","time":4314.862421505,"data":"### yago_event_goldexp_llm_gate: ok sau 0.4 phút\n"}
+,{"stream_name":"stdout","time":4314.863063898,"data":"### yago_event_goldexp_llm_nogate: tối đa 150 phút\n"}
+,{"stream_name":"stdout","time":4314.863086847,"data":"$ cd /kaggle/working/kltn \u0026\u0026 python -u scripts/run_eval.py --jsonl /kaggle/working/out/cascade/cascade/data/yago_event.jsonl --extractor gold_explicit --judge llm --judge-batch 1 --workers 4 --out /kaggle/working/out/cascade/cascade/yago_event_goldexp_llm_nogate.jsonl\n"}
+,{"stream_name":"stdout","time":5297.436235407,"data":"### yago_event_goldexp_llm_nogate: ok sau 16.4 phút\n"}
+,{"stream_name":"stderr","time":5297.438577577,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":5297.439064555,"data":"  File \"/kaggle/working/kltn/kaggle/implicit/run_implicit.py\", line 192, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":5297.439075973,"data":"    os.remove(f\"{WORK}/models/{f}\")\n"}
+,{"stream_name":"stderr","time":5297.439080833,"data":"    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":5297.439085174,"data":"IsADirectoryError: [Errno 21] Is a directory: '/kaggle/working/models/.cache'\n"}
+,{"stream_name":"stdout","time":5297.536658872,"data":"### cascade: error sau 88.2 phút\n"}
+,{"stream_name":"stdout","time":5297.586523731,"data":"{\n"}
+,{"stream_name":"stdout","time":5297.58654714,"data":" \"stages\": [\n"}
+,{"stream_name":"stdout","time":5297.5865518,"data":"  {\n"}
+,{"stream_name":"stdout","time":5297.586571643,"data":"   \"name\": \"cascade\",\n"}
+,{"stream_name":"stdout","time":5297.586576516,"data":"   \"runner\": \"implicit\",\n"}
+,{"stream_name":"stdout","time":5297.586580803,"data":"   \"env\": {\n"}
+,{"stream_name":"stdout","time":5297.586585028,"data":"    \"IMPLICIT_JOB\": \"cascade\"\n"}
+,{"stream_name":"stdout","time":5297.58658931,"data":"   },\n"}
+,{"stream_name":"stdout","time":5297.58659303,"data":"   \"commit\": \"53af0bedb0ac29c1837b6aaf07aecc9d7a5bdad8\",\n"}
+,{"stream_name":"stdout","time":5297.586596991,"data":"   \"returncode\": 1,\n"}
+,{"stream_name":"stdout","time":5297.58660094,"data":"   \"status\": \"error\",\n"}
+,{"stream_name":"stdout","time":5297.586604901,"data":"   \"minutes\": 88.2\n"}
+,{"stream_name":"stdout","time":5297.586608753,"data":"  }\n"}
+,{"stream_name":"stdout","time":5297.586612504,"data":" ],\n"}
+,{"stream_name":"stdout","time":5297.586616404,"data":" \"deadline_hours\": 11.0,\n"}
+,{"stream_name":"stdout","time":5297.58662031,"data":" \"elapsed_minutes\": 88.2\n"}
+,{"stream_name":"stdout","time":5297.586624271,"data":"}\n"}
+,{"stream_name":"stdout","time":5297.586627929,"data":"DONE\n"}
+,{"stream_name":"stderr","time":5299.889410764,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":5299.889440301,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":5300.192384287,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":5300.192419159,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":5301.068520082,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":5302.126759198,"data":"[NbConvertApp] Writing 274938 bytes to __results__.html\n"}
+]

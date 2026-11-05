@@ -1,0 +1,18 @@
+{
+  "precision": 0.92020186090522,
+  "recall": 0.9884469440303564,
+  "f1": 0.953104326946636,
+  "add_acc": 0.4423076923076923,
+  "del_acc": 0.7323943661971831,
+  "config": "gold_explicit+llm[batch=1,gate=None]",
+  "split": "yago_event",
+  "n": 400,
+  "n_scored": 400,
+  "errors": 0,
+  "coverage": 0.7798861480075902,
+  "avg_cut_cand": 1.155,
+  "avg_add_cand": 24.43,
+  "judged_ratio": 0.2511237052960719,
+  "llm_calls": 1082,
+  "seconds": 982.2
+}
