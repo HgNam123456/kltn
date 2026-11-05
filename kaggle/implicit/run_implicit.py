@@ -173,12 +173,14 @@ if JOB == "cascade":
 elif JOB == "tkgqa":
     # dữ liệu đã dựng sẵn trong repo (scripts/prep_tkgqa.py); IMPLICIT_TKGQA_FILES = danh sách jsonl trong data/cascade
     files = os.environ.get("IMPLICIT_TKGQA_FILES", "tkgqa_test.jsonl").split(",")
+    syms = os.environ.get("IMPLICIT_TKGQA_SYMS", "1,0").split(",")       # "1" = vế sinh hai chiều, "0" = một chiều
+    scale = float(os.environ.get("IMPLICIT_TKGQA_SCALE", "1"))          # nhân ngân sách giờ của lượt LLM (tập lớn)
     for fn in files:
         ds = fn.replace(".jsonl", "")
-        for sym in ("1", "0"):
+        for sym in syms:
             for cfg, judge, max_h in (("none", "--judge none", 0.5), ("oracle", "--judge oracle", 0.5),
-                                      ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 2.0),
-                                      ("llm_nogate", "--judge llm --judge-batch 1", 2.5)):
+                                      ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 2.0 * scale),
+                                      ("llm_nogate", "--judge llm --judge-batch 1", 2.5 * scale)):
                 if sym == "0" and cfg == "llm_gate":
                     continue                                   # vế sinh một chiều phủ 10%: chỉ chạy nogate để đối chứng
                 name = f"{ds}_sym{sym}_goldexp_{cfg}"

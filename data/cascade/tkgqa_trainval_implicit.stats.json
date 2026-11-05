@@ -1,0 +1,24 @@
+[
+ {
+  "source": "tkg_val_data_1110.pickle",
+  "records": 515,
+  "kept": 73,
+  "with_implicit": 73,
+  "implicit_add": 678,
+  "implicit_del": 115,
+  "before_edges_mean": 56.1,
+  "before_edges_median": 22,
+  "before_edges_max": 268
+ },
+ {
+  "source": "tkg_train_data_1110.pickle",
+  "records": 4633,
+  "kept": 671,
+  "with_implicit": 671,
+  "implicit_add": 6282,
+  "implicit_del": 1021,
+  "before_edges_mean": 53.0,
+  "before_edges_median": 23,
+  "before_edges_max": 297
+ }
+]
