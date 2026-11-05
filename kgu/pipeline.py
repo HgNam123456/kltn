@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from dataclasses import dataclass, field
 
 from kgu.data import Example
@@ -59,7 +60,8 @@ def run_example(ex: Example, extractor: Extractor, judge: Judge | None, relation
     graph = BiTemporalGraph.from_triples(ex.before, valid_from=AT_BEFORE)
     explicit = extractor.extract(ex, graph, AT_BEFORE)
     explicit = apply_ops(graph, explicit, at=AT_AFTER)           # [2] áp ops TRƯỚC
-    loc = localize(graph, explicit, at=AT_AFTER)                 # [3] khoanh vùng
+    loc = localize(graph, explicit, at=AT_AFTER,                 # [3] khoanh vùng
+                   symmetric_add=os.environ.get("KGU_SYMMETRIC_ADD") == "1")
     judged: list[Op] = []
     if judge is not None:                                        # [4] bộ phán
         ctx = JudgeContext(ex.text, explicit, loc, graph, AT_AFTER, relations)

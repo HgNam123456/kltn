@@ -1,0 +1,13 @@
+[
+ {
+  "source": "tkg_test_data_1110.pickle",
+  "records": 573,
+  "kept": 573,
+  "with_implicit": 75,
+  "implicit_add": 709,
+  "implicit_del": 142,
+  "before_edges_mean": 16.0,
+  "before_edges_median": 2,
+  "before_edges_max": 298
+ }
+]

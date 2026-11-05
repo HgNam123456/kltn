@@ -38,8 +38,12 @@ def _edges_between(graph: BiTemporalGraph, x: str, y: str, at: int) -> set[Tripl
     return {tr for tr in graph.edges_of(x, at) if y in (tr[0], tr[2])}
 
 
-def localize(graph: BiTemporalGraph, explicit_ops: list[Op], at: int) -> Localization:
-    """Khoanh vùng cấu trúc 2 vế. Gọi SAU khi explicit_ops đã được áp tại `at`."""
+def localize(graph: BiTemporalGraph, explicit_ops: list[Op], at: int, symmetric_add: bool = False) -> Localization:
+    """Khoanh vùng cấu trúc 2 vế. Gọi SAU khi explicit_ops đã được áp tại `at`.
+
+    symmetric_add: vế sinh xét cả chiều ngược của cạnh ADD (a, r, b) — ứng viên (b, n) với n là hàng xóm của a
+    (biến thể thử nghiệm: công ty bị mua nhận chủ sở hữu của bên mua; mặc định tắt, giữ đúng Chương 3).
+    """
     participants = {e for op in explicit_ops for e in (op.h, op.t)}
     loc = Localization()
 
@@ -63,10 +67,10 @@ def localize(graph: BiTemporalGraph, explicit_ops: list[Op], at: int) -> Localiz
 
     # ---- vế sinh -------------------------------------------------------
     seen_add: set[tuple[str, str]] = set()
-    for op in explicit_ops:
-        if op.kind is not OpKind.ADD:
-            continue
-        a, b = op.h, op.t
+    add_pairs = [(op.h, op.t) for op in explicit_ops if op.kind is OpKind.ADD]
+    if symmetric_add:
+        add_pairs += [(b, a) for a, b in add_pairs]
+    for a, b in add_pairs:
         fresh = graph.neighbors(b, at) - graph.neighbors(a, at) - {a, b}
         for n in sorted(fresh):
             if (a, n) in seen_add:

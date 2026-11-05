@@ -170,6 +170,21 @@ if JOB == "cascade":
             name = f"{ds}_goldexp_{cfg}"
             timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {data}/{ds}.jsonl --extractor gold_explicit "
                         f"{judge} --workers {WORKERS} --out {OUT}/{name}.jsonl", ENV, max_h=max_h)
+elif JOB == "tkgqa":
+    # dữ liệu đã dựng sẵn trong repo (scripts/prep_tkgqa.py); IMPLICIT_TKGQA_FILES = danh sách jsonl trong data/cascade
+    files = os.environ.get("IMPLICIT_TKGQA_FILES", "tkgqa_test.jsonl").split(",")
+    for fn in files:
+        ds = fn.replace(".jsonl", "")
+        for sym in ("1", "0"):
+            for cfg, judge, max_h in (("none", "--judge none", 0.5), ("oracle", "--judge oracle", 0.5),
+                                      ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 2.0),
+                                      ("llm_nogate", "--judge llm --judge-batch 1", 2.5)):
+                if sym == "0" and cfg == "llm_gate":
+                    continue                                   # vế sinh một chiều phủ 10%: chỉ chạy nogate để đối chứng
+                name = f"{ds}_sym{sym}_goldexp_{cfg}"
+                timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {KLTN}/data/cascade/{fn} "
+                            f"--extractor gold_explicit {judge} --workers {WORKERS} --out {OUT}/{name}.jsonl",
+                      {**ENV, "KGU_SYMMETRIC_ADD": sym}, max_h=max_h)
 elif JOB == "elken":
     elken = f"{WORK}/elken"
     sh(f"git clone -q --depth 1 {ELKEN_REPO} {elken}")
