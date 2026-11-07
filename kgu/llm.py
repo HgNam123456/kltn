@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
+import threading
 from typing import Protocol, TypeVar
 
 from pydantic import BaseModel, ValidationError
@@ -96,6 +97,7 @@ class OpenAICompatClient:
                     response_format={"type": "json_object"}, **extra_kwargs,
                 )
             raw = resp.choices[0].message.content or ""
+            _log_call(user, raw, getattr(resp.choices[0], "finish_reason", None))
             try:
                 return schema.model_validate_json(extract_json(raw))
             except (ValidationError, ValueError) as e:
@@ -104,6 +106,20 @@ class OpenAICompatClient:
                 messages.append({"role": "user", "content":
                     f"Output không hợp lệ (error: {str(e)[:500]}). Xuất lại đúng schema, chỉ JSON."})
         raise LLMOutputError(f"invalid JSON after {self.max_retries} tries: {last_err}")
+
+
+_LOG_LOCK = threading.Lock()
+
+
+def _log_call(user: str, raw: str, finish: str | None) -> None:
+    """KGU_LLM_LOG=<file>: ghi mỗi lệnh gọi (prompt người dùng, output thô, finish_reason) một dòng JSONL để soi
+    reasoning của bộ phán sau khi chạy trên Kaggle. Không đặt → không ghi gì."""
+    path = os.environ.get("KGU_LLM_LOG")
+    if not path:
+        return
+    line = json.dumps({"user": user, "raw": raw, "finish": finish}, ensure_ascii=False)
+    with _LOG_LOCK, open(path, "a", encoding="utf8") as f:
+        f.write(line + "\n")
 
 
 def client_from_env() -> OpenAICompatClient:

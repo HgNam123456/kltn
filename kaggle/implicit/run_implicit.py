@@ -8,7 +8,8 @@ IMPLICIT_JOB = "elken": ELKEN (clone repo THU-KEG) → scripts/run_elken.py trê
 IMPLICIT_JOB = "given": giao thức "KG cho trước" (toàn bộ thực thể/triple đã biết là KG nền, tập quan hệ ĐÓNG = quan hệ
     trong KG nền, không gộp nhãn): IMPLICIT_GIVEN_FILES = jsonl định dạng header base + chênh lệch trong data/cascade
     (tkgqa_test_global.jsonl, icews14_event_global.jsonl có trong repo; yago_event_global.jsonl 63 MB được sinh lại
-    bằng prep_cascade.py --global nếu thiếu); IMPLICIT_GIVEN_SYM = KGU_SYMMETRIC_ADD; IMPLICIT_GIVEN_SCALE nhân giờ LLM.
+    bằng prep_cascade.py --global nếu thiếu); IMPLICIT_GIVEN_SYM = KGU_SYMMETRIC_ADD; IMPLICIT_GIVEN_SCALE nhân giờ LLM;
+    IMPLICIT_GIVEN_CFGS = tập con của none,oracle,llm_gate,llm_nogate. Mỗi lượt LLM ghi logs/<name>.llm.jsonl (KGU_LLM_LOG).
 Đầu ra: $KGU_OUT/<job>/... + summary.json; server.log. KGU_DEADLINE (epoch) = giờ chót chung.
 """
 import json
@@ -201,15 +202,18 @@ elif JOB == "given":
            f"2>&1 | tee {OUT}/logs/prep.log")
         summary["prep_stats"] = json.load(open(f"{data}/prep_stats_global.json"))
         save()
+    cfgs = os.environ.get("IMPLICIT_GIVEN_CFGS", "none,oracle,llm_gate,llm_nogate").split(",")
     for fn in files:
         ds = fn.replace(".jsonl", "")
         for cfg, judge, max_h in (("none", "--judge none", 1.0), ("oracle", "--judge oracle", 1.0),
                                   ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 2.5 * scale),
                                   ("llm_nogate", "--judge llm --judge-batch 1", 2.5 * scale)):
+            if cfg not in cfgs:
+                continue
             name = f"{ds}_sym{sym}_goldexp_{cfg}"
             timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {data}/{fn} --extractor gold_explicit "
                         f"{judge} --workers {WORKERS} --out {OUT}/{name}.jsonl",
-                  {**ENV, "KGU_SYMMETRIC_ADD": sym}, max_h=max_h)
+                  {**ENV, "KGU_SYMMETRIC_ADD": sym, "KGU_LLM_LOG": f"{OUT}/logs/{name}.llm.jsonl"}, max_h=max_h)
 elif JOB == "elken":
     elken = f"{WORK}/elken"
     sh(f"git clone -q --depth 1 {ELKEN_REPO} {elken}")
