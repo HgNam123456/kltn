@@ -1,0 +1,106 @@
+{
+ "job": "given",
+ "runs": {
+  "tkgqa_test_global_sym1_goldexp_none": {
+   "status": "ok",
+   "minutes": 0.1,
+   "summary": {
+    "precision": 0.999987348915312,
+    "recall": 0.9999368368594075,
+    "f1": 0.9999620922494686,
+    "add_acc": 0.4469578783151326,
+    "del_acc": 0.15476190476190477,
+    "config": "gold_explicit+none",
+    "split": "tkgqa_test_global",
+    "n": 573,
+    "n_scored": 573,
+    "errors": 0,
+    "coverage": 0.8296122209165687,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 15.93542757417103,
+    "judged_ratio": 0.0,
+    "llm_calls": 0,
+    "seconds": 8.6
+   }
+  },
+  "tkgqa_test_global_sym1_goldexp_oracle": {
+   "status": "ok",
+   "minutes": 0.5,
+   "summary": {
+    "precision": 0.9999873497110032,
+    "recall": 0.9999997327370638,
+    "f1": 0.9999935411856984,
+    "add_acc": 0.9976599063962559,
+    "del_acc": 0.15476190476190477,
+    "config": "gold_explicit+oracle",
+    "split": "tkgqa_test_global",
+    "n": 573,
+    "n_scored": 573,
+    "errors": 0,
+    "coverage": 0.8296122209165687,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 15.93542757417103,
+    "judged_ratio": 0.07731902310809331,
+    "llm_calls": 0,
+    "seconds": 31.7
+   }
+  },
+  "tkgqa_test_global_sym1_goldexp_llm_gate": {
+   "status": "ok",
+   "minutes": 2.6,
+   "summary": {
+    "precision": 0.999983162546019,
+    "recall": 0.9999897549207784,
+    "f1": 0.9999864587225337,
+    "add_acc": 0.9102964118564743,
+    "del_acc": 0.15476190476190477,
+    "config": "gold_explicit+llm[batch=1,gate=0.5]",
+    "split": "tkgqa_test_global",
+    "n": 573,
+    "n_scored": 573,
+    "errors": 0,
+    "coverage": 0.8296122209165687,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 15.93542757417103,
+    "judged_ratio": 0.07020041616471362,
+    "llm_calls": 102,
+    "seconds": 153.1,
+    "n_gated": 1295,
+    "n_off_menu": 0
+   }
+  },
+  "tkgqa_test_global_sym1_goldexp_llm_nogate": {
+   "status": "ok",
+   "minutes": 26.5,
+   "summary": {
+    "precision": 0.999930604866336,
+    "recall": 0.9999902894466508,
+    "f1": 0.999960446265896,
+    "add_acc": 0.9149765990639626,
+    "del_acc": 0.15476190476190477,
+    "config": "gold_explicit+llm[batch=1,gate=None]",
+    "split": "tkgqa_test_global",
+    "n": 573,
+    "n_scored": 573,
+    "errors": 0,
+    "coverage": 0.8296122209165687,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 15.93542757417103,
+    "judged_ratio": 0.1354725659840105,
+    "llm_calls": 1397,
+    "seconds": 1590.2,
+    "n_gated": 0,
+    "n_off_menu": 0
+   }
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "e580ee199f50110e97a95976962b5abaa2b83db6",
+ "ldd_missing_after_pip": "",
+ "server_cmd": "CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "elapsed_minutes": 30.2
+}

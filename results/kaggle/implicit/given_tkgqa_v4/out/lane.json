@@ -1,0 +1,20 @@
+{
+ "stages": [
+  {
+   "name": "given",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "given",
+    "IMPLICIT_GIVEN_FILES": "tkgqa_test_global.jsonl",
+    "IMPLICIT_GIVEN_SYM": "1",
+    "IMPLICIT_GIVEN_SCALE": "1.2"
+   },
+   "commit": "e580ee199f50110e97a95976962b5abaa2b83db6",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 30.3
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 30.3
+}
