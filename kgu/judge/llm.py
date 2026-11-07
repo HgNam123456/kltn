@@ -334,7 +334,8 @@ class LLMJudge:
         return idx
 
     @staticmethod
-    def _global_rule(p: AddPattern, ctx: JudgeContext, max_pairs: int = 100, max_xs: int = 20) -> list[tuple[str, str, int]] | None:
+    def _global_rule(p: AddPattern, ctx: JudgeContext, max_pairs: int = 100, max_xs: int = 20,
+                     max_scan: int = 5000) -> list[tuple[str, str, int]] | None:
         """Dự phòng khi `other` chưa có entity S nào cùng vai với subject: đo QUY LUẬT TOÀN KG cho cùng dạng cấu hình.
         Với mọi cặp (A, r0, B) đang có trong KG (r0 = quan hệ của cạnh ADD tường minh nối subject–other, cùng chiều),
         lấy các X nối với A qua đúng fact-KG của mẫu (via_r, via_direction) và đếm tỉ lệ bộ (A, B, X) có cạnh (B, r, X) /
@@ -359,17 +360,20 @@ class LLMJudge:
                 res = cache[key]
             else:
                 triples = []                                          # (A, B, X): A đóng vai other, B đóng vai subject
-                n_pairs = 0
+                n_pairs = n_scanned = 0
                 for h, t in sorted(LLMJudge._rel_index(g).get(op.r, ())):   # KG-trước (sắp để tái lập), bỏ cạnh vừa thêm
                     a, b = (t, h) if subj_is_head else (h, t)
                     if b == p.subject and a == p.other:
                         continue
-                    n_pairs += 1
-                    if n_pairs > max_pairs:
+                    n_scanned += 1
+                    if n_pairs >= max_pairs or n_scanned > max_scan:  # chỉ cặp CÓ X mới tính vào mẫu
                         break
                     xs = [tr[2] if p.via_direction == "subject_first" else tr[0] for tr in g.edges_of(a, 0)
                           if tr[1] == p.via_r and (tr[0] == a if p.via_direction == "subject_first" else tr[2] == a)]
-                    triples += [(a, b, x) for x in xs[:max_xs] if x != b]
+                    xs = [x for x in xs[:max_xs] if x != b]
+                    if xs:
+                        n_pairs += 1
+                        triples += [(a, b, x) for x in xs]
                 if not triples:
                     res = None
                 else:
