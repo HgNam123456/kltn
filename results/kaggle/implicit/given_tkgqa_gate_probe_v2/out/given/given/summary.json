@@ -1,0 +1,38 @@
+{
+ "job": "given",
+ "runs": {
+  "tkgqa_test_global_sym1_goldexp_llm_gate": {
+   "status": "ok",
+   "minutes": 2.3,
+   "summary": {
+    "precision": 0.9999805790023024,
+    "recall": 0.9999861914149621,
+    "f1": 0.9999833852007574,
+    "add_acc": 0.8790951638065523,
+    "del_acc": 0.15476190476190477,
+    "config": "gold_explicit+llm[batch=1,gate=0.5]",
+    "split": "tkgqa_test_global",
+    "n": 573,
+    "n_scored": 573,
+    "errors": 0,
+    "coverage": 0.8296122209165687,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 15.24607329842932,
+    "judged_ratio": 0.07211538461538461,
+    "llm_calls": 102,
+    "seconds": 135.9,
+    "n_gated": 1294,
+    "n_off_menu": 4
+   }
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "8d48cbec923071dbef05891755ea05c5322b9b0a",
+ "ldd_missing_after_pip": "",
+ "server_cmd": "CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "elapsed_minutes": 2.9
+}

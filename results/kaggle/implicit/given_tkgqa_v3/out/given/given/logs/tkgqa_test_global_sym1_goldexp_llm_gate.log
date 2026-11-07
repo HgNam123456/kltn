@@ -1,0 +1,21 @@
+gold_explicit+llm:   0%|          | 0/573 [00:00<?, ?it/s]gold_explicit+llm:   0%|          | 1/573 [00:01<15:06,  1.58s/it]gold_explicit+llm:   1%|          | 4/573 [00:15<38:55,  4.10s/it]gold_explicit+llm:   4%|▍         | 22/573 [00:18<05:51,  1.57it/s]gold_explicit+llm:   7%|▋         | 39/573 [00:20<03:20,  2.66it/s]gold_explicit+llm:   8%|▊         | 47/573 [00:25<03:42,  2.37it/s]gold_explicit+llm:  12%|█▏        | 71/573 [00:29<02:29,  3.36it/s]gold_explicit+llm:  13%|█▎        | 75/573 [00:31<02:32,  3.27it/s]gold_explicit+llm:  17%|█▋        | 100/573 [00:31<01:13,  6.47it/s]gold_explicit+llm:  19%|█▉        | 109/573 [00:35<01:39,  4.66it/s]gold_explicit+llm:  21%|██        | 119/573 [00:41<02:18,  3.28it/s]gold_explicit+llm:  31%|███       | 176/573 [00:47<01:08,  5.83it/s]gold_explicit+llm:  31%|███▏      | 180/573 [00:51<01:32,  4.27it/s]gold_explicit+llm:  35%|███▌      | 201/573 [00:52<01:05,  5.64it/s]gold_explicit+llm:  37%|███▋      | 210/573 [00:54<01:02,  5.83it/s]gold_explicit+llm:  38%|███▊      | 220/573 [01:03<01:54,  3.08it/s]gold_explicit+llm:  42%|████▏     | 238/573 [01:05<01:24,  3.97it/s]gold_explicit+llm:  47%|████▋     | 270/573 [01:07<00:48,  6.29it/s]gold_explicit+llm:  51%|█████     | 290/573 [01:08<00:36,  7.65it/s]gold_explicit+llm:  51%|█████     | 292/573 [01:09<00:42,  6.58it/s]gold_explicit+llm:  51%|█████▏    | 294/573 [01:15<01:20,  3.46it/s]gold_explicit+llm:  52%|█████▏    | 299/573 [01:15<01:07,  4.05it/s]gold_explicit+llm:  53%|█████▎    | 302/573 [01:15<01:01,  4.43it/s]gold_explicit+llm:  53%|█████▎    | 304/573 [01:18<01:34,  2.85it/s]gold_explicit+llm:  56%|█████▌    | 319/573 [01:21<01:10,  3.59it/s]gold_explicit+llm:  56%|█████▌    | 320/573 [01:24<01:42,  2.46it/s]gold_explicit+llm:  58%|█████▊    | 332/573 [01:27<01:22,  2.93it/s]gold_explicit+llm:  58%|█████▊    | 333/573 [01:29<01:46,  2.26it/s]gold_explicit+llm:  62%|██████▏   | 357/573 [01:30<00:38,  5.60it/s]gold_explicit+llm:  64%|██████▍   | 366/573 [01:32<00:38,  5.44it/s]gold_explicit+llm:  66%|██████▋   | 381/573 [01:33<00:27,  6.93it/s]gold_explicit+llm:  67%|██████▋   | 383/573 [01:34<00:30,  6.20it/s]gold_explicit+llm:  68%|██████▊   | 390/573 [01:39<00:57,  3.20it/s]gold_explicit+llm:  68%|██████▊   | 392/573 [01:43<01:19,  2.28it/s]gold_explicit+llm:  69%|██████▉   | 394/573 [01:51<02:37,  1.14it/s]gold_explicit+llm:  72%|███████▏  | 413/573 [01:51<00:54,  2.92it/s]gold_explicit+llm:  75%|███████▌  | 432/573 [01:51<00:26,  5.41it/s]gold_explicit+llm:  77%|███████▋  | 443/573 [01:53<00:22,  5.90it/s]gold_explicit+llm:  79%|███████▉  | 452/573 [01:54<00:19,  6.22it/s]gold_explicit+llm:  82%|████████▏ | 471/573 [01:54<00:10,  9.42it/s]gold_explicit+llm:  89%|████████▉ | 511/573 [02:01<00:08,  7.49it/s]gold_explicit+llm:  91%|█████████ | 519/573 [02:02<00:07,  7.05it/s]gold_explicit+llm:  91%|█████████ | 522/573 [02:03<00:07,  6.41it/s]gold_explicit+llm:  91%|█████████▏| 524/573 [02:09<00:15,  3.10it/s]gold_explicit+llm:  96%|█████████▋| 552/573 [02:10<00:03,  6.19it/s]gold_explicit+llm: 100%|██████████| 573/573 [02:10<00:00,  4.40it/s]
+{
+  "precision": 0.9999810244025292,
+  "recall": 0.9999847660126356,
+  "f1": 0.9999828952040825,
+  "add_acc": 0.8666146645865834,
+  "del_acc": 0.15476190476190477,
+  "config": "gold_explicit+llm[batch=1,gate=0.5]",
+  "split": "tkgqa_test_global",
+  "n": 573,
+  "n_scored": 573,
+  "errors": 0,
+  "coverage": 0.8296122209165687,
+  "avg_cut_cand": 0.0,
+  "avg_add_cand": 15.24607329842932,
+  "judged_ratio": 0.06971153846153846,
+  "llm_calls": 102,
+  "seconds": 130.4,
+  "n_gated": 1294,
+  "n_off_menu": 3
+}
