@@ -217,3 +217,23 @@ def test_structural_gate_skips_independent_patterns_without_llm():
     assert all(u.count(PLAYS + " Barca") == 0 for _, u in client.calls)   # mẫu plays_for không bao giờ tới LLM
     assert Op(OpKind.INVALIDATE, "Messi", TEAM, "Pedri") in ops and Op(OpKind.ADD, "Messi", TEAM, "Lautaro") in ops
     assert not any(o.r == PLAYS for o in ops)
+
+
+def test_global_rule_fallback_when_other_has_no_sibling():
+    """`other` chưa có S cùng vai → bằng chứng đo trên TOÀN KG: mọi cặp (A, acq, B) đã có cho thấy B thừa hưởng
+    (A, board, X) → mẫu có lựa chọn hợp lệ (board, subject_first) và qua cổng; quan hệ không thừa hưởng (hq) thì không."""
+    from kgu.graph import BiTemporalGraph
+    before = {("Alpha", "acq", "A1"), ("Alpha", "board", "p1"), ("A1", "board", "p1"), ("Alpha", "hq", "NY"),
+              ("Beta", "acq", "B1"), ("Beta", "board", "p2"), ("B1", "board", "p2"), ("Beta", "hq", "SF"),
+              ("Gamma", "board", "p3"), ("Gamma", "hq", "LA")}                      # Gamma chưa mua ai
+    explicit = [Op(OpKind.ADD, "Gamma", "acq", "Target")]
+    g = BiTemporalGraph.from_triples(before, valid_from=0)
+    apply_ops(g, explicit, at=1)
+    loc = localize(g, explicit, at=1, symmetric_add=True)
+    ctx = JudgeContext("", explicit, loc, g, 1, ["acq", "board", "hq"])
+    pats = {p.via_r: p for p in group_add(loc) if p.subject == "Target"}
+    assert LLMJudge._menu(pats["board"], ctx) == [("board", "subject_first")]
+    assert LLMJudge._menu(pats["hq"], ctx) == []
+    j = LLMJudge(FakeLLMClient([{"add": [{"idx": 0, "r": "board", "direction": "subject_first"}]}]), gate=0.5)
+    ops = j.judge(ctx)
+    assert Op(OpKind.ADD, "Target", "board", "p3") in ops and not any(o.r == "hq" for o in ops)

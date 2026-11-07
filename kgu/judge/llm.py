@@ -308,7 +308,7 @@ class LLMJudge:
         pairs = [(s, x) for s in siblings for x in xs if s != x]      # S có thể trùng X: chỉ bỏ cặp (s, s)
         total = len(pairs)
         if not total:
-            return None
+            return LLMJudge._global_rule(p, ctx)                      # không có S cùng vai → quy luật toàn KG
         out = []
         for r in ctx.relations:
             for direction, mk in (("subject_first", lambda s, x: (s, r, x)), ("neighbor_first", lambda s, x: (x, r, s))):
@@ -316,6 +316,74 @@ class LLMJudge:
                 if hit * 2 >= total:
                     out.append((r, direction, hit * 100 // total))
         return out
+
+    _REL_INDEX: dict[int, tuple[int, dict[str, list[tuple[str, str]]]]] = {}   # id(graph) → (checkpoint, r → [(h, t)])
+
+    @staticmethod
+    def _rel_index(g) -> dict[str, list[tuple[str, str]]]:
+        """Chỉ mục r → [(h, t)] của KG-trước (at = 0), dựng MỘT lần cho mỗi trạng thái đồ thị (khóa = checkpoint =
+        độ dài nhật ký; đồ thị nền dùng chung đổi trạng thái mỗi bài → dựng lại). Không sắp; người dùng sắp theo r cần."""
+        cp = g.checkpoint() if hasattr(g, "checkpoint") else -1
+        hit = LLMJudge._REL_INDEX.get(id(g))
+        if hit is not None and hit[0] == cp:
+            return hit[1]
+        idx: dict[str, list[tuple[str, str]]] = {}
+        for h, r, t in g.active(0):
+            idx.setdefault(r, []).append((h, t))
+        LLMJudge._REL_INDEX[id(g)] = (cp, idx)
+        return idx
+
+    @staticmethod
+    def _global_rule(p: AddPattern, ctx: JudgeContext, max_pairs: int = 100, max_xs: int = 20) -> list[tuple[str, str, int]] | None:
+        """Dự phòng khi `other` chưa có entity S nào cùng vai với subject: đo QUY LUẬT TOÀN KG cho cùng dạng cấu hình.
+        Với mọi cặp (A, r0, B) đang có trong KG (r0 = quan hệ của cạnh ADD tường minh nối subject–other, cùng chiều),
+        lấy các X nối với A qua đúng fact-KG của mẫu (via_r, via_direction) và đếm tỉ lệ bộ (A, B, X) có cạnh (B, r, X) /
+        (X, r, B). >= 50% → lựa chọn hợp lệ. Vẫn chỉ đếm cạnh đang tồn tại trong KG cho trước, không dùng luật miền.
+        None = không có cặp (A, r0, B) nào có X → không có bằng chứng."""
+        g, at = ctx.graph, ctx.at
+        out: list[tuple[str, str, int]] = []
+        seen_any = False
+        for op in ctx.explicit_ops:
+            if op.kind is not OpKind.ADD or {op.h, op.t} != {p.subject, p.other}:
+                continue
+            subj_is_head = op.h == p.subject                          # (subject, r0, other) hay (other, r0, subject)
+            key = ("global", op.r, subj_is_head, p.via_r, p.via_direction, id(g))
+            cache = getattr(ctx, "_rule_cache", None)
+            if cache is None:
+                cache = {}
+                try:
+                    ctx._rule_cache = cache
+                except Exception:  # noqa: BLE001 — ctx không cho gán thuộc tính: bỏ cache
+                    pass
+            if key in cache:
+                res = cache[key]
+            else:
+                triples = []                                          # (A, B, X): A đóng vai other, B đóng vai subject
+                n_pairs = 0
+                for h, t in sorted(LLMJudge._rel_index(g).get(op.r, ())):   # KG-trước (sắp để tái lập), bỏ cạnh vừa thêm
+                    a, b = (t, h) if subj_is_head else (h, t)
+                    if b == p.subject and a == p.other:
+                        continue
+                    n_pairs += 1
+                    if n_pairs > max_pairs:
+                        break
+                    xs = [tr[2] if p.via_direction == "subject_first" else tr[0] for tr in g.edges_of(a, 0)
+                          if tr[1] == p.via_r and (tr[0] == a if p.via_direction == "subject_first" else tr[2] == a)]
+                    triples += [(a, b, x) for x in xs[:max_xs] if x != b]
+                if not triples:
+                    res = None
+                else:
+                    res = []
+                    for r in ctx.relations:
+                        for direction, mk in (("subject_first", lambda b, x: (b, r, x)), ("neighbor_first", lambda b, x: (x, r, b))):
+                            hit = sum(1 for _, b, x in triples if g.is_active(mk(b, x), 0))
+                            if hit * 2 >= len(triples):
+                                res.append((r, direction, hit * 100 // len(triples)))
+                cache[key] = res
+            if res is not None:
+                seen_any = True
+                out += [o for o in res if o not in out]
+        return out if seen_any else None
 
     # ---- prompt -------------------------------------------------------------------------------
 
