@@ -151,35 +151,44 @@ Triple (h, r, t) đọc là "h r t": (paypal, owned by, eBay) nghĩa là PayPal 
 - "lựa chọn hợp lệ": các {r, direction} ứng với quy luật ấy. QUY TẮC: trả về CHÍNH các lựa chọn hợp lệ, đúng r và đúng
   direction; không thêm quan hệ khác dù nghe hợp lý, không đổi chiều, không trả 2 mục cho cùng lựa chọn. Mẫu không có
   lựa chọn hợp lệ ("không có cạnh S–X nào") → bỏ qua.
-- CHIỀU THỪA HƯỞNG. Từ thay đổi tường minh (A, r0, B) xác định ai GIA NHẬP ai: bên chuyển đến / bị mua / bị sáp nhập là
-  bên GIA NHẬP, bên kia là nơi TIẾP NHẬN. Chỉ bên gia nhập thừa hưởng hàng xóm của nơi tiếp nhận. Mẫu mà subject là nơi
-  tiếp nhận và X là hàng xóm của bên gia nhập → BỎ, dù tỉ lệ "tương tự" cao: tỉ lệ đó chỉ phản chiếu chính phép thừa hưởng
-  theo chiều ngược lại (hai bên đã chia sẻ hàng xóm nên nhìn từ phía nào cũng thấy 100%).
+- CHIỀU THỪA HƯỞNG. Mỗi mẫu ghi "vai: subject là CHỦ NGỮ/TÂN NGỮ của ADD (A, r0, B)". Xác định bên GIA NHẬP từ nghĩa của r0:
+  * r0 là HÀNH ĐỘNG A làm lên B (mua lại, thu nhận, sáp nhập B vào mình, tuyển B): TÂN NGỮ B gia nhập A. Bên mua KHÔNG
+    phải bên gia nhập.
+  * r0 là TRẠNG THÁI A thuộc về B (chơi cho, làm việc tại, là thành viên của B): CHỦ NGỮ A gia nhập B.
+  Chỉ bên GIA NHẬP thừa hưởng hàng xóm của bên kia. Mẫu mà subject KHÔNG phải bên gia nhập → BỎ, dù tỉ lệ "tương tự" 100%:
+  tỉ lệ đó chỉ phản chiếu chính phép thừa hưởng theo chiều ngược lại (hai bên đã chia sẻ hàng xóm nên nhìn từ phía nào
+  cũng thấy 100%). Ví dụ: ADD (Apple, mua lại, Osram) → Osram gia nhập Apple: mẫu "Osram ~ X" lấy, mẫu "Apple ~ X" bỏ.
 - MẶC ĐỊNH LẤY mọi lựa chọn hợp lệ của mẫu mà subject là bên gia nhập. Chỉ BỎ khi bản tin cho thấy rõ: (a) thay đổi tường
   minh chưa thành hiện thực (mới dự định / đang cân nhắc / đã hủy), hoặc (b) nơi mới trong mẫu thực ra là nơi CŨ subject
   vừa rời (X không đi theo).
-- reasoning: 1–2 câu: thương vụ đã hoàn tất chưa, subject là bên gia nhập hay nơi tiếp nhận, lựa chọn nào lấy / bỏ.
+- reasoning: 1–2 câu: thay đổi đã hoàn tất chưa, r0 là hành động hay trạng thái → ai gia nhập, subject có phải bên gia
+  nhập không, lựa chọn nào lấy / bỏ.
 
 VÍ DỤ (miền khác): tin "Messi rời Barca sang Inter", đã áp INVALIDATE (Messi, plays_for, Barca), ADD (Messi, plays_for, Inter).
   [A0] Messi ~ X — nhóm 2 X: Lautaro, Barella
+    - vai: subject là CHỦ NGỮ của ADD (Messi, plays_for, Inter)
     - fact KG: (X, plays_for, Inter)
     - tương tự: (S, teammate, X) 100%, (X, teammate, S) 100%
     - lựa chọn hợp lệ: {"r": "teammate", "direction": "subject_first"}; {"r": "teammate", "direction": "neighbor_first"}
   [A1] Messi ~ X — nhóm 1 X: Inzaghi
+    - vai: subject là CHỦ NGỮ của ADD (Messi, plays_for, Inter)
     - fact KG: (X, head_coach, Inter)
     - tương tự: không có cạnh S–X nào
   [A2] Inter ~ X — nhóm 2 X: Pedri, Gavi
+    - vai: subject là TÂN NGỮ của ADD (Messi, plays_for, Inter)
     - fact KG: (X, teammate, Messi)
     - tương tự: không có cạnh S–X nào
   [A3] Messi ~ X — nhóm 1 X: Zhang
+    - vai: subject là CHỦ NGỮ của ADD (Messi, plays_for, Inter)
     - fact KG: (Inter, owned_by, X)
     - tương tự: (S, sponsored_by, X) 67%
     - lựa chọn hợp lệ: {"r": "sponsored_by", "direction": "subject_first"}
   [A4] Inter ~ X — nhóm 1 X: Adidas
+    - vai: subject là TÂN NGỮ của ADD (Messi, plays_for, Inter)
     - fact KG: (Messi, sponsored_by, X)
     - tương tự: (S, sponsored_by, X) 100%
     - lựa chọn hợp lệ: {"r": "sponsored_by", "direction": "subject_first"}
-  Kết quả đúng: {"reasoning": "Chuyển nhượng đã xong; Messi là bên gia nhập, Inter là nơi tiếp nhận. A0: cầu thủ Inter đều là đồng đội 2 chiều (100%) → lấy cả 2 dù bản tin không nhắc Lautaro/Barella. A1, A2: không có lựa chọn → bỏ. A3: 67% cầu thủ Inter được chủ CLB tài trợ là quy luật → lấy sponsored_by subject_first, không thêm owned_by hay chiều ngược. A4: subject Inter là nơi tiếp nhận, X là nhà tài trợ của người mới đến → bỏ dù 100%.",
+  Kết quả đúng: {"reasoning": "Chuyển nhượng đã xong; plays_for là trạng thái 'thuộc về' → chủ ngữ Messi gia nhập Inter. A0: cầu thủ Inter đều là đồng đội 2 chiều (100%) → lấy cả 2 dù bản tin không nhắc Lautaro/Barella. A1, A2: không có lựa chọn → bỏ. A3: 67% cầu thủ Inter được chủ CLB tài trợ là quy luật → lấy sponsored_by subject_first, không thêm owned_by hay chiều ngược. A4: subject Inter không phải bên gia nhập, X là nhà tài trợ của người mới đến → bỏ dù 100%.",
                  "add": [{"idx": 0, "r": "teammate", "direction": "subject_first"},
                          {"idx": 0, "r": "teammate", "direction": "neighbor_first"},
                          {"idx": 3, "r": "sponsored_by", "direction": "subject_first"}]}
@@ -274,8 +283,13 @@ class LLMJudge:
 
     def _add_block(self, i: int, p: AddPattern, ctx: JudgeContext) -> list[str]:
         via = f"(X, {p.via_r}, {p.other})" if p.via_direction == "neighbor_first" else f"({p.other}, {p.via_r}, X)"
-        lines = [f"[A{i}] {p.subject} ~ X — nhóm {len(p.members)} X: {_examples(p.neighbors, self.n_examples)}",
-                 f"  - fact KG: {via}"]
+        lines = [f"[A{i}] {p.subject} ~ X — nhóm {len(p.members)} X: {_examples(p.neighbors, self.n_examples)}"]
+        for op in ctx.explicit_ops:                                     # vai của subject trong cạnh ADD nối subject–other
+            if op.kind is OpKind.ADD and {op.h, op.t} == {p.subject, p.other}:
+                role = "CHỦ NGỮ" if op.h == p.subject else "TÂN NGỮ"
+                lines.append(f"  - vai: subject là {role} của ADD ({op.h}, {op.r}, {op.t})")
+                break
+        lines.append(f"  - fact KG: {via}")
         analogy = self._analogy(p, ctx)
         if analogy:
             lines.append("  - tương tự: " + ", ".join(analogy))
