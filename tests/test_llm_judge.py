@@ -109,7 +109,7 @@ def test_two_phase_prompts_list_patterns_not_edges(graph):
     assert "PHA CẮT" in sys_cut and "PHA SINH" not in sys_cut
     # pha SINH: chỉ có mẫu thêm
     assert "[A0]" in add_user and "[C0]" not in add_user
-    assert f"bằng chứng: (X, {PLAYS}, Inter)" in add_user
+    assert f"fact KG: (X, {PLAYS}, Inter)" in add_user
     assert "PHA SINH" in sys_add and "PHA CẮT" not in sys_add
     for u in (cut_user, add_user):
         assert u.count("ENTITY THAM GIA") == 1 and "BẢN TIN" in u
@@ -161,7 +161,7 @@ def test_add_line_carries_structural_analogy():
     assert "tương tự: không có cạnh S–X nào" in add_user
     # thực đơn {r, direction} LLM được chọn = đúng các dòng "tương tự"; mẫu không có bằng chứng → không có thực đơn
     assert f'lựa chọn hợp lệ: {{"r": "{TEAM}", "direction": "subject_first"}}; {{"r": "{TEAM}", "direction": "neighbor_first"}}' in add_user
-    assert add_user.count("lựa chọn hợp lệ") == 1
+    assert add_user.count("  - lựa chọn hợp lệ") == 1
 
 
 def test_off_menu_verdicts_are_counted_but_still_applied():

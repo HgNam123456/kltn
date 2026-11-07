@@ -137,39 +137,44 @@ VÍ DỤ (miền khác): tin "Messi rời Barca sang Inter", đã áp INVALIDATE
 
 SYSTEM_ADD = _COMMON + """
 
-PHA SINH. Trả về add = danh sách {idx, r, direction} cho các mẫu [Ai] mà cấu trúc mới THỰC SỰ hàm ý. Không liệt kê = bỏ qua.
-- direction: subject_first = (subject, r, X); neighbor_first = (X, r, subject).
-- "tương tự" là bằng chứng ĐO TRÊN KG: các entity S cùng vai với subject (cùng loại cạnh vừa thêm tới nơi mới) đang có
-  cạnh gì với chính các X này, kèm tỷ lệ. "(S, r, X) N%" ↔ {r, direction: subject_first}; "(X, r, S) N%" ↔ {r, direction:
-  neighbor_first}. Subject vừa vào cùng vai với S nên cần đúng các cạnh đó: N cao (≈100%) là quy luật của KG → lấy;
-  N thấp hơn → cân nhắc theo bản tin.
-- QUY TẮC CỨNG: mỗi mục trả về phải trùng ĐÚNG một "lựa chọn hợp lệ" ghi dưới mẫu (đúng r VÀ đúng direction). Không tự thêm
-  quan hệ khác dù nghe hợp lý, không thêm chiều ngược lại nếu không được liệt kê, không trả 2 mục cho cùng một lựa chọn.
-  Mẫu ghi "không có cạnh S–X nào" → bỏ qua. Quan hệ đối xứng chỉ trả 2 chiều khi CẢ 2 chiều đều là lựa chọn hợp lệ.
-- Không lấy lựa chọn khi bản tin cho thấy nó không áp dụng: thay đổi mới chỉ dự định/cân nhắc/bị hủy (chưa thành hiện thực),
-  hoặc bằng chứng nối X với entity CŨ / nơi cũ (X là đồng đội cũ, X không đi theo).
-- Không thêm cạnh ngoài danh sách mẫu.
-- reasoning: 1–2 câu ngắn: lựa chọn nào được lấy, lựa chọn nào bị bỏ và vì sao.
+PHA SINH. Mỗi mẫu [Ai] "subject ~ X": subject vừa có cạnh mới tới một entity (nơi mới); X là các entity đang nối với nơi
+mới qua fact ghi ở dòng "fact KG". Hỏi: subject có cần nối với X không, bằng quan hệ nào, chiều nào?
+Trả về add = danh sách {idx, r, direction}; direction: subject_first = (subject, r, X); neighbor_first = (X, r, subject).
+Triple (h, r, t) đọc là "h r t": (paypal, owned by, eBay) nghĩa là PayPal thuộc sở hữu của eBay.
+
+- MỌI dòng dưới mẫu ("fact KG", "tương tự", "lựa chọn hợp lệ") là fact ĐÃ CÓ SẴN trong KG, đã được kiểm chứng. Chúng KHÔNG
+  phải điều cần tìm trong bản tin. Thay đổi gián tiếp theo định nghĩa là điều bản tin KHÔNG nói ra: bản tin chỉ kể thương
+  vụ/chuyển nhượng, không bao giờ liệt kê X. KHÔNG được bỏ qua mẫu với lý do "bản tin không nhắc tới X / không nhắc tới r".
+- "tương tự": các entity S đã ở cùng vai với subject từ trước (cùng loại cạnh tới nơi mới) đang có cạnh gì với chính các
+  X này, kèm tỉ lệ. Đó là QUY LUẬT đo được của KG: >= 50% S có cạnh (S, r, X) nghĩa là ai vào vai đó cũng có cạnh đó; 61%
+  hay 100% đều là quy luật. Subject vừa vào cùng vai với S nên cần đúng các cạnh đó.
+- "lựa chọn hợp lệ": các {r, direction} ứng với quy luật ấy. QUY TẮC: trả về CHÍNH các lựa chọn hợp lệ, đúng r và đúng
+  direction; không thêm quan hệ khác dù nghe hợp lý, không đổi chiều, không trả 2 mục cho cùng lựa chọn. Mẫu không có
+  lựa chọn hợp lệ ("không có cạnh S–X nào") → bỏ qua.
+- MẶC ĐỊNH LẤY mọi lựa chọn hợp lệ. Chỉ BỎ khi bản tin cho thấy rõ: (a) thay đổi tường minh chưa thành hiện thực (mới
+  dự định / đang cân nhắc / đã hủy), hoặc (b) nơi mới trong mẫu thực ra là nơi CŨ subject vừa rời (X không đi theo).
+- reasoning: 1–2 câu: thương vụ đã hoàn tất chưa, lựa chọn nào được lấy / bị bỏ và vì sao.
 
 VÍ DỤ (miền khác): tin "Messi rời Barca sang Inter", đã áp INVALIDATE (Messi, plays_for, Barca), ADD (Messi, plays_for, Inter).
   [A0] Messi ~ X — nhóm 2 X: Lautaro, Barella
-    - bằng chứng: (X, plays_for, Inter)
+    - fact KG: (X, plays_for, Inter)
     - tương tự: (S, teammate, X) 100%, (X, teammate, S) 100%
     - lựa chọn hợp lệ: {"r": "teammate", "direction": "subject_first"}; {"r": "teammate", "direction": "neighbor_first"}
   [A1] Messi ~ X — nhóm 1 X: Inzaghi
-    - bằng chứng: (X, head_coach, Inter)
+    - fact KG: (X, head_coach, Inter)
     - tương tự: không có cạnh S–X nào
   [A2] Inter ~ X — nhóm 2 X: Pedri, Gavi
-    - bằng chứng: (X, teammate, Messi)
+    - fact KG: (X, teammate, Messi)
     - tương tự: không có cạnh S–X nào
   [A3] Messi ~ X — nhóm 1 X: Zhang
-    - bằng chứng: (Inter, owned_by, X)
-    - tương tự: (S, sponsored_by, X) 100%
+    - fact KG: (Inter, owned_by, X)
+    - tương tự: (S, sponsored_by, X) 67%
     - lựa chọn hợp lệ: {"r": "sponsored_by", "direction": "subject_first"}
-  Kết quả đúng: {"reasoning": "A0: cầu thủ Inter đều là đồng đội 2 chiều (100%, cả 2 chiều hợp lệ) → lấy cả 2. A1, A2: không có bằng chứng → bỏ. A3: cầu thủ Inter đều được chủ CLB tài trợ (100%) → lấy đúng sponsored_by subject_first, không thêm owned_by hay chiều ngược.",
+  Kết quả đúng: {"reasoning": "Chuyển nhượng đã xong. A0: cầu thủ Inter đều là đồng đội 2 chiều (100%) → lấy cả 2 dù bản tin không nhắc Lautaro/Barella. A1, A2: không có lựa chọn → bỏ. A3: 67% cầu thủ Inter được chủ CLB tài trợ là quy luật → lấy sponsored_by subject_first, không thêm owned_by hay chiều ngược.",
                  "add": [{"idx": 0, "r": "teammate", "direction": "subject_first"},
                          {"idx": 0, "r": "teammate", "direction": "neighbor_first"},
-                         {"idx": 3, "r": "sponsored_by", "direction": "subject_first"}]}"""
+                         {"idx": 3, "r": "sponsored_by", "direction": "subject_first"}]}
+  Nếu tin là "Messi đang cân nhắc sang Inter" (chưa xong) → add rỗng."""
 
 SYSTEM = SYSTEM_CUT + "\n\n" + SYSTEM_ADD.split("\n\n", 1)[1]   # bản gộp 1 pha (tương thích)
 
@@ -261,7 +266,7 @@ class LLMJudge:
     def _add_block(self, i: int, p: AddPattern, ctx: JudgeContext) -> list[str]:
         via = f"(X, {p.via_r}, {p.other})" if p.via_direction == "neighbor_first" else f"({p.other}, {p.via_r}, X)"
         lines = [f"[A{i}] {p.subject} ~ X — nhóm {len(p.members)} X: {_examples(p.neighbors, self.n_examples)}",
-                 f"  - bằng chứng: {via}"]
+                 f"  - fact KG: {via}"]
         analogy = self._analogy(p, ctx)
         if analogy:
             lines.append("  - tương tự: " + ", ".join(analogy))
@@ -330,7 +335,7 @@ class LLMJudge:
         return "\n".join(lines)
 
     def _prompt_add(self, ctx: JudgeContext, add: list[AddPattern]) -> str:
-        lines = self._header(ctx) + ["MẪU THÊM (cặp chưa nối trong bối cảnh mới; mặc định bỏ qua):"]
+        lines = self._header(ctx) + ["MẪU THÊM (cặp chưa nối; lấy các lựa chọn hợp lệ trừ khi bản tin cho thấy thay đổi chưa xong):"]
         for i, p in enumerate(add):
             lines += self._add_block(i, p, ctx)
         lines += ["", "Trả về add = các {idx, r, direction} cho [Ai] cần thêm."]
