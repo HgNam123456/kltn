@@ -138,27 +138,38 @@ VÍ DỤ (miền khác): tin "Messi rời Barca sang Inter", đã áp INVALIDATE
 SYSTEM_ADD = _COMMON + """
 
 PHA SINH. Trả về add = danh sách {idx, r, direction} cho các mẫu [Ai] mà cấu trúc mới THỰC SỰ hàm ý. Không liệt kê = bỏ qua.
-- direction: subject_first = (subject, r, X); neighbor_first = (X, r, subject). Quan hệ đối xứng (đồng đội) → 2 mục cùng idx, 2 direction.
-- Chỉ thêm cho entity vừa GIA NHẬP nơi mới: quan hệ với những X đang ở nơi đó (bằng chứng nối X với nơi mới).
-  Mẫu mà bằng chứng nối X với entity CŨ / nơi cũ (X là đồng đội cũ) → bỏ qua: X không đi theo.
+- direction: subject_first = (subject, r, X); neighbor_first = (X, r, subject).
+- "tương tự" là bằng chứng ĐO TRÊN KG: các entity S cùng vai với subject (cùng loại cạnh vừa thêm tới nơi mới) đang có
+  cạnh gì với chính các X này, kèm tỷ lệ. "(S, r, X) N%" ↔ {r, direction: subject_first}; "(X, r, S) N%" ↔ {r, direction:
+  neighbor_first}. Subject vừa vào cùng vai với S nên cần đúng các cạnh đó: N cao (≈100%) là quy luật của KG → lấy;
+  N thấp hơn → cân nhắc theo bản tin.
+- QUY TẮC CỨNG: mỗi mục trả về phải trùng ĐÚNG một "lựa chọn hợp lệ" ghi dưới mẫu (đúng r VÀ đúng direction). Không tự thêm
+  quan hệ khác dù nghe hợp lý, không thêm chiều ngược lại nếu không được liệt kê, không trả 2 mục cho cùng một lựa chọn.
+  Mẫu ghi "không có cạnh S–X nào" → bỏ qua. Quan hệ đối xứng chỉ trả 2 chiều khi CẢ 2 chiều đều là lựa chọn hợp lệ.
+- Không lấy lựa chọn khi bản tin cho thấy nó không áp dụng: thay đổi mới chỉ dự định/cân nhắc/bị hủy (chưa thành hiện thực),
+  hoặc bằng chứng nối X với entity CŨ / nơi cũ (X là đồng đội cũ, X không đi theo).
 - Không thêm cạnh ngoài danh sách mẫu.
-- "tương tự": trong KG hiện có, các entity S cùng vai với subject (cùng loại cạnh tới nơi mới) đang có quan hệ gì
-  với X, kèm tỷ lệ. Subject vừa vào cùng vai với S nên thường cần đúng các cạnh đó; "không có cạnh S–X nào" → bỏ qua.
-- reasoning: 1–2 câu ngắn giải thích trước khi kết luận.
+- reasoning: 1–2 câu ngắn: lựa chọn nào được lấy, lựa chọn nào bị bỏ và vì sao.
 
 VÍ DỤ (miền khác): tin "Messi rời Barca sang Inter", đã áp INVALIDATE (Messi, plays_for, Barca), ADD (Messi, plays_for, Inter).
   [A0] Messi ~ X — nhóm 2 X: Lautaro, Barella
     - bằng chứng: (X, plays_for, Inter)
     - tương tự: (S, teammate, X) 100%, (X, teammate, S) 100%
+    - lựa chọn hợp lệ: {"r": "teammate", "direction": "subject_first"}; {"r": "teammate", "direction": "neighbor_first"}
   [A1] Messi ~ X — nhóm 1 X: Inzaghi
     - bằng chứng: (X, head_coach, Inter)
     - tương tự: không có cạnh S–X nào
   [A2] Inter ~ X — nhóm 2 X: Pedri, Gavi
     - bằng chứng: (X, teammate, Messi)
     - tương tự: không có cạnh S–X nào
-  Kết quả đúng: {"reasoning": "Messi vào Inter nên thành đồng đội 2 chiều với cầu thủ Inter như các cầu thủ khác; HLV không có quan hệ với cầu thủ trong KG; đồng đội cũ không sang Inter.",
+  [A3] Messi ~ X — nhóm 1 X: Zhang
+    - bằng chứng: (Inter, owned_by, X)
+    - tương tự: (S, sponsored_by, X) 100%
+    - lựa chọn hợp lệ: {"r": "sponsored_by", "direction": "subject_first"}
+  Kết quả đúng: {"reasoning": "A0: cầu thủ Inter đều là đồng đội 2 chiều (100%, cả 2 chiều hợp lệ) → lấy cả 2. A1, A2: không có bằng chứng → bỏ. A3: cầu thủ Inter đều được chủ CLB tài trợ (100%) → lấy đúng sponsored_by subject_first, không thêm owned_by hay chiều ngược.",
                  "add": [{"idx": 0, "r": "teammate", "direction": "subject_first"},
-                         {"idx": 0, "r": "teammate", "direction": "neighbor_first"}]}"""
+                         {"idx": 0, "r": "teammate", "direction": "neighbor_first"},
+                         {"idx": 3, "r": "sponsored_by", "direction": "subject_first"}]}"""
 
 SYSTEM = SYSTEM_CUT + "\n\n" + SYSTEM_ADD.split("\n\n", 1)[1]   # bản gộp 1 pha (tương thích)
 
@@ -182,6 +193,7 @@ class LLMJudge:
         self.batch_size = batch_size
         self.gate = gate                     # phương án C (lai): ngưỡng đồng xuất hiện; None = hỏi LLM mọi mẫu
         self.n_gated = 0                     # số mẫu bị cổng cấu trúc KEEP/bỏ qua mà không hỏi LLM
+        self.n_off_menu = 0                  # số mục add LLM trả về ngoài "lựa chọn hợp lệ" (đo độ tuân thủ prompt)
         self._add_schemas: dict[tuple[str, ...], type[BaseModel]] = {}
         self._cut_schema = make_cut_schema()
         self._cooccur_cache: dict[tuple, float] = {}
@@ -253,12 +265,29 @@ class LLMJudge:
         analogy = self._analogy(p, ctx)
         if analogy:
             lines.append("  - tương tự: " + ", ".join(analogy))
+        menu = self._menu(p, ctx)
+        if menu:                                                        # thực đơn {r, direction} LLM được phép chọn
+            lines.append("  - lựa chọn hợp lệ: " + "; ".join(f'{{"r": "{r}", "direction": "{d}"}}' for r, d in menu))
         return lines
+
+    @staticmethod
+    def _menu(p: AddPattern, ctx: JudgeContext) -> list[tuple[str, str]]:
+        """Các (r, direction) có bằng chứng "tương tự" (>= 50% cặp S–X): tập lựa chọn hợp lệ cho LLM ở mẫu này."""
+        return [(r, d) for r, d, _ in (LLMJudge._analogy_pairs(p, ctx) or [])]
 
     @staticmethod
     def _analogy(p: AddPattern, ctx: JudgeContext, max_siblings: int = 30, max_xs: int = 200) -> list[str]:
         """Bằng chứng cấu trúc từ KG hiện có: các entity S cùng vai với subject (cùng cạnh ADD tới `other`)
         đang có quan hệ gì với các X của mẫu. Không dùng luật miền: chỉ đếm cạnh đang tồn tại."""
+        pairs = LLMJudge._analogy_pairs(p, ctx, max_siblings, max_xs)
+        if pairs is None:
+            return []
+        return [f"(S, {r}, X) {pct}%" if d == "subject_first" else f"(X, {r}, S) {pct}%" for r, d, pct in pairs]             or ["không có cạnh S–X nào"]
+
+    @staticmethod
+    def _analogy_pairs(p: AddPattern, ctx: JudgeContext, max_siblings: int = 30,
+                       max_xs: int = 200) -> list[tuple[str, str, int]] | None:
+        """[(r, direction, %)] các quan hệ mà >= 50% cặp (S, X) đang có; None = không có S nào (không có bằng chứng)."""
         g, at = ctx.graph, ctx.at
         siblings: set[str] = set()
         for op in ctx.explicit_ops:
@@ -274,15 +303,14 @@ class LLMJudge:
         pairs = [(s, x) for s in siblings for x in xs if s != x]      # S có thể trùng X: chỉ bỏ cặp (s, s)
         total = len(pairs)
         if not total:
-            return []
+            return None
         out = []
         for r in ctx.relations:
             for direction, mk in (("subject_first", lambda s, x: (s, r, x)), ("neighbor_first", lambda s, x: (x, r, s))):
                 hit = sum(1 for s, x in pairs if g.is_active(mk(s, x), at))
                 if hit * 2 >= total:
-                    shape = f"(S, {r}, X)" if direction == "subject_first" else f"(X, {r}, S)"
-                    out.append(f"{shape} {hit * 100 // total}%")
-        return out or ["không có cạnh S–X nào"]
+                    out.append((r, direction, hit * 100 // total))
+        return out
 
     # ---- prompt -------------------------------------------------------------------------------
 
@@ -340,6 +368,9 @@ class LLMJudge:
             for v in out.add:
                 if not (0 <= v.idx < len(batch)) or v.r not in ctx.relations:   # r vẫn kiểm tra: đường json_object không ép enum
                     continue
+                menu = self._menu(batch[v.idx], ctx)
+                if menu and (v.r, v.direction) not in menu:                       # LLM vi phạm "lựa chọn hợp lệ": đếm, vẫn áp
+                    self.n_off_menu += 1
                 for c in batch[v.idx].members:
                     h, t = (c.subject, c.neighbor) if v.direction == "subject_first" else (c.neighbor, c.subject)
                     if not ctx.graph.is_active((h, v.r, t), ctx.at):

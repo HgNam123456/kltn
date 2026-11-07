@@ -113,11 +113,14 @@ def main() -> None:
     # Mỗi thread một extractor/judge riêng (client riêng): n_calls/n_dropped cộng dồn theo thread, nên
     # hiệu trước/sau trong run_example vẫn đúng cho từng ví dụ khi chạy song song.
     local = threading.local()
+    judges: list = []                                  # mọi judge LLM đã tạo (mỗi thread một) → gộp bộ đếm vào summary
 
     def components():
         if not hasattr(local, "extractor"):
             local.extractor = build_extractor(args.extractor, relations)
             local.judge = build_llm_judge(args.judge, batch=args.judge_batch or None, gate=args.judge_gate)
+            if local.judge is not None:
+                judges.append(local.judge)
         return local.extractor, local.judge
 
     # KG cho trước (GivenKGDataset): dựng đồ thị nền MỘT lần mỗi thread, mỗi bài áp chênh lệch rồi rollback —
@@ -156,6 +159,9 @@ def main() -> None:
 
     tag = f"{args.extractor}+{args.judge}" + (f"[batch={args.judge_batch},gate={args.judge_gate}]" if args.judge == "llm" else "")
     s = summarize_run(records, time.time() - t0, tag, args.split)
+    if judges:
+        s["n_gated"] = sum(j.n_gated for j in judges)           # mẫu bị cổng cấu trúc chặn, không hỏi LLM
+        s["n_off_menu"] = sum(j.n_off_menu for j in judges)     # mục add LLM trả về ngoài "lựa chọn hợp lệ"
     args.out.with_suffix(".summary.json").write_text(json.dumps(s, indent=2), encoding="utf8")
     print(json.dumps(s, indent=2))
 

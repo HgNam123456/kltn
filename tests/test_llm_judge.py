@@ -159,6 +159,26 @@ def test_add_line_carries_structural_analogy():
     assert f"tương tự: (S, {TEAM}, X) 100%, (X, {TEAM}, S) 100%" in add_user
     # mẫu qua head_coach: X = Inzaghi, S = {Lautaro, Barella} → không có cạnh S–X
     assert "tương tự: không có cạnh S–X nào" in add_user
+    # thực đơn {r, direction} LLM được chọn = đúng các dòng "tương tự"; mẫu không có bằng chứng → không có thực đơn
+    assert f'lựa chọn hợp lệ: {{"r": "{TEAM}", "direction": "subject_first"}}; {{"r": "{TEAM}", "direction": "neighbor_first"}}' in add_user
+    assert add_user.count("lựa chọn hợp lệ") == 1
+
+
+def test_off_menu_verdicts_are_counted_but_still_applied():
+    """LLM trả (r, direction) ngoài thực đơn → n_off_menu tăng (đo độ tuân thủ prompt), op vẫn áp (không lọc ngầm)."""
+    from kgu.graph import BiTemporalGraph
+    before = {("Messi", PLAYS, "Barca"), ("Lautaro", PLAYS, "Inter"), ("Barella", PLAYS, "Inter"),
+              ("Lautaro", TEAM, "Barella"), ("Barella", TEAM, "Lautaro")}
+    g = BiTemporalGraph.from_triples(before, valid_from=0)
+    apply_ops(g, EXPLICIT, at=1)
+    loc = localize(g, EXPLICIT, at=1)
+    ctx = JudgeContext("", EXPLICIT, loc, g, 1, [PLAYS, TEAM])
+    client = FakeLLMClient([{"add": [{"idx": 0, "r": TEAM, "direction": "subject_first"},     # không có mẫu cắt → chỉ 1 lệnh gọi
+                                     {"idx": 0, "r": PLAYS, "direction": "subject_first"}]}])
+    j = LLMJudge(client, batch_size=None)
+    ops = j.judge(ctx)
+    assert j.n_off_menu == 1
+    assert Op(OpKind.ADD, "Messi", PLAYS, "Lautaro") in ops and Op(OpKind.ADD, "Messi", TEAM, "Lautaro") in ops
 
 
 def test_prompt_truncates_examples():
