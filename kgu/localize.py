@@ -66,7 +66,7 @@ def localize(graph: BiTemporalGraph, explicit_ops: list[Op], at: int, symmetric_
                         loc.cut.append(CutCandidate(tr, hub, frozenset(anchors)))
 
     # ---- vế sinh -------------------------------------------------------
-    seen_add: set[tuple[str, str]] = set()
+    seen_add: set[tuple[str, str, Triple]] = set()
     add_pairs = [(op.h, op.t) for op in explicit_ops if op.kind is OpKind.ADD]
     if symmetric_add:
         add_pairs += [(b, a) for a, b in add_pairs]
@@ -76,11 +76,13 @@ def localize(graph: BiTemporalGraph, explicit_ops: list[Op], at: int, symmetric_
             by_n.setdefault(tr[2] if tr[0] == b else tr[0], set()).add(tr)
         fresh = set(by_n) - graph.neighbors(a, at) - {a, b}
         for n in sorted(fresh):
-            if (a, n) in seen_add:
-                continue
-            # ưu tiên cạnh có n đứng đầu (X, r, b) để các mẫu bằng chứng gom được vào nhau khi đồ thị 2 chiều
-            via = sorted(by_n[n], key=lambda tr: (tr[0] != n, tr))[0]
-            seen_add.add((a, n))
-            loc.add.append(AddCandidate(a, n, via))
+            # MỖI cạnh bối cảnh b–n một ứng viên: n nối với b qua k quan hệ → k ứng viên (a, n), mỗi cái một `via`,
+            # để bộ phán theo mẫu thấy đủ k mẫu (vd. X vừa là board member vừa là owner của b → 2 mẫu, 2 quan hệ
+            # thừa hưởng). Cặp (a, n) vẫn đếm MỘT lần trong add_pairs/coverage. Thứ tự: cạnh có n đứng đầu trước.
+            for via in sorted(by_n[n], key=lambda tr: (tr[0] != n, tr)):
+                if (a, n, via) in seen_add:
+                    continue
+                seen_add.add((a, n, via))
+                loc.add.append(AddCandidate(a, n, via))
 
     return loc
