@@ -164,8 +164,8 @@ def test_add_line_carries_structural_analogy():
     assert add_user.count("  - lựa chọn hợp lệ") == 1
 
 
-def test_off_menu_verdicts_are_counted_but_still_applied():
-    """LLM trả (r, direction) ngoài thực đơn → n_off_menu tăng (đo độ tuân thủ prompt), op vẫn áp (không lọc ngầm)."""
+def test_off_menu_verdicts_are_counted_and_dropped():
+    """LLM trả (r, direction) ngoài thực đơn của mẫu CÓ bằng chứng → n_off_menu tăng và mục đó bị bỏ; mục trong thực đơn áp."""
     from kgu.graph import BiTemporalGraph
     before = {("Messi", PLAYS, "Barca"), ("Lautaro", PLAYS, "Inter"), ("Barella", PLAYS, "Inter"),
               ("Lautaro", TEAM, "Barella"), ("Barella", TEAM, "Lautaro")}
@@ -178,7 +178,7 @@ def test_off_menu_verdicts_are_counted_but_still_applied():
     j = LLMJudge(client, batch_size=None)
     ops = j.judge(ctx)
     assert j.n_off_menu == 1
-    assert Op(OpKind.ADD, "Messi", PLAYS, "Lautaro") in ops and Op(OpKind.ADD, "Messi", TEAM, "Lautaro") in ops
+    assert Op(OpKind.ADD, "Messi", TEAM, "Lautaro") in ops and not any(o.r == PLAYS for o in ops)
 
 
 def test_prompt_truncates_examples():

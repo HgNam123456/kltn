@@ -151,9 +151,14 @@ Triple (h, r, t) đọc là "h r t": (paypal, owned by, eBay) nghĩa là PayPal 
 - "lựa chọn hợp lệ": các {r, direction} ứng với quy luật ấy. QUY TẮC: trả về CHÍNH các lựa chọn hợp lệ, đúng r và đúng
   direction; không thêm quan hệ khác dù nghe hợp lý, không đổi chiều, không trả 2 mục cho cùng lựa chọn. Mẫu không có
   lựa chọn hợp lệ ("không có cạnh S–X nào") → bỏ qua.
-- MẶC ĐỊNH LẤY mọi lựa chọn hợp lệ. Chỉ BỎ khi bản tin cho thấy rõ: (a) thay đổi tường minh chưa thành hiện thực (mới
-  dự định / đang cân nhắc / đã hủy), hoặc (b) nơi mới trong mẫu thực ra là nơi CŨ subject vừa rời (X không đi theo).
-- reasoning: 1–2 câu: thương vụ đã hoàn tất chưa, lựa chọn nào được lấy / bị bỏ và vì sao.
+- CHIỀU THỪA HƯỞNG. Từ thay đổi tường minh (A, r0, B) xác định ai GIA NHẬP ai: bên chuyển đến / bị mua / bị sáp nhập là
+  bên GIA NHẬP, bên kia là nơi TIẾP NHẬN. Chỉ bên gia nhập thừa hưởng hàng xóm của nơi tiếp nhận. Mẫu mà subject là nơi
+  tiếp nhận và X là hàng xóm của bên gia nhập → BỎ, dù tỉ lệ "tương tự" cao: tỉ lệ đó chỉ phản chiếu chính phép thừa hưởng
+  theo chiều ngược lại (hai bên đã chia sẻ hàng xóm nên nhìn từ phía nào cũng thấy 100%).
+- MẶC ĐỊNH LẤY mọi lựa chọn hợp lệ của mẫu mà subject là bên gia nhập. Chỉ BỎ khi bản tin cho thấy rõ: (a) thay đổi tường
+  minh chưa thành hiện thực (mới dự định / đang cân nhắc / đã hủy), hoặc (b) nơi mới trong mẫu thực ra là nơi CŨ subject
+  vừa rời (X không đi theo).
+- reasoning: 1–2 câu: thương vụ đã hoàn tất chưa, subject là bên gia nhập hay nơi tiếp nhận, lựa chọn nào lấy / bỏ.
 
 VÍ DỤ (miền khác): tin "Messi rời Barca sang Inter", đã áp INVALIDATE (Messi, plays_for, Barca), ADD (Messi, plays_for, Inter).
   [A0] Messi ~ X — nhóm 2 X: Lautaro, Barella
@@ -170,7 +175,11 @@ VÍ DỤ (miền khác): tin "Messi rời Barca sang Inter", đã áp INVALIDATE
     - fact KG: (Inter, owned_by, X)
     - tương tự: (S, sponsored_by, X) 67%
     - lựa chọn hợp lệ: {"r": "sponsored_by", "direction": "subject_first"}
-  Kết quả đúng: {"reasoning": "Chuyển nhượng đã xong. A0: cầu thủ Inter đều là đồng đội 2 chiều (100%) → lấy cả 2 dù bản tin không nhắc Lautaro/Barella. A1, A2: không có lựa chọn → bỏ. A3: 67% cầu thủ Inter được chủ CLB tài trợ là quy luật → lấy sponsored_by subject_first, không thêm owned_by hay chiều ngược.",
+  [A4] Inter ~ X — nhóm 1 X: Adidas
+    - fact KG: (Messi, sponsored_by, X)
+    - tương tự: (S, sponsored_by, X) 100%
+    - lựa chọn hợp lệ: {"r": "sponsored_by", "direction": "subject_first"}
+  Kết quả đúng: {"reasoning": "Chuyển nhượng đã xong; Messi là bên gia nhập, Inter là nơi tiếp nhận. A0: cầu thủ Inter đều là đồng đội 2 chiều (100%) → lấy cả 2 dù bản tin không nhắc Lautaro/Barella. A1, A2: không có lựa chọn → bỏ. A3: 67% cầu thủ Inter được chủ CLB tài trợ là quy luật → lấy sponsored_by subject_first, không thêm owned_by hay chiều ngược. A4: subject Inter là nơi tiếp nhận, X là nhà tài trợ của người mới đến → bỏ dù 100%.",
                  "add": [{"idx": 0, "r": "teammate", "direction": "subject_first"},
                          {"idx": 0, "r": "teammate", "direction": "neighbor_first"},
                          {"idx": 3, "r": "sponsored_by", "direction": "subject_first"}]}
@@ -446,8 +455,9 @@ class LLMJudge:
                 if not (0 <= v.idx < len(batch)) or v.r not in ctx.relations:   # r vẫn kiểm tra: đường json_object không ép enum
                     continue
                 menu = self._menu(batch[v.idx], ctx)
-                if menu and (v.r, v.direction) not in menu:                       # LLM vi phạm "lựa chọn hợp lệ": đếm, vẫn áp
-                    self.n_off_menu += 1
+                if menu and (v.r, v.direction) not in menu:                       # LLM vi phạm "lựa chọn hợp lệ": đếm và BỎ
+                    self.n_off_menu += 1                                           # (mẫu có bằng chứng → chỉ nhận đúng bằng chứng)
+                    continue
                 for c in batch[v.idx].members:
                     h, t = (c.subject, c.neighbor) if v.direction == "subject_first" else (c.neighbor, c.subject)
                     if not ctx.graph.is_active((h, v.r, t), ctx.at):
