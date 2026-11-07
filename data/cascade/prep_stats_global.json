@@ -1,0 +1,56 @@
+{
+ "icews14_event_global": {
+  "candidates": 254,
+  "no_implicit": 82,
+  "n_before": {
+   "n": 172,
+   "mean": 42689.34302325582,
+   "min": 42689,
+   "max": 42690
+  },
+  "n_add1": {
+   "n": 172,
+   "mean": 15.436046511627907,
+   "min": 1,
+   "max": 107
+  },
+  "n_add_full": {
+   "n": 172,
+   "mean": 28.087209302325583,
+   "min": 1,
+   "max": 306
+  },
+  "base_triples": 42690,
+  "base_entities": 6869,
+  "relations": 230,
+  "trigger_in_base": 140
+ },
+ "yago_event_global": {
+  "candidates": 757840,
+  "n_before": {
+   "n": 400,
+   "mean": 1079039.8875,
+   "min": 1079039,
+   "max": 1079049
+  },
+  "n_implicit": {
+   "n": 400,
+   "mean": 1.3175,
+   "min": 1,
+   "max": 9
+  },
+  "quota": {
+   "hop1/add": 150,
+   "hop1/delete": 150,
+   "hop2/add": 100
+  },
+  "got": {
+   "hop1/add": 150,
+   "hop1/delete": 150,
+   "hop2/add": 100
+  },
+  "base_triples": 1079040,
+  "base_entities": 123143,
+  "relations": 37
+ }
+}

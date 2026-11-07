@@ -11,7 +11,7 @@ from kgu.graph import BiTemporalGraph
 from kgu.judge import Judge, JudgeContext
 from kgu.localize import Localization, localize
 from kgu.ops import apply_ops
-from kgu.types import Op, Triple
+from kgu.types import Op, OpKind, Triple
 
 AT_BEFORE = 0
 AT_AFTER = 1
@@ -54,10 +54,13 @@ def _dropped(extractor) -> int:
     return getattr(extractor, "n_dropped", 0)
 
 
-def run_example(ex: Example, extractor: Extractor, judge: Judge | None, relations: list[str]) -> PipelineResult:
+def run_example(ex: Example, extractor: Extractor, judge: Judge | None, relations: list[str],
+                graph: BiTemporalGraph | None = None) -> PipelineResult:
+    """`graph`: đồ thị ĐÃ ở trạng thái ex.before tại AT_BEFORE (KG nền dùng chung, caller rollback sau); None = dựng mới."""
     calls_before = _calls(extractor, judge)                      # extractor/judge dùng chung qua nhiều ví dụ
     dropped_before = _dropped(extractor)                          # LLMExtractor.n_dropped cũng cộng dồn qua nhiều ví dụ
-    graph = BiTemporalGraph.from_triples(ex.before, valid_from=AT_BEFORE)
+    if graph is None:
+        graph = BiTemporalGraph.from_triples(ex.before, valid_from=AT_BEFORE)
     explicit = extractor.extract(ex, graph, AT_BEFORE)
     explicit = apply_ops(graph, explicit, at=AT_AFTER)           # [2] áp ops TRƯỚC
     loc = localize(graph, explicit, at=AT_AFTER,                 # [3] khoanh vùng
@@ -68,4 +71,10 @@ def run_example(ex: Example, extractor: Extractor, judge: Judge | None, relation
         judged = apply_ops(graph, judge.judge(ctx), at=AT_AFTER)
     n_calls = _calls(extractor, judge) - calls_before            # chỉ đếm lệnh gọi của ví dụ này
     n_dropped = _dropped(extractor) - dropped_before              # chỉ đếm op bị loại của ví dụ này
-    return PipelineResult(ex.idx, ex.event, explicit, loc, judged, graph.active(AT_AFTER), n_calls, n_dropped, graph)
+    pred_after = set(ex.before)                                  # = graph.active(AT_AFTER), tính từ ops hiệu lực (O(ops))
+    for op in explicit + judged:
+        if op.kind is OpKind.ADD:
+            pred_after.add(op.triple)
+        else:
+            pred_after.discard(op.triple)
+    return PipelineResult(ex.idx, ex.event, explicit, loc, judged, pred_after, n_calls, n_dropped, graph)

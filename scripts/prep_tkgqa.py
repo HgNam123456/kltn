@@ -10,6 +10,9 @@ dict/list/str (đã quét opcode), vẫn mở bằng Unpickler từ chối mọi
 
 Dùng: python scripts/prep_tkgqa.py --pickle <tkg_test_data_1110.pickle> --out data/cascade/tkgqa_test.jsonl
       [--only-implicit]  (chỉ giữ bài có >= 1 thay đổi gián tiếp)
+      [--global]         giao thức "KG cho trước": KG-trước = TOÀN BỘ fact đang mở của đồ thị toàn cục (mọi thực thể,
+                         triple đã biết trước bản tin, kể cả lịch sử train); tệp ra theo định dạng header base +
+                         chênh lệch từng bài (kgu.data.jsonl, cumulative=true); tập quan hệ đóng = quan hệ trong base.
 """
 from __future__ import annotations
 
@@ -64,19 +67,76 @@ def convert(pickle_path: Path, only_implicit: bool = False, idx0: int = 0) -> tu
     return out, stats
 
 
+def _open(quads) -> set[tuple[str, str, str]]:
+    return {(q[0], q[1], q[2]) for q in quads if len(q) == 4}
+
+
+def convert_global(pickle_paths: list[Path]) -> tuple[dict, list[dict], dict]:
+    """Giao thức KG cho trước. base = fact đang mở trước bản tin đầu; mỗi bài ghi chênh lệch so với KG-sau bài trước
+    (đồ thị toàn cục của TKGQA là tích lũy: after_i == before_{i+1}, kiểm tra và ghi vào stats) và so với KG-trước."""
+    header, rows = None, []
+    stats = {"records": 0, "with_implicit": 0, "implicit_add": 0, "implicit_del": 0, "non_cumulative_steps": 0,
+             "trigger_already_open": 0}
+    state: set | None = None
+    for pp in pickle_paths:
+        with pp.open("rb") as f:
+            recs = SafeUnpickler(f).load()
+        for r in recs:
+            explicit = tuple(ast.literal_eval(r["tuples"]) if isinstance(r["tuples"], str) else r["tuples"])
+            head, tail = explicit[0], explicit[2]
+            before, after = _open(r["before_tkg"]), _open(r["after_tkg"])
+            if header is None:
+                header = {"base": sorted(before), "cumulative": True, "relations": sorted({x[1] for x in before}),
+                          "source": [q.name for q in pickle_paths]}
+                state = set(before)
+            if before != state:
+                stats["non_cumulative_steps"] += 1
+            implicit_add = (after - before) - {explicit[:3]}
+            implicit_del = {t for t in before - after if {t[0], t[2]} != {head, tail}}
+            stats["records"] += 1
+            stats["with_implicit"] += bool(implicit_add or implicit_del)
+            stats["implicit_add"] += len(implicit_add)
+            stats["implicit_del"] += len(implicit_del)
+            stats["trigger_already_open"] += explicit[:3] in before
+            rows.append({
+                "idx": len(rows), "event": r["relations"], "season": str(r["date"]), "text": r["sentence_text"],
+                "mentioned": [head, tail],
+                "before_add": sorted(before - state), "before_del": sorted(state - before),
+                "after_add": sorted(after - before), "after_del": sorted(before - after),
+                "extra": {"article_id": r["article_id"], "trigger": list(explicit[:3]), "split": pp.stem,
+                          "n_implicit_add": len(implicit_add), "n_implicit_del": len(implicit_del),
+                          "n_before": len(before)},
+            })
+            state = after
+    stats["base_triples"] = len(header["base"])
+    stats["base_entities"] = len({e for h, _, t in header["base"] for e in (h, t)})
+    stats["relations"] = len(header["relations"])
+    return header, rows, stats
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--pickle", type=Path, nargs="+", required=True)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--only-implicit", action="store_true")
+    ap.add_argument("--global", dest="global_kg", action="store_true")
     args = ap.parse_args()
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    if args.global_kg:
+        header, rows, st = convert_global(args.pickle)
+        print(json.dumps(st, ensure_ascii=False), flush=True)
+        with args.out.open("w", encoding="utf8") as f:
+            f.write(json.dumps(header, ensure_ascii=False) + "\n")
+            for row in rows:
+                f.write(json.dumps(row, ensure_ascii=False) + "\n")
+        args.out.with_suffix(".stats.json").write_text(json.dumps(st, indent=1, ensure_ascii=False), encoding="utf8")
+        return
     rows, stats = [], []
     for p in args.pickle:
         r, s = convert(p, args.only_implicit, idx0=len(rows))
         rows += r
         stats.append(s)
         print(json.dumps(s, ensure_ascii=False), flush=True)
-    args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf8") as f:
         for row in rows:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")

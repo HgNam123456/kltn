@@ -40,10 +40,10 @@ def build_llm_judge(name: str, batch: int | None = 1, gate: float | None = None)
     raise SystemExit(f"unknown judge {name}")
 
 
-def run_one(ex, extractor, judge, relations: list[str]) -> dict:
+def run_one(ex, extractor, judge, relations: list[str], graph=None) -> dict:
     """Một ví dụ → record; nếu lỗi (LLM, mạng, tràn ctx...) → record lỗi để lượt chạy không abort."""
     try:
-        return run_example(ex, extractor, judge, relations).to_record(ex)
+        return run_example(ex, extractor, judge, relations, graph=graph).to_record(ex)
     except Exception as e:  # noqa: BLE001 — cố ý: ghi lại mọi lỗi per-example
         return {"idx": ex.idx, "event": ex.event, "error": f"{type(e).__name__}: {e}"}
 
@@ -120,16 +120,36 @@ def main() -> None:
             local.judge = build_llm_judge(args.judge, batch=args.judge_batch or None, gate=args.judge_gate)
         return local.extractor, local.judge
 
-    def work(ex) -> dict:
+    # KG cho trước (GivenKGDataset): dựng đồ thị nền MỘT lần mỗi thread, mỗi bài áp chênh lệch rồi rollback —
+    # tránh dựng lại đồ thị ~1M cạnh cho từng bài. Kết quả đồng nhất với dựng mới từ ex.before.
+    from kgu.data.jsonl import GivenKGDataset
+    given = examples if isinstance(examples, GivenKGDataset) else None
+
+    def base_graph():
+        if given is not None and not hasattr(local, "graph"):
+            from kgu.graph import BiTemporalGraph
+            local.graph = BiTemporalGraph.from_triples(given.base, valid_from=0)
+        return getattr(local, "graph", None)
+
+    def work(i: int) -> dict:
+        ex = examples[i]
         extractor, llm_judge = components()
         judge = OracleJudge(ex.after) if args.judge == "oracle" else llm_judge
-        return run_one(ex, extractor, judge, relations)
+        g = base_graph()
+        if g is None:
+            return run_one(ex, extractor, judge, relations)
+        cp = g.checkpoint()
+        try:
+            given.apply_before(g, i)
+            return run_one(ex, extractor, judge, relations, graph=g)
+        finally:
+            g.rollback(cp)
 
     records: list[dict] = []
     t0 = time.time()
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf8") as f, ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
-        for rec in tqdm(pool.map(work, examples), total=len(examples), desc=f"{args.extractor}+{args.judge}"):
+        for rec in tqdm(pool.map(work, range(len(examples))), total=len(examples), desc=f"{args.extractor}+{args.judge}"):
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             f.flush()
             records.append(rec)

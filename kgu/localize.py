@@ -71,12 +71,15 @@ def localize(graph: BiTemporalGraph, explicit_ops: list[Op], at: int, symmetric_
     if symmetric_add:
         add_pairs += [(b, a) for a, b in add_pairs]
     for a, b in add_pairs:
-        fresh = graph.neighbors(b, at) - graph.neighbors(a, at) - {a, b}
+        by_n: dict[str, set[Triple]] = {}                      # cạnh b–n theo n: duyệt edges_of(b) MỘT lần
+        for tr in graph.edges_of(b, at):
+            by_n.setdefault(tr[2] if tr[0] == b else tr[0], set()).add(tr)
+        fresh = set(by_n) - graph.neighbors(a, at) - {a, b}
         for n in sorted(fresh):
             if (a, n) in seen_add:
                 continue
             # ưu tiên cạnh có n đứng đầu (X, r, b) để các mẫu bằng chứng gom được vào nhau khi đồ thị 2 chiều
-            via = sorted(_edges_between(graph, b, n, at), key=lambda tr: (tr[0] != n, tr))[0]
+            via = sorted(by_n[n], key=lambda tr: (tr[0] != n, tr))[0]
             seen_add.add((a, n))
             loc.add.append(AddCandidate(a, n, via))
 

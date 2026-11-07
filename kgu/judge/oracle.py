@@ -9,7 +9,9 @@ class OracleJudge:
 
     def __init__(self, gold_after: set[Triple]) -> None:
         self.gold_after = gold_after
-        self._gold_sorted = sorted(gold_after)
+        self._by_pair: dict[frozenset[str], list[Triple]] = {}       # chỉ mục cặp đầu–cuối (KG nền có thể ~1M cạnh)
+        for tr in gold_after:
+            self._by_pair.setdefault(frozenset((tr[0], tr[2])), []).append(tr)
 
     def judge(self, ctx: JudgeContext) -> list[Op]:
         ops: list[Op] = []
@@ -18,9 +20,8 @@ class OracleJudge:
                 ops.append(Op(OpKind.INVALIDATE, *c.triple, source="oracle"))
         seen: set[Triple] = set()
         for c in ctx.loc.add:
-            pair = {c.subject, c.neighbor}
-            for tr in self._gold_sorted:
-                if {tr[0], tr[2]} == pair and tr not in seen and not ctx.graph.is_active(tr, ctx.at):
+            for tr in sorted(self._by_pair.get(frozenset((c.subject, c.neighbor)), ())):
+                if tr not in seen and not ctx.graph.is_active(tr, ctx.at):
                     seen.add(tr)
                     ops.append(Op(OpKind.ADD, *tr, source="oracle"))
         return ops

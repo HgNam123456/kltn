@@ -1,0 +1,11 @@
+{
+ "records": 573,
+ "with_implicit": 75,
+ "implicit_add": 709,
+ "implicit_del": 142,
+ "non_cumulative_steps": 0,
+ "trigger_already_open": 0,
+ "base_triples": 18991,
+ "base_entities": 13949,
+ "relations": 13
+}

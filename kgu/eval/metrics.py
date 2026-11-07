@@ -28,18 +28,11 @@ def score(before: set[Triple], gold_after: set[Triple], pred_after: set[Triple])
 
     Triple dự đoán nằm ngoài universe vẫn bị tính FP (không cho thêm bừa).
     """
-    universe = before | gold_after | pred_after
     c = Counts()
-    for tr in universe:
-        label, pred = tr in gold_after, tr in pred_after
-        if label and pred:
-            c.tp += 1
-        elif label and not pred:
-            c.fn += 1
-        elif not label and pred:
-            c.fp += 1
-        else:
-            c.tn += 1
+    c.tp = len(gold_after & pred_after)
+    c.fn = len(gold_after - pred_after)
+    c.fp = len(pred_after - gold_after)
+    c.tn = len(before - gold_after - pred_after)                 # universe = before ∪ gold ∪ pred; phần còn lại là tn
     added, deleted = gold_after - before, before - gold_after
     c.n_add, c.n_del = len(added), len(deleted)
     c.add_hit = sum(1 for tr in added if tr in pred_after)

@@ -5,6 +5,10 @@ IMPLICIT_JOB = "cascade": ICEWS14-Event + YAGO-Event sinh lại từ luật Casc
     tải từ GitHub ngay trong kernel), rồi scripts/run_eval.py --jsonl với các cấu hình: gold_explicit + none (sàn),
     + oracle (trần của khoanh vùng), + llm gate 0,5 (như NBA), + llm không cổng. Mỗi lượt LLM có giờ chót riêng.
 IMPLICIT_JOB = "elken": ELKEN (clone repo THU-KEG) → scripts/run_elken.py trên test rồi train.
+IMPLICIT_JOB = "given": giao thức "KG cho trước" (toàn bộ thực thể/triple đã biết là KG nền, tập quan hệ ĐÓNG = quan hệ
+    trong KG nền, không gộp nhãn): IMPLICIT_GIVEN_FILES = jsonl định dạng header base + chênh lệch trong data/cascade
+    (tkgqa_test_global.jsonl, icews14_event_global.jsonl có trong repo; yago_event_global.jsonl 63 MB được sinh lại
+    bằng prep_cascade.py --global nếu thiếu); IMPLICIT_GIVEN_SYM = KGU_SYMMETRIC_ADD; IMPLICIT_GIVEN_SCALE nhân giờ LLM.
 Đầu ra: $KGU_OUT/<job>/... + summary.json; server.log. KGU_DEADLINE (epoch) = giờ chót chung.
 """
 import json
@@ -187,6 +191,25 @@ elif JOB == "tkgqa":
                 timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {KLTN}/data/cascade/{fn} "
                             f"--extractor gold_explicit {judge} --workers {WORKERS} --out {OUT}/{name}.jsonl",
                       {**ENV, "KGU_SYMMETRIC_ADD": sym}, max_h=max_h)
+elif JOB == "given":
+    files = os.environ.get("IMPLICIT_GIVEN_FILES", "tkgqa_test_global.jsonl").split(",")
+    sym = os.environ.get("IMPLICIT_GIVEN_SYM", "0")
+    scale = float(os.environ.get("IMPLICIT_GIVEN_SCALE", "1"))
+    data = f"{KLTN}/data/cascade"
+    if any(not os.path.exists(f"{data}/{fn}") for fn in files):
+        sh(f"cd {KLTN} && python scripts/prep_cascade.py --global --raw {WORK}/data/raw/cascade --out {data} "
+           f"2>&1 | tee {OUT}/logs/prep.log")
+        summary["prep_stats"] = json.load(open(f"{data}/prep_stats_global.json"))
+        save()
+    for fn in files:
+        ds = fn.replace(".jsonl", "")
+        for cfg, judge, max_h in (("none", "--judge none", 1.0), ("oracle", "--judge oracle", 1.0),
+                                  ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 2.5 * scale),
+                                  ("llm_nogate", "--judge llm --judge-batch 1", 2.5 * scale)):
+            name = f"{ds}_sym{sym}_goldexp_{cfg}"
+            timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {data}/{fn} --extractor gold_explicit "
+                        f"{judge} --workers {WORKERS} --out {OUT}/{name}.jsonl",
+                  {**ENV, "KGU_SYMMETRIC_ADD": sym}, max_h=max_h)
 elif JOB == "elken":
     elken = f"{WORK}/elken"
     sh(f"git clone -q --depth 1 {ELKEN_REPO} {elken}")

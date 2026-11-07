@@ -256,7 +256,7 @@ class LLMJudge:
         return lines
 
     @staticmethod
-    def _analogy(p: AddPattern, ctx: JudgeContext, max_siblings: int = 30) -> list[str]:
+    def _analogy(p: AddPattern, ctx: JudgeContext, max_siblings: int = 30, max_xs: int = 200) -> list[str]:
         """Bằng chứng cấu trúc từ KG hiện có: các entity S cùng vai với subject (cùng cạnh ADD tới `other`)
         đang có quan hệ gì với các X của mẫu. Không dùng luật miền: chỉ đếm cạnh đang tồn tại."""
         g, at = ctx.graph, ctx.at
@@ -270,7 +270,7 @@ class LLMJudge:
                 siblings |= {tr[2] for tr in g.edges_of(p.other, at) if tr[1] == op.r and tr[0] == p.other}
         siblings.discard(p.subject)
         siblings = set(sorted(siblings)[:max_siblings])
-        xs = p.neighbors
+        xs = p.neighbors[:max_xs]                                     # tỉ lệ trên mẫu X đầu (KG nền lớn)
         pairs = [(s, x) for s in siblings for x in xs if s != x]      # S có thể trùng X: chỉ bỏ cặp (s, s)
         total = len(pairs)
         if not total:
