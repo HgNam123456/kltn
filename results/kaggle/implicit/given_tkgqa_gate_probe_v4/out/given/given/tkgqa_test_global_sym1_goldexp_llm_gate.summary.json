@@ -1,0 +1,20 @@
+{
+  "precision": 0.9999833406028884,
+  "recall": 0.9999828951720822,
+  "f1": 0.9999831178874358,
+  "add_acc": 0.8502340093603744,
+  "del_acc": 0.15476190476190477,
+  "config": "gold_explicit+llm[batch=1,gate=0.5]",
+  "split": "tkgqa_test_global",
+  "n": 573,
+  "n_scored": 573,
+  "errors": 0,
+  "coverage": 0.8296122209165687,
+  "avg_cut_cand": 0.0,
+  "avg_add_cand": 15.93542757417103,
+  "judged_ratio": 0.06154857080275983,
+  "llm_calls": 102,
+  "seconds": 165.4,
+  "n_gated": 1295,
+  "n_off_menu": 0
+}
