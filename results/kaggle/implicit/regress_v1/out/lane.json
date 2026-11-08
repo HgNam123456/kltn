@@ -1,0 +1,32 @@
+{
+ "stages": [
+  {
+   "name": "nba",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "nba",
+    "IMPLICIT_NBA_CFGS": "llm_gate"
+   },
+   "commit": "8542bfb376c0fe9d77d439cf53a386987dae8d3b",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 52.8
+  },
+  {
+   "name": "given",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "given",
+    "IMPLICIT_GIVEN_FILES": "tkgqa_test_global.jsonl",
+    "IMPLICIT_GIVEN_SYM": "1",
+    "IMPLICIT_GIVEN_CFGS": "llm_gate"
+   },
+   "commit": "79105b9820fc875a3a28c20e89b08419dfe2afa7",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 2.9
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 55.6
+}
