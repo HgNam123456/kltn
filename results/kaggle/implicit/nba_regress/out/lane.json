@@ -1,0 +1,19 @@
+{
+ "stages": [
+  {
+   "name": "nba",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "nba",
+    "IMPLICIT_NBA_CFGS": "none,oracle,llm_gate",
+    "IMPLICIT_NBA_SCALE": "1"
+   },
+   "commit": "66e951cddc3c73e667b79b0c75e5e45a57186ef0",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 56.6
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 56.6
+}

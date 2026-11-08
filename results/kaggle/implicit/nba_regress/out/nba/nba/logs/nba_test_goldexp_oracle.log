@@ -1,0 +1,19 @@
+gold_explicit+oracle:   0%|          | 0/438 [00:00<?, ?it/s]gold_explicit+oracle:   8%|▊         | 33/438 [00:00<00:02, 167.50it/s]gold_explicit+oracle:  11%|█▏        | 50/438 [00:00<00:06, 61.82it/s] gold_explicit+oracle:  13%|█▎        | 59/438 [00:00<00:05, 66.73it/s]gold_explicit+oracle:  16%|█▌        | 71/438 [00:00<00:04, 77.41it/s]gold_explicit+oracle:  19%|█▊        | 82/438 [00:01<00:04, 80.31it/s]gold_explicit+oracle: 100%|██████████| 438/438 [00:01<00:00, 400.61it/s]
+{
+  "precision": 1.0,
+  "recall": 1.0,
+  "f1": 1.0,
+  "add_acc": 1.0,
+  "del_acc": 1.0,
+  "config": "gold_explicit+oracle",
+  "split": "test",
+  "n": 438,
+  "n_scored": 438,
+  "errors": 0,
+  "coverage": 1.0,
+  "avg_cut_cand": 70.33333333333333,
+  "avg_add_cand": 67.47945205479452,
+  "judged_ratio": 0.5335475961697757,
+  "llm_calls": 0,
+  "seconds": 3.8
+}
