@@ -1,0 +1,19 @@
+gold_explicit+llm:   0%|          | 0/172 [00:00<?, ?it/s]gold_explicit+llm:   1%|          | 1/172 [00:06<19:01,  6.67s/it]gold_explicit+llm:   2%|▏         | 3/172 [00:22<20:53,  7.42s/it]gold_explicit+llm:   2%|▏         | 4/172 [00:50<41:37, 14.87s/it]gold_explicit+llm:   8%|▊         | 14/172 [01:33<15:53,  6.03s/it]gold_explicit+llm:  24%|██▍       | 42/172 [01:39<03:22,  1.56s/it]gold_explicit+llm:  27%|██▋       | 47/172 [01:39<02:43,  1.31s/it]gold_explicit+llm:  27%|██▋       | 47/172 [01:50<02:43,  1.31s/it]gold_explicit+llm:  29%|██▉       | 50/172 [02:26<06:13,  3.06s/it]gold_explicit+llm:  45%|████▌     | 78/172 [03:00<03:00,  1.92s/it]gold_explicit+llm:  51%|█████     | 87/172 [03:41<03:32,  2.50s/it]gold_explicit+llm:  66%|██████▋   | 114/172 [04:00<01:34,  1.62s/it]gold_explicit+llm:  82%|████████▏ | 141/172 [04:00<00:29,  1.04it/s]gold_explicit+llm:  87%|████████▋ | 150/172 [04:01<00:18,  1.21it/s]gold_explicit+llm:  91%|█████████ | 156/172 [04:04<00:12,  1.30it/s]gold_explicit+llm:  91%|█████████ | 156/172 [04:21<00:12,  1.30it/s]gold_explicit+llm:  93%|█████████▎| 160/172 [04:49<00:23,  1.97s/it]gold_explicit+llm: 100%|██████████| 172/172 [04:49<00:00,  1.68s/it]
+{
+  "precision": 0.9999869260448575,
+  "recall": 0.9996396381187993,
+  "f1": 0.9998132519239715,
+  "add_acc": 0.0636717368234878,
+  "del_acc": 0.0,
+  "config": "gold_explicit+llm[batch=1,gate=0.5]",
+  "split": "icews14_event_global",
+  "n": 172,
+  "n_scored": 172,
+  "errors": 0,
+  "coverage": 0.6531073446327683,
+  "avg_cut_cand": 0.0,
+  "avg_add_cand": 179.9825581395349,
+  "judged_ratio": 0.0033594986594308236,
+  "llm_calls": 187,
+  "seconds": 289.7
+}

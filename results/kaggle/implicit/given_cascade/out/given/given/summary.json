@@ -1,0 +1,210 @@
+{
+ "job": "given",
+ "runs": {
+  "icews14_event_global_sym0_goldexp_none": {
+   "status": "ok",
+   "minutes": 0.1,
+   "summary": {
+    "precision": 1.0,
+    "recall": 0.9996385490009113,
+    "f1": 0.9998192418328455,
+    "add_acc": 0.060841881853555005,
+    "del_acc": 0.0,
+    "config": "gold_explicit+none",
+    "split": "icews14_event_global",
+    "n": 172,
+    "n_scored": 172,
+    "errors": 0,
+    "coverage": 0.6531073446327683,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 179.9825581395349,
+    "judged_ratio": 0.0,
+    "llm_calls": 0,
+    "seconds": 4.9
+   }
+  },
+  "icews14_event_global_sym0_goldexp_oracle": {
+   "status": "ok",
+   "minutes": 0.3,
+   "summary": {
+    "precision": 1.0,
+    "recall": 0.999874615303141,
+    "f1": 0.9999373037209935,
+    "add_acc": 0.6742129465864874,
+    "del_acc": 0.0,
+    "config": "gold_explicit+oracle",
+    "split": "icews14_event_global",
+    "n": 172,
+    "n_scored": 172,
+    "errors": 0,
+    "coverage": 0.6531073446327683,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 179.9825581395349,
+    "judged_ratio": 0.05601317957166392,
+    "llm_calls": 0,
+    "seconds": 18.3
+   }
+  },
+  "icews14_event_global_sym0_goldexp_llm_gate": {
+   "status": "ok",
+   "minutes": 4.8,
+   "summary": {
+    "precision": 0.9999869260448575,
+    "recall": 0.9996396381187993,
+    "f1": 0.9998132519239715,
+    "add_acc": 0.0636717368234878,
+    "del_acc": 0.0,
+    "config": "gold_explicit+llm[batch=1,gate=0.5]",
+    "split": "icews14_event_global",
+    "n": 172,
+    "n_scored": 172,
+    "errors": 0,
+    "coverage": 0.6531073446327683,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 179.9825581395349,
+    "judged_ratio": 0.0033594986594308236,
+    "llm_calls": 187,
+    "seconds": 289.7
+   }
+  },
+  "icews14_event_global_sym0_goldexp_llm_nogate": {
+   "status": "ok",
+   "minutes": 113.7,
+   "summary": {
+    "precision": 0.9977657179358511,
+    "recall": 0.999669725000456,
+    "f1": 0.9987168139937933,
+    "add_acc": 0.14184648036788114,
+    "del_acc": 0.0,
+    "config": "gold_explicit+llm[batch=1,gate=None]",
+    "split": "icews14_event_global",
+    "n": 172,
+    "n_scored": 172,
+    "errors": 0,
+    "coverage": 0.6531073446327683,
+    "avg_cut_cand": 0.0,
+    "avg_add_cand": 179.9825581395349,
+    "judged_ratio": 0.5385534774041413,
+    "llm_calls": 7539,
+    "seconds": 6822.9
+   }
+  },
+  "yago_event_global_sym0_goldexp_none": {
+   "status": "ok",
+   "minutes": 10.1,
+   "summary": {
+    "precision": 0.9999995250408376,
+    "recall": 0.999999253966786,
+    "f1": 0.9999993895037935,
+    "add_acc": 0.4370629370629371,
+    "del_acc": 0.4225352112676056,
+    "config": "gold_explicit+none",
+    "split": "yago_event_global",
+    "n": 400,
+    "n_scored": 400,
+    "errors": 0,
+    "coverage": 0.7798861480075902,
+    "avg_cut_cand": 1.1775,
+    "avg_add_cand": 254.025,
+    "judged_ratio": 0.0,
+    "llm_calls": 0,
+    "seconds": 602.9
+   }
+  },
+  "yago_event_global_sym0_goldexp_oracle": {
+   "status": "ok",
+   "minutes": 43.0,
+   "summary": {
+    "precision": 1.0,
+    "recall": 0.9999997312426931,
+    "f1": 0.9999998656213285,
+    "add_acc": 0.7972027972027972,
+    "del_acc": 1.0,
+    "config": "gold_explicit+oracle",
+    "split": "yago_event_global",
+    "n": 400,
+    "n_scored": 400,
+    "errors": 0,
+    "coverage": 0.7798861480075902,
+    "avg_cut_cand": 1.1775,
+    "avg_add_cand": 254.025,
+    "judged_ratio": 0.00402621447673906,
+    "llm_calls": 0,
+    "seconds": 2575.8
+   }
+  },
+  "yago_event_global_sym0_goldexp_llm_gate": {
+   "status": "killed: hết giờ",
+   "minutes": 180.0
+  },
+  "yago_event_global_sym0_goldexp_llm_nogate": {
+   "status": "killed: hết giờ",
+   "minutes": 180.0
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "15c01934b1b8d306ab4462a70f3ca06d735d8c6b",
+ "ldd_missing_after_pip": "",
+ "server_cmd": "CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "elapsed_minutes": 539.3,
+ "prep_stats": {
+  "icews14_event_global": {
+   "candidates": 254,
+   "no_implicit": 82,
+   "n_before": {
+    "n": 172,
+    "mean": 42689.34302325582,
+    "min": 42689,
+    "max": 42690
+   },
+   "n_add1": {
+    "n": 172,
+    "mean": 15.436046511627907,
+    "min": 1,
+    "max": 107
+   },
+   "n_add_full": {
+    "n": 172,
+    "mean": 28.087209302325583,
+    "min": 1,
+    "max": 306
+   },
+   "base_triples": 42690,
+   "base_entities": 6869,
+   "relations": 230,
+   "trigger_in_base": 140
+  },
+  "yago_event_global": {
+   "candidates": 757840,
+   "n_before": {
+    "n": 400,
+    "mean": 1079039.8875,
+    "min": 1079039,
+    "max": 1079049
+   },
+   "n_implicit": {
+    "n": 400,
+    "mean": 1.3175,
+    "min": 1,
+    "max": 9
+   },
+   "quota": {
+    "hop1/add": 150,
+    "hop1/delete": 150,
+    "hop2/add": 100
+   },
+   "got": {
+    "hop1/add": 150,
+    "hop1/delete": 150,
+    "hop2/add": 100
+   },
+   "base_triples": 1079040,
+   "base_entities": 123143,
+   "relations": 37
+  }
+ }
+}

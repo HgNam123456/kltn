@@ -1,0 +1,18 @@
+{
+  "precision": 1.0,
+  "recall": 0.999874615303141,
+  "f1": 0.9999373037209935,
+  "add_acc": 0.6742129465864874,
+  "del_acc": 0.0,
+  "config": "gold_explicit+oracle",
+  "split": "icews14_event_global",
+  "n": 172,
+  "n_scored": 172,
+  "errors": 0,
+  "coverage": 0.6531073446327683,
+  "avg_cut_cand": 0.0,
+  "avg_add_cand": 179.9825581395349,
+  "judged_ratio": 0.05601317957166392,
+  "llm_calls": 0,
+  "seconds": 18.3
+}

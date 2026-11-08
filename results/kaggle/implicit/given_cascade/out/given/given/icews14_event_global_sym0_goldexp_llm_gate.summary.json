@@ -1,0 +1,18 @@
+{
+  "precision": 0.9999869260448575,
+  "recall": 0.9996396381187993,
+  "f1": 0.9998132519239715,
+  "add_acc": 0.0636717368234878,
+  "del_acc": 0.0,
+  "config": "gold_explicit+llm[batch=1,gate=0.5]",
+  "split": "icews14_event_global",
+  "n": 172,
+  "n_scored": 172,
+  "errors": 0,
+  "coverage": 0.6531073446327683,
+  "avg_cut_cand": 0.0,
+  "avg_add_cand": 179.9825581395349,
+  "judged_ratio": 0.0033594986594308236,
+  "llm_calls": 187,
+  "seconds": 289.7
+}

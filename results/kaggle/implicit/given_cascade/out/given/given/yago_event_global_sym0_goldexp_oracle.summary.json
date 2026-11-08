@@ -1,0 +1,18 @@
+{
+  "precision": 1.0,
+  "recall": 0.9999997312426931,
+  "f1": 0.9999998656213285,
+  "add_acc": 0.7972027972027972,
+  "del_acc": 1.0,
+  "config": "gold_explicit+oracle",
+  "split": "yago_event_global",
+  "n": 400,
+  "n_scored": 400,
+  "errors": 0,
+  "coverage": 0.7798861480075902,
+  "avg_cut_cand": 1.1775,
+  "avg_add_cand": 254.025,
+  "judged_ratio": 0.00402621447673906,
+  "llm_calls": 0,
+  "seconds": 2575.8
+}
