@@ -4,6 +4,8 @@ CUDA (như kaggle/judge/run_judge.py). Chạy qua kaggle/night/run_lane.py (runn
 IMPLICIT_JOB = "cascade": ICEWS14-Event + YAGO-Event sinh lại từ luật CascadeKG (scripts/prep_cascade.py, dữ liệu thô
     tải từ GitHub ngay trong kernel), rồi scripts/run_eval.py --jsonl với các cấu hình: gold_explicit + none (sàn),
     + oracle (trần của khoanh vùng), + llm gate 0,5 (như NBA), + llm không cổng. Mỗi lượt LLM có giờ chót riêng.
+IMPLICIT_JOB = "nba": hồi quy NBAtransactions test (dataset ngocnam2005/kgu-nba): IMPLICIT_NBA_CFGS (mặc định none,oracle,llm_gate),
+    IMPLICIT_NBA_SCALE nhân giờ LLM. Mốc 09/2026: gate 0.5 F1 0,993 / add 0,840 / del 0,997, 1.428 lệnh gọi.
 IMPLICIT_JOB = "elken": ELKEN (clone repo THU-KEG) → scripts/run_elken.py trên test rồi train.
 IMPLICIT_JOB = "given": giao thức "KG cho trước" (toàn bộ thực thể/triple đã biết là KG nền, tập quan hệ ĐÓNG = quan hệ
     trong KG nền, không gộp nhãn): IMPLICIT_GIVEN_FILES = jsonl định dạng header base + chênh lệch trong data/cascade
@@ -214,6 +216,21 @@ elif JOB == "given":
             timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {data}/{fn} --extractor gold_explicit "
                         f"{judge} --workers {WORKERS} --out {OUT}/{name}.jsonl",
                   {**ENV, "KGU_SYMMETRIC_ADD": sym, "KGU_LLM_LOG": f"{OUT}/logs/{name}.llm.jsonl"}, max_h=max_h)
+elif JOB == "nba":
+    # hồi quy trên benchmark neo NBAtransactions (test 438 bài) sau khi đổi prompt bộ phán; dữ liệu từ dataset kgu-nba
+    nba = find_dir("NBAtransactions_test.json")
+    assert nba, "không thấy dataset kgu-nba trong /kaggle/input"
+    cfgs = os.environ.get("IMPLICIT_NBA_CFGS", "none,oracle,llm_gate").split(",")
+    scale = float(os.environ.get("IMPLICIT_NBA_SCALE", "1"))
+    for cfg, judge, max_h in (("none", "--judge none", 0.5), ("oracle", "--judge oracle", 0.5),
+                              ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 3.0 * scale),
+                              ("llm_nogate", "--judge llm --judge-batch 1", 3.0 * scale)):
+        if cfg not in cfgs:
+            continue
+        name = f"nba_test_goldexp_{cfg}"
+        timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --data-dir {nba} --split test --extractor gold_explicit "
+                    f"{judge} --workers {WORKERS} --out {OUT}/{name}.jsonl",
+              {**ENV, "KGU_LLM_LOG": f"{OUT}/logs/{name}.llm.jsonl"}, max_h=max_h)
 elif JOB == "elken":
     elken = f"{WORK}/elken"
     sh(f"git clone -q --depth 1 {ELKEN_REPO} {elken}")
