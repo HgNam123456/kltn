@@ -27,6 +27,7 @@ Chúng tôi chọn ba benchmark của EDC vì ba lý do. Thứ nhất, chúng c�
 Thứ hai, đây là ``sân nhà'' của EDC: dữ liệu, schema, ví dụ few-shot và script chấm đều do nhóm tác giả EDC chuẩn bị, nên phép so sánh không nghiêng về phía pipeline.
 Thứ ba, bài báo EDC công bố số liệu trên chính ba bộ này, giúp định vị kết quả so với các LLM lớn hơn.
 Benchmark thứ tư là NBAtransactions~\cite{tang2019gupdate}, bộ dữ liệu mà 94\% thay đổi của KG là gián tiếp; trên bộ này chúng tôi đo hai bước khoanh vùng cấu trúc hai vế và bộ phán, so với GUpdater.
+Benchmark thứ năm là TKGQA~\cite{ong2023tkgqa}, bộ bản tin mua bán và sáp nhập (M\&A) thật kèm một KG toàn cục được cập nhật sau mỗi tin; trên bộ này chúng tôi đo vế sinh của bộ phán khi KG cho trước là một KG thật, thưa và có tập quan hệ đóng.
 
 % ----------------------------------------------------------------------
 \section{Công cụ và môi trường thực nghiệm}\label{sec:exp-env}
@@ -100,6 +101,12 @@ NBAtransactions gồm 4.100 tin chuyển nhượng NBA (2010--2019), mỗi tin k
 KG là đội hình của một đến ba đội với bốn quan hệ (cầu thủ của đội, đồng đội, huấn luyện viên trưởng, tổng giám đốc), trung bình 480 cạnh, 89\% là cạnh đồng đội.
 Mỗi tin làm thay đổi trung bình 33 đến 38 cạnh thêm và 36 đến 40 cạnh xóa, nhưng chỉ 5,6\% số thay đổi có cả hai đầu được nhắc trong tin: tin ``X ký hợp đồng với đội Y'' kéo theo việc cắt mọi cạnh đồng đội của X ở đội cũ và thêm mọi cạnh đồng đội ở đội mới.
 
+\paragraph*{TKGQA.}
+TKGQA gồm các bản tin M\&A thật, mỗi tin kèm hiệu giữa KG toàn cục trước và sau tin; chúng tôi dùng 573 tin của tập kiểm tra.
+KG cho trước là 18.991 fact đang mở trên 13.949 thực thể và 13 quan hệ: năm quan hệ Wikidata (thành viên hội đồng, thuộc sở hữu, chủ sở hữu, công ty con, bộ phận kinh doanh) và tám quan hệ giai đoạn thương vụ (đang cân nhắc, dự kiến, đã hoàn tất, đã hủy, cho mua lại và sáp nhập).
+Tin thường chỉ nói ``A mua B'', nhưng KG-sau còn có các cạnh hai bên thừa hưởng của nhau: 709 cạnh thêm gián tiếp trong 72 tin, gồm 433 cạnh thành viên hội đồng và 186 cạnh thuộc sở hữu mà bên bị mua nhận từ bên mua, cùng 86 cạnh công ty con hoặc chủ sở hữu mà bên mua nhận từ bên bị mua.
+142 cạnh bị đóng chỉ chạm một bên thương vụ nên nằm ngoài vùng khoanh của vế cắt; thực nghiệm trên bộ này vì vậy chỉ đo vế sinh.
+
 % ----------------------------------------------------------------------
 \section{Độ đo}\label{sec:exp-metrics}
 
@@ -125,6 +132,9 @@ Chúng tôi báo đủ $P$, $R$, $F_1$ ở cả ba mức, trên thang 100.
 
 \paragraph*{Trên NBAtransactions.}
 Độ đo lấy theo bài báo GUpdater: F1 giữa tập cạnh của KG dự đoán và KG-sau vàng, độ chính xác trên các cạnh cần thêm và độ chính xác trên các cạnh cần xóa.
+
+\paragraph*{Trên TKGQA.}
+Chúng tôi báo độ chính xác trên cạnh cần thêm theo cách của GUpdater và, riêng cho 709 cạnh gián tiếp, số cạnh tìm đúng, số cạnh đề xuất, số cạnh sai và precision của đề xuất; vế cắt không có ứng viên nên không được đo.
 
 % ----------------------------------------------------------------------
 \section{Các hệ so sánh}\label{sec:exp-systems}
@@ -161,10 +171,14 @@ Thao tác tường minh được lấy từ nhãn vàng: trong hiệu giữa KG-
 Pipeline áp các thao tác này lên KG-trước, khoanh vùng hai vế rồi để bộ phán Gemma~4 E4B quyết định từng ứng viên (gom theo mẫu cấu trúc, ngưỡng lọc 0,5).
 GUpdater và baseline IE+R-GCN được đối chiếu bằng số công bố; hai hệ này huấn luyện trên 3.263 tin, pipeline không huấn luyện.
 
+\paragraph*{Trên TKGQA.}
+Thao tác tường minh cũng lấy từ nhãn vàng. Bốn cấu hình chạy trên cùng tập ứng viên của bước khoanh vùng: không bộ phán (bỏ mọi ứng viên, là sàn), oracle (giữ đúng những ứng viên có trong KG-sau vàng, là trần của bước khoanh vùng), bộ phán Gemma~4 E4B không cổng và bộ phán có cổng 0,5.
+Bài báo TKGQA không công bố kết quả cho tác vụ cập nhật nên không có số đối chiếu ngoài; sàn và trần đóng vai trò mốc so sánh.
+
 % ----------------------------------------------------------------------
 \section{Kết quả thực nghiệm}\label{sec:exp-results}
 
-Bảng~\ref{tab:webnlg}, Bảng~\ref{tab:rebel} và Bảng~\ref{tab:wikinre} trình bày kết quả trên ba bộ của EDC, Bảng~\ref{tab:nba} trên NBAtransactions; mỗi hệ được chạy một lượt trên mỗi bộ, với nhiệt độ 0.
+Bảng~\ref{tab:webnlg}, Bảng~\ref{tab:rebel} và Bảng~\ref{tab:wikinre} trình bày kết quả trên ba bộ của EDC, Bảng~\ref{tab:nba} trên NBAtransactions và Bảng~\ref{tab:tkgqa} trên TKGQA; mỗi hệ được chạy một lượt trên mỗi bộ, với nhiệt độ 0.
 Nhóm dòng trên là ba hệ chúng tôi đã chạy bằng Gemma~4 E4B; dòng pipeline tô nền xanh nhạt; số in đậm là tốt nhất trong nhóm này.
 Nhóm dòng dưới, tô nền xám, là số công bố trong bài báo EDC~\cite{zhang2024edc}, chỉ gồm F1. Cột cuối ghi thời gian chạy (phút trên Kaggle T4) và, trong ngoặc, số lệnh gọi LLM cho mỗi câu.
 
@@ -268,6 +282,36 @@ IE + R-GCN (số công bố) & 0,943 & 0,468 & 0,245 \\
 \end{tabular}
 \end{table}
 
+\paragraph*{TKGQA.}
+Bảng~\ref{tab:tkgqa} trình bày kết quả trên 573 tin kiểm tra với 709 cạnh thêm gián tiếp.
+Tập ứng viên của bước khoanh vùng chứa 706 trong 709 cạnh (oracle 0,998), nên gần như toàn bộ sai số còn lại thuộc bộ phán.
+Không có bộ phán, pipeline chỉ giữ được các cạnh tường minh: độ chính xác thêm 0,447 và không cạnh gián tiếp nào.
+Bộ phán có cổng 0,5 tìm đúng 615 cạnh (0,927) với 627 đề xuất, precision 0,98, và chỉ cần 94 lệnh gọi LLM cho 573 tin.
+Bỏ cổng, số cạnh đúng không tăng (600) nhưng số cạnh sai tăng từ 12 lên 637 và số lệnh gọi lên 1.397.
+
+\begin{table}[htbp]
+\centering
+\caption{Kết quả trên 573 tin kiểm tra của TKGQA (709 cạnh thêm gián tiếp). Dòng có cổng là lượt chạy sau cùng; ba dòng trên lấy từ lượt chạy đủ bốn cấu hình ngay trước đó, khác lượt sau cùng ở phần cổng, nên hai dòng không bộ phán và oracle không đổi.}\label{tab:tkgqa}
+\small
+\begin{tabular}{>{\raggedright\arraybackslash}p{5.6cm} c c c c c c}
+\toprule
+\textbf{Cấu hình} & \textbf{Acc cạnh thêm} & \textbf{Đúng/709} & \textbf{Đề xuất} & \textbf{Sai} & \textbf{Precision} & \textbf{Lệnh gọi} \\
+\midrule
+Không bộ phán (sàn) & 0,447 & 0 & 0 & 0 & -- & 0 \\
+Oracle (trần khoanh vùng) & 0,998 & 706 & 706 & 0 & 1,00 & 0 \\
+Bộ phán Gemma~4 E4B, không cổng & 0,915 & 600 & 1.237 & 637 & 0,49 & 1.397 \\
+\rowcolor{green!10}
+Bộ phán Gemma~4 E4B, cổng 0,5 & \textbf{0,927} & \textbf{615} & 627 & \textbf{12} & \textbf{0,98} & \textbf{94} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Kết quả này nói ba điều về pipeline khi KG cho trước là một KG thật.
+Thứ nhất, bộ phán bù được gần hết khoảng trống giữa sàn và trần chỉ bằng bằng chứng cấu trúc đọc từ KG cho trước, không cần dữ liệu huấn luyện và không cần luật miền: quy luật ``bên bị mua thừa hưởng hội đồng và chủ sở hữu của bên mua'' không được viết ở đâu trong pipeline, mà được rút từ các thương vụ cũ đã có trong KG rồi áp cho thương vụ mới.
+Thứ hai, cổng là điều kiện để kết quả dùng được: không cổng, mỗi cạnh đúng kèm hơn một cạnh sai; có cổng, hơn 50 cạnh đúng mới có một cạnh sai, mà số cạnh đúng không giảm.
+Với KG thật, nơi một cạnh sai tồn tại cho đến khi có người phát hiện, precision 0,98 đáng giá hơn vài cạnh đúng thêm.
+Thứ ba, chi phí thấp vì cấu trúc quyết định phần lớn: cổng loại 1.303 trong 1.397 mẫu ứng viên, LLM chỉ xét 94 mẫu mà cấu trúc không tự trả lời được, chủ yếu là thương vụ đã hoàn tất hay mới đang cân nhắc.
+
 Hình~\ref{fig:edc-f1} tóm tắt Partial F1 của ba hệ cùng chạy bằng Gemma~4 E4B trên ba bộ.
 
 \begin{figure}[htbp]
@@ -323,6 +367,11 @@ Thời gian chỉ nên đọc cùng số lệnh gọi vì pipeline xử lý song
 \paragraph*{Trên NBAtransactions.}
 Bước khoanh vùng phủ đủ 100\% thay đổi gián tiếp, nên toàn bộ sai số thuộc bộ phán; sai tập trung ở cạnh thêm (0,840) của các tin đổi nhiều cầu thủ cùng lúc giữa hai đội.
 Thao tác tường minh được lấy từ nhãn vàng, nên kết quả này đo riêng hai bước khoanh vùng và bộ phán, chưa đo cả pipeline từ văn bản thô.
+
+\paragraph*{Trên TKGQA.}
+Trong 94 cạnh gián tiếp còn thiếu, 86 cạnh là công ty con hoặc tài sản mà bên mua nhận từ bên bị mua.
+KG cho trước có 2.419 thương vụ đã hoàn tất nhưng chỉ 3 bên bị mua có cạnh công ty con và không trường hợp nào bên mua thừa hưởng cạnh này, nên không có bằng chứng cấu trúc cho quy luật ấy; trần thực của một bộ phán dựa trên KG là khoảng 620 trong 709 cạnh, và pipeline đạt 615.
+12 cạnh sai còn lại đều gán cho bên mua một chủ sở hữu hoặc thành viên hội đồng của bên bị mua, tức là đảo chiều thừa hưởng.
 
 \paragraph*{Đánh giá chung.}
 Kết quả ủng hộ việc trích và chọn quan hệ ngay trong một bước có ràng buộc enum: pipeline vừa chính xác hơn EDC, vừa ít tốn lệnh gọi và thời gian. Tuy nhiên, pipeline vẫn kém một số hệ dùng LLM lớn và còn mắc lỗi sai chiều hoặc nhầm quan hệ gần nghĩa.
@@ -385,9 +434,9 @@ Ví dụ này cho thấy lỗi chiều quan hệ và lỗi chọn giữa hai qua
 \section{Hạn chế của thực nghiệm}\label{sec:exp-limits}
 
 \begin{itemize}
-  \item \textbf{Phạm vi đánh giá.} Ba benchmark của EDC chỉ kiểm chứng bước trích ở dạng trích theo schema; thực nghiệm NBAtransactions kiểm chứng hai bước khoanh vùng và bộ phán nhưng với thao tác tường minh lấy từ nhãn vàng. Bước rút câu đơn và bước gộp tên định kỳ chưa được đánh giá định lượng, và chưa có lượt chạy nào đi trọn pipeline từ văn bản thô tới KG-sau.
+  \item \textbf{Phạm vi đánh giá.} Ba benchmark của EDC chỉ kiểm chứng bước trích ở dạng trích theo schema; thực nghiệm NBAtransactions và TKGQA kiểm chứng hai bước khoanh vùng và bộ phán nhưng với thao tác tường minh lấy từ nhãn vàng; trên TKGQA chỉ vế sinh được đo. Bước rút câu đơn và bước gộp tên định kỳ chưa được đánh giá định lượng, và chưa có lượt chạy nào đi trọn pipeline từ văn bản thô tới KG-sau.
   \item \textbf{Một LLM duy nhất.} Mọi hệ chỉ chạy với Gemma~4 E4B lượng tử hóa 4-bit; chúng tôi chưa kiểm tra xu hướng trên có giữ nguyên với LLM khác hay không.
-  \item \textbf{Một lượt chạy.} Mỗi hệ chạy một lượt với nhiệt độ 0; chưa có khoảng tin cậy hay kiểm định thống kê. Chênh lệch với EDC nhất quán ở cả 9 phép so sánh, nhưng độ dao động giữa các lượt chưa được đo.
+  \item \textbf{Một lượt chạy.} Mỗi hệ chạy một lượt với nhiệt độ 0; chưa có khoảng tin cậy hay kiểm định thống kê. Chênh lệch với EDC nhất quán ở cả 9 phép so sánh, nhưng độ dao động giữa các lượt chưa được đo. Trên TKGQA, các lượt chạy lại với mã gần như không đổi cho từ 570 đến 615 cạnh đúng, tức dao động khoảng 3\%, vì llama.cpp không tất định khi phục vụ nhiều yêu cầu song song.
   \item \textbf{Mẫu dữ liệu và số công bố.} Mẫu 1.000 câu của REBEL và Wiki-NRE có thể khác mẫu của bài báo EDC, và số công bố dùng GPT-3.5 cho các bước sau bước trích mở; so sánh với số công bố chỉ mang tính định vị. Sáu ví dụ few-shot trùng sáu câu đầu của tệp đánh giá, như trong kho mã EDC.
   \item \textbf{Đo thời gian.} Thời gian phụ thuộc cách gửi yêu cầu (song song hay tuần tự) của từng mã nguồn, nên chỉ nên đọc cùng với số lệnh gọi mỗi câu.
   \item \textbf{Chưa chạy EDC+R.} Bước tinh chỉnh của EDC chưa được chạy với Gemma; bước này độc lập với module trích và có thể ghép thêm trong tương lai.
@@ -395,4 +444,4 @@ Ví dụ này cho thấy lỗi chiều quan hệ và lỗi chọn giữa hai qua
 
 Tóm lại, chúng tôi đã cài đặt và đánh giá module trích theo schema của pipeline trên ba benchmark của EDC, với cùng LLM và cùng script chấm cho mọi hệ.
 Module này vượt EDC và ATOM+EDC ở cả ba bộ và ba mức khớp, trong khi chỉ cần một lệnh gọi mỗi câu.
-Trên NBAtransactions, hai bước khoanh vùng và bộ phán tìm lại được các thay đổi gián tiếp với F1 0,993 và độ chính xác xóa 0,997, cao hơn GUpdater, khi thao tác tường minh được cho trước. Các kết luận và hướng phát triển được trình bày ở Chương~\ref{chap:conclusion}.
+Trên NBAtransactions, hai bước khoanh vùng và bộ phán tìm lại được các thay đổi gián tiếp với F1 0,993 và độ chính xác xóa 0,997, cao hơn GUpdater, khi thao tác tường minh được cho trước. Trên TKGQA, bộ phán tìm lại 615 trong 709 cạnh thêm gián tiếp với precision 0,98 bằng 94 lệnh gọi LLM, trên một KG thật không có dữ liệu huấn luyện. Các kết luận và hướng phát triển được trình bày ở Chương~\ref{chap:conclusion}.
