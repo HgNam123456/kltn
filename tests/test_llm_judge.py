@@ -246,7 +246,8 @@ def test_gate_drops_patterns_whose_subject_is_clearly_the_host():
     inter = {(p, PLAYS, "Inter") for p in ("Lautaro", "Barella", "Bastoni", "Dimarco", "Calhanoglu", "Thuram",
                                            "Sommer", "Acerbi", "Pavard", "Dumfries", "Mkhitaryan", "Frattesi",
                                            "Arnautovic", "Bisseck", "Carlos", "Darmian")}   # Inter >= 5× cạnh của Messi (3)
-    inter |= {(a, TEAM, b) for a in ("Lautaro", "Barella", "Bastoni") for b in ("Lautaro", "Barella", "Bastoni") if a != b}
+    players = sorted({h for h, _, _ in inter})
+    inter |= {(a, TEAM, b) for a in players for b in players if a != b}        # đồng đội 2 chiều đủ → "tương tự" 100%
     barca = {("Messi", PLAYS, "Barca"), ("Pedri", PLAYS, "Barca"), ("Messi", TEAM, "Pedri"), ("Pedri", TEAM, "Messi")}
     g = BiTemporalGraph.from_triples(inter | barca, valid_from=0)
     apply_ops(g, EXPLICIT, at=1)
