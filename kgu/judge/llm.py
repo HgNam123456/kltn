@@ -258,24 +258,26 @@ class LLMJudge:
             lines.append(f"  - trong KG: {self._cooccur(p.r, r0, ctx) * 100:.0f}% cặp {p.r} cùng chung hàng xóm qua {r0}")
         return lines
 
-    def _cooccur(self, r: str, r0: str, ctx: JudgeContext) -> float:
+    def _cooccur(self, r: str, r0: str, ctx: JudgeContext, max_edges: int = 2000) -> float:
         """Bằng chứng cấu trúc: tỷ lệ cặp (u, r, v) trong KG-trước mà u và v cùng chung một hàng xóm qua r0.
         Cao → quan hệ r đi kèm "cùng nhóm qua r0" (đồng đội ↔ cùng CLB); thấp → r độc lập với r0."""
         key = (r, r0, id(ctx.graph))
         if key in self._cooccur_cache:
             return self._cooccur_cache[key]
         g = ctx.graph
-        edges = [tr for tr in g.active(0) if tr[1] == r]                 # KG-trước (at = 0)
+        edges = LLMJudge._rel_index(g).get(r, [])                        # KG-trước (at = 0), qua chỉ mục r → [(h, t)]
         if not edges:
             self._cooccur_cache[key] = 0.0
             return 0.0
+        if len(edges) > max_edges:                                       # KG nền lớn: lấy mẫu đều, tái lập được
+            edges = sorted(edges)[:: max(1, len(edges) // max_edges)][:max_edges]
 
         def nb_via(e: str) -> set[str]:
             return {tr[0] if tr[2] == e else tr[2] for tr in g.edges_of(e, 0) if tr[1] == r0}
 
         memo: dict[str, set[str]] = {}
         hit = 0
-        for u, _, v in edges:
+        for u, v in edges:
             nu = memo.setdefault(u, nb_via(u)) - {v}
             nv = memo.setdefault(v, nb_via(v)) - {u}
             hit += bool(nu & nv)
@@ -339,10 +341,18 @@ class LLMJudge:
         total = len(pairs)
         if not total:
             return LLMJudge._global_rule(p, ctx)                      # không có S cùng vai → quy luật toàn KG
+        xset = set(xs)
+        hits: dict[tuple[str, str], int] = {}                           # (r, direction) → số cặp (S, X) có cạnh
+        for s_ in siblings:                                               # duyệt cạnh của S thay vì |S|·|X|·|R| phép dò
+            for h, r, t in g.edges_of(s_, at):
+                if h == s_ and t in xset and t != s_:
+                    hits[(r, "subject_first")] = hits.get((r, "subject_first"), 0) + 1
+                elif t == s_ and h in xset and h != s_:
+                    hits[(r, "neighbor_first")] = hits.get((r, "neighbor_first"), 0) + 1
         out = []
         for r in ctx.relations:
-            for direction, mk in (("subject_first", lambda s, x: (s, r, x)), ("neighbor_first", lambda s, x: (x, r, s))):
-                hit = sum(1 for s, x in pairs if g.is_active(mk(s, x), at))
+            for direction in ("subject_first", "neighbor_first"):
+                hit = hits.get((r, direction), 0)
                 if hit * 2 >= total:
                     out.append((r, direction, hit * 100 // total))
         return out
@@ -407,12 +417,23 @@ class LLMJudge:
                 if not triples:
                     res = None
                 else:
+                    want: dict[str, set[str]] = {}                        # b → {x} cần kiểm; tỉ lệ trên cặp (B, X) PHÂN BIỆT
+                    for _, b, x in triples:
+                        want.setdefault(b, set()).add(x)
+                    n_bx = sum(len(v) for v in want.values())
+                    hits: dict[tuple[str, str], int] = {}
+                    for b, xs_b in want.items():
+                        for h, r, t in g.edges_of(b, 0):
+                            if h == b and t in xs_b:
+                                hits[(r, "subject_first")] = hits.get((r, "subject_first"), 0) + 1
+                            elif t == b and h in xs_b:
+                                hits[(r, "neighbor_first")] = hits.get((r, "neighbor_first"), 0) + 1
                     res = []
                     for r in ctx.relations:
-                        for direction, mk in (("subject_first", lambda b, x: (b, r, x)), ("neighbor_first", lambda b, x: (x, r, b))):
-                            hit = sum(1 for _, b, x in triples if g.is_active(mk(b, x), 0))
-                            if hit * 2 >= len(triples):
-                                res.append((r, direction, hit * 100 // len(triples)))
+                        for direction in ("subject_first", "neighbor_first"):
+                            hit = hits.get((r, direction), 0)
+                            if hit * 2 >= n_bx:
+                                res.append((r, direction, hit * 100 // n_bx))
                 cache[key] = res
             if res is not None:
                 seen_any = True
