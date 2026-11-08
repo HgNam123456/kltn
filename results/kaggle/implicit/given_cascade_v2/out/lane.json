@@ -1,0 +1,20 @@
+{
+ "stages": [
+  {
+   "name": "given",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "given",
+    "IMPLICIT_GIVEN_FILES": "icews14_event_global.jsonl,yago_event_global.jsonl",
+    "IMPLICIT_GIVEN_SYM": "0",
+    "IMPLICIT_GIVEN_SCALE": "1.2"
+   },
+   "commit": "92ebc4b45f061ee698140b05889ff8eaf7f4123f",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 316.5
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 316.5
+}
