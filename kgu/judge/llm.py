@@ -287,17 +287,12 @@ class LLMJudge:
     def _add_block(self, i: int, p: AddPattern, ctx: JudgeContext) -> list[str]:
         via = f"(X, {p.via_r}, {p.other})" if p.via_direction == "neighbor_first" else f"({p.other}, {p.via_r}, X)"
         lines = [f"[A{i}] {p.subject} ~ X — nhóm {len(p.members)} X: {_examples(p.neighbors, self.n_examples)}"]
-        for op in ctx.explicit_ops:                                     # vai của subject trong cạnh ADD nối subject–other
-            if op.kind is OpKind.ADD and {op.h, op.t} == {p.subject, p.other}:
-                role = "CHỦ NGỮ" if op.h == p.subject else "TÂN NGỮ"
-                d_s, d_o = len(ctx.graph.edges_of(p.subject, 0)), len(ctx.graph.edges_of(p.other, 0))   # KG-trước
-                # chỉ kết luận khi chênh lệch rõ (gấp >= 5 lần, hoặc một bên chưa có cạnh); còn lại để LLM xét nghĩa r0
-                clear = (d_s == 0) != (d_o == 0) or max(d_s, d_o) >= 5 * max(1, min(d_s, d_o))
-                who = ("chưa rõ, xét nghĩa r0" if not clear or d_s == d_o
-                       else "subject là bên GIA NHẬP" if d_s < d_o else "subject là bên TIẾP NHẬN")
-                lines.append(f"  - vai: subject là {role} của ADD ({op.h}, {op.r}, {op.t}); số cạnh KG-trước: "
-                             f"{p.subject} {d_s}, {p.other} {d_o} → {who}")
-                break
+        role = self._role(p, ctx)
+        if role is not None:                                            # vai của subject trong cạnh ADD nối subject–other
+            op, d_s, d_o, side = role
+            who = {"join": "subject là bên GIA NHẬP", "host": "subject là bên TIẾP NHẬN"}.get(side, "chưa rõ, xét nghĩa r0")
+            lines.append(f"  - vai: subject là {'CHỦ NGỮ' if op.h == p.subject else 'TÂN NGỮ'} của ADD ({op.h}, {op.r}, {op.t}); "
+                         f"số cạnh KG-trước: {p.subject} {d_s}, {p.other} {d_o} → {who}")
         lines.append(f"  - fact KG: {via}")
         analogy = self._analogy(p, ctx)
         if analogy:
@@ -306,6 +301,19 @@ class LLMJudge:
         if menu:                                                        # thực đơn {r, direction} LLM được phép chọn
             lines.append("  - lựa chọn hợp lệ: " + "; ".join(f'{{"r": "{r}", "direction": "{d}"}}' for r, d in menu))
         return lines
+
+    @staticmethod
+    def _role(p: AddPattern, ctx: JudgeContext) -> tuple[Op, int, int, str] | None:
+        """(op ADD nối subject–other, số cạnh KG-trước của subject, của other, phía): phía = "join" (subject là bên mới,
+        ít cạnh hơn hẳn: một bên 0 cạnh hoặc chênh >= 5 lần), "host" (subject là bên tiếp nhận), "unclear". None = mẫu
+        không gắn với cạnh ADD tường minh nào."""
+        for op in ctx.explicit_ops:
+            if op.kind is OpKind.ADD and {op.h, op.t} == {p.subject, p.other}:
+                d_s, d_o = len(ctx.graph.edges_of(p.subject, 0)), len(ctx.graph.edges_of(p.other, 0))
+                clear = (d_s == 0) != (d_o == 0) or max(d_s, d_o) >= 5 * max(1, min(d_s, d_o))
+                side = "unclear" if not clear or d_s == d_o else "join" if d_s < d_o else "host"
+                return op, d_s, d_o, side
+        return None
 
     @staticmethod
     def _menu(p: AddPattern, ctx: JudgeContext) -> list[tuple[str, str]]:
@@ -475,11 +483,15 @@ class LLMJudge:
     def _gated(self, cut: list[CutPattern], add: list[AddPattern], ctx: JudgeContext):
         """Cổng cấu trúc (phương án C): chỉ đẩy lên LLM các mẫu mà KG cho thấy CÓ THỂ bị ảnh hưởng.
         - cắt: đồng xuất hiện (r, r0) >= gate → quan hệ r đi kèm "cùng nhóm qua r0" → LLM phán; dưới → KEEP.
-        - thêm: có "tương tự" (entity cùng vai đang có cạnh với X) → LLM phán; không có → bỏ qua."""
+        - thêm: có "tương tự" (entity cùng vai đang có cạnh với X) và subject không phải bên tiếp nhận rõ ràng
+          (theo số cạnh KG-trước) → LLM phán; không → bỏ qua."""
         if self.gate is None:
             return cut, add
         keep_cut = [p for p in cut if self._cut_dependency(p, ctx) >= self.gate]
-        keep_add = [p for p in add if any("%" in a for a in self._analogy(p, ctx))]
+        # thêm: cần bằng chứng "tương tự" VÀ subject không phải bên TIẾP NHẬN rõ ràng (bên nhiều cạnh không thừa hưởng
+        # hàng xóm của bên mới; tỉ lệ 100% ở đó chỉ phản chiếu phép thừa hưởng chiều ngược — LLM 4B vẫn lấy ~1/5 số mẫu này)
+        keep_add = [p for p in add if any("%" in a for a in self._analogy(p, ctx))
+                    and (self._role(p, ctx) or (None, 0, 0, "unclear"))[3] != "host"]
         self.n_gated += (len(cut) - len(keep_cut)) + (len(add) - len(keep_add))
         return keep_cut, keep_add
 

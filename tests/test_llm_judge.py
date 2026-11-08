@@ -237,3 +237,23 @@ def test_global_rule_fallback_when_other_has_no_sibling():
     j = LLMJudge(FakeLLMClient([{"add": [{"idx": 0, "r": "board", "direction": "subject_first"}]}]), gate=0.5)
     ops = j.judge(ctx)
     assert Op(OpKind.ADD, "Target", "board", "p3") in ops and not any(o.r == "hq" for o in ops)
+
+
+def test_gate_drops_patterns_whose_subject_is_clearly_the_host():
+    """Cổng: mẫu "Inter ~ X" (Inter nhiều cạnh = bên tiếp nhận, X = đồng đội cũ của Messi) bị bỏ KHÔNG hỏi LLM dù có
+    "tương tự"; mẫu "Messi ~ X" (Messi ít cạnh = bên gia nhập) vẫn tới LLM."""
+    from kgu.graph import BiTemporalGraph
+    inter = {(p, PLAYS, "Inter") for p in ("Lautaro", "Barella", "Bastoni", "Dimarco", "Calhanoglu", "Thuram")}
+    inter |= {(a, TEAM, b) for a in ("Lautaro", "Barella", "Bastoni") for b in ("Lautaro", "Barella", "Bastoni") if a != b}
+    barca = {("Messi", PLAYS, "Barca"), ("Pedri", PLAYS, "Barca"), ("Messi", TEAM, "Pedri"), ("Pedri", TEAM, "Messi")}
+    g = BiTemporalGraph.from_triples(inter | barca, valid_from=0)
+    apply_ops(g, EXPLICIT, at=1)
+    loc = localize(g, EXPLICIT, at=1, symmetric_add=True)
+    ctx = JudgeContext("", EXPLICIT, loc, g, 1, [PLAYS, TEAM])
+    pats = group_add(loc)
+    host = [p for p in pats if p.subject == "Inter"]
+    assert host and LLMJudge._menu(host[0], ctx)                      # Inter ~ Pedri qua (X, teammate, Messi) CÓ bằng chứng
+    assert LLMJudge._role(host[0], ctx)[3] == "host"
+    j = LLMJudge(FakeLLMClient([{"add": []}] * 10), gate=0.5)
+    _, keep = j._gated([], pats, ctx)
+    assert all(p.subject == "Messi" for p in keep) and keep           # chỉ mẫu của bên gia nhập được hỏi
