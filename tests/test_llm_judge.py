@@ -243,7 +243,9 @@ def test_gate_drops_patterns_whose_subject_is_clearly_the_host():
     """Cổng: mẫu "Inter ~ X" (Inter nhiều cạnh = bên tiếp nhận, X = đồng đội cũ của Messi) bị bỏ KHÔNG hỏi LLM dù có
     "tương tự"; mẫu "Messi ~ X" (Messi ít cạnh = bên gia nhập) vẫn tới LLM."""
     from kgu.graph import BiTemporalGraph
-    inter = {(p, PLAYS, "Inter") for p in ("Lautaro", "Barella", "Bastoni", "Dimarco", "Calhanoglu", "Thuram")}
+    inter = {(p, PLAYS, "Inter") for p in ("Lautaro", "Barella", "Bastoni", "Dimarco", "Calhanoglu", "Thuram",
+                                           "Sommer", "Acerbi", "Pavard", "Dumfries", "Mkhitaryan", "Frattesi",
+                                           "Arnautovic", "Bisseck", "Carlos", "Darmian")}   # Inter >= 5× cạnh của Messi (3)
     inter |= {(a, TEAM, b) for a in ("Lautaro", "Barella", "Bastoni") for b in ("Lautaro", "Barella", "Bastoni") if a != b}
     barca = {("Messi", PLAYS, "Barca"), ("Pedri", PLAYS, "Barca"), ("Messi", TEAM, "Pedri"), ("Pedri", TEAM, "Messi")}
     g = BiTemporalGraph.from_triples(inter | barca, valid_from=0)
