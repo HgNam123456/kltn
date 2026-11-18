@@ -215,7 +215,7 @@ elif JOB == "given":
     naive_max = os.environ.get("IMPLICIT_NAIVE_MAX", "80")      # số triple 1-hop tối đa trong prompt của hệ so sánh
     for fn in files:
         ds = fn.replace(".jsonl", "")
-        for cfg, judge, max_h in (("none", "--judge none", 1.0), ("oracle", "--judge oracle", 1.0),
+        for cfg, judge, max_h in (("none", "--judge none", 1.0), ("oracle", "--judge oracle", 2.0),   # YAGO bổ sung: trần ~50 phút
                                   ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 2.5 * scale),
                                   ("naive", f"--judge naive --naive-max-triples {naive_max}", 1.5 * scale),  # hệ so sánh: LLM + lân cận 1-hop
                                   ("llm_nogate", "--judge llm --judge-batch 1", 2.5 * scale)):
