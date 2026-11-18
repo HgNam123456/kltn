@@ -199,23 +199,33 @@ elif JOB == "given":
     sym = os.environ.get("IMPLICIT_GIVEN_SYM", "0")
     scale = float(os.environ.get("IMPLICIT_GIVEN_SCALE", "1"))
     data = f"{KLTN}/data/cascade"
-    if any(not os.path.exists(f"{data}/{fn}") for fn in files):
-        sh(f"cd {KLTN} && python scripts/prep_cascade.py --global --raw {WORK}/data/raw/cascade --out {data} "
-           f"2>&1 | tee {OUT}/logs/prep.log")
-        summary["prep_stats"] = json.load(open(f"{data}/prep_stats_global.json"))
+    missing_files = [fn for fn in files if not os.path.exists(f"{data}/{fn}")]
+    if missing_files:
+        # *_aug.jsonl: KG nền đã bổ sung các fact suy ra theo luật (prep_cascade.py --global --augment); chỉ sinh bộ còn thiếu
+        aug = any(fn.endswith("_aug.jsonl") for fn in missing_files)
+        kinds = {"icews" if fn.startswith("icews") else "yago" for fn in missing_files}
+        only = f" --only {kinds.pop()}" if len(kinds) == 1 else ""
+        sh(f"cd {KLTN} && python scripts/prep_cascade.py --global{' --augment' if aug else ''}{only} "
+           f"--raw {WORK}/data/raw/cascade --out {data} 2>&1 | tee {OUT}/logs/prep.log")
+        stats_file = f"{data}/prep_stats_{'aug' if aug else 'global'}.json"
+        if os.path.exists(stats_file):
+            summary["prep_stats"] = json.load(open(stats_file))
         save()
     cfgs = os.environ.get("IMPLICIT_GIVEN_CFGS", "none,oracle,llm_gate,llm_nogate").split(",")
+    naive_max = os.environ.get("IMPLICIT_NAIVE_MAX", "80")      # số triple 1-hop tối đa trong prompt của hệ so sánh
     for fn in files:
         ds = fn.replace(".jsonl", "")
         for cfg, judge, max_h in (("none", "--judge none", 1.0), ("oracle", "--judge oracle", 1.0),
                                   ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 2.5 * scale),
+                                  ("naive", f"--judge naive --naive-max-triples {naive_max}", 1.5 * scale),  # hệ so sánh: LLM + lân cận 1-hop
                                   ("llm_nogate", "--judge llm --judge-batch 1", 2.5 * scale)):
             if cfg not in cfgs:
                 continue
             name = f"{ds}_sym{sym}_goldexp_{cfg}"
             timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {data}/{fn} --extractor gold_explicit "
                         f"{judge} --workers {WORKERS} --out {OUT}/{name}.jsonl",
-                  {**ENV, "KGU_SYMMETRIC_ADD": sym, "KGU_LLM_LOG": f"{OUT}/logs/{name}.llm.jsonl"}, max_h=max_h)
+                  {**ENV, "KGU_SYMMETRIC_ADD": sym, "KGU_LLM_LOG": f"{OUT}/logs/{name}.llm.jsonl",
+                   **({"KGU_LLM_MAX_TOKENS": "2048"} if cfg == "naive" else {})}, max_h=max_h)   # prompt dài: chừa chỗ trong khe 8192
 elif JOB == "nba":
     # hồi quy trên benchmark neo NBAtransactions (test 438 bài) sau khi đổi prompt bộ phán; dữ liệu từ dataset kgu-nba
     nba = find_dir("NBAtransactions_test.json")

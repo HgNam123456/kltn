@@ -29,12 +29,16 @@ def build_extractor(name: str, relations: list[str]):
     raise SystemExit(f"unknown extractor {name}")
 
 
-def build_llm_judge(name: str, batch: int | None = 1, gate: float | None = None):
+def build_llm_judge(name: str, batch: int | None = 1, gate: float | None = None, naive_max_triples: int = 80):
     """Judge LLM tạo MỘT lần (dùng chung client, đếm n_calls liên tục); oracle tạo per-example."""
     if name == "llm":
         from kgu.judge.llm import LLMJudge
         from kgu.llm import client_from_env
         return LLMJudge(client_from_env(), batch_size=batch, gate=gate)
+    if name == "naive":                                # hệ so sánh: LLM tự quyết trên triple 1 bước, không khoanh vùng
+        from kgu.judge.naive import NaiveOneHopJudge
+        from kgu.llm import client_from_env
+        return NaiveOneHopJudge(client_from_env(), max_triples=naive_max_triples)
     if name in ("none", "oracle"):
         return None
     raise SystemExit(f"unknown judge {name}")
@@ -92,7 +96,7 @@ def main() -> None:
                     help="bộ dữ liệu JSONL chung (kgu.data.jsonl: ICEWS14-Event, YAGO-Event...) thay cho NBA")
     ap.add_argument("--split", default="test")
     ap.add_argument("--extractor", default="gold_explicit", choices=["gold_all", "gold_explicit", "llm"])
-    ap.add_argument("--judge", default="none", choices=["none", "oracle", "llm"])
+    ap.add_argument("--judge", default="none", choices=["none", "oracle", "llm", "naive"])
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--workers", type=int, default=1,
@@ -100,6 +104,8 @@ def main() -> None:
     ap.add_argument("--judge-batch", type=int, default=1, help="mẫu / lệnh gọi LLM judge; 0 = cả pha một lệnh gọi")
     ap.add_argument("--judge-gate", type=float, default=None,
                     help="phương án C: ngưỡng đồng xuất hiện để cổng cấu trúc lọc mẫu trước LLM (vd 0.5); bỏ = LLM thuần")
+    ap.add_argument("--naive-max-triples", type=int, default=80,
+                    help="--judge naive: số triple 1 bước tối đa đưa vào prompt (vượt → lấy mẫu đều theo thực thể tham gia)")
     args = ap.parse_args()
 
     if args.jsonl is not None:
@@ -118,7 +124,8 @@ def main() -> None:
     def components():
         if not hasattr(local, "extractor"):
             local.extractor = build_extractor(args.extractor, relations)
-            local.judge = build_llm_judge(args.judge, batch=args.judge_batch or None, gate=args.judge_gate)
+            local.judge = build_llm_judge(args.judge, batch=args.judge_batch or None, gate=args.judge_gate,
+                                          naive_max_triples=args.naive_max_triples)
             if local.judge is not None:
                 judges.append(local.judge)
         return local.extractor, local.judge
@@ -158,10 +165,19 @@ def main() -> None:
             records.append(rec)
 
     tag = f"{args.extractor}+{args.judge}" + (f"[batch={args.judge_batch},gate={args.judge_gate}]" if args.judge == "llm" else "")
+    if args.judge == "naive":
+        tag = f"{args.extractor}+naive1hop[max={args.naive_max_triples}]"
     s = summarize_run(records, time.time() - t0, tag, args.split)
     if judges:
         s["n_gated"] = sum(j.n_gated for j in judges)           # mẫu bị cổng cấu trúc chặn, không hỏi LLM
         s["n_off_menu"] = sum(j.n_off_menu for j in judges)     # mục add LLM trả về ngoài "lựa chọn hợp lệ"
+    if judges and args.judge == "naive":                        # bộ đếm riêng của hệ so sánh 1 bước
+        n_items = sum(j.n_items for j in judges)
+        s["naive_dropped"] = sum(j.n_dropped for j in judges)   # mục LLM trả về bị hậu kiểm loại
+        s["naive_drop_reasons"] = dict(sum((j.drop_reasons for j in judges), start=type(judges[0].drop_reasons)()))
+        s["naive_errors"] = sum(j.n_errors for j in judges)     # lệnh gọi lỗi → bản tin không có thay đổi gián tiếp
+        s["naive_avg_listed"] = sum(j.n_listed for j in judges) / n_items if n_items else 0.0
+        s["naive_truncated"] = sum(j.n_truncated for j in judges)   # bản tin có nhiều triple 1 bước hơn mức trần
     args.out.with_suffix(".summary.json").write_text(json.dumps(s, indent=2), encoding="utf8")
     print(json.dumps(s, indent=2))
 

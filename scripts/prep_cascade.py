@@ -19,6 +19,16 @@ mentioned, before, after, extra) và <out>/prep_stats.json.
     vế sinh của YAGO-Event không thể đạt được theo giao thức này (cố ý, để đo), chỉ vế cắt có ý nghĩa.
   Tệp ra: <out>/icews14_event_global.jsonl, <out>/yago_event_global.jsonl (tệp YAGO ~45 MB, không commit; kernel sinh lại).
 
+--global --augment: như --global nhưng KG nền ĐÃ CHỨA các fact suy ra theo luật (để bước xét duyệt có tiền lệ trong KG).
+  YAGO-Event: derived_all = một vòng YAGO_RULES trên mọi đường hai cạnh của KG nền; header base = KG nền ∪ derived_all,
+    tập quan hệ = mọi quan hệ của tập đó (thêm các quan hệ do luật đặt ra). Cùng 400 bài/thứ tự như --global;
+    KG-trước = (KG nền ∪ derived_all) − trigger − cạnh suy ra của bài, rồi logic add/delete như cũ.
+  ICEWS14-Event: mỗi bài derived_i = một vòng luật trên (KG nền − trigger) với mọi cạnh "explicit" của nó làm trigger
+    (điều kiện chỉ xét trên cạnh GỐC, không nối chuỗi qua cạnh suy ra); KG-trước = (KG nền − trigger) ∪ derived_i (trừ
+    chính trigger nếu nó cũng suy ra được); gold = một vòng luật của trigger trên cạnh gốc − KG-trước; bỏ bài nếu rỗng
+    (số bài có thể ít hơn bản --global). Header base = KG nền ∪ một vòng luật trên toàn KG nền.
+  Tệp ra: <out>/icews14_event_aug.jsonl, <out>/yago_event_aug.jsonl (lớn, không commit), <out>/prep_stats_aug.json.
+
 ICEWS14-Event: trigger (A, r, B, ngày d) lấy từ icews_2014_test.txt với r thuộc vế "explicit" của luật ADD;
   KG-trước = mọi cạnh có ngày <= d chạm A hoặc B (trừ chính trigger), giữ tối đa --icews-cap cạnh gần ngày d nhất
   mỗi đầu; luật: (A, r_trig, B) + (B, r_cond, C) [B–C bất kỳ chiều] → (A, r_new, C). `after` = một vòng luật
@@ -146,7 +156,8 @@ def load_icews_split(raw: Path, split: str) -> list[tuple[str, str, str, date]]:
     return rows
 
 
-def build_icews(raw: Path, n: int, cap: int, rng: random.Random, global_kg: bool = False) -> tuple[list[dict], dict]:
+def build_icews(raw: Path, n: int, cap: int, rng: random.Random, global_kg: bool = False,
+                augment: bool = False) -> tuple[list[dict], dict]:
     rows = load_icews(raw)
     by_ent: dict[str, list[tuple[str, str, str, date]]] = defaultdict(list)
     for row in rows:
@@ -164,12 +175,45 @@ def build_icews(raw: Path, n: int, cap: int, rng: random.Random, global_kg: bool
     if global_kg:
         stats.update({"base_triples": len(base), "base_entities": len({e for h, _, t in base for e in (h, t)}),
                       "relations": len({rr for _, rr, _ in base}), "trigger_in_base": 0})
+    if augment:                                         # KG nền bổ sung: một vòng luật trên mọi cạnh explicit của KG nền
+        expl_base = sorted(tr for tr in base if tr[1] in explicit_rels)
+        derived_full = icews_rules_once(base, expl_base)
+        aug_base = base | derived_full
+        stats.update({"base_triples_aug": len(aug_base), "derived_added": len(aug_base) - len(base),
+                      "explicit_in_base": len(expl_base), "relations": len({rr for _, rr, _ in aug_base}),
+                      "trigger_derivable": 0})
     seen: set[tuple] = set()
     for a, r, b, d in test:
         if (a, r, b, d) in seen:
             continue
         seen.add((a, r, b, d))
         trigger = (a, r, b)
+        if augment:
+            stats["trigger_in_base"] += trigger in base
+            if trigger in base:                         # rút trigger: mất cả vai trò explicit lẫn vai trò cạnh điều kiện
+                orig = base - {trigger}
+                derived_i = icews_rules_once(orig, [tr for tr in expl_base if tr != trigger])
+            else:
+                orig, derived_i = base, derived_full
+            stats["trigger_derivable"] += trigger in derived_i
+            before = (orig | derived_i) - {trigger}
+            add1 = icews_rules_once(orig | {trigger}, [trigger]) - before     # điều kiện chỉ trên cạnh gốc
+            if not add1:
+                stats["no_implicit"] += 1
+                continue
+            out.append({
+                "idx": len(out), "event": r, "season": d.isoformat(),
+                "text": f"On {d.isoformat()}, {a} took the following action toward {b}: {r.lower()}.",
+                "mentioned": [a, b],
+                "extra": {"trigger": [a, r, b], "op": "ADD", "n_add1": len(add1)},
+                "before_add": sorted(before - aug_base), "before_del": sorted(aug_base - before),
+                "after_add": sorted({trigger} | add1), "after_del": [],
+            })
+            stats["n_before"].append(len(before))
+            stats["n_add1"].append(len(add1))
+            if len(out) >= n:
+                break
+            continue
         if global_kg:
             before = base - {trigger}
             stats["trigger_in_base"] += trigger in base
@@ -211,7 +255,10 @@ def build_icews(raw: Path, n: int, cap: int, rng: random.Random, global_kg: bool
         if len(out) >= n:
             break
     if global_kg:
-        stats["_base"] = sorted(base)
+        stats["_base"] = sorted(aug_base if augment else base)
+    if augment:
+        stats.pop("n_add_full")
+        stats["items"] = len(out)
     return out, stats
 
 
@@ -234,7 +281,8 @@ def load_yago(raw: Path) -> list[Triple]:
     return triples
 
 
-def build_yago(raw: Path, n: int, cap: int, rng: random.Random, global_kg: bool = False) -> tuple[list[dict], dict]:
+def build_yago(raw: Path, n: int, cap: int, rng: random.Random, global_kg: bool = False,
+               augment: bool = False) -> tuple[list[dict], dict]:
     triples = load_yago(raw)
     base: set[Triple] = set(triples) if global_kg else set()
     out_adj: dict[str, list[tuple[str, str]]] = defaultdict(list)
@@ -246,6 +294,20 @@ def build_yago(raw: Path, n: int, cap: int, rng: random.Random, global_kg: bool 
     for path, new_rel, mode in YAGO_RULES:
         rules_by_path[path].append((new_rel, mode))
     r1s = {p[0] for p in rules_by_path}
+    raw_base = base
+    if augment:                                         # KG nền bổ sung: một vòng luật trên mọi đường hai cạnh
+        derived_all: set[Triple] = set()
+        for h1, r1, t1 in triples:
+            if r1 not in r1s:
+                continue
+            for r2, t2 in out_adj[t1]:
+                for new_rel, mode in rules_by_path.get((r1, r2), ()):
+                    if t2 == h1:
+                        continue
+                    derived_all.add((h1, new_rel, t2))
+                    if mode == "cross":
+                        derived_all.add((t2, new_rel, h1))
+        base = raw_base | derived_all                   # không dùng rng → cùng 400 bài như --global
     cand = [tr for tr in triples if tr[1] in r1s]
     rng.shuffle(cand)
     kinds = ["add", "delete"]
@@ -319,8 +381,12 @@ def build_yago(raw: Path, n: int, cap: int, rng: random.Random, global_kg: bool 
         stats["n_implicit"].append(len(inferred))
     stats["got"] = {f"{a}/{b}": v for (a, b), v in got.items()}
     if global_kg:
-        stats.update({"base_triples": len(base), "base_entities": len({e for h, _, t in base for e in (h, t)}),
+        stats.update({"base_triples": len(raw_base), "base_entities": len({e for h, _, t in base for e in (h, t)}),
                       "relations": len({rr for _, rr, _ in base}), "_base": sorted(base)})
+    if augment:
+        stats.update({"base_triples_aug": len(base), "derived_added": len(base) - len(raw_base),
+                      "derived_relations": sorted({rr for _, rr, _ in base} - {rr for _, rr, _ in raw_base}),
+                      "items": len(out)})
     return out, stats
 
 
@@ -355,11 +421,16 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--only", choices=["icews", "yago"], default=None)
     ap.add_argument("--global", dest="global_kg", action="store_true", help="giao thức KG cho trước (xem docstring)")
+    ap.add_argument("--augment", action="store_true",
+                    help="cùng --global: KG nền đã chứa các fact suy ra theo luật (tệp *_aug.jsonl, xem docstring)")
     args = ap.parse_args()
-    suffix = "_global" if args.global_kg else ""
+    if args.augment and not args.global_kg:
+        ap.error("--augment chỉ dùng cùng --global")
+    suffix = "_aug" if args.augment else "_global" if args.global_kg else ""
     stats_all = {}
     if args.only in (None, "icews"):
-        rows, st = build_icews(args.raw, args.n_icews, args.icews_cap, random.Random(args.seed), args.global_kg)
+        rows, st = build_icews(args.raw, args.n_icews, args.icews_cap, random.Random(args.seed), args.global_kg,
+                               args.augment)
         if args.global_kg:
             dump_global(args.out / f"icews14_event{suffix}.jsonl", rows, st)
         else:
@@ -367,7 +438,8 @@ def main() -> None:
         stats_all["icews14_event" + suffix] = _agg(st)
         print("ICEWS14-Event:", json.dumps(stats_all["icews14_event" + suffix], ensure_ascii=False), flush=True)
     if args.only in (None, "yago"):
-        rows, st = build_yago(args.raw, args.n_yago, args.yago_cap, random.Random(args.seed), args.global_kg)
+        rows, st = build_yago(args.raw, args.n_yago, args.yago_cap, random.Random(args.seed), args.global_kg,
+                             args.augment)
         if args.global_kg:
             dump_global(args.out / f"yago_event{suffix}.jsonl", rows, st)
         else:

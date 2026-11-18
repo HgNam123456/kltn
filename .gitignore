@@ -45,3 +45,4 @@ results/kaggle/knet_baseline/out/pred_baseline5.json
 /data/cascade/yago_event_global.jsonl
 /kaggle/dataset_nba/*
 !/kaggle/dataset_nba/dataset-metadata.json
+/data/cascade/yago_event_aug.jsonl

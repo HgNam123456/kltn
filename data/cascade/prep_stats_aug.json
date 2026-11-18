@@ -1,0 +1,69 @@
+{
+ "icews14_event_aug": {
+  "candidates": 254,
+  "no_implicit": 86,
+  "n_before": {
+   "n": 168,
+   "mean": 50440.44642857143,
+   "min": 50389,
+   "max": 50449
+  },
+  "n_add1": {
+   "n": 168,
+   "mean": 11.31547619047619,
+   "min": 1,
+   "max": 67
+  },
+  "base_triples": 42690,
+  "base_entities": 6869,
+  "relations": 230,
+  "trigger_in_base": 140,
+  "base_triples_aug": 50449,
+  "derived_added": 7759,
+  "explicit_in_base": 1222,
+  "trigger_derivable": 6,
+  "items": 168
+ },
+ "yago_event_aug": {
+  "candidates": 757840,
+  "n_before": {
+   "n": 400,
+   "mean": 1243317.57,
+   "min": 1243313,
+   "max": 1243319
+  },
+  "n_implicit": {
+   "n": 400,
+   "mean": 1.3175,
+   "min": 1,
+   "max": 9
+  },
+  "quota": {
+   "hop1/add": 150,
+   "hop1/delete": 150,
+   "hop2/add": 100
+  },
+  "got": {
+   "hop1/add": 150,
+   "hop1/delete": 150,
+   "hop2/add": 100
+  },
+  "base_triples": 1079040,
+  "base_entities": 123143,
+  "relations": 46,
+  "base_triples_aug": 1243319,
+  "derived_added": 164279,
+  "derived_relations": [
+   "academicAncestor",
+   "academicLineageFrom",
+   "childGraduatedFrom",
+   "hasBusinessIn",
+   "hasGrandchild",
+   "hasOfficeIn",
+   "residesInCapital",
+   "tradesWith",
+   "wasEducatedIn"
+  ],
+  "items": 400
+ }
+}
