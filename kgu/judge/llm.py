@@ -453,10 +453,22 @@ class LLMJudge:
 
     # ---- prompt -------------------------------------------------------------------------------
 
+    MAX_PREV_OPS = 60        # lần gọi k >= 2: số dòng tối đa của danh sách thay đổi gián tiếp vừa ghi (O_{k-1}) trong prompt
+
     def _header(self, ctx: JudgeContext) -> list[str]:
         participants = sorted({e for op in ctx.explicit_ops for e in (op.h, op.t)})
-        lines = ["BẢN TIN:", ctx.text, "", "THAY ĐỔI TƯỜNG MINH ĐÃ ÁP:"]
-        lines += [f"  {o.kind.value} ({o.h}, {o.r}, {o.t})" for o in ctx.explicit_ops]
+        if getattr(ctx, "call", 1) <= 1:                                # lần gọi 1: prompt giữ nguyên từng byte
+            lines = ["BẢN TIN:", ctx.text, "", "THAY ĐỔI TƯỜNG MINH ĐÃ ÁP:"]
+            lines += [f"  {o.kind.value} ({o.h}, {o.r}, {o.t})" for o in ctx.explicit_ops]
+        else:                                                           # lần gọi k >= 2 của khoanh vùng đệ quy
+            direct = ctx.direct_ops if getattr(ctx, "direct_ops", None) is not None else []
+            lines = ["BẢN TIN:", ctx.text, "", "THAY ĐỔI TRỰC TIẾP ĐÃ ÁP:"]
+            lines += [f"  {o.kind.value} ({o.h}, {o.r}, {o.t})" for o in direct]
+            lines.append("THAY ĐỔI GIÁN TIẾP VỪA GHI Ở LẦN GỌI TRƯỚC (đầu vào của lần gọi này):")
+            shown = ctx.explicit_ops[:self.MAX_PREV_OPS]
+            lines += [f"  {o.kind.value} ({o.h}, {o.r}, {o.t})" for o in shown]
+            if len(ctx.explicit_ops) > len(shown):
+                lines.append(f"  ... (còn {len(ctx.explicit_ops) - len(shown)} thay đổi cùng dạng)")
         lines += ["ENTITY THAM GIA: " + ", ".join(participants),
                   "QUAN HỆ CHO PHÉP: " + ", ".join(ctx.relations), ""]
         return lines

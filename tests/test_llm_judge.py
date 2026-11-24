@@ -260,3 +260,79 @@ def test_gate_drops_patterns_whose_subject_is_clearly_the_host():
     j = LLMJudge(FakeLLMClient([{"add": []}] * 10), gate=0.5)
     _, keep = j._gated([], pats, ctx)
     assert all(p.subject == "Messi" for p in keep) and keep           # chỉ mẫu của bên gia nhập được hỏi
+
+
+# ---- khoanh vùng đệ quy: phần đầu prompt theo lần gọi ------------------------------------------------------
+
+def _old_header(ctx):
+    """Phần đầu prompt đúng như trước khi có tham số K (lần gọi 1 phải giữ nguyên từng byte)."""
+    participants = sorted({e for op in ctx.explicit_ops for e in (op.h, op.t)})
+    lines = ["BẢN TIN:", ctx.text, "", "THAY ĐỔI TƯỜNG MINH ĐÃ ÁP:"]
+    lines += [f"  {o.kind.value} ({o.h}, {o.r}, {o.t})" for o in ctx.explicit_ops]
+    lines += ["ENTITY THAM GIA: " + ", ".join(participants),
+              "QUAN HỆ CHO PHÉP: " + ", ".join(ctx.relations), ""]
+    return lines
+
+
+def test_first_call_prompt_is_unchanged(graph):
+    ctx = _ctx(graph)
+    assert ctx.call == 1 and ctx.direct_ops is None                       # mặc định của JudgeContext
+    j = LLMJudge(FakeLLMClient([]))
+    assert j._header(ctx) == _old_header(ctx)
+    with_direct = JudgeContext(ctx.text, ctx.explicit_ops, ctx.loc, ctx.graph, ctx.at, ctx.relations,
+                               direct_ops=ctx.explicit_ops, call=1)       # pipeline truyền direct_ops ở lần gọi 1
+    assert j._header(with_direct) == _old_header(ctx)
+    cut, add = group_cut(ctx.loc), group_add(ctx.loc)
+    assert j._prompt_cut(with_direct, cut) == j._prompt_cut(ctx, cut)
+    assert j._prompt_cut(ctx, cut).startswith("\n".join(_old_header(ctx)) + "\nMẪU CẮT")
+    assert j._prompt_add(with_direct, add) == j._prompt_add(ctx, add)
+    assert j._prompt_add(ctx, add).startswith("\n".join(_old_header(ctx)) + "\nMẪU THÊM")
+
+
+def test_later_call_prompt_lists_direct_then_previous_indirect_changes(graph):
+    ctx = _ctx(graph)
+    prev = [Op(OpKind.INVALIDATE, "Messi", TEAM, "Pedri"), Op(OpKind.ADD, "Messi", TEAM, "Lautaro")]
+    apply_ops(graph, prev, at=1)
+    loc = localize(graph, prev, at=1)
+    ctx2 = JudgeContext(ctx.text, prev, loc, graph, 1, ctx.relations, direct_ops=EXPLICIT, call=2)
+    head = LLMJudge(FakeLLMClient([]))._header(ctx2)
+    text = "\n".join(head)
+    assert "THAY ĐỔI TƯỜNG MINH ĐÃ ÁP:" not in text
+    i_direct = head.index("THAY ĐỔI TRỰC TIẾP ĐÃ ÁP:")
+    i_prev = head.index("THAY ĐỔI GIÁN TIẾP VỪA GHI Ở LẦN GỌI TRƯỚC (đầu vào của lần gọi này):")
+    assert head[:3] == ["BẢN TIN:", ctx.text, ""] and i_direct == 3
+    assert head[i_direct + 1:i_prev] == [f"  INVALIDATE (Messi, {PLAYS}, Barca)", f"  ADD (Messi, {PLAYS}, Inter)"]
+    assert head[i_prev + 1:i_prev + 3] == [f"  INVALIDATE (Messi, {TEAM}, Pedri)", f"  ADD (Messi, {TEAM}, Lautaro)"]
+    assert head[i_prev + 3] == "ENTITY THAM GIA: Lautaro, Messi, Pedri"     # tính trên tập thay đổi đang xét
+    assert head[-2].startswith("QUAN HỆ CHO PHÉP: ") and head[-1] == ""
+
+
+def test_later_call_prompt_truncates_long_previous_list(graph):
+    prev = [Op(OpKind.ADD, "Messi", TEAM, f"P{i:03d}") for i in range(75)]
+    ctx2 = JudgeContext("t", prev, Localization(), graph, 1, [TEAM], direct_ops=EXPLICIT, call=3)
+    head = LLMJudge(FakeLLMClient([]))._header(ctx2)
+    i_prev = head.index("THAY ĐỔI GIÁN TIẾP VỪA GHI Ở LẦN GỌI TRƯỚC (đầu vào của lần gọi này):")
+    body = head[i_prev + 1:-3]                                             # bỏ ENTITY THAM GIA, QUAN HỆ, dòng trống
+    assert len(body) == 61 and body[59] == f"  ADD (Messi, {TEAM}, P059)"
+    assert body[60] == "  ... (còn 15 thay đổi cùng dạng)"
+    short = JudgeContext("t", prev[:60], Localization(), graph, 1, [TEAM], direct_ops=EXPLICIT, call=2)
+    assert not any("còn" in line for line in LLMJudge(FakeLLMClient([]))._header(short))
+
+
+def test_evidence_at_later_call_reads_the_changes_under_consideration():
+    """Lần gọi 2: bằng chứng "vừa tách khỏi" và mức phụ thuộc tính trên O_1 (ctx.explicit_ops), không phải thay đổi trực tiếp."""
+    from kgu.graph import BiTemporalGraph
+    before = {("e", "works_for", "C1"), ("x", "works_for", "C1"), ("e", "based_in", "A"), ("x", "based_in", "A"),
+              ("C1", "based_in", "A")}
+    g = BiTemporalGraph.from_triples(before, valid_from=0)
+    direct = [Op(OpKind.INVALIDATE, "e", "member_of", "D1")]
+    prev = apply_ops(g, [Op(OpKind.INVALIDATE, "e", "works_for", "C1")], at=1)
+    loc = localize(g, prev, at=1)
+    ctx = JudgeContext("e leaves D1.", prev, loc, g, 1, ["works_for", "based_in"], direct_ops=direct, call=2)
+    cut = group_cut(loc)
+    p = next(p for p in cut if (p.participant, p.r, p.direction) == ("e", "based_in", "subject_first"))
+    j = LLMJudge(FakeLLMClient([{"invalidate": []}]), batch_size=None, gate=None)
+    assert j._detached(p, ctx) == [("C1", "works_for")]
+    j.judge(ctx)
+    user = j.client.calls[0][1]
+    assert "  - e vừa tách khỏi C1 (qua works_for)" in user and "INVALIDATE (e, member_of, D1)" in user

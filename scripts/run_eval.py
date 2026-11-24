@@ -44,21 +44,35 @@ def build_llm_judge(name: str, batch: int | None = 1, gate: float | None = None,
     raise SystemExit(f"unknown judge {name}")
 
 
-def run_one(ex, extractor, judge, relations: list[str], graph=None) -> dict:
+def effective_max_calls(judge_name: str, max_calls: int) -> int:
+    """K thực dùng: hệ so sánh 1 bước (--judge naive) không dùng khoanh vùng nên luôn chỉ một lần gọi."""
+    return 1 if judge_name == "naive" else max(1, max_calls)
+
+
+def run_one(ex, extractor, judge, relations: list[str], graph=None, max_calls: int = 1) -> dict:
     """Một ví dụ → record; nếu lỗi (LLM, mạng, tràn ctx...) → record lỗi để lượt chạy không abort."""
     try:
-        return run_example(ex, extractor, judge, relations, graph=graph).to_record(ex)
+        return run_example(ex, extractor, judge, relations, graph=graph, max_calls=max_calls).to_record(ex)
     except Exception as e:  # noqa: BLE001 — cố ý: ghi lại mọi lỗi per-example
         return {"idx": ex.idx, "event": ex.event, "error": f"{type(e).__name__}: {e}"}
 
 
-def summarize_run(records: list[dict], seconds: float, config: str, split: str) -> dict:
+def summarize_run(records: list[dict], seconds: float, config: str, split: str,
+                  max_calls: int | None = None) -> dict:
     """Gộp danh sách record (kể cả record lỗi) thành summary.
 
     `n` đếm MỌI record (kể cả lỗi); `n_scored` = n - errors chỉ đếm record có "counts". Các trung bình
     (avg_cut_cand, avg_add_cand) và coverage chia cho n_scored, không phải n — record lỗi không có
     n_cut_cand/n_add_cand nên chia cho n sẽ làm trung bình bị pha loãng sai khi có lỗi.
+
+    Khoanh vùng đệ quy: `max_calls` = K (None → lấy từ record, mặc định 1); `llm_calls_by_call[k-1]` = số lệnh gọi LLM
+    của bước xét duyệt ở lần gọi k; `coverage_by_call[k-1]` = độ phủ CỘNG DỒN sau lần gọi k (phần thay đổi gián tiếp
+    vàng đã nằm trong vùng ứng viên của một lần gọi <= k). Record kiểu cũ (không có "rounds"/"implied") được tính vào
+    lần gọi 1.
     """
+    k_max = max(1, max_calls if max_calls is not None else max((r.get("max_calls", 1) for r in records), default=1))
+    calls_by_call = [0] * k_max
+    cov_by_call = [0] * k_max                           # số thay đổi gián tiếp được phủ LẦN ĐẦU ở lần gọi k
     total = Counts()
     cov_hit = cov_all = n_cut = n_add = n_judged = n_calls = n_err = 0
     for rec in records:
@@ -72,6 +86,18 @@ def summarize_run(records: list[dict], seconds: float, config: str, split: str) 
         n_add += rec["n_add_cand"]
         n_judged += rec["n_judged"]
         n_calls += rec["n_llm_calls"]
+        if "rounds" in rec:
+            for rd in rec["rounds"]:
+                if 1 <= rd["k"] <= k_max:
+                    calls_by_call[rd["k"] - 1] += rd["n_llm_calls"]
+        else:
+            calls_by_call[0] += rec["n_llm_calls"]
+        if "implied" in rec:
+            for op in rec["implied"]:
+                if 1 <= op["cov"] <= k_max:
+                    cov_by_call[op["cov"] - 1] += 1
+        else:
+            cov_by_call[0] += rec["coverage"][0]
 
     n = len(records)
     n_scored = n - n_err
@@ -85,6 +111,9 @@ def summarize_run(records: list[dict], seconds: float, config: str, split: str) 
         "avg_add_cand": n_add / n_scored if n_scored else 0.0,
         "judged_ratio": n_judged / n_cands if n_cands else 0.0,
         "llm_calls": n_calls, "seconds": round(seconds, 1),
+        "max_calls": k_max,
+        "llm_calls_by_call": calls_by_call,
+        "coverage_by_call": [sum(cov_by_call[:k + 1]) / cov_all if cov_all else 0.0 for k in range(k_max)],
     })
     return s
 
@@ -104,9 +133,13 @@ def main() -> None:
     ap.add_argument("--judge-batch", type=int, default=1, help="mẫu / lệnh gọi LLM judge; 0 = cả pha một lệnh gọi")
     ap.add_argument("--judge-gate", type=float, default=None,
                     help="phương án C: ngưỡng đồng xuất hiện để cổng cấu trúc lọc mẫu trước LLM (vd 0.5); bỏ = LLM thuần")
+    ap.add_argument("--max-calls", type=int, default=1,
+                    help="K của Thuật toán khoanh vùng đệ quy (Chương 3): số lần gọi tối đa; lần gọi k khoanh vùng quanh "
+                         "các thay đổi vừa ghi ở lần k-1. Mặc định 1 = một lần gọi (các số đã báo cáo); --judge naive luôn 1")
     ap.add_argument("--naive-max-triples", type=int, default=80,
                     help="--judge naive: số triple 1 bước tối đa đưa vào prompt (vượt → lấy mẫu đều theo thực thể tham gia)")
     args = ap.parse_args()
+    max_calls = effective_max_calls(args.judge, args.max_calls)
 
     if args.jsonl is not None:
         from kgu.data.jsonl import load_jsonl
@@ -147,11 +180,11 @@ def main() -> None:
         judge = OracleJudge(ex.after) if args.judge == "oracle" else llm_judge
         g = base_graph()
         if g is None:
-            return run_one(ex, extractor, judge, relations)
+            return run_one(ex, extractor, judge, relations, max_calls=max_calls)
         cp = g.checkpoint()
         try:
             given.apply_before(g, i)
-            return run_one(ex, extractor, judge, relations, graph=g)
+            return run_one(ex, extractor, judge, relations, graph=g, max_calls=max_calls)
         finally:
             g.rollback(cp)
 
@@ -167,7 +200,9 @@ def main() -> None:
     tag = f"{args.extractor}+{args.judge}" + (f"[batch={args.judge_batch},gate={args.judge_gate}]" if args.judge == "llm" else "")
     if args.judge == "naive":
         tag = f"{args.extractor}+naive1hop[max={args.naive_max_triples}]"
-    s = summarize_run(records, time.time() - t0, tag, args.split)
+    if max_calls != 1:                                          # tag cũ giữ nguyên khi K = 1
+        tag += f"[K={max_calls}]"
+    s = summarize_run(records, time.time() - t0, tag, args.split, max_calls=max_calls)
     if judges:
         s["n_gated"] = sum(j.n_gated for j in judges)           # mẫu bị cổng cấu trúc chặn, không hỏi LLM
         s["n_off_menu"] = sum(j.n_off_menu for j in judges)     # mục add LLM trả về ngoài "lựa chọn hợp lệ"
