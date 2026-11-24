@@ -12,6 +12,11 @@ IMPLICIT_JOB = "given": giao thức "KG cho trước" (toàn bộ thực thể/t
     (tkgqa_test_global.jsonl, icews14_event_global.jsonl có trong repo; yago_event_global.jsonl 63 MB được sinh lại
     bằng prep_cascade.py --global nếu thiếu); IMPLICIT_GIVEN_SYM = KGU_SYMMETRIC_ADD; IMPLICIT_GIVEN_SCALE nhân giờ LLM;
     IMPLICIT_GIVEN_CFGS = tập con của none,oracle,llm_gate,llm_nogate. Mỗi lượt LLM ghi logs/<name>.llm.jsonl (KGU_LLM_LOG).
+IMPLICIT_JOB = "synth": bộ tự sinh KGU-Synth (data/synth/kgu_synth.jsonl, 1.000 mẫu, thay đổi gián tiếp có nhãn độ sâu 1–3).
+    IMPLICIT_SYNTH_CFGS = tập con của none,oracle,llm_gate,llm_nogate,naive; IMPLICIT_SYNTH_K = các giá trị K (--max-calls)
+    cho llm_gate (mặc định 1,2,3); IMPLICIT_SYNTH_K_ORACLE cho oracle (mặc định 1,2,3); IMPLICIT_SYNTH_K_NOGATE cho
+    llm_nogate (mặc định 1) và IMPLICIT_SYNTH_LIMIT_NOGATE = số mẫu đầu cho llm_nogate; IMPLICIT_SYNTH_SYM,
+    IMPLICIT_SYNTH_SCALE, IMPLICIT_SYNTH_LIMIT. Cuối cùng chạy scripts/score_synth.py → score_by_depth.{txt,json}.
 Đầu ra: $KGU_OUT/<job>/... + summary.json; server.log. KGU_DEADLINE (epoch) = giờ chót chung.
 """
 import json
@@ -241,6 +246,35 @@ elif JOB == "nba":
         timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --data-dir {nba} --split test --extractor gold_explicit "
                     f"{judge} --workers {WORKERS} --out {OUT}/{name}.jsonl",
               {**ENV, "KGU_LLM_LOG": f"{OUT}/logs/{name}.llm.jsonl"}, max_h=max_h)
+elif JOB == "synth":
+    # KGU-Synth (data/synth/kgu_synth.jsonl, sinh bởi scripts/gen_synth.py): KG nền hư cấu ba miền, thay đổi gián tiếp có
+    # nhãn độ sâu 1–3. Mỗi cấu hình có khoanh vùng chạy với từng K (--max-calls, số lần gọi tối đa của khoanh vùng đệ quy).
+    data = f"{KLTN}/data/synth/kgu_synth.jsonl"
+    cfgs = os.environ.get("IMPLICIT_SYNTH_CFGS", "none,oracle,llm_gate,llm_nogate,naive").split(",")
+    ks = [int(k) for k in os.environ.get("IMPLICIT_SYNTH_K", "1,2,3").split(",")]
+    ks_oracle = [int(k) for k in os.environ.get("IMPLICIT_SYNTH_K_ORACLE", "1,2,3").split(",")]   # trần: không tốn GPU
+    ks_nogate = [int(k) for k in os.environ.get("IMPLICIT_SYNTH_K_NOGATE", "1").split(",")]   # không lọc: số lô tăng mạnh theo K
+    limit_nogate = os.environ.get("IMPLICIT_SYNTH_LIMIT_NOGATE", "")                           # không lọc chỉ chạy N mẫu đầu
+    sym = os.environ.get("IMPLICIT_SYNTH_SYM", "0")
+    scale = float(os.environ.get("IMPLICIT_SYNTH_SCALE", "1"))
+    limit = os.environ.get("IMPLICIT_SYNTH_LIMIT", "")
+    naive_max = os.environ.get("IMPLICIT_NAIVE_MAX", "80")
+    for cfg, judge, max_h, cfg_ks in (("none", "--judge none", 0.3, [1]), ("oracle", "--judge oracle", 0.5, ks_oracle),
+                                      ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 3.0 * scale, ks),
+                                      ("llm_nogate", "--judge llm --judge-batch 1", 3.0 * scale, ks_nogate),
+                                      ("naive", f"--judge naive --naive-max-triples {naive_max}", 1.5 * scale, [1])):
+        if cfg not in cfgs:
+            continue
+        n_limit = (limit_nogate or limit) if cfg == "llm_nogate" else limit
+        for k in cfg_ks:
+            name = f"synth_sym{sym}_goldexp_{cfg}_k{k}"
+            timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {data} --extractor gold_explicit {judge} "
+                        f"--max-calls {k} --workers {WORKERS}{' --limit ' + n_limit if n_limit else ''} --out {OUT}/{name}.jsonl",
+                  {**ENV, "KGU_SYMMETRIC_ADD": sym, "KGU_LLM_LOG": f"{OUT}/logs/{name}.llm.jsonl",
+                   **({"KGU_LLM_MAX_TOKENS": "2048"} if cfg == "naive" else {})}, max_h=max_h)
+    # bảng theo độ sâu và theo họ sự kiện cho mọi lượt đã chạy (lỗi ở bước này không làm hỏng kết quả đã ghi)
+    subprocess.run(f"cd {KLTN} && python scripts/score_synth.py --data {data} {OUT}/synth_*.jsonl --by family "
+                   f"--json {OUT}/score_by_depth.json > {OUT}/score_by_depth.txt 2>&1", shell=True, env=ENV)
 elif JOB == "elken":
     elken = f"{WORK}/elken"
     sh(f"git clone -q --depth 1 {ELKEN_REPO} {elken}")
