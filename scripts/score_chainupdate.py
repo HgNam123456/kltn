@@ -1,6 +1,10 @@
-"""Chấm một lượt chạy run_eval trên KGU-Synth theo ĐỘ SÂU của thay đổi gián tiếp.
+"""Chấm một lượt chạy run_eval trên ChainUpdate theo ĐỘ SÂU của thay đổi gián tiếp.
 
-    python scripts/score_synth.py --data data/synth/kgu_synth.jsonl RUN.jsonl [RUN2.jsonl ...] [--by family] [--json OUT]
+    python scripts/score_chainupdate.py --data data/chainupdate/chainupdate.jsonl RUN.jsonl [RUN2.jsonl ...]
+                                        [--by family] [--first N] [--json OUT]
+
+--first N chỉ chấm các mẫu có idx < N, để so nhiều lượt chạy trên cùng một tập mẫu khi có lượt bị dừng giữa chừng
+(run_eval ghi record theo thứ tự idx); dòng cuối bị cắt dở của lượt bị dừng được bỏ qua.
 
 Với mỗi lượt chạy, in:
   - theo độ sâu (1, 2, 3) và theo vế (thêm, cắt): số thay đổi gián tiếp vàng, số nằm trong vùng ứng viên (độ phủ),
@@ -40,6 +44,22 @@ def net_ops(judged: list[dict]) -> dict[tuple, int]:
     for o in judged:
         seen[(o["h"], o["r"], o["t"])].append((o["kind"], int(o.get("round", 1))))
     return {(kinds[0][0], *tr): kinds[0][1] for tr, kinds in seen.items() if len(kinds) == 1}
+
+
+def load_records(path: Path, first: int | None = None) -> list[dict]:
+    """Record của một lượt chạy; bỏ dòng cuối bị cắt dở (lượt bị dừng) và, nếu có `first`, các mẫu có idx >= first."""
+    records = []
+    with path.open(encoding="utf8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            try:
+                rec = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if first is None or rec["idx"] < first:
+                records.append(rec)
+    return records
 
 
 def _cell() -> dict:
@@ -142,18 +162,19 @@ def render(name: str, s: dict) -> str:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("runs", nargs="+", type=Path, help="tệp JSONL do scripts/run_eval.py ghi")
-    ap.add_argument("--data", type=Path, default=Path("data/synth/kgu_synth.jsonl"))
+    ap.add_argument("--data", type=Path, default=Path("data/chainupdate/chainupdate.jsonl"))
     ap.add_argument("--by", choices=["family", "domain", "event"], default=None, help="thêm bảng theo nhóm sự kiện")
+    ap.add_argument("--first", type=int, default=None, help="chỉ chấm các mẫu có idx < N")
     ap.add_argument("--json", type=Path, default=None, help="ghi kết quả của mọi lượt chạy vào một tệp JSON")
     args = ap.parse_args()
 
     gold = load_gold(args.data)
     out = {}
     for run in args.runs:
-        with run.open(encoding="utf8") as f:
-            records = [json.loads(line) for line in f if line.strip()]
-        out[run.stem] = score_run(gold, records, by=args.by)
-        print(render(run.stem, out[run.stem]), end="\n\n")
+        records = load_records(run, args.first)
+        name = run.stem + (f" [idx<{args.first}]" if args.first is not None else "")
+        out[name] = score_run(gold, records, by=args.by)
+        print(render(name, out[name]), end="\n\n")
     if args.json:
         args.json.write_text(json.dumps(out, indent=2, ensure_ascii=False), encoding="utf8")
 

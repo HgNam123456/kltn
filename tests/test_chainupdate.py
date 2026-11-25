@@ -1,4 +1,4 @@
-"""Bộ sinh KGU-Synth: tái lập được, không tạo quan hệ mới, nhãn trực tiếp / gián tiếp / độ sâu nhất quán với pipeline."""
+"""Bộ sinh ChainUpdate: tái lập được, không tạo quan hệ mới, nhãn trực tiếp / gián tiếp / độ sâu nhất quán với pipeline."""
 import json
 import sys
 from pathlib import Path
@@ -7,8 +7,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-import gen_synth  # noqa: E402
-import score_synth  # noqa: E402
+import gen_chainupdate  # noqa: E402
+import score_chainupdate  # noqa: E402
 from kgu.data.jsonl import load_jsonl  # noqa: E402
 from kgu.extract.gold import GoldExplicitExtractor  # noqa: E402
 from kgu.judge.oracle import OracleJudge  # noqa: E402
@@ -19,17 +19,17 @@ SCALE = 0.04                                               # mỗi loại sự k
 
 @pytest.fixture(scope="module")
 def data():
-    return gen_synth.generate(seed=7, scale=SCALE)
+    return gen_chainupdate.generate(seed=7, scale=SCALE)
 
 
 def test_generation_is_reproducible(data):
-    again = gen_synth.generate(seed=7, scale=SCALE)
+    again = gen_chainupdate.generate(seed=7, scale=SCALE)
     assert again["base"] == data["base"] and again["rows"] == data["rows"] and again["briefs"] == data["briefs"]
-    assert gen_synth.generate(seed=8, scale=SCALE)["base"] != data["base"]
+    assert gen_chainupdate.generate(seed=8, scale=SCALE)["base"] != data["base"]
 
 
 def test_every_event_type_is_present(data):
-    assert {r["event"] for r in data["rows"]} == {f"{f}/{v}" for f, v, _ in gen_synth.PLAN}
+    assert {r["event"] for r in data["rows"]} == {f"{f}/{v}" for f, v, _ in gen_chainupdate.PLAN}
 
 
 def test_no_new_relation_and_few_new_entities(data):
@@ -40,7 +40,7 @@ def test_no_new_relation_and_few_new_entities(data):
         assert {r for _, r, _ in changed} <= base_rel
         new = {e for h, _, t in row["after_add"] for e in (h, t)} - base_ent
         assert new == set(row["extra"]["new_entities"]) and len(new) <= 1
-    for rel in gen_synth.DERIVED:                              # quan hệ gián tiếp nào cũng đã có nhiều tiền lệ trong KG nền
+    for rel in gen_chainupdate.DERIVED:                              # quan hệ gián tiếp nào cũng đã có nhiều tiền lệ trong KG nền
         assert sum(1 for _, r, _ in data["base"] if r == rel) >= 100, rel
 
 
@@ -66,12 +66,12 @@ def test_depth_labels(data):
     assert depth_of == {"colleague_of": 1, "reports_to": 1, "works_for": 1, "based_in": 2, "resident_of": 3} or \
         depth_of == {"colleague_of": 1, "works_for": 1, "based_in": 2, "resident_of": 3}          # phòng không có trưởng phòng
     for row in data["rows"]:
-        assert all(1 <= op[4] <= 3 and op[2] in gen_synth.DERIVED for op in row["extra"]["indirect"])
+        assert all(1 <= op[4] <= 3 and op[2] in gen_chainupdate.DERIVED for op in row["extra"]["indirect"])
 
 
 def test_names_do_not_nest(data):
-    assert gen_synth.nested_names(data["names"]) == []
-    assert gen_synth.nested_names(["Velaria", "Velaria FC"]) == [("Velaria", "Velaria FC")]
+    assert gen_chainupdate.nested_names(data["names"]) == []
+    assert gen_chainupdate.nested_names(["Velaria", "Velaria FC"]) == [("Velaria", "Velaria FC")]
 
 
 def test_check_text_catches_missing_and_leaked_entities(data):
@@ -79,15 +79,15 @@ def test_check_text_catches_missing_and_leaked_entities(data):
     row = next(r for r in data["rows"] if r["event"] == "f_transfer/same_league")
     player, old, new = row["mentioned"]
     good = f"{player} has completed a permanent move from {old} to {new}, the buying club's spokesperson said."
-    assert gen_synth.check_text(good, row["mentioned"], index) == []
-    assert gen_synth.check_text(f"{player}'s switch from {old} to {new} is done, both clubs confirmed today.",
+    assert gen_chainupdate.check_text(good, row["mentioned"], index) == []
+    assert gen_chainupdate.check_text(f"{player}'s switch from {old} to {new} is done, both clubs confirmed today.",
                                 row["mentioned"], index) == []                                   # đuôi sở hữu vẫn nhận ra tên
-    missing = gen_synth.check_text(f"{player} has left {old} for a new club after several seasons there.", row["mentioned"], index)
+    missing = gen_chainupdate.check_text(f"{player} has left {old} for a new club after several seasons there.", row["mentioned"], index)
     assert missing == [f"thiếu tên: {new}"]
     other = next(n for n in data["names"] if n not in row["mentioned"])
-    leaked = gen_synth.check_text(good + f" {other} was not involved.", row["mentioned"], index)
+    leaked = gen_chainupdate.check_text(good + f" {other} was not involved.", row["mentioned"], index)
     assert leaked == [f"nhắc thực thể ngoài đề bài: {other}"]
-    assert gen_synth.check_text("Too short.", [], index) == ["2 từ (cần 10–130)"]
+    assert gen_chainupdate.check_text("Too short.", [], index) == ["2 từ (cần 10–130)"]
 
 
 def _write(tmp_path: Path, data: dict) -> Path:
@@ -105,7 +105,7 @@ def test_dataset_loads_and_recursion_reaches_deeper_changes(tmp_path, data):
     path = _write(tmp_path, data)
     examples, relations, extras = load_jsonl(path)
     assert relations == data["relations"] and len(examples) == len(data["rows"])
-    gold = score_synth.load_gold(path)
+    gold = score_chainupdate.load_gold(path)
     scores = {}
     for k in (1, 2, 3):
         records = []
@@ -115,7 +115,7 @@ def test_dataset_loads_and_recursion_reaches_deeper_changes(tmp_path, data):
             assert {(o.kind.value, *o.triple) for o in res.explicit_ops} == \
                 {tuple(op) for op in extras[ex.idx]["direct"]}
             records.append(res.to_record(ex))
-        scores[k] = score_synth.score_run(gold, records, by="family")
+        scores[k] = score_chainupdate.score_run(gold, records, by="family")
     correct = {k: sum(row["correct"] for row in s["by_depth"]) for k, s in scores.items()}
     assert correct[1] <= correct[2] <= correct[3]
     assert correct[2] > correct[1]                               # có thay đổi chỉ tìm được ở lần gọi thứ hai
@@ -132,4 +132,4 @@ def test_net_ops_drops_contradictory_verdicts():
               {"kind": "INVALIDATE", "h": "c", "r": "r", "t": "d", "round": 2},
               {"kind": "INVALIDATE", "h": "e", "r": "r", "t": "f", "round": 1},
               {"kind": "ADD", "h": "e", "r": "r", "t": "f", "round": 2}]
-    assert score_synth.net_ops(judged) == {("ADD", "a", "r", "b"): 1, ("INVALIDATE", "c", "r", "d"): 2}
+    assert score_chainupdate.net_ops(judged) == {("ADD", "a", "r", "b"): 1, ("INVALIDATE", "c", "r", "d"): 2}

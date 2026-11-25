@@ -1,4 +1,4 @@
-"""Kernel kgu-synth (làn GPU): bộ tự sinh KGU-Synth (data/synth/kgu_synth.jsonl, 1.000 mẫu, thay đổi gián tiếp có nhãn
+"""Kernel kgu-synth (làn GPU): bộ tự sinh ChainUpdate (data/chainupdate/chainupdate.jsonl, 1.000 mẫu, thay đổi gián tiếp có nhãn
 độ sâu 1–3) với K = 1, 2, 3 lần gọi của thuật toán khoanh vùng đệ quy (--max-calls).
 Cấu hình: sàn (none), trần (oracle, K = 1, 2, 3), pipeline có bước lọc theo cấu trúc (llm_gate 0,5, K = 1, 2, 3).
 Cuối cùng ghi score_by_depth.{txt,json}. Các cấu hình đối chứng nằm ở kernel kgu-synth-b (lane_synth_b).

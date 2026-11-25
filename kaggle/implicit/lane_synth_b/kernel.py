@@ -1,4 +1,4 @@
-"""Kernel kgu-synth-b (làn GPU): các cấu hình đối chứng trên KGU-Synth (data/synth/kgu_synth.jsonl).
+"""Kernel kgu-synth-b (làn GPU): các cấu hình đối chứng trên ChainUpdate (data/chainupdate/chainupdate.jsonl).
 Việc 1 (vế sinh như Chương 3): hệ so sánh LLM + lân cận 1-hop (naive, 1.000 mẫu) và pipeline không có bước lọc theo cấu
 trúc (llm_nogate, K = 1, 300 mẫu đầu vì số lệnh gọi lớn).
 Việc 2 (vế sinh xét cả hai chiều của cạnh vừa thêm, KGU_SYMMETRIC_ADD=1): trần (oracle, K = 1, 2, 3) và pipeline có bước

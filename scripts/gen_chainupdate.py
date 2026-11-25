@@ -1,4 +1,4 @@
-"""Sinh bộ dữ liệu tổng hợp KGU-Synth để đo độ phủ và độ chính xác khi tìm thay đổi gián tiếp theo độ sâu.
+"""Sinh bộ dữ liệu tổng hợp ChainUpdate để đo độ phủ và độ chính xác khi tìm thay đổi gián tiếp theo độ sâu.
 
 Không lấy dữ liệu từ nguồn nào: một KG nền hư cấu gồm ba miền (bóng đá, doanh nghiệp, đại học) được dựng từ seed;
 mỗi mẫu là MỘT sự kiện đổi vài fact gốc (thay đổi trực tiếp, bản tin nói thẳng), còn thay đổi gián tiếp là phần chênh
@@ -12,9 +12,9 @@ Nhãn độ sâu của một thay đổi gián tiếp = số tầng luật kể 
 Đầu ra dùng định dạng "KG cho trước" của kgu.data.jsonl (dòng đầu là KG nền, mỗi mẫu chỉ ghi chênh lệch).
 
 Ba lệnh:
-    python scripts/gen_synth.py briefs --out-dir DIR [--chunks 10]     # đề bài cho người viết bản tin
-    python scripts/gen_synth.py check  --texts FILE_OR_DIR              # kiểm bản tin đã viết
-    python scripts/gen_synth.py build  --texts FILE_OR_DIR --out data/synth/kgu_synth.jsonl
+    python scripts/gen_chainupdate.py briefs --out-dir DIR [--chunks 10]     # đề bài cho người viết bản tin
+    python scripts/gen_chainupdate.py check  --texts FILE_OR_DIR              # kiểm bản tin đã viết
+    python scripts/gen_chainupdate.py build  --texts FILE_OR_DIR --out data/chainupdate/chainupdate.jsonl
                                        [--placeholder]                  # ghép bản tin + nhãn vàng thành bộ dữ liệu
 """
 from __future__ import annotations
@@ -908,7 +908,7 @@ def stats(data: dict) -> dict:
             by_depth[f"{op[0]}@{op[-1]}"] += 1
     n_ind = sum(len(r["extra"]["indirect"]) for r in rows)
     return {
-        "name": "KGU-Synth", "seed": SEED, "n": len(rows),
+        "name": "ChainUpdate", "seed": SEED, "n": len(rows),
         "base_triples": len(data["base"]), "base_entities": len({e for h, _, t in data["base"] for e in (h, t)}),
         "relations": len(data["relations"]),
         "direct_ops": sum(len(r["extra"]["direct"]) for r in rows), "indirect_ops": n_ind,
@@ -929,7 +929,7 @@ def main() -> None:
     ap.add_argument("--out-dir", type=Path, help="briefs: thư mục ghi đề bài theo lô")
     ap.add_argument("--chunks", type=int, default=10)
     ap.add_argument("--texts", type=Path, help="check/build: tệp JSONL {idx, text} hoặc thư mục chứa các tệp đó")
-    ap.add_argument("--out", type=Path, default=Path("data/synth/kgu_synth.jsonl"))
+    ap.add_argument("--out", type=Path, default=Path("data/chainupdate/chainupdate.jsonl"))
     ap.add_argument("--placeholder", action="store_true", help="build: dùng các câu của đề bài làm bản tin (chỉ để thử mã)")
     args = ap.parse_args()
     data = generate(args.seed, args.scale)
@@ -963,7 +963,7 @@ def main() -> None:
                 raise SystemExit(f"{len(bad)} bản tin lỗi hoặc thiếu; chạy lệnh check trước")
         args.out.parent.mkdir(parents=True, exist_ok=True)
         head = {"base": [list(tr) for tr in data["base"]], "cumulative": False, "relations": data["relations"],
-                "meta": {"name": "KGU-Synth", "seed": args.seed, "generator": "scripts/gen_synth.py"},
+                "meta": {"name": "ChainUpdate", "seed": args.seed, "generator": "scripts/gen_chainupdate.py"},
                 "entity_types": data["world"].etype}
         with args.out.open("w", encoding="utf8") as f:
             f.write(json.dumps(head, ensure_ascii=False) + "\n")
