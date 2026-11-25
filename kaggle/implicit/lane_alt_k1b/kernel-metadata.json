@@ -1,0 +1,15 @@
+{
+  "id": "hunghoang111445121/kgu-synth-c2",
+  "title": "kgu-synth-c2",
+  "code_file": "kernel.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_internet": true,
+  "dataset_sources": [
+    "hunghoang111445121/llama-server-cuda"
+  ],
+  "competition_sources": [],
+  "kernel_sources": []
+}

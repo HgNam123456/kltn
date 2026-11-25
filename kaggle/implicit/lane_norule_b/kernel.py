@@ -1,4 +1,4 @@
-"""Kernel kgu-norule-b (làn GPU): ChainUpdate, bỏ bước lọc theo cấu trúc ở vế cắt. Một kernel làm trọn chuỗi trên các tin 261 tới 520: K = 1 chỉ các nhóm vế cắt bị bước lọc giữ nguyên, ghép với lượt llm_gate K = 1 đã có để được kết quả lần gọi 1, rồi chạy tiếp lần gọi 2 và 3 từ đó.
+"""Kernel kgu-norule-b (làn GPU): ChainUpdate, bỏ bước lọc theo cấu trúc ở vế cắt. Một kernel làm trọn chuỗi trên các tin 500 tới 520 (21 tin cuối của 521 tin đầu; lúc đẩy kernel chưa có kết quả K = 1 của nửa sau): K = 1 chỉ các nhóm vế cắt bị bước lọc giữ nguyên, ghép với lượt llm_gate K = 1 đã có để được kết quả lần gọi 1, rồi chạy tiếp lần gọi 2 và 3 từ đó.
 Điều phối: kaggle/night/run_lane.py (runner "implicit" → kaggle/implicit/run_implicit.py, IMPLICIT_JOB=norule)."""
 import json
 import os
@@ -11,7 +11,7 @@ os.environ["LANE_STAGES"] = json.dumps([
         "env": {
             "IMPLICIT_JOB": "norule",
             "NORULE_LIMIT": "521",
-            "NORULE_OFFSET": "261"
+            "NORULE_OFFSET": "500"
         }
     }
 ])
