@@ -50,10 +50,29 @@ def effective_max_calls(judge_name: str, max_calls: int) -> int:
     return 1 if judge_name == "naive" else max(1, max_calls)
 
 
-def run_one(ex, extractor, judge, relations: list[str], graph=None, max_calls: int = 1) -> dict:
+def load_seed_call1(path: Path) -> dict[int, list]:
+    """idx → thao tác của lần gọi 1 trong một tệp record (mỗi dòng có idx và judged_ops; thao tác không ghi round thì coi
+    là lần gọi 1). Dùng với --seed-call1 để chạy tiếp các lần gọi 2..K từ kết quả lần gọi 1 đã có."""
+    from kgu.types import Op, OpKind
+    seed: dict[int, list] = {}
+    with path.open(encoding="utf8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            if "error" in rec:
+                continue
+            seed[int(rec["idx"])] = list(dict.fromkeys(
+                Op(OpKind[o["kind"]], o["h"], o["r"], o["t"], source="seed_call1")
+                for o in rec["judged_ops"] if int(o.get("round", 1)) == 1))
+    return seed
+
+
+def run_one(ex, extractor, judge, relations: list[str], graph=None, max_calls: int = 1, seed_ops=None) -> dict:
     """Một ví dụ → record; nếu lỗi (LLM, mạng, tràn ctx...) → record lỗi để lượt chạy không abort."""
     try:
-        return run_example(ex, extractor, judge, relations, graph=graph, max_calls=max_calls).to_record(ex)
+        return run_example(ex, extractor, judge, relations, graph=graph, max_calls=max_calls,
+                           seed_ops=seed_ops).to_record(ex)
     except Exception as e:  # noqa: BLE001 — cố ý: ghi lại mọi lỗi per-example
         return {"idx": ex.idx, "event": ex.event, "error": f"{type(e).__name__}: {e}"}
 
@@ -140,6 +159,9 @@ def main() -> None:
                     help="vế có bước lọc theo cấu trúc: both (mặc định); add = chỉ lọc vế sinh, mọi nhóm của vế cắt tới LLM; "
                          "cut = chỉ lọc vế cắt; cut_rejected = CHỈ gửi LLM các nhóm của vế cắt mà bước lọc giữ nguyên "
                          "(không xét gì khác), để ghép với một lượt có lọc đã chạy")
+    ap.add_argument("--seed-call1", type=Path, default=None,
+                    help="tệp record chứa kết quả lần gọi 1 đã có (idx, judged_ops); lần gọi 1 không hỏi bước xét duyệt mà "
+                         "ghi các thao tác này, rồi chạy tiếp các lần gọi 2..K. Mẫu không có trong tệp bị ghi là lỗi")
     ap.add_argument("--max-calls", type=int, default=1,
                     help="K của Thuật toán khoanh vùng đệ quy (Chương 3): số lần gọi tối đa; lần gọi k khoanh vùng quanh "
                          "các thay đổi vừa ghi ở lần k-1. Mặc định 1 = một lần gọi (các số đã báo cáo); --judge naive luôn 1")
@@ -156,7 +178,7 @@ def main() -> None:
         relations = Vocab.load(args.data_dir).relations
         examples = load_split(args.data_dir, args.split, limit=args.limit)
 
-    examples = examples[args.offset:]
+    seed = load_seed_call1(args.seed_call1) if args.seed_call1 else None
 
     # Mỗi thread một extractor/judge riêng (client riêng): n_calls/n_dropped cộng dồn theo thread, nên
     # hiệu trước/sau trong run_example vẫn đúng cho từng ví dụ khi chạy song song.
@@ -185,15 +207,20 @@ def main() -> None:
 
     def work(i: int) -> dict:
         ex = examples[i]
+        seed_ops = None
+        if seed is not None:
+            if ex.idx not in seed:
+                return {"idx": ex.idx, "event": ex.event, "error": "SeedMissing: không có kết quả lần gọi 1 cho mẫu này"}
+            seed_ops = seed[ex.idx]
         extractor, llm_judge = components()
         judge = OracleJudge(ex.after) if args.judge == "oracle" else llm_judge
         g = base_graph()
         if g is None:
-            return run_one(ex, extractor, judge, relations, max_calls=max_calls)
+            return run_one(ex, extractor, judge, relations, max_calls=max_calls, seed_ops=seed_ops)
         cp = g.checkpoint()
         try:
             given.apply_before(g, i)
-            return run_one(ex, extractor, judge, relations, graph=g, max_calls=max_calls)
+            return run_one(ex, extractor, judge, relations, graph=g, max_calls=max_calls, seed_ops=seed_ops)
         finally:
             g.rollback(cp)
 
@@ -201,7 +228,8 @@ def main() -> None:
     t0 = time.time()
     args.out.parent.mkdir(parents=True, exist_ok=True)
     with args.out.open("w", encoding="utf8") as f, ThreadPoolExecutor(max_workers=max(1, args.workers)) as pool:
-        for rec in tqdm(pool.map(work, range(len(examples))), total=len(examples), desc=f"{args.extractor}+{args.judge}"):
+        todo = range(max(0, args.offset), len(examples))        # --offset: bỏ N mẫu đầu, vẫn giữ đồ thị nền dùng chung
+        for rec in tqdm(pool.map(work, todo), total=len(todo), desc=f"{args.extractor}+{args.judge}"):
             f.write(json.dumps(rec, ensure_ascii=False) + "\n")
             f.flush()
             records.append(rec)
@@ -209,6 +237,8 @@ def main() -> None:
     tag = f"{args.extractor}+{args.judge}" + (f"[batch={args.judge_batch},gate={args.judge_gate}]" if args.judge == "llm" else "")
     if args.judge == "llm" and args.judge_gate_sides != "both":   # tag cũ giữ nguyên khi lọc cả hai vế
         tag += f"[gate_sides={args.judge_gate_sides}]"
+    if args.seed_call1 is not None:
+        tag += "[seed_call1]"
     if args.judge == "naive":
         tag = f"{args.extractor}+naive1hop[max={args.naive_max_triples}]"
     if max_calls != 1:                                          # tag cũ giữ nguyên khi K = 1

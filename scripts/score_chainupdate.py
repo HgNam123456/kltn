@@ -84,6 +84,21 @@ def merge_plus(records: list[dict], extra: list[dict]) -> list[dict]:
     return out
 
 
+def upto_round(records: list[dict], n: int) -> list[dict]:
+    """Kết quả của K = n lấy từ một lượt chạy K lớn hơn: chỉ giữ thao tác, độ phủ và lệnh gọi của các lần gọi 1..n.
+    Đúng vì lần gọi k chỉ phụ thuộc vào các lần gọi trước nó."""
+    out = []
+    for rec in records:
+        if "error" in rec:
+            out.append(rec)
+            continue
+        out.append({**rec,
+                    "judged_ops": [o for o in rec["judged_ops"] if int(o.get("round", 1)) <= n],
+                    "implied": [o for o in rec.get("implied", []) if 0 < int(o["cov"]) <= n],
+                    "rounds": [rd for rd in rec.get("rounds", []) if rd["k"] <= n], "_merged": True})
+    return out
+
+
 def _cell() -> dict:
     return {"gold": 0, "covered": 0, "correct": 0}
 
@@ -191,6 +206,10 @@ def main() -> None:
     ap.add_argument("--by", choices=["family", "domain", "event"], default=None, help="thêm bảng theo nhóm sự kiện")
     ap.add_argument("--first", type=int, default=None, help="chỉ chấm các mẫu có idx < N")
     ap.add_argument("--json", type=Path, default=None, help="ghi kết quả của mọi lượt chạy vào một tệp JSON")
+    ap.add_argument("--write-seed", type=Path, default=None,
+                    help="ghi thao tác lần gọi 1 của lượt chạy đầu tiên (sau khi ghép --plus) ra tệp, dùng cho run_eval --seed-call1")
+    ap.add_argument("--max-round", type=int, default=None,
+                    help="chỉ tính các lần gọi 1..N của mỗi lượt chạy (kết quả của K = N lấy từ lượt K lớn hơn)")
     ap.add_argument("--plus", type=Path, default=None,
                     help="lượt chạy bổ sung (vd lượt cut_rejected) được ghép vào từng lượt chạy theo idx trước khi chấm")
     args = ap.parse_args()
@@ -204,6 +223,15 @@ def main() -> None:
         if extra is not None:
             records = merge_plus(records, extra)
             name += f" + {args.plus.stem}"
+        if args.write_seed is not None and run == args.runs[0]:
+            with args.write_seed.open("w", encoding="utf8", newline="\n") as f:
+                for rec in records:
+                    if "error" not in rec:
+                        ops = [o for o in rec["judged_ops"] if int(o.get("round", 1)) == 1]
+                        f.write(json.dumps({"idx": rec["idx"], "judged_ops": ops}, ensure_ascii=False) + "\n")
+        if args.max_round is not None:
+            records = upto_round(records, args.max_round)
+            name += f" [lần gọi <= {args.max_round}]"
         out[name] = score_run(gold, records, by=args.by)
         print(render(name, out[name]), end="\n\n")
     if args.json:

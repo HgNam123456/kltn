@@ -65,12 +65,16 @@ def _dropped(extractor) -> int:
 
 
 def run_example(ex: Example, extractor: Extractor, judge: Judge | None, relations: list[str],
-                graph: BiTemporalGraph | None = None, max_calls: int = 1) -> PipelineResult:
+                graph: BiTemporalGraph | None = None, max_calls: int = 1,
+                seed_ops: list[Op] | None = None) -> PipelineResult:
     """`graph`: đồ thị ĐÃ ở trạng thái ex.before tại AT_BEFORE (KG nền dùng chung, caller rollback sau); None = dựng mới.
 
     `max_calls` = K, số lần gọi tối đa của thuật toán khoanh vùng đệ quy (Chương 3, Thuật toán alg:localize):
     lần gọi k khoanh vùng quanh O_{k-1} (O_0 = thay đổi trực tiếp đã áp), bước xét duyệt cho O_k, O_k được ghi vào KG
     rồi làm đầu vào của lần gọi k+1; dừng khi O_k rỗng hoặc k > K. K = 1 là hành vi một lần gọi như trước.
+
+    `seed_ops`: O_1 đã có từ một lượt chạy trước với cùng thiết lập. Khi có, lần gọi 1 vẫn khoanh vùng nhưng không hỏi
+    bước xét duyệt mà ghi thẳng các thao tác này; các lần gọi 2..K chạy bình thường.
     """
     calls_before = _calls(extractor, judge)                      # extractor/judge dùng chung qua nhiều ví dụ
     dropped_before = _dropped(extractor)                          # LLMExtractor.n_dropped cũng cộng dồn qua nhiều ví dụ
@@ -107,11 +111,15 @@ def run_example(ex: Example, extractor: Extractor, judge: Judge | None, relation
         merged.add += loc.add
         new_ops: list[Op] = []
         calls_k = _calls(judge)
-        if judge is not None:                                    # [4] bộ phán trên ứng viên của lần gọi k
+        seeded = k == 1 and seed_ops is not None
+        if seeded:                                               # O_1 lấy từ lượt chạy trước: cắt trước, sinh sau như bộ phán
+            ordered = sorted(seed_ops, key=lambda op: op.kind is OpKind.ADD)
+            new_ops = apply_ops(graph, ordered, at=AT_AFTER)
+        elif judge is not None:                                  # [4] bộ phán trên ứng viên của lần gọi k
             ctx = JudgeContext(ex.text, current, loc, graph, AT_AFTER, relations, direct_ops=explicit, call=k)
             new_ops = apply_ops(graph, judge.judge(ctx), at=AT_AFTER)           # [5] ghi O_k
         rounds.append({"k": k, "n_cut_cand": len(loc.cut), "n_add_cand": len(loc.add),
-                       "n_ops": len(new_ops), "n_llm_calls": _calls(judge) - calls_k})
+                       "n_ops": len(new_ops), "n_llm_calls": _calls(judge) - calls_k, **({"seeded": True} if seeded else {})})
         judged += new_ops
         judged_rounds += [k] * len(new_ops)
         written |= {op.triple for op in new_ops}

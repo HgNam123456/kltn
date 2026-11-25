@@ -209,3 +209,16 @@ def test_llm_calls_per_call_sum_to_total():
 
     again = run_example(ex, GoldExplicitExtractor(), judge, RELS, max_calls=3)       # judge dùng chung: chỉ đếm phần của ví dụ
     assert again.n_llm_calls == res.n_llm_calls and [r["n_llm_calls"] for r in again.rounds] == per_call
+
+
+def test_seed_ops_replay_call_one_and_continue_from_call_two():
+    """seed_ops: lần gọi 1 lấy từ lượt chạy trước (không hỏi bộ phán), các lần gọi sau chạy tiếp và cho cùng kết quả."""
+    ex, full = _run(RICH_BEFORE, RICH_AFTER, 3)
+    first = [op for op, k in zip(full.judged_ops, full.judged_rounds) if k == 1]
+    assert first and any(k > 1 for k in full.judged_rounds)             # ví dụ này cần cả lần gọi sau
+    rec = _Recorder(OracleJudge(ex.after))
+    seeded = run_example(ex, GoldExplicitExtractor(), rec, RELS, max_calls=3, seed_ops=list(reversed(first)))
+    assert [c.call for c in rec.ctxs] == [k for k in (2, 3) if k <= len(full.rounds)]   # không hỏi bộ phán ở lần gọi 1
+    assert seeded.rounds[0]["seeded"] is True and seeded.rounds[0]["n_llm_calls"] == 0
+    assert set(seeded.judged_ops) == set(full.judged_ops) and seeded.pred_after == full.pred_after
+    assert sorted(zip(map(str, seeded.judged_ops), seeded.judged_rounds)) == sorted(zip(map(str, full.judged_ops), full.judged_rounds))
