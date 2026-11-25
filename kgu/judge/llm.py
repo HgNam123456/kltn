@@ -211,11 +211,14 @@ class LLMJudge:
     """
 
     def __init__(self, client: LLMClient, n_examples: int = 2, batch_size: int | None = 1,
-                 gate: float | None = None) -> None:
+                 gate: float | None = None, gate_sides: str = "both") -> None:
+        if gate_sides not in ("both", "cut", "add", "cut_rejected"):
+            raise ValueError(f"gate_sides phải là both, cut, add hoặc cut_rejected, không phải {gate_sides!r}")
         self.client = client
         self.n_examples = n_examples
         self.batch_size = batch_size
         self.gate = gate                     # phương án C (lai): ngưỡng đồng xuất hiện; None = hỏi LLM mọi mẫu
+        self.gate_sides = gate_sides         # vế có bước lọc: "both"; "add" = mọi mẫu cắt tới LLM; "cut" = mọi mẫu thêm tới LLM
         self.n_gated = 0                     # số mẫu bị cổng cấu trúc KEEP/bỏ qua mà không hỏi LLM
         self.n_off_menu = 0                  # số mục add LLM trả về ngoài "lựa chọn hợp lệ" (đo độ tuân thủ prompt)
         self._add_schemas: dict[tuple[str, ...], type[BaseModel]] = {}
@@ -502,11 +505,14 @@ class LLMJudge:
           (theo số cạnh KG-trước) → LLM phán; không → bỏ qua."""
         if self.gate is None:
             return cut, add
-        keep_cut = [p for p in cut if self._cut_dependency(p, ctx) >= self.gate]
+        if self.gate_sides == "cut_rejected":   # chỉ các mẫu cắt mà bước lọc giữ nguyên; kết quả ghép với lượt có lọc đã chạy
+            return [p for p in cut if self._cut_dependency(p, ctx) < self.gate], []
+        keep_cut = cut if self.gate_sides == "add" else [p for p in cut if self._cut_dependency(p, ctx) >= self.gate]
         # thêm: cần bằng chứng "tương tự" VÀ subject không phải bên TIẾP NHẬN rõ ràng (bên nhiều cạnh không thừa hưởng
         # hàng xóm của bên mới; tỉ lệ 100% ở đó chỉ phản chiếu phép thừa hưởng chiều ngược — LLM 4B vẫn lấy ~1/5 số mẫu này)
-        keep_add = [p for p in add if any("%" in a for a in self._analogy(p, ctx))
-                    and (self._role(p, ctx) or (None, 0, 0, "unclear"))[3] != "host"]
+        keep_add = add if self.gate_sides == "cut" else [
+            p for p in add if any("%" in a for a in self._analogy(p, ctx))
+            and (self._role(p, ctx) or (None, 0, 0, "unclear"))[3] != "host"]
         self.n_gated += (len(cut) - len(keep_cut)) + (len(add) - len(keep_add))
         return keep_cut, keep_add
 

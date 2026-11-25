@@ -29,12 +29,13 @@ def build_extractor(name: str, relations: list[str]):
     raise SystemExit(f"unknown extractor {name}")
 
 
-def build_llm_judge(name: str, batch: int | None = 1, gate: float | None = None, naive_max_triples: int = 80):
+def build_llm_judge(name: str, batch: int | None = 1, gate: float | None = None, naive_max_triples: int = 80,
+                    gate_sides: str = "both"):
     """Judge LLM tạo MỘT lần (dùng chung client, đếm n_calls liên tục); oracle tạo per-example."""
     if name == "llm":
         from kgu.judge.llm import LLMJudge
         from kgu.llm import client_from_env
-        return LLMJudge(client_from_env(), batch_size=batch, gate=gate)
+        return LLMJudge(client_from_env(), batch_size=batch, gate=gate, gate_sides=gate_sides)
     if name == "naive":                                # hệ so sánh: LLM tự quyết trên triple 1 bước, không khoanh vùng
         from kgu.judge.naive import NaiveOneHopJudge
         from kgu.llm import client_from_env
@@ -133,6 +134,10 @@ def main() -> None:
     ap.add_argument("--judge-batch", type=int, default=1, help="mẫu / lệnh gọi LLM judge; 0 = cả pha một lệnh gọi")
     ap.add_argument("--judge-gate", type=float, default=None,
                     help="phương án C: ngưỡng đồng xuất hiện để cổng cấu trúc lọc mẫu trước LLM (vd 0.5); bỏ = LLM thuần")
+    ap.add_argument("--judge-gate-sides", choices=["both", "cut", "add", "cut_rejected"], default="both",
+                    help="vế có bước lọc theo cấu trúc: both (mặc định); add = chỉ lọc vế sinh, mọi nhóm của vế cắt tới LLM; "
+                         "cut = chỉ lọc vế cắt; cut_rejected = CHỈ gửi LLM các nhóm của vế cắt mà bước lọc giữ nguyên "
+                         "(không xét gì khác), để ghép với một lượt có lọc đã chạy")
     ap.add_argument("--max-calls", type=int, default=1,
                     help="K của Thuật toán khoanh vùng đệ quy (Chương 3): số lần gọi tối đa; lần gọi k khoanh vùng quanh "
                          "các thay đổi vừa ghi ở lần k-1. Mặc định 1 = một lần gọi (các số đã báo cáo); --judge naive luôn 1")
@@ -158,7 +163,7 @@ def main() -> None:
         if not hasattr(local, "extractor"):
             local.extractor = build_extractor(args.extractor, relations)
             local.judge = build_llm_judge(args.judge, batch=args.judge_batch or None, gate=args.judge_gate,
-                                          naive_max_triples=args.naive_max_triples)
+                                          naive_max_triples=args.naive_max_triples, gate_sides=args.judge_gate_sides)
             if local.judge is not None:
                 judges.append(local.judge)
         return local.extractor, local.judge
@@ -198,6 +203,8 @@ def main() -> None:
             records.append(rec)
 
     tag = f"{args.extractor}+{args.judge}" + (f"[batch={args.judge_batch},gate={args.judge_gate}]" if args.judge == "llm" else "")
+    if args.judge == "llm" and args.judge_gate_sides != "both":   # tag cũ giữ nguyên khi lọc cả hai vế
+        tag += f"[gate_sides={args.judge_gate_sides}]"
     if args.judge == "naive":
         tag = f"{args.extractor}+naive1hop[max={args.naive_max_triples}]"
     if max_calls != 1:                                          # tag cũ giữ nguyên khi K = 1

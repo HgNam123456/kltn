@@ -218,6 +218,20 @@ def test_structural_gate_skips_independent_patterns_without_llm():
     assert Op(OpKind.INVALIDATE, "Messi", TEAM, "Pedri") in ops and Op(OpKind.ADD, "Messi", TEAM, "Lautaro") in ops
     assert not any(o.r == PLAYS for o in ops)
 
+    # gate_sides="add": bước lọc chỉ áp ở vế sinh → mẫu plays_for của vế cắt cũng tới LLM, mẫu HLV của vế sinh vẫn bị chặn
+    client = FakeLLMClient([{"invalidate": []}] * 3 + [{"add": []}])
+    j = LLMJudge(client, gate=0.5, gate_sides="add")
+    j.judge(ctx)
+    assert client.n_calls == 4 and j.n_gated == 1
+    assert any(u.count(PLAYS + " Barca") > 0 for _, u in client.calls)
+    # gate_sides="cut": ngược lại, mọi mẫu của vế sinh tới LLM
+    keep_cut, keep_add = LLMJudge(FakeLLMClient([]), gate=0.5, gate_sides="cut")._gated(cut, add, ctx)
+    assert len(keep_cut) == 2 and len(keep_add) == 2
+    # gate_sides="cut_rejected": chỉ mẫu cắt mà bước lọc giữ nguyên (plays_for) tới LLM; không mẫu thêm nào
+    client = FakeLLMClient([{"invalidate": [0]}])
+    ops = LLMJudge(client, gate=0.5, gate_sides="cut_rejected").judge(ctx)
+    assert client.n_calls == 1 and ops and all(o.kind == OpKind.INVALIDATE and o.r == PLAYS for o in ops)
+
 
 def test_global_rule_fallback_when_other_has_no_sibling():
     """`other` chưa có S cùng vai → bằng chứng đo trên TOÀN KG: mọi cặp (A, acq, B) đã có cho thấy B thừa hưởng

@@ -261,6 +261,12 @@ elif JOB == "synth":
     naive_max = os.environ.get("IMPLICIT_NAIVE_MAX", "80")
     for cfg, judge, max_h, cfg_ks in (("none", "--judge none", 0.3, [1]), ("oracle", "--judge oracle", 0.5, ks_oracle),
                                       ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 3.0 * scale, ks),
+                                      # bước lọc chỉ ở vế sinh: nhóm của vế cắt mà bước lọc vẫn giữ nguyên nay cũng tới LLM
+                                      ("llm_gate_add", "--judge llm --judge-batch 1 --judge-gate 0.5 --judge-gate-sides add",
+                                       3.0 * scale, ks),
+                                      # CHỈ các nhóm của vế cắt mà bước lọc giữ nguyên (K = 1): ghép với lượt llm_gate K = 1 đã có
+                                      ("llm_cut_rejected", "--judge llm --judge-batch 1 --judge-gate 0.5 "
+                                       "--judge-gate-sides cut_rejected", 3.0 * scale, [1]),
                                       ("llm_nogate", "--judge llm --judge-batch 1", 3.0 * scale, ks_nogate),
                                       ("naive", f"--judge naive --naive-max-triples {naive_max}", 1.5 * scale, [1])):
         if cfg not in cfgs:
