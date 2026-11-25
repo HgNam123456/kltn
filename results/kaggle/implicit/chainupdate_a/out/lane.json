@@ -1,0 +1,21 @@
+{
+ "stages": [
+  {
+   "name": "synth",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "synth",
+    "IMPLICIT_SYNTH_SYM": "0",
+    "IMPLICIT_SYNTH_CFGS": "none,oracle,llm_gate",
+    "IMPLICIT_SYNTH_K": "1,2,3",
+    "IMPLICIT_SYNTH_K_ORACLE": "1,2,3"
+   },
+   "commit": "752c2751340940a539def3370673f57b1b5cdd37",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 431.1
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 431.1
+}

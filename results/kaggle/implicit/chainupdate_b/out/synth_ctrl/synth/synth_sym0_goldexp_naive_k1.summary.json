@@ -1,0 +1,35 @@
+{
+  "precision": 0.9997501927810708,
+  "recall": 0.9995342659936735,
+  "f1": 0.999642217727106,
+  "add_acc": 0.30781078107810783,
+  "del_acc": 0.5938311100380274,
+  "config": "gold_explicit+naive1hop[max=80]",
+  "split": "kgu_synth",
+  "n": 1000,
+  "n_scored": 1000,
+  "errors": 0,
+  "coverage": 0.8389558476167404,
+  "avg_cut_cand": 25.805,
+  "avg_add_cand": 22.912,
+  "judged_ratio": 0.37028142126978264,
+  "llm_calls": 968,
+  "seconds": 2905.5,
+  "max_calls": 1,
+  "llm_calls_by_call": [
+    968
+  ],
+  "coverage_by_call": [
+    0.8389558476167404
+  ],
+  "n_gated": 0,
+  "n_off_menu": 0,
+  "naive_dropped": 531,
+  "naive_drop_reasons": {
+    "already_active": 526,
+    "unknown_entity": 5
+  },
+  "naive_errors": 0,
+  "naive_avg_listed": 48.92842105263158,
+  "naive_truncated": 238
+}

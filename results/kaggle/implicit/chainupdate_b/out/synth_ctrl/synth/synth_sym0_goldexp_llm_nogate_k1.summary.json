@@ -1,0 +1,27 @@
+{
+  "precision": 0.9997750512010702,
+  "recall": 0.999786346664138,
+  "f1": 0.9997806989007002,
+  "add_acc": 0.7619301994301995,
+  "del_acc": 0.7407337008173351,
+  "config": "gold_explicit+llm[batch=1,gate=None]",
+  "split": "kgu_synth",
+  "n": 300,
+  "n_scored": 300,
+  "errors": 0,
+  "coverage": 0.8114809454896286,
+  "avg_cut_cand": 26.73,
+  "avg_add_cand": 24.80666666666667,
+  "judged_ratio": 0.6022249531078196,
+  "llm_calls": 2880,
+  "seconds": 2537.8,
+  "max_calls": 1,
+  "llm_calls_by_call": [
+    2880
+  ],
+  "coverage_by_call": [
+    0.8114809454896286
+  ],
+  "n_gated": 0,
+  "n_off_menu": 0
+}

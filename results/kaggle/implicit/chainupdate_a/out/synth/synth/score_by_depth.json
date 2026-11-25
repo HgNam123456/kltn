@@ -1,0 +1,2126 @@
+{
+  "synth_sym0_goldexp_llm_gate_k1": {
+    "n": 1000,
+    "errors": 0,
+    "exact": 69,
+    "exact_rate": 0.069,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 15517,
+        "covered": 13607,
+        "correct": 13501,
+        "coverage": 0.8769,
+        "recall": 0.8701,
+        "covered_at_call": {
+          "1": 13607
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 1292,
+        "covered": 0,
+        "correct": 0,
+        "coverage": 0.0,
+        "recall": 0.0,
+        "covered_at_call": {}
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 496,
+        "covered": 0,
+        "correct": 0,
+        "coverage": 0.0,
+        "recall": 0.0,
+        "covered_at_call": {}
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 13977,
+        "covered": 13977,
+        "correct": 9757,
+        "coverage": 1.0,
+        "recall": 0.6981,
+        "covered_at_call": {
+          "1": 13977
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 1263,
+        "covered": 74,
+        "correct": 0,
+        "coverage": 0.0586,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 74
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 477,
+        "covered": 46,
+        "correct": 0,
+        "coverage": 0.0964,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 46
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 17305,
+        "covered": 13607,
+        "correct": 13501,
+        "wrong": 1325,
+        "coverage": 0.7863,
+        "recall": 0.7802,
+        "precision": 0.9106,
+        "correct_by_call": {
+          "1": 13501
+        },
+        "wrong_by_call": {
+          "1": 1325
+        }
+      },
+      "INVALIDATE": {
+        "gold": 15717,
+        "covered": 14097,
+        "correct": 9757,
+        "wrong": 0,
+        "coverage": 0.8969,
+        "recall": 0.6208,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 9757
+        },
+        "wrong_by_call": {}
+      }
+    },
+    "llm_calls": 3138,
+    "llm_calls_by_call": {
+      "1": 3138
+    },
+    "groups": {
+      "c_dept": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1330,
+        "covered": 312,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.2346,
+        "recall": 0.0,
+        "precision": null
+      },
+      "c_head": {
+        "n": 50,
+        "exact": 0,
+        "gold": 862,
+        "covered": 695,
+        "correct": 336,
+        "wrong": 0,
+        "coverage": 0.8063,
+        "recall": 0.3898,
+        "precision": 1.0
+      },
+      "c_hire": {
+        "n": 45,
+        "exact": 0,
+        "gold": 783,
+        "covered": 693,
+        "correct": 691,
+        "wrong": 0,
+        "coverage": 0.8851,
+        "recall": 0.8825,
+        "precision": 1.0
+      },
+      "c_hq": {
+        "n": 30,
+        "exact": 0,
+        "gold": 2466,
+        "covered": 874,
+        "correct": 0,
+        "wrong": 887,
+        "coverage": 0.3544,
+        "recall": 0.0,
+        "precision": 0.0
+      },
+      "c_leave": {
+        "n": 35,
+        "exact": 0,
+        "gold": 577,
+        "covered": 507,
+        "correct": 438,
+        "wrong": 0,
+        "coverage": 0.8787,
+        "recall": 0.7591,
+        "precision": 1.0
+      },
+      "c_move": {
+        "n": 140,
+        "exact": 2,
+        "gold": 4866,
+        "covered": 4596,
+        "correct": 4243,
+        "wrong": 0,
+        "coverage": 0.9445,
+        "recall": 0.872,
+        "precision": 1.0
+      },
+      "f_coach": {
+        "n": 60,
+        "exact": 8,
+        "gold": 1348,
+        "covered": 1347,
+        "correct": 640,
+        "wrong": 0,
+        "coverage": 0.9993,
+        "recall": 0.4748,
+        "precision": 1.0
+      },
+      "f_league": {
+        "n": 30,
+        "exact": 0,
+        "gold": 814,
+        "covered": 407,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.0,
+        "precision": null
+      },
+      "f_release": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1142,
+        "covered": 1102,
+        "correct": 1024,
+        "wrong": 0,
+        "coverage": 0.965,
+        "recall": 0.8967,
+        "precision": 1.0
+      },
+      "f_sign": {
+        "n": 50,
+        "exact": 0,
+        "gold": 1513,
+        "covered": 1461,
+        "correct": 1434,
+        "wrong": 72,
+        "coverage": 0.9656,
+        "recall": 0.9478,
+        "precision": 0.9522
+      },
+      "f_transfer": {
+        "n": 170,
+        "exact": 5,
+        "gold": 10859,
+        "covered": 10693,
+        "correct": 10337,
+        "wrong": 318,
+        "coverage": 0.9847,
+        "recall": 0.9519,
+        "precision": 0.9702
+      },
+      "no_change": {
+        "n": 50,
+        "exact": 50,
+        "gold": 0,
+        "covered": 0,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": null,
+        "recall": null,
+        "precision": null
+      },
+      "u_director": {
+        "n": 40,
+        "exact": 0,
+        "gold": 639,
+        "covered": 497,
+        "correct": 218,
+        "wrong": 0,
+        "coverage": 0.7778,
+        "recall": 0.3412,
+        "precision": 1.0
+      },
+      "u_join": {
+        "n": 35,
+        "exact": 0,
+        "gold": 564,
+        "covered": 490,
+        "correct": 477,
+        "wrong": 24,
+        "coverage": 0.8688,
+        "recall": 0.8457,
+        "precision": 0.9521
+      },
+      "u_lab": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1242,
+        "covered": 296,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.2383,
+        "recall": 0.0,
+        "precision": null
+      },
+      "u_leave": {
+        "n": 25,
+        "exact": 0,
+        "gold": 363,
+        "covered": 313,
+        "correct": 264,
+        "wrong": 0,
+        "coverage": 0.8623,
+        "recall": 0.7273,
+        "precision": 1.0
+      },
+      "u_move": {
+        "n": 120,
+        "exact": 4,
+        "gold": 3654,
+        "covered": 3421,
+        "correct": 3156,
+        "wrong": 24,
+        "coverage": 0.9362,
+        "recall": 0.8637,
+        "precision": 0.9925
+      }
+    }
+  },
+  "synth_sym0_goldexp_llm_gate_k2": {
+    "n": 709,
+    "errors": 1,
+    "exact": 121,
+    "exact_rate": 0.1707,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 11186,
+        "covered": 9721,
+        "correct": 9627,
+        "coverage": 0.869,
+        "recall": 0.8606,
+        "covered_at_call": {
+          "1": 9721
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 1014,
+        "covered": 334,
+        "correct": 316,
+        "coverage": 0.3294,
+        "recall": 0.3116,
+        "covered_at_call": {
+          "2": 334
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 357,
+        "covered": 148,
+        "correct": 145,
+        "coverage": 0.4146,
+        "recall": 0.4062,
+        "covered_at_call": {
+          "2": 148
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 10070,
+        "covered": 10070,
+        "correct": 6985,
+        "coverage": 1.0,
+        "recall": 0.6936,
+        "covered_at_call": {
+          "1": 10070
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 996,
+        "covered": 279,
+        "correct": 0,
+        "coverage": 0.2801,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 54,
+          "2": 225
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 343,
+        "covered": 132,
+        "correct": 0,
+        "coverage": 0.3848,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 34,
+          "2": 98
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 12557,
+        "covered": 10203,
+        "correct": 10088,
+        "wrong": 7560,
+        "coverage": 0.8125,
+        "recall": 0.8034,
+        "precision": 0.5716,
+        "correct_by_call": {
+          "1": 9627,
+          "2": 461
+        },
+        "wrong_by_call": {
+          "1": 977,
+          "2": 6583
+        }
+      },
+      "INVALIDATE": {
+        "gold": 11409,
+        "covered": 10481,
+        "correct": 6985,
+        "wrong": 0,
+        "coverage": 0.9187,
+        "recall": 0.6122,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 6985
+        },
+        "wrong_by_call": {}
+      }
+    },
+    "llm_calls": 7616,
+    "llm_calls_by_call": {
+      "1": 2242,
+      "2": 5374
+    },
+    "groups": {
+      "c_dept": {
+        "n": 27,
+        "exact": 0,
+        "gold": 876,
+        "covered": 206,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.2352,
+        "recall": 0.0,
+        "precision": null
+      },
+      "c_head": {
+        "n": 34,
+        "exact": 0,
+        "gold": 587,
+        "covered": 500,
+        "correct": 241,
+        "wrong": 0,
+        "coverage": 0.8518,
+        "recall": 0.4106,
+        "precision": 1.0
+      },
+      "c_hire": {
+        "n": 36,
+        "exact": 34,
+        "gold": 624,
+        "covered": 623,
+        "correct": 621,
+        "wrong": 0,
+        "coverage": 0.9984,
+        "recall": 0.9952,
+        "precision": 1.0
+      },
+      "c_hq": {
+        "n": 25,
+        "exact": 0,
+        "gold": 2202,
+        "covered": 742,
+        "correct": 0,
+        "wrong": 661,
+        "coverage": 0.337,
+        "recall": 0.0,
+        "precision": 0.0
+      },
+      "c_leave": {
+        "n": 27,
+        "exact": 0,
+        "gold": 441,
+        "covered": 441,
+        "correct": 334,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 0.7574,
+        "precision": 1.0
+      },
+      "c_move": {
+        "n": 95,
+        "exact": 1,
+        "gold": 3427,
+        "covered": 3424,
+        "correct": 3083,
+        "wrong": 3,
+        "coverage": 0.9991,
+        "recall": 0.8996,
+        "precision": 0.999
+      },
+      "f_coach": {
+        "n": 37,
+        "exact": 5,
+        "gold": 834,
+        "covered": 833,
+        "correct": 399,
+        "wrong": 0,
+        "coverage": 0.9988,
+        "recall": 0.4784,
+        "precision": 1.0
+      },
+      "f_league": {
+        "n": 22,
+        "exact": 0,
+        "gold": 598,
+        "covered": 299,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.0,
+        "precision": null
+      },
+      "f_release": {
+        "n": 30,
+        "exact": 0,
+        "gold": 857,
+        "covered": 857,
+        "correct": 768,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 0.8961,
+        "precision": 1.0
+      },
+      "f_sign": {
+        "n": 34,
+        "exact": 24,
+        "gold": 1033,
+        "covered": 1030,
+        "correct": 1004,
+        "wrong": 535,
+        "coverage": 0.9971,
+        "recall": 0.9719,
+        "precision": 0.6524
+      },
+      "f_transfer": {
+        "n": 126,
+        "exact": 4,
+        "gold": 7965,
+        "covered": 7965,
+        "correct": 7613,
+        "wrong": 6318,
+        "coverage": 1.0,
+        "recall": 0.9558,
+        "precision": 0.5465
+      },
+      "no_change": {
+        "n": 31,
+        "exact": 31,
+        "gold": 0,
+        "covered": 0,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": null,
+        "recall": null,
+        "precision": null
+      },
+      "u_director": {
+        "n": 28,
+        "exact": 0,
+        "gold": 462,
+        "covered": 382,
+        "correct": 166,
+        "wrong": 0,
+        "coverage": 0.8268,
+        "recall": 0.3593,
+        "precision": 1.0
+      },
+      "u_join": {
+        "n": 26,
+        "exact": 20,
+        "gold": 420,
+        "covered": 416,
+        "correct": 406,
+        "wrong": 16,
+        "coverage": 0.9905,
+        "recall": 0.9667,
+        "precision": 0.9621
+      },
+      "u_lab": {
+        "n": 28,
+        "exact": 0,
+        "gold": 868,
+        "covered": 201,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.2316,
+        "recall": 0.0,
+        "precision": null
+      },
+      "u_leave": {
+        "n": 19,
+        "exact": 0,
+        "gold": 269,
+        "covered": 269,
+        "correct": 194,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 0.7212,
+        "precision": 1.0
+      },
+      "u_move": {
+        "n": 84,
+        "exact": 2,
+        "gold": 2503,
+        "covered": 2496,
+        "correct": 2244,
+        "wrong": 27,
+        "coverage": 0.9972,
+        "recall": 0.8965,
+        "precision": 0.9881
+      }
+    }
+  },
+  "synth_sym0_goldexp_llm_gate_k3": {
+    "n": 521,
+    "errors": 0,
+    "exact": 73,
+    "exact_rate": 0.1401,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 7934,
+        "covered": 6739,
+        "correct": 6702,
+        "coverage": 0.8494,
+        "recall": 0.8447,
+        "covered_at_call": {
+          "1": 6739
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 810,
+        "covered": 232,
+        "correct": 221,
+        "coverage": 0.2864,
+        "recall": 0.2728,
+        "covered_at_call": {
+          "2": 232
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 271,
+        "covered": 127,
+        "correct": 123,
+        "coverage": 0.4686,
+        "recall": 0.4539,
+        "covered_at_call": {
+          "2": 103,
+          "3": 24
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 7432,
+        "covered": 7432,
+        "correct": 5024,
+        "coverage": 1.0,
+        "recall": 0.676,
+        "covered_at_call": {
+          "1": 7432
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 811,
+        "covered": 207,
+        "correct": 0,
+        "coverage": 0.2552,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 37,
+          "2": 170
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 270,
+        "covered": 101,
+        "correct": 0,
+        "coverage": 0.3741,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 24,
+          "2": 77
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 9015,
+        "covered": 7098,
+        "correct": 7046,
+        "wrong": 7758,
+        "coverage": 0.7874,
+        "recall": 0.7816,
+        "precision": 0.476,
+        "correct_by_call": {
+          "1": 6702,
+          "2": 320,
+          "3": 24
+        },
+        "wrong_by_call": {
+          "1": 757,
+          "2": 4862,
+          "3": 2139
+        }
+      },
+      "INVALIDATE": {
+        "gold": 8513,
+        "covered": 7740,
+        "correct": 5024,
+        "wrong": 0,
+        "coverage": 0.9092,
+        "recall": 0.5902,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 5024
+        },
+        "wrong_by_call": {}
+      }
+    },
+    "llm_calls": 7501,
+    "llm_calls_by_call": {
+      "1": 1591,
+      "2": 3738,
+      "3": 2172
+    },
+    "groups": {
+      "c_dept": {
+        "n": 19,
+        "exact": 0,
+        "gold": 662,
+        "covered": 148,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.2236,
+        "recall": 0.0,
+        "precision": null
+      },
+      "c_head": {
+        "n": 27,
+        "exact": 1,
+        "gold": 466,
+        "covered": 410,
+        "correct": 215,
+        "wrong": 2,
+        "coverage": 0.8798,
+        "recall": 0.4614,
+        "precision": 0.9908
+      },
+      "c_hire": {
+        "n": 22,
+        "exact": 17,
+        "gold": 367,
+        "covered": 366,
+        "correct": 363,
+        "wrong": 2,
+        "coverage": 0.9973,
+        "recall": 0.9891,
+        "precision": 0.9945
+      },
+      "c_hq": {
+        "n": 22,
+        "exact": 0,
+        "gold": 1926,
+        "covered": 637,
+        "correct": 0,
+        "wrong": 517,
+        "coverage": 0.3307,
+        "recall": 0.0,
+        "precision": 0.0
+      },
+      "c_leave": {
+        "n": 24,
+        "exact": 0,
+        "gold": 391,
+        "covered": 391,
+        "correct": 296,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 0.757,
+        "precision": 1.0
+      },
+      "c_move": {
+        "n": 60,
+        "exact": 1,
+        "gold": 2182,
+        "covered": 2179,
+        "correct": 1963,
+        "wrong": 7,
+        "coverage": 0.9986,
+        "recall": 0.8996,
+        "precision": 0.9964
+      },
+      "f_coach": {
+        "n": 31,
+        "exact": 5,
+        "gold": 676,
+        "covered": 675,
+        "correct": 320,
+        "wrong": 0,
+        "coverage": 0.9985,
+        "recall": 0.4734,
+        "precision": 1.0
+      },
+      "f_league": {
+        "n": 17,
+        "exact": 0,
+        "gold": 470,
+        "covered": 235,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.0,
+        "precision": null
+      },
+      "f_release": {
+        "n": 24,
+        "exact": 0,
+        "gold": 685,
+        "covered": 685,
+        "correct": 614,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 0.8964,
+        "precision": 1.0
+      },
+      "f_sign": {
+        "n": 22,
+        "exact": 10,
+        "gold": 673,
+        "covered": 673,
+        "correct": 671,
+        "wrong": 549,
+        "coverage": 1.0,
+        "recall": 0.997,
+        "precision": 0.55
+      },
+      "f_transfer": {
+        "n": 89,
+        "exact": 4,
+        "gold": 5543,
+        "covered": 5543,
+        "correct": 5307,
+        "wrong": 6631,
+        "coverage": 1.0,
+        "recall": 0.9574,
+        "precision": 0.4445
+      },
+      "no_change": {
+        "n": 22,
+        "exact": 22,
+        "gold": 0,
+        "covered": 0,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": null,
+        "recall": null,
+        "precision": null
+      },
+      "u_director": {
+        "n": 19,
+        "exact": 0,
+        "gold": 329,
+        "covered": 282,
+        "correct": 129,
+        "wrong": 1,
+        "coverage": 0.8571,
+        "recall": 0.3921,
+        "precision": 0.9923
+      },
+      "u_join": {
+        "n": 19,
+        "exact": 12,
+        "gold": 312,
+        "covered": 309,
+        "correct": 298,
+        "wrong": 11,
+        "coverage": 0.9904,
+        "recall": 0.9551,
+        "precision": 0.9644
+      },
+      "u_lab": {
+        "n": 23,
+        "exact": 0,
+        "gold": 696,
+        "covered": 161,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.2313,
+        "recall": 0.0,
+        "precision": null
+      },
+      "u_leave": {
+        "n": 15,
+        "exact": 0,
+        "gold": 209,
+        "covered": 209,
+        "correct": 150,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 0.7177,
+        "precision": 1.0
+      },
+      "u_move": {
+        "n": 66,
+        "exact": 1,
+        "gold": 1941,
+        "covered": 1935,
+        "correct": 1744,
+        "wrong": 38,
+        "coverage": 0.9969,
+        "recall": 0.8985,
+        "precision": 0.9787
+      }
+    }
+  },
+  "synth_sym0_goldexp_none_k1": {
+    "n": 1000,
+    "errors": 0,
+    "exact": 50,
+    "exact_rate": 0.05,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 15517,
+        "covered": 13607,
+        "correct": 0,
+        "coverage": 0.8769,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 13607
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 1292,
+        "covered": 0,
+        "correct": 0,
+        "coverage": 0.0,
+        "recall": 0.0,
+        "covered_at_call": {}
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 496,
+        "covered": 0,
+        "correct": 0,
+        "coverage": 0.0,
+        "recall": 0.0,
+        "covered_at_call": {}
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 13977,
+        "covered": 13977,
+        "correct": 0,
+        "coverage": 1.0,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 13977
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 1263,
+        "covered": 74,
+        "correct": 0,
+        "coverage": 0.0586,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 74
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 477,
+        "covered": 46,
+        "correct": 0,
+        "coverage": 0.0964,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 46
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 17305,
+        "covered": 13607,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.7863,
+        "recall": 0.0,
+        "precision": null,
+        "correct_by_call": {},
+        "wrong_by_call": {}
+      },
+      "INVALIDATE": {
+        "gold": 15717,
+        "covered": 14097,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.8969,
+        "recall": 0.0,
+        "precision": null,
+        "correct_by_call": {},
+        "wrong_by_call": {}
+      }
+    },
+    "llm_calls": 0,
+    "llm_calls_by_call": {
+      "1": 0
+    },
+    "groups": {
+      "c_dept": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1330,
+        "covered": 312,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.2346,
+        "recall": 0.0,
+        "precision": null
+      },
+      "c_head": {
+        "n": 50,
+        "exact": 0,
+        "gold": 862,
+        "covered": 695,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.8063,
+        "recall": 0.0,
+        "precision": null
+      },
+      "c_hire": {
+        "n": 45,
+        "exact": 0,
+        "gold": 783,
+        "covered": 693,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.8851,
+        "recall": 0.0,
+        "precision": null
+      },
+      "c_hq": {
+        "n": 30,
+        "exact": 0,
+        "gold": 2466,
+        "covered": 874,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.3544,
+        "recall": 0.0,
+        "precision": null
+      },
+      "c_leave": {
+        "n": 35,
+        "exact": 0,
+        "gold": 577,
+        "covered": 507,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.8787,
+        "recall": 0.0,
+        "precision": null
+      },
+      "c_move": {
+        "n": 140,
+        "exact": 0,
+        "gold": 4866,
+        "covered": 4596,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.9445,
+        "recall": 0.0,
+        "precision": null
+      },
+      "f_coach": {
+        "n": 60,
+        "exact": 0,
+        "gold": 1348,
+        "covered": 1347,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.9993,
+        "recall": 0.0,
+        "precision": null
+      },
+      "f_league": {
+        "n": 30,
+        "exact": 0,
+        "gold": 814,
+        "covered": 407,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.0,
+        "precision": null
+      },
+      "f_release": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1142,
+        "covered": 1102,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.965,
+        "recall": 0.0,
+        "precision": null
+      },
+      "f_sign": {
+        "n": 50,
+        "exact": 0,
+        "gold": 1513,
+        "covered": 1461,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.9656,
+        "recall": 0.0,
+        "precision": null
+      },
+      "f_transfer": {
+        "n": 170,
+        "exact": 0,
+        "gold": 10859,
+        "covered": 10693,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.9847,
+        "recall": 0.0,
+        "precision": null
+      },
+      "no_change": {
+        "n": 50,
+        "exact": 50,
+        "gold": 0,
+        "covered": 0,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": null,
+        "recall": null,
+        "precision": null
+      },
+      "u_director": {
+        "n": 40,
+        "exact": 0,
+        "gold": 639,
+        "covered": 497,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.7778,
+        "recall": 0.0,
+        "precision": null
+      },
+      "u_join": {
+        "n": 35,
+        "exact": 0,
+        "gold": 564,
+        "covered": 490,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.8688,
+        "recall": 0.0,
+        "precision": null
+      },
+      "u_lab": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1242,
+        "covered": 296,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.2383,
+        "recall": 0.0,
+        "precision": null
+      },
+      "u_leave": {
+        "n": 25,
+        "exact": 0,
+        "gold": 363,
+        "covered": 313,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.8623,
+        "recall": 0.0,
+        "precision": null
+      },
+      "u_move": {
+        "n": 120,
+        "exact": 0,
+        "gold": 3654,
+        "covered": 3421,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": 0.9362,
+        "recall": 0.0,
+        "precision": null
+      }
+    }
+  },
+  "synth_sym0_goldexp_oracle_k1": {
+    "n": 1000,
+    "errors": 0,
+    "exact": 306,
+    "exact_rate": 0.306,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 15517,
+        "covered": 13607,
+        "correct": 13607,
+        "coverage": 0.8769,
+        "recall": 0.8769,
+        "covered_at_call": {
+          "1": 13607
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 1292,
+        "covered": 0,
+        "correct": 0,
+        "coverage": 0.0,
+        "recall": 0.0,
+        "covered_at_call": {}
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 496,
+        "covered": 0,
+        "correct": 0,
+        "coverage": 0.0,
+        "recall": 0.0,
+        "covered_at_call": {}
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 13977,
+        "covered": 13977,
+        "correct": 13977,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "covered_at_call": {
+          "1": 13977
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 1263,
+        "covered": 74,
+        "correct": 74,
+        "coverage": 0.0586,
+        "recall": 0.0586,
+        "covered_at_call": {
+          "1": 74
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 477,
+        "covered": 46,
+        "correct": 46,
+        "coverage": 0.0964,
+        "recall": 0.0964,
+        "covered_at_call": {
+          "1": 46
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 17305,
+        "covered": 13607,
+        "correct": 13607,
+        "wrong": 0,
+        "coverage": 0.7863,
+        "recall": 0.7863,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 13607
+        },
+        "wrong_by_call": {}
+      },
+      "INVALIDATE": {
+        "gold": 15717,
+        "covered": 14097,
+        "correct": 14097,
+        "wrong": 0,
+        "coverage": 0.8969,
+        "recall": 0.8969,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 14097
+        },
+        "wrong_by_call": {}
+      }
+    },
+    "llm_calls": 0,
+    "llm_calls_by_call": {
+      "1": 0
+    },
+    "groups": {
+      "c_dept": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1330,
+        "covered": 312,
+        "correct": 312,
+        "wrong": 0,
+        "coverage": 0.2346,
+        "recall": 0.2346,
+        "precision": 1.0
+      },
+      "c_head": {
+        "n": 50,
+        "exact": 0,
+        "gold": 862,
+        "covered": 695,
+        "correct": 695,
+        "wrong": 0,
+        "coverage": 0.8063,
+        "recall": 0.8063,
+        "precision": 1.0
+      },
+      "c_hire": {
+        "n": 45,
+        "exact": 0,
+        "gold": 783,
+        "covered": 693,
+        "correct": 693,
+        "wrong": 0,
+        "coverage": 0.8851,
+        "recall": 0.8851,
+        "precision": 1.0
+      },
+      "c_hq": {
+        "n": 30,
+        "exact": 0,
+        "gold": 2466,
+        "covered": 874,
+        "correct": 874,
+        "wrong": 0,
+        "coverage": 0.3544,
+        "recall": 0.3544,
+        "precision": 1.0
+      },
+      "c_leave": {
+        "n": 35,
+        "exact": 0,
+        "gold": 577,
+        "covered": 507,
+        "correct": 507,
+        "wrong": 0,
+        "coverage": 0.8787,
+        "recall": 0.8787,
+        "precision": 1.0
+      },
+      "c_move": {
+        "n": 140,
+        "exact": 55,
+        "gold": 4866,
+        "covered": 4596,
+        "correct": 4596,
+        "wrong": 0,
+        "coverage": 0.9445,
+        "recall": 0.9445,
+        "precision": 1.0
+      },
+      "f_coach": {
+        "n": 60,
+        "exact": 59,
+        "gold": 1348,
+        "covered": 1347,
+        "correct": 1347,
+        "wrong": 0,
+        "coverage": 0.9993,
+        "recall": 0.9993,
+        "precision": 1.0
+      },
+      "f_league": {
+        "n": 30,
+        "exact": 0,
+        "gold": 814,
+        "covered": 407,
+        "correct": 407,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "f_release": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1142,
+        "covered": 1102,
+        "correct": 1102,
+        "wrong": 0,
+        "coverage": 0.965,
+        "recall": 0.965,
+        "precision": 1.0
+      },
+      "f_sign": {
+        "n": 50,
+        "exact": 0,
+        "gold": 1513,
+        "covered": 1461,
+        "correct": 1461,
+        "wrong": 0,
+        "coverage": 0.9656,
+        "recall": 0.9656,
+        "precision": 1.0
+      },
+      "f_transfer": {
+        "n": 170,
+        "exact": 96,
+        "gold": 10859,
+        "covered": 10693,
+        "correct": 10693,
+        "wrong": 0,
+        "coverage": 0.9847,
+        "recall": 0.9847,
+        "precision": 1.0
+      },
+      "no_change": {
+        "n": 50,
+        "exact": 50,
+        "gold": 0,
+        "covered": 0,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": null,
+        "recall": null,
+        "precision": null
+      },
+      "u_director": {
+        "n": 40,
+        "exact": 0,
+        "gold": 639,
+        "covered": 497,
+        "correct": 497,
+        "wrong": 0,
+        "coverage": 0.7778,
+        "recall": 0.7778,
+        "precision": 1.0
+      },
+      "u_join": {
+        "n": 35,
+        "exact": 0,
+        "gold": 564,
+        "covered": 490,
+        "correct": 490,
+        "wrong": 0,
+        "coverage": 0.8688,
+        "recall": 0.8688,
+        "precision": 1.0
+      },
+      "u_lab": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1242,
+        "covered": 296,
+        "correct": 296,
+        "wrong": 0,
+        "coverage": 0.2383,
+        "recall": 0.2383,
+        "precision": 1.0
+      },
+      "u_leave": {
+        "n": 25,
+        "exact": 0,
+        "gold": 363,
+        "covered": 313,
+        "correct": 313,
+        "wrong": 0,
+        "coverage": 0.8623,
+        "recall": 0.8623,
+        "precision": 1.0
+      },
+      "u_move": {
+        "n": 120,
+        "exact": 46,
+        "gold": 3654,
+        "covered": 3421,
+        "correct": 3421,
+        "wrong": 0,
+        "coverage": 0.9362,
+        "recall": 0.9362,
+        "precision": 1.0
+      }
+    }
+  },
+  "synth_sym0_goldexp_oracle_k2": {
+    "n": 1000,
+    "errors": 0,
+    "exact": 762,
+    "exact_rate": 0.762,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 15517,
+        "covered": 13607,
+        "correct": 13607,
+        "coverage": 0.8769,
+        "recall": 0.8769,
+        "covered_at_call": {
+          "1": 13607
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 1292,
+        "covered": 467,
+        "correct": 467,
+        "coverage": 0.3615,
+        "recall": 0.3615,
+        "covered_at_call": {
+          "2": 467
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 496,
+        "covered": 191,
+        "correct": 191,
+        "coverage": 0.3851,
+        "recall": 0.3851,
+        "covered_at_call": {
+          "2": 191
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 13977,
+        "covered": 13977,
+        "correct": 13977,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "covered_at_call": {
+          "1": 13977
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 1263,
+        "covered": 1263,
+        "correct": 1263,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "covered_at_call": {
+          "1": 74,
+          "2": 1189
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 477,
+        "covered": 477,
+        "correct": 477,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "covered_at_call": {
+          "1": 46,
+          "2": 431
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 17305,
+        "covered": 14265,
+        "correct": 14265,
+        "wrong": 0,
+        "coverage": 0.8243,
+        "recall": 0.8243,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 13607,
+          "2": 658
+        },
+        "wrong_by_call": {}
+      },
+      "INVALIDATE": {
+        "gold": 15717,
+        "covered": 15717,
+        "correct": 15717,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 14097,
+          "2": 1620
+        },
+        "wrong_by_call": {}
+      }
+    },
+    "llm_calls": 0,
+    "llm_calls_by_call": {
+      "1": 0,
+      "2": 0
+    },
+    "groups": {
+      "c_dept": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1330,
+        "covered": 665,
+        "correct": 665,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "c_head": {
+        "n": 50,
+        "exact": 8,
+        "gold": 862,
+        "covered": 816,
+        "correct": 816,
+        "wrong": 0,
+        "coverage": 0.9466,
+        "recall": 0.9466,
+        "precision": 1.0
+      },
+      "c_hire": {
+        "n": 45,
+        "exact": 44,
+        "gold": 783,
+        "covered": 782,
+        "correct": 782,
+        "wrong": 0,
+        "coverage": 0.9987,
+        "recall": 0.9987,
+        "precision": 1.0
+      },
+      "c_hq": {
+        "n": 30,
+        "exact": 0,
+        "gold": 2466,
+        "covered": 1233,
+        "correct": 1233,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "c_leave": {
+        "n": 35,
+        "exact": 35,
+        "gold": 577,
+        "covered": 577,
+        "correct": 577,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "c_move": {
+        "n": 140,
+        "exact": 136,
+        "gold": 4866,
+        "covered": 4862,
+        "correct": 4862,
+        "wrong": 0,
+        "coverage": 0.9992,
+        "recall": 0.9992,
+        "precision": 1.0
+      },
+      "f_coach": {
+        "n": 60,
+        "exact": 59,
+        "gold": 1348,
+        "covered": 1347,
+        "correct": 1347,
+        "wrong": 0,
+        "coverage": 0.9993,
+        "recall": 0.9993,
+        "precision": 1.0
+      },
+      "f_league": {
+        "n": 30,
+        "exact": 0,
+        "gold": 814,
+        "covered": 407,
+        "correct": 407,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "f_release": {
+        "n": 40,
+        "exact": 40,
+        "gold": 1142,
+        "covered": 1142,
+        "correct": 1142,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "f_sign": {
+        "n": 50,
+        "exact": 49,
+        "gold": 1513,
+        "covered": 1511,
+        "correct": 1511,
+        "wrong": 0,
+        "coverage": 0.9987,
+        "recall": 0.9987,
+        "precision": 1.0
+      },
+      "f_transfer": {
+        "n": 170,
+        "exact": 170,
+        "gold": 10859,
+        "covered": 10859,
+        "correct": 10859,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "no_change": {
+        "n": 50,
+        "exact": 50,
+        "gold": 0,
+        "covered": 0,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": null,
+        "recall": null,
+        "precision": null
+      },
+      "u_director": {
+        "n": 40,
+        "exact": 5,
+        "gold": 639,
+        "covered": 595,
+        "correct": 595,
+        "wrong": 0,
+        "coverage": 0.9311,
+        "recall": 0.9311,
+        "precision": 1.0
+      },
+      "u_join": {
+        "n": 35,
+        "exact": 30,
+        "gold": 564,
+        "covered": 558,
+        "correct": 558,
+        "wrong": 0,
+        "coverage": 0.9894,
+        "recall": 0.9894,
+        "precision": 1.0
+      },
+      "u_lab": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1242,
+        "covered": 621,
+        "correct": 621,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "u_leave": {
+        "n": 25,
+        "exact": 25,
+        "gold": 363,
+        "covered": 363,
+        "correct": 363,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "u_move": {
+        "n": 120,
+        "exact": 111,
+        "gold": 3654,
+        "covered": 3644,
+        "correct": 3644,
+        "wrong": 0,
+        "coverage": 0.9973,
+        "recall": 0.9973,
+        "precision": 1.0
+      }
+    }
+  },
+  "synth_sym0_goldexp_oracle_k3": {
+    "n": 1000,
+    "errors": 0,
+    "exact": 829,
+    "exact_rate": 0.829,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 15517,
+        "covered": 13607,
+        "correct": 13607,
+        "coverage": 0.8769,
+        "recall": 0.8769,
+        "covered_at_call": {
+          "1": 13607
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 1292,
+        "covered": 467,
+        "correct": 467,
+        "coverage": 0.3615,
+        "recall": 0.3615,
+        "covered_at_call": {
+          "2": 467
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 496,
+        "covered": 260,
+        "correct": 260,
+        "coverage": 0.5242,
+        "recall": 0.5242,
+        "covered_at_call": {
+          "2": 191,
+          "3": 69
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 13977,
+        "covered": 13977,
+        "correct": 13977,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "covered_at_call": {
+          "1": 13977
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 1263,
+        "covered": 1263,
+        "correct": 1263,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "covered_at_call": {
+          "1": 74,
+          "2": 1189
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 477,
+        "covered": 477,
+        "correct": 477,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "covered_at_call": {
+          "1": 46,
+          "2": 431
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 17305,
+        "covered": 14334,
+        "correct": 14334,
+        "wrong": 0,
+        "coverage": 0.8283,
+        "recall": 0.8283,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 13607,
+          "2": 658,
+          "3": 69
+        },
+        "wrong_by_call": {}
+      },
+      "INVALIDATE": {
+        "gold": 15717,
+        "covered": 15717,
+        "correct": 15717,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0,
+        "correct_by_call": {
+          "1": 14097,
+          "2": 1620
+        },
+        "wrong_by_call": {}
+      }
+    },
+    "llm_calls": 0,
+    "llm_calls_by_call": {
+      "1": 0,
+      "2": 0,
+      "3": 0
+    },
+    "groups": {
+      "c_dept": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1330,
+        "covered": 665,
+        "correct": 665,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "c_head": {
+        "n": 50,
+        "exact": 46,
+        "gold": 862,
+        "covered": 854,
+        "correct": 854,
+        "wrong": 0,
+        "coverage": 0.9907,
+        "recall": 0.9907,
+        "precision": 1.0
+      },
+      "c_hire": {
+        "n": 45,
+        "exact": 44,
+        "gold": 783,
+        "covered": 782,
+        "correct": 782,
+        "wrong": 0,
+        "coverage": 0.9987,
+        "recall": 0.9987,
+        "precision": 1.0
+      },
+      "c_hq": {
+        "n": 30,
+        "exact": 0,
+        "gold": 2466,
+        "covered": 1233,
+        "correct": 1233,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "c_leave": {
+        "n": 35,
+        "exact": 35,
+        "gold": 577,
+        "covered": 577,
+        "correct": 577,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "c_move": {
+        "n": 140,
+        "exact": 136,
+        "gold": 4866,
+        "covered": 4862,
+        "correct": 4862,
+        "wrong": 0,
+        "coverage": 0.9992,
+        "recall": 0.9992,
+        "precision": 1.0
+      },
+      "f_coach": {
+        "n": 60,
+        "exact": 59,
+        "gold": 1348,
+        "covered": 1347,
+        "correct": 1347,
+        "wrong": 0,
+        "coverage": 0.9993,
+        "recall": 0.9993,
+        "precision": 1.0
+      },
+      "f_league": {
+        "n": 30,
+        "exact": 0,
+        "gold": 814,
+        "covered": 407,
+        "correct": 407,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "f_release": {
+        "n": 40,
+        "exact": 40,
+        "gold": 1142,
+        "covered": 1142,
+        "correct": 1142,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "f_sign": {
+        "n": 50,
+        "exact": 49,
+        "gold": 1513,
+        "covered": 1511,
+        "correct": 1511,
+        "wrong": 0,
+        "coverage": 0.9987,
+        "recall": 0.9987,
+        "precision": 1.0
+      },
+      "f_transfer": {
+        "n": 170,
+        "exact": 170,
+        "gold": 10859,
+        "covered": 10859,
+        "correct": 10859,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "no_change": {
+        "n": 50,
+        "exact": 50,
+        "gold": 0,
+        "covered": 0,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": null,
+        "recall": null,
+        "precision": null
+      },
+      "u_director": {
+        "n": 40,
+        "exact": 34,
+        "gold": 639,
+        "covered": 626,
+        "correct": 626,
+        "wrong": 0,
+        "coverage": 0.9797,
+        "recall": 0.9797,
+        "precision": 1.0
+      },
+      "u_join": {
+        "n": 35,
+        "exact": 30,
+        "gold": 564,
+        "covered": 558,
+        "correct": 558,
+        "wrong": 0,
+        "coverage": 0.9894,
+        "recall": 0.9894,
+        "precision": 1.0
+      },
+      "u_lab": {
+        "n": 40,
+        "exact": 0,
+        "gold": 1242,
+        "covered": 621,
+        "correct": 621,
+        "wrong": 0,
+        "coverage": 0.5,
+        "recall": 0.5,
+        "precision": 1.0
+      },
+      "u_leave": {
+        "n": 25,
+        "exact": 25,
+        "gold": 363,
+        "covered": 363,
+        "correct": 363,
+        "wrong": 0,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 1.0
+      },
+      "u_move": {
+        "n": 120,
+        "exact": 111,
+        "gold": 3654,
+        "covered": 3644,
+        "correct": 3644,
+        "wrong": 0,
+        "coverage": 0.9973,
+        "recall": 0.9973,
+        "precision": 1.0
+      }
+    }
+  }
+}

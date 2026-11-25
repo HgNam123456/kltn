@@ -1,0 +1,111 @@
+{
+ "job": "synth",
+ "runs": {
+  "synth_sym1_goldexp_oracle_k1": {
+   "status": "ok",
+   "minutes": 1.7,
+   "summary": {
+    "precision": 0.9999509750250436,
+    "recall": 0.9999439848183425,
+    "f1": 0.9999474799094766,
+    "add_acc": 0.8981848184818482,
+    "del_acc": 0.9022152471781252,
+    "config": "gold_explicit+oracle",
+    "split": "kgu_synth",
+    "n": 1000,
+    "n_scored": 1000,
+    "errors": 0,
+    "coverage": 0.8948882563139725,
+    "avg_cut_cand": 25.805,
+    "avg_add_cand": 38.661,
+    "judged_ratio": 0.4583966742158657,
+    "llm_calls": 0,
+    "seconds": 101.1,
+    "max_calls": 1,
+    "llm_calls_by_call": [
+     0
+    ],
+    "coverage_by_call": [
+     0.8948882563139725
+    ]
+   }
+  },
+  "synth_sym1_goldexp_oracle_k2": {
+   "status": "ok",
+   "minutes": 3.4,
+   "summary": {
+    "precision": 1.0,
+    "recall": 0.9999896200932963,
+    "f1": 0.9999948100197124,
+    "add_acc": 0.9811331133113311,
+    "del_acc": 1.0,
+    "config": "gold_explicit+oracle[K=2]",
+    "split": "kgu_synth",
+    "n": 1000,
+    "n_scored": 1000,
+    "errors": 0,
+    "coverage": 0.9896129852825389,
+    "avg_cut_cand": 69.495,
+    "avg_add_cand": 371.963,
+    "judged_ratio": 0.07402516207657353,
+    "llm_calls": 0,
+    "seconds": 202.7,
+    "max_calls": 2,
+    "llm_calls_by_call": [
+     0,
+     0
+    ],
+    "coverage_by_call": [
+     0.8948882563139725,
+     0.9896129852825389
+    ]
+   }
+  },
+  "synth_sym1_goldexp_oracle_k3": {
+   "status": "ok",
+   "minutes": 3.8,
+   "summary": {
+    "precision": 1.0,
+    "recall": 0.999996701429065,
+    "f1": 0.9999983507118124,
+    "add_acc": 0.994004400440044,
+    "del_acc": 1.0,
+    "config": "gold_explicit+oracle[K=3]",
+    "split": "kgu_synth",
+    "n": 1000,
+    "n_scored": 1000,
+    "errors": 0,
+    "coverage": 0.9966991702501363,
+    "avg_cut_cand": 110.599,
+    "avg_add_cand": 594.987,
+    "judged_ratio": 0.04664633368575907,
+    "llm_calls": 0,
+    "seconds": 227.9,
+    "max_calls": 3,
+    "llm_calls_by_call": [
+     0,
+     0,
+     0
+    ],
+    "coverage_by_call": [
+     0.8948882563139725,
+     0.9896129852825389,
+     0.9966991702501363
+    ]
+   }
+  },
+  "synth_sym1_goldexp_llm_gate_k2": {
+   "status": "killed: hết giờ",
+   "minutes": 180.0
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "752c2751340940a539def3370673f57b1b5cdd37",
+ "ldd_missing_after_pip": "",
+ "server_cmd": "CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "elapsed_minutes": 189.3
+}

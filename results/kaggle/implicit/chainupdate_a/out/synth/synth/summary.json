@@ -1,0 +1,175 @@
+{
+ "job": "synth",
+ "runs": {
+  "synth_sym0_goldexp_none_k1": {
+   "status": "ok",
+   "minutes": 0.5,
+   "summary": {
+    "precision": 0.999524347422792,
+    "recall": 0.999476314036421,
+    "f1": 0.9995003301525166,
+    "add_acc": 0.04812981298129813,
+    "del_acc": 0.051306814752218266,
+    "config": "gold_explicit+none",
+    "split": "kgu_synth",
+    "n": 1000,
+    "n_scored": 1000,
+    "errors": 0,
+    "coverage": 0.8389558476167404,
+    "avg_cut_cand": 25.805,
+    "avg_add_cand": 22.912,
+    "judged_ratio": 0.0,
+    "llm_calls": 0,
+    "seconds": 26.8,
+    "max_calls": 1,
+    "llm_calls_by_call": [
+     0
+    ],
+    "coverage_by_call": [
+     0.8389558476167404
+    ]
+   }
+  },
+  "synth_sym0_goldexp_oracle_k1": {
+   "status": "ok",
+   "minutes": 1.7,
+   "summary": {
+    "precision": 0.9999509722846628,
+    "recall": 0.9998880906851595,
+    "f1": 0.9999195304963077,
+    "add_acc": 0.7965896589658966,
+    "del_acc": 0.9022152471781252,
+    "config": "gold_explicit+oracle",
+    "split": "kgu_synth",
+    "n": 1000,
+    "n_scored": 1000,
+    "errors": 0,
+    "coverage": 0.8389558476167404,
+    "avg_cut_cand": 25.805,
+    "avg_add_cand": 22.912,
+    "judged_ratio": 0.5686721267729951,
+    "llm_calls": 0,
+    "seconds": 101.1,
+    "max_calls": 1,
+    "llm_calls_by_call": [
+     0
+    ],
+    "coverage_by_call": [
+     0.8389558476167404
+    ]
+   }
+  },
+  "synth_sym0_goldexp_oracle_k2": {
+   "status": "ok",
+   "minutes": 3.2,
+   "summary": {
+    "precision": 1.0,
+    "recall": 0.9999080031592441,
+    "f1": 0.9999539994636701,
+    "add_acc": 0.8327832783278328,
+    "del_acc": 1.0,
+    "config": "gold_explicit+oracle[K=2]",
+    "split": "kgu_synth",
+    "n": 1000,
+    "n_scored": 1000,
+    "errors": 0,
+    "coverage": 0.9079401611047181,
+    "avg_cut_cand": 69.082,
+    "avg_add_cand": 117.856,
+    "judged_ratio": 0.16038472648685662,
+    "llm_calls": 0,
+    "seconds": 191.0,
+    "max_calls": 2,
+    "llm_calls_by_call": [
+     0,
+     0
+    ],
+    "coverage_by_call": [
+     0.8389558476167404,
+     0.9079401611047181
+    ]
+   }
+  },
+  "synth_sym0_goldexp_oracle_k3": {
+   "status": "ok",
+   "minutes": 3.7,
+   "summary": {
+    "precision": 1.0,
+    "recall": 0.9999100912454324,
+    "f1": 0.9999550436017293,
+    "add_acc": 0.8365786578657866,
+    "del_acc": 1.0,
+    "config": "gold_explicit+oracle[K=3]",
+    "split": "kgu_synth",
+    "n": 1000,
+    "n_scored": 1000,
+    "errors": 0,
+    "coverage": 0.910029677184907,
+    "avg_cut_cand": 108.848,
+    "avg_add_cand": 219.805,
+    "judged_ratio": 0.09143686502177069,
+    "llm_calls": 0,
+    "seconds": 219.1,
+    "max_calls": 3,
+    "llm_calls_by_call": [
+     0,
+     0,
+     0
+    ],
+    "coverage_by_call": [
+     0.8389558476167404,
+     0.9079401611047181,
+     0.910029677184907
+    ]
+   }
+  },
+  "synth_sym0_goldexp_llm_gate_k1": {
+   "status": "ok",
+   "minutes": 61.4,
+   "summary": {
+    "precision": 0.9997795636867893,
+    "recall": 0.9998848829005805,
+    "f1": 0.9998322205201854,
+    "add_acc": 0.7907590759075908,
+    "del_acc": 0.640248687149152,
+    "config": "gold_explicit+llm[batch=1,gate=0.5]",
+    "split": "kgu_synth",
+    "n": 1000,
+    "n_scored": 1000,
+    "errors": 0,
+    "coverage": 0.8389558476167404,
+    "avg_cut_cand": 25.805,
+    "avg_add_cand": 22.912,
+    "judged_ratio": 0.504608247634296,
+    "llm_calls": 3138,
+    "seconds": 3680.8,
+    "max_calls": 1,
+    "llm_calls_by_call": [
+     3138
+    ],
+    "coverage_by_call": [
+     0.8389558476167404
+    ],
+    "n_gated": 6576,
+    "n_off_menu": 0
+   }
+  },
+  "synth_sym0_goldexp_llm_gate_k2": {
+   "status": "killed: hết giờ",
+   "minutes": 180.0
+  },
+  "synth_sym0_goldexp_llm_gate_k3": {
+   "status": "killed: hết giờ",
+   "minutes": 180.0
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "752c2751340940a539def3370673f57b1b5cdd37",
+ "ldd_missing_after_pip": "",
+ "server_cmd": "CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "elapsed_minutes": 431.1
+}
