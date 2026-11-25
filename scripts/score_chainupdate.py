@@ -62,6 +62,28 @@ def load_records(path: Path, first: int | None = None) -> list[dict]:
     return records
 
 
+def merge_plus(records: list[dict], extra: list[dict]) -> list[dict]:
+    """Ghép một lượt chạy bổ sung vào một lượt chạy đã có, theo idx: thao tác gián tiếp và số lệnh gọi LLM của lượt bổ
+    sung được cộng vào. Dùng cho lượt chỉ xét các nhóm mà bước lọc theo cấu trúc đã giữ nguyên (--judge-gate-sides
+    cut_rejected, K = 1): mỗi nhóm là một lệnh gọi riêng nên ghép với lượt có lọc cho đúng kết quả của một lượt không lọc
+    ở vế cắt. Chỉ giữ các mẫu có ở cả hai lượt; mẫu đã ghép được đánh dấu để tính "trùng hoàn toàn" lại từ nhãn vàng."""
+    by_idx = {r["idx"]: r for r in extra if "error" not in r}
+    out = []
+    for rec in records:
+        ex = by_idx.get(rec["idx"])
+        if ex is None or "error" in rec:
+            continue
+        rounds = [dict(rd) for rd in rec.get("rounds", [])]
+        for rd in ex.get("rounds", []):
+            same = next((r for r in rounds if r["k"] == rd["k"]), None)
+            if same is None:
+                rounds.append(dict(rd))
+            else:
+                same["n_llm_calls"] += rd["n_llm_calls"]
+        out.append({**rec, "judged_ops": rec["judged_ops"] + ex["judged_ops"], "rounds": rounds, "_merged": True})
+    return out
+
+
 def _cell() -> dict:
     return {"gold": 0, "covered": 0, "correct": 0}
 
@@ -80,12 +102,15 @@ def score_run(gold: dict[int, dict], records: list[dict], by: str | None = None)
             continue
         g = gold[rec["idx"]]
         n += 1
-        is_exact = rec["counts"]["fp"] == 0 and rec["counts"]["fn"] == 0
+        pred = net_ops(rec["judged_ops"])
+        if rec.get("_merged"):          # lượt đã ghép: KG thu được trùng KG-sau vàng khi tập thao tác gián tiếp trùng nhãn
+            is_exact = set(pred) == set(g["indirect"])
+        else:
+            is_exact = rec["counts"]["fp"] == 0 and rec["counts"]["fn"] == 0
         exact += is_exact
         for rd in rec.get("rounds", []):
             calls[rd["k"]] += rd["n_llm_calls"]
         cov = {(o["kind"], o["h"], o["r"], o["t"]): int(o["cov"]) for o in rec.get("implied", [])}
-        pred = net_ops(rec["judged_ops"])
         grp = groups[g[by]] if by else None
         if grp is not None:
             grp["n"] += 1
@@ -166,13 +191,19 @@ def main() -> None:
     ap.add_argument("--by", choices=["family", "domain", "event"], default=None, help="thêm bảng theo nhóm sự kiện")
     ap.add_argument("--first", type=int, default=None, help="chỉ chấm các mẫu có idx < N")
     ap.add_argument("--json", type=Path, default=None, help="ghi kết quả của mọi lượt chạy vào một tệp JSON")
+    ap.add_argument("--plus", type=Path, default=None,
+                    help="lượt chạy bổ sung (vd lượt cut_rejected) được ghép vào từng lượt chạy theo idx trước khi chấm")
     args = ap.parse_args()
 
     gold = load_gold(args.data)
+    extra = load_records(args.plus, args.first) if args.plus else None
     out = {}
     for run in args.runs:
         records = load_records(run, args.first)
         name = run.stem + (f" [idx<{args.first}]" if args.first is not None else "")
+        if extra is not None:
+            records = merge_plus(records, extra)
+            name += f" + {args.plus.stem}"
         out[name] = score_run(gold, records, by=args.by)
         print(render(name, out[name]), end="\n\n")
     if args.json:

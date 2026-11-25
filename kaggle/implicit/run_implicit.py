@@ -258,6 +258,7 @@ elif JOB == "synth":
     sym = os.environ.get("IMPLICIT_SYNTH_SYM", "0")
     scale = float(os.environ.get("IMPLICIT_SYNTH_SCALE", "1"))
     limit = os.environ.get("IMPLICIT_SYNTH_LIMIT", "")
+    offset = os.environ.get("IMPLICIT_SYNTH_OFFSET", "")                                        # bỏ N mẫu đầu: chia bộ cho nhiều kernel
     naive_max = os.environ.get("IMPLICIT_NAIVE_MAX", "80")
     for cfg, judge, max_h, cfg_ks in (("none", "--judge none", 0.3, [1]), ("oracle", "--judge oracle", 0.5, ks_oracle),
                                       ("llm_gate", "--judge llm --judge-batch 1 --judge-gate 0.5", 3.0 * scale, ks),
@@ -275,7 +276,8 @@ elif JOB == "synth":
         for k in cfg_ks:
             name = f"synth_sym{sym}_goldexp_{cfg}_k{k}"
             timed(name, f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {data} --extractor gold_explicit {judge} "
-                        f"--max-calls {k} --workers {WORKERS}{' --limit ' + n_limit if n_limit else ''} --out {OUT}/{name}.jsonl",
+                        f"--max-calls {k} --workers {WORKERS}{' --limit ' + n_limit if n_limit else ''}"
+                        f"{' --offset ' + offset if offset else ''} --out {OUT}/{name}.jsonl",
                   {**ENV, "KGU_SYMMETRIC_ADD": sym, "KGU_LLM_LOG": f"{OUT}/logs/{name}.llm.jsonl",
                    **({"KGU_LLM_MAX_TOKENS": "2048"} if cfg == "naive" else {})}, max_h=max_h)
     # bảng theo độ sâu và theo họ sự kiện cho mọi lượt đã chạy (lỗi ở bước này không làm hỏng kết quả đã ghi)

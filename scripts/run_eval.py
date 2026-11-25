@@ -128,6 +128,8 @@ def main() -> None:
     ap.add_argument("--extractor", default="gold_explicit", choices=["gold_all", "gold_explicit", "llm"])
     ap.add_argument("--judge", default="none", choices=["none", "oracle", "llm", "naive"])
     ap.add_argument("--limit", type=int, default=None)
+    ap.add_argument("--offset", type=int, default=0,
+                    help="bỏ qua N mẫu đầu (sau --limit), để chia một bộ có các mẫu độc lập cho nhiều kernel chạy song song")
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--workers", type=int, default=1,
                     help="số tin gửi song song (khớp --parallel của llama-server để dùng continuous batching)")
@@ -153,6 +155,8 @@ def main() -> None:
     else:
         relations = Vocab.load(args.data_dir).relations
         examples = load_split(args.data_dir, args.split, limit=args.limit)
+
+    examples = examples[args.offset:]
 
     # Mỗi thread một extractor/judge riêng (client riêng): n_calls/n_dropped cộng dồn theo thread, nên
     # hiệu trước/sau trong run_example vẫn đúng cho từng ví dụ khi chạy song song.
