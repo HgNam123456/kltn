@@ -93,11 +93,12 @@ sh("pip install -q huggingface_hub pydantic 'openai>=1' tqdm")
 
 # 1. llama-server (binary cache) + model. Ảnh Kaggle 11/2026 (Python 3.13) không còn libcudart.so.12 mà binary
 # cache (build 09/2026) cần → cài CUDA 12 runtime từ pip và trỏ LD_LIBRARY_PATH; nếu ldd vẫn báo thiếu thì build lại.
-cached = find_dir("llama-server")
-assert cached, "thiếu dataset ngocnam2005/llama-server-cuda"
+cached = find_dir("llama-server")                 # dataset cache của bất kỳ tài khoản nào; không có thì build trong kernel
 bin_dir = f"{WORK}/llama-bin"
-shutil.copytree(cached, bin_dir, dirs_exist_ok=True)
-sh(f"chmod +x {bin_dir}/llama-server")
+os.makedirs(bin_dir, exist_ok=True)
+if cached:
+    shutil.copytree(cached, bin_dir, dirs_exist_ok=True)
+    sh(f"chmod +x {bin_dir}/llama-server")
 sh("pip install -q nvidia-cuda-runtime-cu12 nvidia-cublas-cu12")
 import glob  # noqa: E402
 
@@ -107,7 +108,8 @@ LD_DIRS = {os.path.dirname(f) for pat in ("/usr/local/lib/python3*/dist-packages
            for f in glob.glob(pat, recursive=True)} | {"/usr/local/nvidia/lib64", "/usr/local/cuda/lib64"}
 LD = ":".join(sorted(LD_DIRS))
 os.environ["LD_LIBRARY_PATH"] = LD + ":" + os.environ.get("LD_LIBRARY_PATH", "")
-missing = subprocess.run(f"ldd {bin_dir}/llama-server | grep 'not found'", shell=True, capture_output=True, text=True).stdout
+missing = subprocess.run(f"ldd {bin_dir}/llama-server | grep 'not found'", shell=True, capture_output=True,
+                         text=True).stdout if cached else "không có dataset cache llama-server"
 summary["ldd_missing_after_pip"] = missing.strip()
 print("LD_LIBRARY_PATH:", LD, "| ldd thiếu:", missing or "(không)", flush=True)
 if missing:
@@ -286,6 +288,30 @@ elif JOB == "synth":
     # bảng theo độ sâu và theo họ sự kiện cho mọi lượt đã chạy (lỗi ở bước này không làm hỏng kết quả đã ghi)
     subprocess.run(f"cd {KLTN} && python scripts/score_chainupdate.py --data {data} {OUT}/synth_*.jsonl --by family "
                    f"--json {OUT}/score_by_depth.json > {OUT}/score_by_depth.txt 2>&1", shell=True, env=ENV)
+elif JOB == "norule":
+    # ChainUpdate, bỏ bước lọc theo cấu trúc ở vế cắt, trọn chuỗi trong một kernel trên các tin [NORULE_OFFSET, NORULE_LIMIT):
+    #  (1) K = 1: CHỈ gửi LLM các nhóm của vế cắt mà bước lọc giữ nguyên (cut_rejected);
+    #  (2) ghép với lượt llm_gate K = 1 đã có trong repo → O_1 của cấu hình không lọc ở vế cắt (seed_call1.jsonl);
+    #  (3) chạy tiếp các lần gọi 2..K từ O_1 đó (--seed-call1), bước lọc chỉ còn ở vế sinh. Kết quả của K = 2 lấy từ
+    #      chính lượt này bằng score_chainupdate.py --max-round 2, vì lần gọi 2 không phụ thuộc lần gọi 3.
+    data = f"{KLTN}/data/chainupdate/chainupdate.jsonl"
+    base = f"{KLTN}/results/kaggle/implicit/chainupdate_a/out/synth/synth/synth_sym0_goldexp_llm_gate_k1.jsonl"
+    k = os.environ.get("NORULE_K", "3")
+    lim, off = os.environ.get("NORULE_LIMIT", ""), os.environ.get("NORULE_OFFSET", "")
+    rng = (f" --limit {lim}" if lim else "") + (f" --offset {off}" if off else "")
+    common = (f"cd {KLTN} && python -u scripts/run_eval.py --jsonl {data} --extractor gold_explicit --judge llm "
+              f"--judge-batch 1 --judge-gate 0.5 --workers {WORKERS}{rng}")
+    env1 = {**ENV, "KGU_SYMMETRIC_ADD": "0"}
+    timed("norule_k1_cut_rejected", f"{common} --judge-gate-sides cut_rejected --max-calls 1 "
+                                    f"--out {OUT}/norule_k1_cut_rejected.jsonl",
+          {**env1, "KGU_LLM_LOG": f"{OUT}/logs/norule_k1_cut_rejected.llm.jsonl"}, max_h=float(os.environ.get("NORULE_H1", "3")))
+    subprocess.run(f"cd {KLTN} && python scripts/score_chainupdate.py --data {data} {base} "
+                   f"--plus {OUT}/norule_k1_cut_rejected.jsonl --write-seed {OUT}/seed_call1.jsonl "
+                   f"> {OUT}/score_k1_merged.txt 2>&1", shell=True, env=ENV)
+    if int(k) > 1 and os.path.exists(f"{OUT}/seed_call1.jsonl"):
+        timed(f"norule_k{k}_seeded", f"{common} --judge-gate-sides add --max-calls {k} --seed-call1 {OUT}/seed_call1.jsonl "
+                                     f"--out {OUT}/norule_k{k}_seeded.jsonl",
+              {**env1, "KGU_LLM_LOG": f"{OUT}/logs/norule_k{k}_seeded.llm.jsonl"}, max_h=float(os.environ.get("NORULE_H2", "9")))
 elif JOB == "elken":
     elken = f"{WORK}/elken"
     sh(f"git clone -q --depth 1 {ELKEN_REPO} {elken}")
