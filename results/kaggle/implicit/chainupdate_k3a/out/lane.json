@@ -1,0 +1,23 @@
+{
+ "stages": [
+  {
+   "name": "norule_k3",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "synth",
+    "IMPLICIT_SYNTH_SYM": "0",
+    "IMPLICIT_SYNTH_CFGS": "llm_gate_add",
+    "IMPLICIT_SYNTH_K": "3",
+    "IMPLICIT_SYNTH_SCALE": "3",
+    "IMPLICIT_SYNTH_SEED_CALL1": "results/kaggle/implicit/chainupdate_c/seed_call1_norule.jsonl",
+    "IMPLICIT_SYNTH_LIMIT": "261"
+   },
+   "commit": "da513f13d07f317eaec79dea8ac5d52e42656c61",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 237.8
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 237.8
+}

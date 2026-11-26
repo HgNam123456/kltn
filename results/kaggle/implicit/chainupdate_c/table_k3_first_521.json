@@ -1,0 +1,132 @@
+{
+  "norule_k3_first521": {
+    "n": 521,
+    "errors": 0,
+    "exact": 77,
+    "exact_rate": 0.1478,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 7934,
+        "covered": 6739,
+        "correct": 6712,
+        "coverage": 0.8494,
+        "recall": 0.846,
+        "covered_at_call": {
+          "1": 6739
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 810,
+        "covered": 233,
+        "correct": 222,
+        "coverage": 0.2877,
+        "recall": 0.2741,
+        "covered_at_call": {
+          "2": 233
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 271,
+        "covered": 128,
+        "correct": 123,
+        "coverage": 0.4723,
+        "recall": 0.4539,
+        "covered_at_call": {
+          "2": 103,
+          "3": 25
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 7432,
+        "covered": 7432,
+        "correct": 6103,
+        "coverage": 1.0,
+        "recall": 0.8212,
+        "covered_at_call": {
+          "1": 7432
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 811,
+        "covered": 481,
+        "correct": 35,
+        "coverage": 0.5931,
+        "recall": 0.0432,
+        "covered_at_call": {
+          "1": 37,
+          "2": 443,
+          "3": 1
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 270,
+        "covered": 184,
+        "correct": 6,
+        "coverage": 0.6815,
+        "recall": 0.0222,
+        "covered_at_call": {
+          "1": 24,
+          "2": 160
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 9015,
+        "covered": 7100,
+        "correct": 7057,
+        "wrong": 9703,
+        "coverage": 0.7876,
+        "recall": 0.7828,
+        "precision": 0.4211,
+        "correct_by_call": {
+          "1": 6712,
+          "2": 320,
+          "3": 25
+        },
+        "wrong_by_call": {
+          "1": 822,
+          "2": 4991,
+          "3": 3890
+        }
+      },
+      "INVALIDATE": {
+        "gold": 8513,
+        "covered": 8097,
+        "correct": 6144,
+        "wrong": 13474,
+        "coverage": 0.9511,
+        "recall": 0.7217,
+        "precision": 0.3132,
+        "correct_by_call": {
+          "1": 6103,
+          "2": 41
+        },
+        "wrong_by_call": {
+          "1": 1315,
+          "2": 2270,
+          "3": 9889
+        }
+      }
+    },
+    "llm_calls": 33160,
+    "llm_calls_by_call": {
+      "1": 0,
+      "2": 24656,
+      "3": 8504
+    },
+    "groups": {}
+  }
+}

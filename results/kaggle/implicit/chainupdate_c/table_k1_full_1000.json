@@ -1,0 +1,115 @@
+{
+  "synth_sym0_goldexp_llm_gate_k1 + cut_rejected_k1": {
+    "n": 1000,
+    "errors": 0,
+    "exact": 82,
+    "exact_rate": 0.082,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 15517,
+        "covered": 13607,
+        "correct": 13501,
+        "coverage": 0.8769,
+        "recall": 0.8701,
+        "covered_at_call": {
+          "1": 13607
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 1292,
+        "covered": 0,
+        "correct": 0,
+        "coverage": 0.0,
+        "recall": 0.0,
+        "covered_at_call": {}
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 496,
+        "covered": 0,
+        "correct": 0,
+        "coverage": 0.0,
+        "recall": 0.0,
+        "covered_at_call": {}
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 13977,
+        "covered": 13977,
+        "correct": 11647,
+        "coverage": 1.0,
+        "recall": 0.8333,
+        "covered_at_call": {
+          "1": 13977
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 1263,
+        "covered": 74,
+        "correct": 0,
+        "coverage": 0.0586,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 74
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 477,
+        "covered": 46,
+        "correct": 0,
+        "coverage": 0.0964,
+        "recall": 0.0,
+        "covered_at_call": {
+          "1": 46
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 17305,
+        "covered": 13607,
+        "correct": 13501,
+        "wrong": 1325,
+        "coverage": 0.7863,
+        "recall": 0.7802,
+        "precision": 0.9106,
+        "correct_by_call": {
+          "1": 13501
+        },
+        "wrong_by_call": {
+          "1": 1325
+        }
+      },
+      "INVALIDATE": {
+        "gold": 15717,
+        "covered": 14097,
+        "correct": 11647,
+        "wrong": 2488,
+        "coverage": 0.8969,
+        "recall": 0.741,
+        "precision": 0.824,
+        "correct_by_call": {
+          "1": 11647
+        },
+        "wrong_by_call": {
+          "1": 2488
+        }
+      }
+    },
+    "llm_calls": 8188,
+    "llm_calls_by_call": {
+      "1": 8188
+    },
+    "groups": {}
+  }
+}

@@ -1,0 +1,20 @@
+{
+ "stages": [
+  {
+   "name": "cut_rejected",
+   "runner": "implicit",
+   "env": {
+    "IMPLICIT_JOB": "synth",
+    "IMPLICIT_SYNTH_SYM": "0",
+    "IMPLICIT_SYNTH_CFGS": "llm_cut_rejected",
+    "IMPLICIT_SYNTH_OFFSET": "500"
+   },
+   "commit": "db8d23395a2bec45fc5f9b6950e65ecd5fca9cee",
+   "returncode": 0,
+   "status": "ok",
+   "minutes": 31.8
+  }
+ ],
+ "deadline_hours": 11.0,
+ "elapsed_minutes": 31.8
+}

@@ -1,0 +1,32 @@
+gold_explicit+llm:   0%|          | 0/21 [00:00<?, ?it/s]gold_explicit+llm:   5%|▍         | 1/21 [00:38<12:59, 38.95s/it]gold_explicit+llm:  10%|▉         | 2/21 [03:26<36:16, 114.54s/it]gold_explicit+llm:  14%|█▍        | 3/21 [27:34<3:37:05, 723.66s/it]gold_explicit+llm:  71%|███████▏  | 15/21 [28:07<08:26, 84.40s/it]  gold_explicit+llm: 100%|██████████| 21/21 [28:07<00:00, 80.37s/it]
+{
+  "precision": 0.9986227205015833,
+  "recall": 0.9989436503006922,
+  "f1": 0.9987831596207838,
+  "add_acc": 0.7916666666666666,
+  "del_acc": 0.7369565217391304,
+  "config": "gold_explicit+llm[batch=1,gate=0.5][gate_sides=add][seed_call1][K=3]",
+  "split": "chainupdate",
+  "n": 21,
+  "n_scored": 21,
+  "errors": 0,
+  "coverage": 0.8649885583524027,
+  "avg_cut_cand": 156.52380952380952,
+  "avg_add_cand": 1992.142857142857,
+  "judged_ratio": 0.04727184078719915,
+  "llm_calls": 1907,
+  "seconds": 1687.8,
+  "max_calls": 3,
+  "llm_calls_by_call": [
+    0,
+    1361,
+    546
+  ],
+  "coverage_by_call": [
+    0.8146453089244852,
+    0.8638443935926774,
+    0.8649885583524027
+  ],
+  "n_gated": 5798,
+  "n_off_menu": 0
+}

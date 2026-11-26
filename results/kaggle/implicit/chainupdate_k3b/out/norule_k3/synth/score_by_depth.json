@@ -1,0 +1,319 @@
+{
+  "synth_sym0_goldexp_llm_gate_add_k3": {
+    "n": 239,
+    "errors": 0,
+    "exact": 36,
+    "exact_rate": 0.1506,
+    "by_depth": [
+      {
+        "side": "ADD",
+        "depth": 1,
+        "gold": 3478,
+        "covered": 2851,
+        "correct": 2840,
+        "coverage": 0.8197,
+        "recall": 0.8166,
+        "covered_at_call": {
+          "1": 2851
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 2,
+        "gold": 375,
+        "covered": 104,
+        "correct": 100,
+        "coverage": 0.2773,
+        "recall": 0.2667,
+        "covered_at_call": {
+          "2": 104
+        }
+      },
+      {
+        "side": "ADD",
+        "depth": 3,
+        "gold": 112,
+        "covered": 65,
+        "correct": 62,
+        "coverage": 0.5804,
+        "recall": 0.5536,
+        "covered_at_call": {
+          "2": 53,
+          "3": 12
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 1,
+        "gold": 3413,
+        "covered": 3413,
+        "correct": 2688,
+        "coverage": 1.0,
+        "recall": 0.7876,
+        "covered_at_call": {
+          "1": 3413
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 2,
+        "gold": 382,
+        "covered": 174,
+        "correct": 7,
+        "coverage": 0.4555,
+        "recall": 0.0183,
+        "covered_at_call": {
+          "1": 23,
+          "2": 151
+        }
+      },
+      {
+        "side": "INVALIDATE",
+        "depth": 3,
+        "gold": 114,
+        "covered": 82,
+        "correct": 3,
+        "coverage": 0.7193,
+        "recall": 0.0263,
+        "covered_at_call": {
+          "1": 16,
+          "2": 66
+        }
+      }
+    ],
+    "by_side": {
+      "ADD": {
+        "gold": 3965,
+        "covered": 3020,
+        "correct": 3002,
+        "wrong": 4522,
+        "coverage": 0.7617,
+        "recall": 0.7571,
+        "precision": 0.399,
+        "correct_by_call": {
+          "1": 2840,
+          "2": 150,
+          "3": 12
+        },
+        "wrong_by_call": {
+          "1": 423,
+          "2": 2260,
+          "3": 1839
+        }
+      },
+      "INVALIDATE": {
+        "gold": 3909,
+        "covered": 3669,
+        "correct": 2698,
+        "wrong": 5767,
+        "coverage": 0.9386,
+        "recall": 0.6902,
+        "precision": 0.3187,
+        "correct_by_call": {
+          "1": 2688,
+          "2": 10
+        },
+        "wrong_by_call": {
+          "1": 573,
+          "2": 1079,
+          "3": 4115
+        }
+      }
+    },
+    "llm_calls": 14404,
+    "llm_calls_by_call": {
+      "1": 0,
+      "2": 10505,
+      "3": 3899
+    },
+    "groups": {
+      "c_dept": {
+        "n": 9,
+        "exact": 0,
+        "gold": 300,
+        "covered": 75,
+        "correct": 6,
+        "wrong": 0,
+        "coverage": 0.25,
+        "recall": 0.02,
+        "precision": 1.0
+      },
+      "c_head": {
+        "n": 12,
+        "exact": 1,
+        "gold": 195,
+        "covered": 192,
+        "correct": 166,
+        "wrong": 21,
+        "coverage": 0.9846,
+        "recall": 0.8513,
+        "precision": 0.8877
+      },
+      "c_hire": {
+        "n": 9,
+        "exact": 7,
+        "gold": 154,
+        "covered": 154,
+        "correct": 153,
+        "wrong": 1,
+        "coverage": 1.0,
+        "recall": 0.9935,
+        "precision": 0.9935
+      },
+      "c_hq": {
+        "n": 11,
+        "exact": 0,
+        "gold": 988,
+        "covered": 349,
+        "correct": 83,
+        "wrong": 621,
+        "coverage": 0.3532,
+        "recall": 0.084,
+        "precision": 0.1179
+      },
+      "c_leave": {
+        "n": 12,
+        "exact": 0,
+        "gold": 194,
+        "covered": 194,
+        "correct": 159,
+        "wrong": 20,
+        "coverage": 1.0,
+        "recall": 0.8196,
+        "precision": 0.8883
+      },
+      "c_move": {
+        "n": 32,
+        "exact": 0,
+        "gold": 1187,
+        "covered": 1185,
+        "correct": 1070,
+        "wrong": 403,
+        "coverage": 0.9983,
+        "recall": 0.9014,
+        "precision": 0.7264
+      },
+      "f_coach": {
+        "n": 13,
+        "exact": 6,
+        "gold": 299,
+        "covered": 299,
+        "correct": 228,
+        "wrong": 172,
+        "coverage": 1.0,
+        "recall": 0.7625,
+        "precision": 0.57
+      },
+      "f_league": {
+        "n": 12,
+        "exact": 0,
+        "gold": 348,
+        "covered": 174,
+        "correct": 116,
+        "wrong": 1139,
+        "coverage": 0.5,
+        "recall": 0.3333,
+        "precision": 0.0924
+      },
+      "f_release": {
+        "n": 13,
+        "exact": 0,
+        "gold": 385,
+        "covered": 385,
+        "correct": 353,
+        "wrong": 598,
+        "coverage": 1.0,
+        "recall": 0.9169,
+        "precision": 0.3712
+      },
+      "f_sign": {
+        "n": 8,
+        "exact": 4,
+        "gold": 247,
+        "covered": 247,
+        "correct": 247,
+        "wrong": 239,
+        "coverage": 1.0,
+        "recall": 1.0,
+        "precision": 0.5082
+      },
+      "f_transfer": {
+        "n": 32,
+        "exact": 0,
+        "gold": 2050,
+        "covered": 2050,
+        "correct": 1952,
+        "wrong": 6335,
+        "coverage": 1.0,
+        "recall": 0.9522,
+        "precision": 0.2355
+      },
+      "no_change": {
+        "n": 11,
+        "exact": 11,
+        "gold": 0,
+        "covered": 0,
+        "correct": 0,
+        "wrong": 0,
+        "coverage": null,
+        "recall": null,
+        "precision": null
+      },
+      "u_director": {
+        "n": 8,
+        "exact": 0,
+        "gold": 150,
+        "covered": 140,
+        "correct": 102,
+        "wrong": 8,
+        "coverage": 0.9333,
+        "recall": 0.68,
+        "precision": 0.9273
+      },
+      "u_join": {
+        "n": 10,
+        "exact": 7,
+        "gold": 162,
+        "covered": 161,
+        "correct": 160,
+        "wrong": 9,
+        "coverage": 0.9938,
+        "recall": 0.9877,
+        "precision": 0.9467
+      },
+      "u_lab": {
+        "n": 9,
+        "exact": 0,
+        "gold": 224,
+        "covered": 96,
+        "correct": 25,
+        "wrong": 108,
+        "coverage": 0.4286,
+        "recall": 0.1116,
+        "precision": 0.188
+      },
+      "u_leave": {
+        "n": 9,
+        "exact": 0,
+        "gold": 126,
+        "covered": 126,
+        "correct": 96,
+        "wrong": 121,
+        "coverage": 1.0,
+        "recall": 0.7619,
+        "precision": 0.4424
+      },
+      "u_move": {
+        "n": 29,
+        "exact": 0,
+        "gold": 865,
+        "covered": 862,
+        "correct": 784,
+        "wrong": 494,
+        "coverage": 0.9965,
+        "recall": 0.9064,
+        "precision": 0.6135
+      }
+    }
+  }
+}

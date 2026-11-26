@@ -1,0 +1,31 @@
+{
+  "precision": 0.9992739661457747,
+  "recall": 0.999147812492917,
+  "f1": 0.9992108853375177,
+  "add_acc": 0.7687319884726225,
+  "del_acc": 0.7056823700825644,
+  "config": "gold_explicit+llm[batch=1,gate=0.5][gate_sides=add][seed_call1][K=3]",
+  "split": "chainupdate",
+  "n": 239,
+  "n_scored": 239,
+  "errors": 0,
+  "coverage": 0.8495046990093981,
+  "avg_cut_cand": 107.44769874476988,
+  "avg_add_cand": 694.6610878661088,
+  "judged_ratio": 0.08369674080874681,
+  "llm_calls": 14404,
+  "seconds": 13115.6,
+  "max_calls": 3,
+  "llm_calls_by_call": [
+    0,
+    10505,
+    3899
+  ],
+  "coverage_by_call": [
+    0.800482600965202,
+    0.8479806959613919,
+    0.8495046990093981
+  ],
+  "n_gated": 25710,
+  "n_off_menu": 0
+}

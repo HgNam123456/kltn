@@ -1,0 +1,27 @@
+{
+  "precision": 0.9995893323011756,
+  "recall": 0.9993974922848146,
+  "f1": 0.9994934030876839,
+  "add_acc": 0.04914460063201482,
+  "del_acc": 0.15904301475145655,
+  "config": "gold_explicit+llm[batch=1,gate=0.5][gate_sides=cut_rejected]",
+  "split": "chainupdate",
+  "n": 500,
+  "n_scored": 500,
+  "errors": 0,
+  "coverage": 0.8665689149560117,
+  "avg_cut_cand": 25.292,
+  "avg_add_cand": 21.19,
+  "judged_ratio": 0.0897982014543264,
+  "llm_calls": 2553,
+  "seconds": 1856.4,
+  "max_calls": 1,
+  "llm_calls_by_call": [
+    2553
+  ],
+  "coverage_by_call": [
+    0.8665689149560117
+  ],
+  "n_gated": 0,
+  "n_off_menu": 0
+}

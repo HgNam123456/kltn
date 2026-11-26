@@ -1,0 +1,49 @@
+{
+ "job": "synth",
+ "runs": {
+  "synth_sym0_goldexp_llm_gate_add_k3": {
+   "status": "ok",
+   "minutes": 237.0,
+   "summary": {
+    "precision": 0.9993756737052507,
+    "recall": 0.9990760236901542,
+    "f1": 0.9992258262327783,
+    "add_acc": 0.8140111593304402,
+    "del_acc": 0.7633500684618896,
+    "config": "gold_explicit+llm[batch=1,gate=0.5][gate_sides=add][seed_call1][K=3]",
+    "split": "chainupdate",
+    "n": 261,
+    "n_scored": 261,
+    "errors": 0,
+    "coverage": 0.8829157175398633,
+    "avg_cut_cand": 119.03065134099617,
+    "avg_add_cand": 541.1034482758621,
+    "judged_ratio": 0.10602745291505848,
+    "llm_calls": 16849,
+    "seconds": 14219.6,
+    "max_calls": 3,
+    "llm_calls_by_call": [
+     0,
+     12790,
+     4059
+    ],
+    "coverage_by_call": [
+     0.8219817767653759,
+     0.8814350797266515,
+     0.8829157175398633
+    ],
+    "n_gated": 26577,
+    "n_off_menu": 0
+   }
+  }
+ },
+ "notes": [],
+ "gpus": [
+  "Tesla T4, 15360 MiB",
+  "Tesla T4, 15360 MiB"
+ ],
+ "kltn_commit": "da513f13d07f317eaec79dea8ac5d52e42656c61",
+ "ldd_missing_after_pip": "",
+ "server_cmd": "CUDA_VISIBLE_DEVICES=0 /kaggle/working/llama-bin/llama-server -m /kaggle/working/models/gemma-4-E4B-it-qat-UD-Q4_K_XL.gguf --alias local --host 127.0.0.1 --port 8080 -ngl 99 --jinja --temp 0 --parallel 4 --cont-batching --kv-unified-per-slot 8192 --reasoning off --flash-attn on --spec-type draft-mtp --spec-draft-n-max 2 --model-draft /kaggle/working/models/mtp-gemma-4-E4B-it.gguf",
+ "elapsed_minutes": 237.7
+}

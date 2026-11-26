@@ -1,0 +1,11 @@
+== synth_sym0_goldexp_llm_gate_k1 + norule_k1_cut_rejected: 21 mẫu, 0 mẫu trùng hoàn toàn KG-sau vàng (0.0%), 205 lệnh gọi LLM {1: 205}
+vế    độ sâu    vàng     phủ   độ phủ    đúng   recall   phủ lần đầu ở lần gọi
+thêm       1     381     331    86.9%     330    86.6%   {1: 331}
+thêm       2      33       0     0.0%       0     0.0%   {}
+thêm       3      22       0     0.0%       0     0.0%   {}
+cắt        1     379     379   100.0%     315    83.1%   {1: 379}
+cắt        2      35       2     5.7%       0     0.0%   {1: 2}
+cắt        3      24       0     0.0%       0     0.0%   {}
+thêm     mọi     436     331    75.9%     330    75.7%   sai 93 (theo lần gọi {1: 93}), độ chính xác 78.0%
+cắt      mọi     438     381    87.0%     315    71.9%   sai 42 (theo lần gọi {1: 42}), độ chính xác 88.2%
+
